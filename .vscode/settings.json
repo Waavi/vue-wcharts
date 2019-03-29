@@ -1,0 +1,23 @@
+{
+    "editor.formatOnSave": false,
+    "editor.formatOnPaste": false,
+    "editor.rulers": [
+        180
+    ],
+    "trailing-spaces.trimOnSave": true,
+    "eslint.autoFixOnSave": true,
+    "eslint.validate": [
+        {
+            "language": "vue",
+            "autoFix": true
+        },
+        {
+            "language": "html",
+            "autoFix": true
+        },
+        {
+            "language": "javascript",
+            "autoFix": true
+        }
+    ],
+}
