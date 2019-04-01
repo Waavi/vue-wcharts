@@ -56,9 +56,10 @@ module.exports = {
     },
     overrides: [
         {
-            files: ['**/*.spec.js', 'src/utils/tests/*.js', 'src/api/mock/endpoints/__mocks__/*.js', 'src/lang/__mocks__/*.js'],
+            files: ['**/*.spec.js'],
             rules: {
                 'import/no-extraneous-dependencies': 'off',
+                'no-console': 'off',
                 'no-debugger': 'off',
             },
             env: {

@@ -908,14 +908,6 @@
   resolved "https://registry.yarnpkg.com/@nodelib/fs.stat/-/fs.stat-1.1.3.tgz#2b5a3ab3f918cca48a8c754c08168e3f03eba61b"
   integrity sha512-shAmDyaQC4H92APFoIaVDHCx5bStIocgvbwQyxPRrbUY20V1EYTbSDchWbuwlMG3V17cprZhA6+78JfB+3DTPw==
 
-"@oncomouse/vue-cli-plugin-vue-types@^1.0.7":
-  version "1.0.7"
-  resolved "https://registry.yarnpkg.com/@oncomouse/vue-cli-plugin-vue-types/-/vue-cli-plugin-vue-types-1.0.7.tgz#20c6cc9dbfb2d14296e6c6eba9bdec96382d0391"
-  integrity sha512-R58CbfFtyQNhjM7T4ZjVVyhSjfroDs53FqMOyE+c+8a+ILwON3RNFx8Ibqm/u/js/6UrS5Gz+zFs1IWuGtAS3A==
-  dependencies:
-    js-yaml "^3.12.0"
-    ramda "^0.25.0"
-
 "@reach/router@^1.2.1":
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/@reach/router/-/router-1.2.1.tgz#34ae3541a5ac44fa7796e5506a5d7274a162be4e"
@@ -13411,7 +13403,7 @@ vue-template-es2015-compiler@^1.6.0, vue-template-es2015-compiler@^1.9.0:
   resolved "https://registry.yarnpkg.com/vue-template-es2015-compiler/-/vue-template-es2015-compiler-1.9.1.tgz#1ee3bc9a16ecbf5118be334bb15f9c46f82f5825"
   integrity sha512-4gDntzrifFnCEvyoO8PqyJDmguXgVPxKiIxrBKjIowvL9l+N66196+72XVYR8BBf1Uv1Fgt3bGevJ+sEmxfZzw==
 
-vue-types@^1.3.1:
+vue-types@^1.5.0:
   version "1.5.0"
   resolved "https://registry.yarnpkg.com/vue-types/-/vue-types-1.5.0.tgz#ed7988896bdb4fb1fe47df293d289e5c36d7d418"
   integrity sha512-sXtq47f+KOlknfJC5k+m+BsMB8vYeBWTO0fkRt/GDYONlnRSnI2Uz4WnLhpLWUKdckgeHqGnyS68JAAn7LQFPg==
