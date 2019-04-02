@@ -6,7 +6,7 @@
   "license": "MIT",
   "repository": "waavi/vue-wcharts",
   "scripts": {
-    "build": "vue-cli-service build --target lib --name WCharts src/index.js",
+    "build": "vue-cli-service build --target lib --name vue-wcharts src/index.js",
     "build:sb": "vue-cli-service storybook:build -c src/config/storybook",
     "serve:sb": "vue-cli-service storybook:serve -p 6006 -c src/config/storybook",
     "test": "vue-cli-service test:unit",
