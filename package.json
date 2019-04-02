@@ -6,10 +6,10 @@
   "license": "MIT",
   "repository": "waavi/vue-wcharts",
   "scripts": {
-    "serve": "vue-cli-service serve --open ./demo/main.js",
+    "serve": "vue-cli-service serve --open demo/main.js",
     "build": "vue-cli-service build --target lib --name vue-wcharts src/index.js",
-    "build:sb": "vue-cli-service storybook:build -c src/config/storybook",
-    "serve:sb": "vue-cli-service storybook:serve -p 6006 -c src/config/storybook",
+    "build:sb": "vue-cli-service storybook:build -c .storybook",
+    "serve:sb": "vue-cli-service storybook:serve -p 6006 -c .storybook",
     "test": "vue-cli-service test:unit",
     "lint": "vue-cli-service lint",
     "stylelint": "node_modules/stylelint/bin/stylelint.js ./src --formatter verbose",
