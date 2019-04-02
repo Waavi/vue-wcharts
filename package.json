@@ -6,8 +6,7 @@
   "license": "MIT",
   "repository": "waavi/vue-wcharts",
   "scripts": {
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
+    "build": "vue-cli-service build --target lib --name WCharts src/index.js",
     "build:sb": "vue-cli-service storybook:build -c src/config/storybook",
     "serve:sb": "vue-cli-service storybook:serve -p 6006 -c src/config/storybook",
     "test": "vue-cli-service test:unit",
@@ -15,8 +14,19 @@
     "stylelint": "node_modules/stylelint/bin/stylelint.js ./src --formatter verbose",
     "validate": "yarn test && yarn lint && yarn stylelint"
   },
+  "main": "dist/WCharts.umd.js",
+  "browser": "dist/WCharts.common.js",
+  "unpkg": "dist/WCharts.umd.min.js",
+  "jsDelivr": "dist/WCharts.umd.min.js",
+  "files": [
+    "dist",
+    "src"
+  ],
   "dependencies": {
     "vue-types": "^1.5.0"
+  },
+  "peerDependencies": {
+    "vue": "^2.5.0"
   },
   "devDependencies": {
     "@storybook/addon-actions": "^5.0.0",
@@ -50,9 +60,9 @@
     "stylelint-config-recommended-scss": "^3.2.0",
     "stylelint-scss": "^3.5.4",
     "stylelint-webpack-plugin": "^0.10.5",
-    "vue": "^2.6.6",
     "vue-cli-plugin-storybook": "^0.6.1",
-    "vue-template-compiler": "^2.5.21"
+    "vue-template-compiler": "^2.5.21",
+    "vue": "^2.6.6"
   },
   "gitHooks": {
     "pre-commit": "lint-staged"
