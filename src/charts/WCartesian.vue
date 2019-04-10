@@ -28,7 +28,7 @@ export default {
         },
         xScale () {
             return scaleLinear()
-                .domain([0, this.dataset.length + 1])
+                .domain([0, this.dataset.length - 1])
                 .range([0, this.width])
         },
         bounds () {

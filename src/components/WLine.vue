@@ -22,7 +22,7 @@ export default {
     computed: {
         lineData () {
             return this.Cartesian.dataset.map((item, index) => ({
-                x: index + 1,
+                x: index,
                 y: item[this.datakey],
             }))
         },

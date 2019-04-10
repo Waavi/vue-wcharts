@@ -37,7 +37,7 @@ export default {
                 { value: 4910 },
                 { value: 2300 },
             ]
-        }, 3000)
+        }, 5000)
     },
 }
 </script>
