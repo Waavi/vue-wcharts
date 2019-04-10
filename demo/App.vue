@@ -3,8 +3,11 @@
         <WCartesian :dataset="jaime">
             <WLine datakey="one" />
             <WLine datakey="two" />
-            <WXAxis datakey="name" />
-            <WYAxis />
+            <WXAxis
+                datakey="name"
+                :space="[0, 50, 50, 50]"
+            />
+            <WYAxis :space="[50, 0, 0, 50]" />
         </WCartesian>
     </div>
 </template>

@@ -50,12 +50,12 @@ export default {
         yScale () {
             return scaleLinear()
                 .domain([this.bounds.min, this.bounds.max])
-                .range([this.canvas.height, this.canvas.y0])
+                .range([this.canvas.y1, this.canvas.y0])
         },
         xScale () {
             return scaleLinear()
                 .domain([0, this.dataset.length - 1])
-                .range([this.canvas.x0, this.canvas.width])
+                .range([this.canvas.x0, this.canvas.x1])
         },
         bounds () {
             if (this.datakeys.length) {
