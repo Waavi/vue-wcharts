@@ -1,6 +1,9 @@
 <template>
     <div class="Container">
-        <WCartesian :dataset="data">
+        <WCartesian
+            :dataset="data"
+            :bound="[0, n => n + 1000]"
+        >
             <WLine
                 dot
                 :styles="{ stroke: 'red' }"
@@ -73,6 +76,7 @@ export default {
         margin: 0;
         min-width: 100vw;
         min-height: 100vh;
+        font-family: sans-serif;
     }
     svg{
         border: 1px solid rgba(0,0,0,0.125);

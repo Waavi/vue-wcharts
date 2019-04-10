@@ -10,6 +10,7 @@ export default {
         dataset: VueTypes.array.def([]),
         height: VueTypes.number.def(400),
         width: VueTypes.number.def(600),
+        bound: VueTypes.array.def([]),
         colors: VueTypes.array.def([
             '#3fb1e3',
             '#6be6c1',
@@ -63,15 +64,13 @@ export default {
         },
         bounds () {
             if (this.datakeys.length) {
-                const values = this.dataset.reduce((acc, d) => {
-                    const picked = pick(d, this.datakeys)
-                    return [...acc, ...Object.values(picked)]
-                }, [])
+                const [boundMin, boundMax] = this.bound
                 return {
-                    max: Math.max(...values),
-                    min: Math.min(...values),
+                    min: this.getBound(boundMin),
+                    max: this.getBound(boundMax, 'max'),
                 }
             }
+
             return {
                 max: 0,
                 min: 0,
@@ -90,6 +89,20 @@ export default {
             space.forEach((val, i) => {
                 this.space[i] = Math.max(val, this.space[i] || 0)
             })
+        },
+        getBound (val, type = 'min') {
+            if (typeof val === 'number') return val
+
+            const isMin = type === 'min'
+            const values = this.dataset.reduce((acc, d) => {
+                const picked = pick(d, this.datakeys)
+                return [...acc, ...Object.values(picked)]
+            }, [])
+
+            const result = isMin ? Math.min(...values) : Math.max(...values)
+            if (typeof val === 'function') return val(result)
+
+            return result
         },
     },
     render (h) {

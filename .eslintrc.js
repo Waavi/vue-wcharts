@@ -12,7 +12,7 @@ module.exports = {
         'import/prefer-default-export': 'off',
         'vue/attribute-hyphenation': [
             2, 'never', {
-                ignore: ['stroke-width'],
+                ignore: ['stroke-width', 'font-size', 'text-anchor'],
             },
         ],
         'vue/html-closing-bracket-newline': [
