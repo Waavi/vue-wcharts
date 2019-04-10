@@ -1,7 +1,9 @@
 <template>
-    <WCartesian :dataset="values">
-        <WLine datakey="value" />
-    </WCartesian>
+    <div class="Container">
+        <WCartesian :dataset="values">
+            <WLine datakey="value" />
+        </WCartesian>
+    </div>
 </template>
 
 <script>
@@ -16,28 +18,37 @@ export default {
     data () {
         return {
             values: [
-                { value: 3200 },
-                { value: 2600 },
-                { value: 4500 },
-                { value: 3040 },
-                { value: 6900 },
-                { value: 4910 },
-                { value: 2300 },
+                { name: 'Category 1', value: 3200 },
+                { name: 'Category 2', value: 2600 },
+                { name: 'Category 3', value: 4500 },
+                { name: 'Category 4', value: 3040 },
+                { name: 'Category 5', value: 6900 },
+                { name: 'Category 6', value: 4910 },
+                { name: 'Category 7', value: 2300 },
             ],
         }
     },
-    mounted () {
-        setTimeout(() => {
-            this.values = [
-                { value: 1200 },
-                { value: 2600 },
-                { value: 2500 },
-                { value: 3040 },
-                { value: 2900 },
-                { value: 4910 },
-                { value: 2300 },
-            ]
-        }, 5000)
-    },
 }
 </script>
+<style lang="scss">
+    body {
+        display: flex;
+        padding: 0;
+        margin: 0;
+        min-width: 100vw;
+        min-height: 100vh;
+    }
+    svg{
+        border: 1px solid rgba(0,0,0,0.125);
+        background: #FFF;
+    }
+</style>
+<style lang="scss" scoped>
+.Container {
+    display: flex;
+    flex-grow: 1;
+    justify-content: center;
+    align-items: center;
+    background-color: #f9f9f9
+}
+</style>
