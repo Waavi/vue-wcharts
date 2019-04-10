@@ -1,5 +1,5 @@
 <template>
-    <g stroke="#999">
+    <g :stroke="stroke">
         <line
             :x1="x1"
             :y1="y1"
@@ -19,6 +19,7 @@ export default {
     props: {
         datakey: VueTypes.string.isRequired,
         space: VueTypes.arrayOf(VueTypes.number).def([0, 20, 24, 20]),
+        stroke: VueTypes.string.def('#999'),
     },
     computed: {
         points () {
