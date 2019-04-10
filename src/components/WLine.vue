@@ -2,15 +2,15 @@
     <path
         ref="line"
         :d="linePath"
-        stroke="black"
+        :stroke="fillColor"
         fill="none"
-        :strokeWidth="3"
+        :stroke-width="width"
     />
 </template>
 
 <script>
 import VueTypes from 'vue-types'
-import { line as d3Line } from 'd3'
+import { line as d3Line, curveBasis } from 'd3'
 
 export default {
     name: 'WLine',
@@ -18,8 +18,16 @@ export default {
     inject: ['Cartesian'],
     props: {
         datakey: VueTypes.string.isRequired,
+        width: VueTypes.number.def(1),
+        curve: VueTypes.bool.def(false),
     },
     computed: {
+        id () {
+            return this.$vnode.index
+        },
+        fillColor () {
+            return this.Cartesian.colors[this.id]
+        },
         lineData () {
             return this.Cartesian.dataset.map((item, index) => ({
                 x: index,
@@ -32,7 +40,7 @@ export default {
                 .y(d => this.Cartesian.yScale(d.y))
         },
         linePath () {
-            return this.defaultLine(this.lineData)
+            return this.curve ? this.defaultLine.curve(curveBasis)(this.lineData) : this.defaultLine(this.lineData)
         },
     },
 }

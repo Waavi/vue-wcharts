@@ -11,7 +11,9 @@ module.exports = {
         'import/no-extraneous-dependencies': 'off',
         'import/prefer-default-export': 'off',
         'vue/attribute-hyphenation': [
-            2, 'never',
+            2, 'never', {
+                ignore: ['stroke-width'],
+            },
         ],
         'vue/html-closing-bracket-newline': [
             'error',

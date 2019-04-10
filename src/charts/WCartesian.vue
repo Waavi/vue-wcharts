@@ -1,7 +1,7 @@
 <script>
 import VueTypes from 'vue-types'
 import { scaleLinear } from 'd3'
-import { property, includes } from 'lodash'
+import { pick, includes } from 'lodash'
 
 export default {
     name: 'WCartesian',
@@ -9,6 +9,14 @@ export default {
         dataset: VueTypes.array.def([]),
         height: VueTypes.number.def(400),
         width: VueTypes.number.def(600),
+        colors: VueTypes.array.def([
+            '#3fb1e3',
+            '#6be6c1',
+            '#626c91',
+            '#a0a7e6',
+            '#c4ebad',
+            '#96dee8',
+        ]),
     },
     provide () {
         return {
@@ -33,7 +41,10 @@ export default {
         },
         bounds () {
             if (this.datakeys.length) {
-                const values = this.dataset.map(property(this.datakeys))
+                const values = this.dataset.reduce((acc, d) => {
+                    const picked = pick(d, this.datakeys)
+                    return [...acc, ...Object.values(picked)]
+                }, [])
                 return {
                     max: Math.max(...values),
                     min: Math.min(...values),

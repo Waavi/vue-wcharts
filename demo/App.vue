@@ -1,7 +1,8 @@
 <template>
     <div class="Container">
-        <WCartesian :dataset="values">
-            <WLine datakey="value" />
+        <WCartesian :dataset="jaime">
+            <WLine datakey="one" />
+            <WLine datakey="two" />
         </WCartesian>
     </div>
 </template>
@@ -25,6 +26,15 @@ export default {
                 { name: 'Category 5', value: 6900 },
                 { name: 'Category 6', value: 4910 },
                 { name: 'Category 7', value: 2300 },
+            ],
+            jaime: [
+                { name: 'Category 1', one: 3200, two: 1200 },
+                { name: 'Category 2', one: 2600, two: 1600 },
+                { name: 'Category 3', one: 4500, two: 1500 },
+                { name: 'Category 4', one: 3040, two: 1040 },
+                { name: 'Category 5', one: 6900, two: 1900 },
+                { name: 'Category 6', one: 4910, two: 1910 },
+                { name: 'Category 7', one: 2300, two: 1300 },
             ],
         }
     },
