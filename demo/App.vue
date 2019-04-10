@@ -3,18 +3,24 @@
         <WCartesian :dataset="jaime">
             <WLine datakey="one" />
             <WLine datakey="two" />
+            <WXAxis datakey="name" />
+            <WYAxis />
         </WCartesian>
     </div>
 </template>
 
 <script>
-import { WCartesian, WLine } from '../src'
+import {
+    WCartesian, WLine, WXAxis, WYAxis,
+} from '../src'
 
 export default {
     name: 'App',
     components: {
         WCartesian,
         WLine,
+        WXAxis,
+        WYAxis,
     },
     data () {
         return {
