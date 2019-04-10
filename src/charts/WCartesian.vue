@@ -1,7 +1,7 @@
 <script>
 import VueTypes from 'vue-types'
 import { scaleLinear } from 'd3'
-import { map, property } from 'lodash'
+import { property, includes } from 'lodash'
 
 export default {
     name: 'WCartesian',
@@ -10,9 +10,14 @@ export default {
         height: VueTypes.number.def(400),
         width: VueTypes.number.def(600),
     },
+    provide () {
+        return {
+            Cartesian: this,
+        }
+    },
     data () {
         return {
-            dataKeys: [],
+            datakeys: [],
         }
     },
     computed: {
@@ -27,8 +32,8 @@ export default {
                 .range([0, this.width])
         },
         bounds () {
-            if (this.dataKeys.length) {
-                const values = map(this.dataset, property(this.dataKeys))
+            if (this.datakeys.length) {
+                const values = this.dataset.map(property(this.datakeys))
                 return {
                     max: Math.max(...values),
                     min: Math.min(...values),
@@ -40,46 +45,37 @@ export default {
             }
         },
     },
-    created () {
-        this.$slots.default.forEach((children) => {
-            const { componentOptions } = children
-            const { name } = componentOptions.Ctor.options
-            const { dataKey } = componentOptions.propsData
-            if (name === 'WLine' && dataKey) {
-                this.dataKeys.push(dataKey)
-            }
-        })
-    },
     render (h) {
         const slots = this.$slots.default || []
-        const cartesians = []
+        const datakeys = [] // We need get slots datakey prop to calculate max and min values for the scales
+        const cartesians = [] // We need inject necessary props to cartesian slots
+        const others = []
+
         slots.forEach((slot) => {
-            console.log(slot)
             const options = slot.componentOptions
+            if (!options) {
+                others.push(slot)
+                return
+            }
             const sealed = options.Ctor.sealedOptions
             if (!sealed) {
                 return
             }
-            console.log(sealed.preload)
+            const { datakey } = options.propsData
             switch (sealed.type) {
                 case 'cartesian':
-                    slot.index = cartesians.length
-                    slot.componentOptions.propsData = {
-                        ...slot.componentOptions.propsData,
-                        xScale: this.xScale,
-                        yScale: this.yScale,
-                        dataset: this.dataset,
-                        height: this.height,
-                        width: this.width,
-                        bounds: this.bounds,
+                    if (datakey && !includes(datakeys, datakey)) {
+                        datakeys.push(datakey)
                     }
-                    console.log(slot)
+                    slot.index = cartesians.length
                     cartesians.push(slot)
                     break
                 default:
                     break
             }
         })
+        this.datakeys = datakeys
+
         return h(
             'div',
             {
@@ -98,7 +94,7 @@ export default {
                             viewBox: `0 0 ${this.width} ${this.height}`,
                         },
                     },
-                    [cartesians]
+                    [others, cartesians]
                 ),
             ]
         )

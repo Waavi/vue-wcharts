@@ -1,6 +1,6 @@
 <template>
     <WCartesian :dataset="values">
-        <WLine dataKey="value" />
+        <WLine datakey="value" />
     </WCartesian>
 </template>
 
@@ -30,14 +30,14 @@ export default {
         setTimeout(() => {
             this.values = [
                 { value: 1200 },
-                { value: 1600 },
-                { value: 1500 },
+                { value: 2600 },
+                { value: 2500 },
                 { value: 3040 },
-                { value: 1900 },
+                { value: 2900 },
                 { value: 4910 },
-                { value: 1300 },
+                { value: 2300 },
             ]
-        }, 8000)
+        }, 3000)
     },
 }
 </script>

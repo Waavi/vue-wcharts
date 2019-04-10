@@ -1,7 +1,7 @@
 <template>
     <path
         ref="line"
-        :d="line"
+        :d="linePath"
         stroke="black"
         fill="none"
         :strokeWidth="3"
@@ -15,40 +15,24 @@ import { line as d3Line } from 'd3'
 export default {
     name: 'WLine',
     type: 'cartesian',
-    // inject: [
-    //     'injectedData',
-    // ],
-    // inject: [
-    //     'dataset',
-    //     'bounds',
-    //     'height',
-    //     'width',
-    //     'xScale',
-    //     'yScale',
-    // ],
+    inject: ['Cartesian'],
     props: {
-        dataKey: VueTypes.string.isRequired,
-        dataset: VueTypes.array.def([]),
-        height: VueTypes.number.def(400),
-        width: VueTypes.number.def(600),
-        bounds: VueTypes.object.def({}),
-        xScale: VueTypes.func.def(() => null),
-        yScale: VueTypes.func.def(() => null),
+        datakey: VueTypes.string.isRequired,
     },
     computed: {
         lineData () {
-            return this.dataset.map((item, index) => ({
+            return this.Cartesian.dataset.map((item, index) => ({
                 x: index + 1,
-                y: item[this.dataKey],
+                y: item[this.datakey],
             }))
         },
-        basicLine () {
-            return this.xScale ? d3Line()
-                .x(d => this.xScale(d.x))
-                .y(d => this.yScale(d.y)) : null
+        defaultLine () {
+            return d3Line()
+                .x(d => this.Cartesian.xScale(d.x))
+                .y(d => this.Cartesian.yScale(d.y))
         },
-        line () {
-            return this.basicLine ? this.basicLine(this.lineData) : null
+        linePath () {
+            return this.defaultLine(this.lineData)
         },
     },
 }
