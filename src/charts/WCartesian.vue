@@ -2,6 +2,7 @@
 import VueTypes from 'vue-types'
 import { scaleLinear } from 'd3'
 import { pick, includes } from 'lodash'
+import { Slots } from '../utils'
 
 export default {
     name: 'WCartesian',
@@ -30,18 +31,35 @@ export default {
                 cartesianIndex: null,
                 pointIndex: null,
             },
+            space: [0, 0, 0, 0],
         }
     },
     computed: {
+        canvas () {
+            const { width, height, space: offset } = this
+            const x0 = offset[3]
+            const y0 = offset[0]
+            const y1 = height - offset[2]
+            const x1 = width - offset[1]
+
+            return {
+                x0,
+                y0,
+                width: x1 - x0,
+                height: y1 - y0,
+                x1,
+                y1,
+            }
+        },
         yScale () {
             return scaleLinear()
                 .domain([this.bounds.min, this.bounds.max])
-                .range([this.height, 0])
+                .range([this.canvas.y1, this.canvas.y0])
         },
         xScale () {
             return scaleLinear()
                 .domain([0, this.dataset.length - 1])
-                .range([0, this.width])
+                .range([this.canvas.x0, this.canvas.x1])
         },
         bounds () {
             if (this.datakeys.length) {
@@ -68,12 +86,18 @@ export default {
                 event,
             }
         },
+        addSpace (space = []) {
+            space.forEach((val, i) => {
+                this.space[i] = Math.max(val, this.space[i] || 0)
+            })
+        },
     },
     render (h) {
         const slots = this.$slots.default || []
         const datakeys = [] // We need get slots datakey prop to calculate max and min values for the scales
         const cartesians = [] // We need inject necessary props to cartesian slots
         const others = []
+        const axis = []
 
         slots.forEach((slot) => {
             const options = slot.componentOptions
@@ -93,6 +117,10 @@ export default {
                     }
                     slot.index = cartesians.length
                     cartesians.push(slot)
+                    break
+                case 'axis':
+                    this.addSpace(Slots.props(options, 'space'))
+                    axis.push(slot)
                     break
                 default:
                     break
@@ -118,7 +146,7 @@ export default {
                             viewBox: `0 0 ${this.width} ${this.height}`,
                         },
                     },
-                    [others, cartesians]
+                    [others, cartesians, axis]
                 ),
             ]
         )

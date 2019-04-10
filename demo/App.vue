@@ -1,9 +1,9 @@
 <template>
     <div class="Container">
-        <WCartesian :dataset="jaime">
+        <WCartesian :dataset="data">
             <WLine
                 dot
-                :styles="{ stroke: '#000' }"
+                :styles="{ stroke: 'red' }"
                 datakey="one"
             />
             <WLine
@@ -15,31 +15,31 @@
                 dot
                 datakey="three"
             />
+            <WXAxis
+                datakey="name"
+                :space="[0, 50, 50, 50]"
+            />
+            <WYAxis :space="[50, 0, 0, 50]" />
         </WCartesian>
     </div>
 </template>
 
 <script>
-import { WCartesian, WLine } from '../src'
+import {
+    WCartesian, WLine, WXAxis, WYAxis,
+} from '../src'
 
 export default {
     name: 'App',
     components: {
         WCartesian,
         WLine,
+        WXAxis,
+        WYAxis,
     },
     data () {
         return {
-            values: [
-                { name: 'Category 1', value: 3200 },
-                { name: 'Category 2', value: 2600 },
-                { name: 'Category 3', value: 4500 },
-                { name: 'Category 4', value: 3040 },
-                { name: 'Category 5', value: 6900 },
-                { name: 'Category 6', value: 4910 },
-                { name: 'Category 7', value: 2300 },
-            ],
-            jaime: [
+            data: [
                 {
                     name: 'Page A', one: 4000, two: 2400, three: 2400,
                 },
