@@ -26,6 +26,10 @@ export default {
     data () {
         return {
             datakeys: [],
+            activePoint: {
+                cartesianIndex: null,
+                pointIndex: null,
+            },
         }
     },
     computed: {
@@ -53,6 +57,15 @@ export default {
             return {
                 max: 0,
                 min: 0,
+            }
+        },
+    },
+    methods: {
+        activatePoint ({ cartesianIndex = null, pointIndex = null }, event) {
+            this.activePoint = {
+                cartesianIndex,
+                pointIndex,
+                event,
             }
         },
     },
