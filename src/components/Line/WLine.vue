@@ -1,12 +1,17 @@
 <template>
     <g>
-        <path
-            ref="line"
-            :d="linePath"
-            :stroke="stylesCmp.stroke ? stylesCmp.stroke : fillColor"
-            :stroke-width="stylesCmp.strokeWidth"
-            fill="none"
-        />
+        <BasicTrans
+            :initialProps="{ d: initialLinePath }"
+            transition="d .3s ease-in-out"
+        >
+            <path
+                :d="linePath"
+                :stroke="stylesCmp.stroke ? stylesCmp.stroke : fillColor"
+                :stroke-width="stylesCmp.strokeWidth"
+                :stroke-dasharray="stylesCmp.strokeDasharray"
+                fill="none"
+            />
+        </BasicTrans>
         <g
             v-if="dot"
         >
@@ -17,16 +22,19 @@
                     name="dot"
                     :dotItem="dotItem"
                 >
-                    <circle
-                        :key="`dot${dotItem.lineIndex}${dotItem.index}`"
+                    <Dot
+                        :key="`dot${dotItem.cartesianIndex}${dotItem.index}`"
+                        :index="dotItem.index"
+                        :cartesianIndex="dotItem.cartesianIndex"
                         :cx="dotItem.cx"
                         :cy="dotItem.cy"
-                        :stroke="dotStylesCmp.stroke ? dotStylesCmp.stroke : fillColor"
-                        :fill="dotStylesCmp.fill ? dotStylesCmp.fill : fillColor"
-                        :r="Cartesian.activePoint.cartesianIndex === dotItem.lineIndex && Cartesian.activePoint.pointIndex === dotItem.index ? dotStylesCmp.radius * 2 : dotStylesCmp.radius"
-                        :stroke-width="dotStylesCmp.strokeWidth"
-                        @mouseenter="Cartesian.activatePoint({ cartesianIndex: dotItem.lineIndex, pointIndex: dotItem.index }, $event)"
-                        @mouseleave="Cartesian.activatePoint({}, $event)"
+                        :styles="{
+                            stroke:dotStylesCmp.stroke ? dotStylesCmp.stroke : fillColor,
+                            fill: dotStylesCmp.fill ? dotStylesCmp.fill : fillColor,
+                            strokeWidth: dotStylesCmp.strokeWidth,
+                            radius: dotStylesCmp.radius,
+                            hoverRadius: dotStylesCmp.hoverRadius,
+                        }"
                     />
                 </slot>
             </template>
@@ -37,10 +45,15 @@
 <script>
 import VueTypes from 'vue-types'
 import { line as d3Line, curveMonotoneX } from 'd3'
+import Dot from './Dot.vue'
+import BasicTrans from '../transitions/BasicTrans.vue'
+
+import { isFunc } from '../../utils/checks'
 
 const stylesDefaultProp = {
     stroke: '',
     strokeWidth: 1,
+    strokeDasharray: '0',
 }
 
 const dotStylesDefaultProp = {
@@ -48,18 +61,24 @@ const dotStylesDefaultProp = {
     stroke: '',
     strokeWidth: 0,
     radius: 4,
+    hoverRadius: 8,
 }
 
 export default {
     name: 'WLine',
     type: 'cartesian',
     inject: ['Cartesian'],
+    components: {
+        Dot,
+        BasicTrans,
+    },
     props: {
         datakey: VueTypes.string.isRequired,
-        curve: VueTypes.bool.def(false),
+        curve: VueTypes.oneOfType([VueTypes.bool, VueTypes.func]).def(false),
         styles: VueTypes.shape({
             stroke: VueTypes.string,
             strokeWidth: VueTypes.number,
+            strokeDasharray: VueTypes.string,
         }).def(() => ({
             ...stylesDefaultProp,
         })),
@@ -69,6 +88,7 @@ export default {
             stroke: VueTypes.string,
             strokeWidth: VueTypes.number,
             radius: VueTypes.number,
+            hoverRadius: VueTypes.number,
         }).def(() => ({
             ...dotStylesDefaultProp,
         })),
@@ -103,16 +123,30 @@ export default {
                 cx: this.Cartesian.xScale(index),
                 cy: this.Cartesian.yScale(item[this.datakey]),
                 index,
-                lineIndex: this.index,
+                cartesianIndex: this.index,
             })) : []
         },
-        defaultLine () {
+        basicLineFn () {
             return d3Line()
                 .x(d => this.Cartesian.xScale(d.x))
                 .y(d => this.Cartesian.yScale(d.y))
         },
+        initialLinePath () {
+            const data = this.lineData.map(d => ({
+                x: d.x,
+                y: 0,
+            }))
+            return this.calculateLine(data, this.curve, this.basicLineFn)
+        },
         linePath () {
-            return this.curve ? this.defaultLine.curve(curveMonotoneX)(this.lineData) : this.defaultLine(this.lineData)
+            return this.calculateLine(this.lineData, this.curve, this.basicLineFn)
+        },
+    },
+    methods: {
+        calculateLine (data, curve, basicLineFn) {
+            if (curve === false) return basicLineFn(data)
+            const curveFn = isFunc(curve) ? curve : curveMonotoneX
+            return basicLineFn.curve(curveFn)(data)
         },
     },
 }
