@@ -6,7 +6,7 @@
             :y1="y1"
             :x2="x2"
             :y2="y2"
-            :stroke="stroke"
+            :stroke="axisStylesCmp.stroke"
         />
         <template
             v-for="(tick, index) in ticks"
@@ -21,7 +21,7 @@
                     :y1="tick.mark.y1"
                     :x2="tick.mark.x2"
                     :y2="tick.mark.y2"
-                    :stroke="stroke"
+                    :stroke="markStylesCmp.stroke"
                 />
                 <slot
                     name="tick"
@@ -29,8 +29,7 @@
                 >
                     <Tick
                         :text="tick.text"
-                        :fill="fontColor"
-                        :font-size="fontSize"
+                        :styles="labelStylesCmp"
                     />
                 </slot>
             </g>
@@ -43,6 +42,20 @@ import VueTypes from 'vue-types'
 import Tick from './Tick.vue'
 import { Maths } from '../../utils'
 
+const axisStylesDefaultProp = {
+    stroke: '#999',
+}
+
+const markStylesDefaultProp = {
+    stroke: '#999',
+}
+
+const labelStylesDefaultProp = {
+    stroke: 'none',
+    fill: '#999',
+    fontSize: 12,
+}
+
 export default {
     name: 'WYAxis',
     type: 'axis',
@@ -52,13 +65,28 @@ export default {
     },
     props: {
         space: VueTypes.arrayOf(VueTypes.number).def([10, 0, 0, 40]),
-        stroke: VueTypes.string.def('#999'),
-        fontSize: VueTypes.number.def(12),
-        fontColor: VueTypes.string.def('#999'),
         textOffsetY: VueTypes.number.def(10),
         ticksNum: VueTypes.number,
         hideLine: VueTypes.bool.def(false),
         hideTickMark: VueTypes.bool.def(false),
+        /** Styles */
+        axisStyles: VueTypes.shape({
+            stroke: VueTypes.string,
+        }).def(() => ({
+            ...axisStylesDefaultProp,
+        })),
+        markStyles: VueTypes.shape({
+            stroke: VueTypes.string,
+        }).def(() => ({
+            ...axisStylesDefaultProp,
+        })),
+        labelStyles: VueTypes.shape({
+            fill: VueTypes.string,
+            stroke: VueTypes.string,
+            fontSize: VueTypes.oneOfType([String, Number]),
+        }).def(() => ({
+            ...labelStylesDefaultProp,
+        })),
     },
     computed: {
         ticks () {
@@ -84,7 +112,7 @@ export default {
                         index,
                         value,
                         x: canvas.x0 - this.textOffsetY,
-                        y: y + this.fontSize / 3,
+                        y: y + this.labelStylesCmp.fontSize / 3,
                     },
                 }
             })
@@ -100,6 +128,24 @@ export default {
         },
         y2 () {
             return this.Cartesian.canvas.y1
+        },
+        axisStylesCmp () {
+            return {
+                ...axisStylesDefaultProp,
+                ...this.axisStyles,
+            }
+        },
+        markStylesCmp () {
+            return {
+                ...markStylesDefaultProp,
+                ...this.markStyles,
+            }
+        },
+        labelStylesCmp () {
+            return {
+                ...labelStylesDefaultProp,
+                ...this.labelStyles,
+            }
         },
     },
 }
