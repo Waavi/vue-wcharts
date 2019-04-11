@@ -1,13 +1,14 @@
 <script>
 import VueTypes from 'vue-types'
 import { scaleLinear } from 'd3'
-import { pick, includes } from 'lodash'
+import { pick, includes, debounce } from 'lodash'
 import { Slots } from '../utils'
 
 export default {
     name: 'WCartesian',
     props: {
         dataset: VueTypes.array.def([]),
+        autoresize: VueTypes.bool.def(false),
         height: VueTypes.number.def(400),
         width: VueTypes.number.def(600),
         bound: VueTypes.array.def([]),
@@ -37,25 +38,10 @@ export default {
                 pointIndex: null,
             },
             space: [0, 0, 0, 0],
+            parentWidth: null,
         }
     },
     computed: {
-        canvas () {
-            const { width, height, space: margin } = this
-            const x0 = margin[3]
-            const y0 = margin[0]
-            const y1 = height - margin[2]
-            const x1 = width - margin[1]
-
-            return {
-                x0,
-                y0,
-                width: x1 - x0,
-                height: y1 - y0,
-                x1,
-                y1,
-            }
-        },
         yScale () {
             return scaleLinear()
                 .domain([this.bounds.min, this.bounds.max])
@@ -80,10 +66,41 @@ export default {
                 min: 0,
             }
         },
+        viewWidth () {
+            return this.parentWidth || this.width
+        },
+        canvas () {
+            const { viewWidth, height, space: margin } = this
+            const x0 = margin[3]
+            const y0 = margin[0]
+            const y1 = height - margin[2]
+            const x1 = viewWidth - margin[1]
+
+            return {
+                x0,
+                y0,
+                width: x1 - x0,
+                height: y1 - y0,
+                x1,
+                y1,
+            }
+        },
         padding () {
             if (Array.isArray(this.gap)) return this.gap
             return Array(4).fill(this.gap)
         },
+    },
+
+    mounted () {
+        if (this.autoresize) {
+            this.resize()
+            if (typeof window !== 'undefined') {
+                window.addEventListener('resize', debounce(this.resize, 220))
+            }
+        }
+    },
+    unmounted () {
+        if (this.autoresize) window.removeEventListener('resize')
     },
     methods: {
         activatePoint ({ cartesianIndex = null, pointIndex = null }, event) {
@@ -97,6 +114,12 @@ export default {
             space.forEach((val, i) => {
                 this.space[i] = Math.max(val, this.space[i] || 0)
             })
+        },
+        resize () {
+            if (this.$el) {
+                const { width } = this.$el.getBoundingClientRect()
+                this.parentWidth = width
+            }
         },
         getBound (val, type = 'min') {
             if (typeof val === 'number') return val
@@ -147,6 +170,8 @@ export default {
                     break
             }
         })
+
+        const { viewWidth, height, autoresize } = this
         this.datakeys = datakeys
 
         return h(
@@ -154,7 +179,7 @@ export default {
             {
                 style: {
                     position: 'relative',
-                    width: `${this.width}px`,
+                    width: autoresize ? '100%' : `${viewWidth}px`,
                 },
             },
             [
@@ -162,9 +187,9 @@ export default {
                     'svg',
                     {
                         attrs: {
-                            width: this.width,
-                            height: this.height,
-                            viewBox: `0 0 ${this.width} ${this.height}`,
+                            width: viewWidth,
+                            height,
+                            viewBox: `0 0 ${viewWidth} ${height}`,
                         },
                     },
                     [others, cartesians, axis]

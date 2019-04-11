@@ -126,6 +126,11 @@ export default {
     flex-grow: 1;
     justify-content: center;
     align-items: center;
+    width: 100%;
     background-color: #f9f9f9
+}
+.Wrapper {
+    width: 90%;
+    max-width: 800px;
 }
 </style>
