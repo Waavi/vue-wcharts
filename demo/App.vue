@@ -1,33 +1,36 @@
 <template>
     <div class="Container">
-        <WCartesian
-            :dataset="data"
-            :bound="[0, n => n + 1000]"
-        >
-            <WLine
-                dot
-                :styles="{ stroke: 'red', strokeDasharray: '4' }"
-                datakey="one"
-            />
-            <WLine
-                dot
-                curve
-                datakey="two"
-            />
-            <WLine
-                dot
-                :curve="curveStep"
-                datakey="three"
-            />
-            <WXAxis
-                datakey="name"
-                :space="[0, 50, 50, 50]"
-            />
-            <WYAxis :space="[50, 0, 0, 50]" />
-        </WCartesian>
-        <button @click="changeData">
-            Change Data
-        </button>
+        <div class="Wrapper">
+            <WCartesian
+                :dataset="data"
+                :bound="[0, n => n + 1000]"
+                autoresize
+            >
+                <WLine
+                    dot
+                    :styles="{ stroke: 'red', strokeDasharray: '4' }"
+                    datakey="one"
+                />
+                <WLine
+                    dot
+                    curve
+                    datakey="two"
+                />
+                <WLine
+                    dot
+                    :curve="curveStep"
+                    datakey="three"
+                />
+                <WXAxis
+                    datakey="name"
+                    :space="[0, 50, 50, 50]"
+                />
+                <WYAxis :space="[50, 0, 0, 50]" />
+            </WCartesian>
+            <button class="Btn" @click="changeData">
+                Change Data
+            </button>
+        </div>
     </div>
 </template>
 
@@ -130,7 +133,19 @@ export default {
     background-color: #f9f9f9
 }
 .Wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     width: 90%;
     max-width: 800px;
+}
+.Btn {
+    margin-top: 1rem;
+    padding: .75rem 1.5rem;
+    background: #626c91;
+    border-radius: 6px;
+    color: #FFF;
+    font-size: 16px;
+    outline: none;
 }
 </style>
