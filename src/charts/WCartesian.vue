@@ -11,6 +11,10 @@ export default {
         height: VueTypes.number.def(400),
         width: VueTypes.number.def(600),
         bound: VueTypes.array.def([]),
+        gap: VueTypes.oneOfType([
+            VueTypes.number,
+            VueTypes.arrayOf(VueTypes.number).def([0, 0, 0, 0]),
+        ]).def(0),
         colors: VueTypes.array.def([
             '#3fb1e3',
             '#6be6c1',
@@ -37,11 +41,11 @@ export default {
     },
     computed: {
         canvas () {
-            const { width, height, space: offset } = this
-            const x0 = offset[3]
-            const y0 = offset[0]
-            const y1 = height - offset[2]
-            const x1 = width - offset[1]
+            const { width, height, space: margin } = this
+            const x0 = margin[3]
+            const y0 = margin[0]
+            const y1 = height - margin[2]
+            const x1 = width - margin[1]
 
             return {
                 x0,
@@ -55,12 +59,12 @@ export default {
         yScale () {
             return scaleLinear()
                 .domain([this.bounds.min, this.bounds.max])
-                .range([this.canvas.y1, this.canvas.y0])
+                .range([this.canvas.y1 - this.padding[2], this.canvas.y0 + this.padding[0]])
         },
         xScale () {
             return scaleLinear()
                 .domain([0, this.dataset.length - 1])
-                .range([this.canvas.x0, this.canvas.x1])
+                .range([this.canvas.x0 + this.padding[3], this.canvas.x1 - this.padding[1]])
         },
         bounds () {
             if (this.datakeys.length) {
@@ -75,6 +79,10 @@ export default {
                 max: 0,
                 min: 0,
             }
+        },
+        padding () {
+            if (Array.isArray(this.gap)) return this.gap
+            return Array(4).fill(this.gap)
         },
     },
     methods: {

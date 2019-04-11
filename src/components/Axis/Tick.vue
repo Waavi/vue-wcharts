@@ -1,10 +1,12 @@
 <template>
     <text
         v-if="text"
-        :fill="fill"
         :x="text.x"
         :y="text.y"
         :dy="text.dy"
+        :stroke="stylesCmp.stroke"
+        :fill="stylesCmp.fill"
+        :font-size="stylesCmp.fontSize"
     >
         {{ text.value }}
     </text>
@@ -13,6 +15,12 @@
 <script>
 import VueTypes from 'vue-types'
 
+const stylesDefaultProp = {
+    fill: 'none',
+    stroke: 'none',
+    fontSize: 14,
+}
+
 export default {
     name: 'Tick',
     props: {
@@ -20,9 +28,24 @@ export default {
             x: VueTypes.number,
             y: VueTypes.number,
             dy: VueTypes.string,
+            index: VueTypes.number,
             value: VueTypes.oneOfType([String, Number]),
         }),
-        fill: VueTypes.string,
+        styles: VueTypes.shape({
+            fill: VueTypes.string,
+            stroke: VueTypes.string,
+            fontSize: VueTypes.oneOfType([String, Number]),
+        }).def(() => ({
+            ...stylesDefaultProp,
+        })),
+    },
+    computed: {
+        stylesCmp () {
+            return {
+                ...stylesDefaultProp,
+                ...this.styles,
+            }
+        },
     },
 }
 </script>
