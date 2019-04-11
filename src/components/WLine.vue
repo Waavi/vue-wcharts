@@ -1,5 +1,5 @@
 <template>
-    <g>
+    <g class="WLine">
         <path
             ref="line"
             :d="linePath"

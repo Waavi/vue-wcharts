@@ -1,3 +1,17 @@
 #root {
     padding: 25px;
 }
+
+body {
+    display: flex;
+    padding: 0;
+    margin: 0;
+    min-width: 100vw;
+    min-height: 100vh;
+    font-family: sans-serif;
+}
+
+svg{
+    border: 1px solid rgba(0,0,0,0.125);
+    background: #FFF;
+}

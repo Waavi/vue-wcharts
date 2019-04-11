@@ -6,7 +6,7 @@
         >
             <WLine
                 dot
-                :styles="{ stroke: 'red' }"
+                :styles="{ stroke: 'tomato' }"
                 datakey="one"
             />
             <WLine

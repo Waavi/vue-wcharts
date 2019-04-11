@@ -20,6 +20,7 @@ export default {
             x: VueTypes.number,
             y: VueTypes.number,
             dy: VueTypes.string,
+            index: VueTypes.number,
             value: VueTypes.oneOfType([String, Number]),
         }),
         fill: VueTypes.string,

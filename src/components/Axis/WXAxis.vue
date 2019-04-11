@@ -1,6 +1,7 @@
 <template>
-    <g>
+    <g id="WXAxis">
         <line
+            v-if="!hideLine"
             :x1="x1"
             :y1="y1"
             :x2="x2"
@@ -15,6 +16,7 @@
                 text-anchor="middle"
             >
                 <line
+                    v-if="!hideTickMark"
                     :x1="tick.mark.x1"
                     :y1="tick.mark.y1"
                     :x2="tick.mark.x2"
@@ -22,12 +24,12 @@
                     :stroke="stroke"
                 />
                 <slot
-                    name="tick"
-                    :tick="tick"
+                    name="tickText"
+                    :tick="tick.text"
                 >
                     <Tick
                         :text="tick.text"
-                        :fill="stroke"
+                        :fill="fontColor"
                         :font-size="fontSize"
                     />
                 </slot>
@@ -48,11 +50,14 @@ export default {
         Tick,
     },
     props: {
-        datakey: VueTypes.string.isRequired,
+        datakey: VueTypes.string,
         space: VueTypes.arrayOf(VueTypes.number).def([0, 20, 24, 20]),
         stroke: VueTypes.string.def('#999'),
         fontSize: VueTypes.number.def(15),
+        fontColor: VueTypes.string.def('#999'),
         textOffsetY: VueTypes.number.def(20),
+        hideLine: VueTypes.bool.def(false),
+        hideTickMark: VueTypes.bool.def(false),
     },
     computed: {
         ticks () {
@@ -62,13 +67,15 @@ export default {
                 const x = canvas.x0 + (space * index)
                 return {
                     mark: {
+                        index,
                         x1: x,
                         y1: canvas.y1,
                         x2: x,
                         y2: canvas.y1 + 5,
                     },
                     text: {
-                        value: props[this.datakey],
+                        index,
+                        value: props[this.datakey] || index,
                         x,
                         y: canvas.y1 + this.textOffsetY,
                     },

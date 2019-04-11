@@ -1,6 +1,7 @@
 <template>
-    <g>
+    <g id="WYAxis">
         <line
+            v-if="!hideLine"
             :x1="x1"
             :y1="y1"
             :x2="x2"
@@ -15,6 +16,7 @@
                 text-anchor="end"
             >
                 <line
+                    v-if="!hideTickMark"
                     :x1="tick.mark.x1"
                     :y1="tick.mark.y1"
                     :x2="tick.mark.x2"
@@ -23,11 +25,11 @@
                 />
                 <slot
                     name="tick"
-                    :tick="tick"
+                    :tick="tick.text"
                 >
                     <Tick
                         :text="tick.text"
-                        :fill="stroke"
+                        :fill="fontColor"
                         :font-size="fontSize"
                     />
                 </slot>
@@ -49,12 +51,14 @@ export default {
         Tick,
     },
     props: {
-        datakey: VueTypes.string,
         space: VueTypes.arrayOf(VueTypes.number).def([10, 0, 0, 40]),
         stroke: VueTypes.string.def('#999'),
         fontSize: VueTypes.number.def(12),
+        fontColor: VueTypes.string.def('#999'),
         textOffsetY: VueTypes.number.def(10),
         ticksNum: VueTypes.number,
+        hideLine: VueTypes.bool.def(false),
+        hideTickMark: VueTypes.bool.def(false),
     },
     computed: {
         ticks () {
@@ -67,12 +71,14 @@ export default {
                 const y = canvas.y0 + (space * index)
                 return {
                     mark: {
+                        index,
                         x1: canvas.x0 - 5,
                         y1: y,
                         x2: canvas.x0,
                         y2: y,
                     },
                     text: {
+                        index,
                         value,
                         x: canvas.x0 - this.textOffsetY,
                         y: y + this.fontSize / 3,
