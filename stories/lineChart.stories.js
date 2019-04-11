@@ -17,7 +17,7 @@ storiesOf('Components/LineChart', module)
             return {
                 data: [
                     {
-                        name: 'Page A', one: 4000, two: 2400, three: 2400,
+                        name: 'Page A', one: 10, two: 2400, three: 2400,
                     },
                     {
                         name: 'Page B', one: 3000, two: 1398, three: 2210,
@@ -29,15 +29,20 @@ storiesOf('Components/LineChart', module)
                         name: 'Page D', one: 2780, two: 3908, three: 2000,
                     },
                     {
-                        name: 'Page E', one: 1890, two: 4800, three: 1700,
+                        name: 'Page E', one: 1890, two: 0, three: 1700,
                     },
                     {
                         name: 'Page F', one: 2390, two: 3800, three: 2500,
                     },
                     {
-                        name: 'Page G', one: 3490, two: 4300, three: 2100,
+                        name: 'Page G', one: 3490, two: 4300, three: -10,
                     },
                 ],
+                gap: number('Gap', 0, {
+                    range: true,
+                    min: 0,
+                    max: 75,
+                }),
                 fontSize: number('Font size', 12, {
                     range: true,
                     min: 8,
@@ -61,6 +66,7 @@ storiesOf('Components/LineChart', module)
                 <WCartesian
                     :dataset="data"
                     :bound="[0, n => n + 1000]"
+                    :gap="gap"
                 >
                     <WLine
                         dot
@@ -129,6 +135,11 @@ storiesOf('Components/LineChart', module)
                         name: 'Page G', one: 3490, two: 4300, three: 2100,
                     },
                 ],
+                gap: number('Gap', 0, {
+                    range: true,
+                    min: 0,
+                    max: 75,
+                }),
                 fontSize: number('Font size', 12, {
                     range: true,
                     min: 8,
@@ -152,6 +163,7 @@ storiesOf('Components/LineChart', module)
                 <WCartesian
                     :dataset="data"
                     :bound="[0, n => n + 1000]"
+                    :gap="gap"
                 >
                     <WLine
                         dot
@@ -219,6 +231,11 @@ storiesOf('Components/LineChart', module)
                         name: 'Page G', one: 3490, two: 4300, three: 2100,
                     },
                 ],
+                gap: number('Gap', 20, {
+                    range: true,
+                    min: 0,
+                    max: 75,
+                }),
                 fontSize: number('Font size', 12, {
                     range: true,
                     min: 8,
@@ -242,6 +259,7 @@ storiesOf('Components/LineChart', module)
                 <WCartesian
                     :dataset="data"
                     :bound="[0, n => n + 1000]"
+                    :gap="gap"
                 >
                     <WLine
                         dot

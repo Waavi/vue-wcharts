@@ -62,13 +62,16 @@ export default {
     },
     computed: {
         ticks () {
-            const { dataset, canvas, bounds } = this.Cartesian
+            const {
+                dataset, canvas, bounds, padding,
+            } = this.Cartesian
             const num = this.ticksNum || dataset.length
             const ticks = Maths.genTicks(bounds.min, bounds.max, num).reverse()
-            const space = canvas.height / (ticks.length - 1)
+            const offset = (padding[0] + padding[2])
+            const space = (canvas.height - offset) / (ticks.length - 1)
 
             return ticks.map((value, index) => {
-                const y = canvas.y0 + (space * index)
+                const y = canvas.y0 + (space * index) + padding[2]
                 return {
                     mark: {
                         index,

@@ -61,10 +61,11 @@ export default {
     },
     computed: {
         ticks () {
-            const { dataset, canvas } = this.Cartesian
-            const space = canvas.width / (dataset.length - 1)
+            const { dataset, canvas, padding } = this.Cartesian
+            const offset = padding[1] + padding[3]
+            const space = (canvas.width - offset) / (dataset.length - 1)
             return dataset.map((props, index) => {
-                const x = canvas.x0 + (space * index)
+                const x = canvas.x0 + (space * index) + padding[3]
                 return {
                     mark: {
                         index,
