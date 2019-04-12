@@ -1,2 +1,4 @@
 export { WCartesian } from './charts'
-export { WLine, WXAxis, WYAxis } from './components'
+export {
+    WLine, WXAxis, WYAxis, WLegend,
+} from './components'

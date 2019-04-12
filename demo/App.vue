@@ -10,22 +10,30 @@
                     dot
                     :styles="{ stroke: 'red', strokeDasharray: '4' }"
                     datakey="one"
+                    legend="One Line"
                 />
                 <WLine
                     dot
                     curve
                     datakey="two"
+                    legend="Two Line"
                 />
                 <WLine
                     dot
                     :curve="curveStep"
                     datakey="three"
+                    legend="Three Line"
                 />
                 <WXAxis
                     datakey="name"
                     :space="[0, 50, 50, 50]"
                 />
                 <WYAxis :space="[50, 0, 0, 50]" />
+                <WLegend
+                    selectable
+                    align="end"
+                    :containerStyles="{ marginBottom: '1rem', paddingRight: '50px' }"
+                />
             </WCartesian>
             <button
                 class="Btn"
@@ -40,7 +48,7 @@
 <script>
 import { curveStep } from 'd3-shape'
 import {
-    WCartesian, WLine, WXAxis, WYAxis,
+    WCartesian, WLine, WXAxis, WYAxis, WLegend,
 } from '../src'
 
 const dataOne = [
@@ -98,6 +106,7 @@ export default {
         WLine,
         WXAxis,
         WYAxis,
+        WLegend,
     },
     data () {
         return {
@@ -121,10 +130,6 @@ export default {
         min-height: 100vh;
         font-family: sans-serif;
     }
-    svg{
-        border: 1px solid rgba(0,0,0,0.125);
-        background: #FFF;
-    }
 </style>
 <style lang="scss" scoped>
 .Container {
@@ -141,6 +146,11 @@ export default {
     align-items: center;
     width: 90%;
     max-width: 800px;
+}
+.WCartesian {
+    border: 1px solid rgba(0,0,0,0.125);
+    background: #FFF;
+    padding: 0 0 2rem 0;
 }
 .Btn {
     margin-top: 1rem;
