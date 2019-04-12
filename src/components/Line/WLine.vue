@@ -2,11 +2,11 @@
     <g v-if="active">
         <Spread
             axis="x"
-            transition="all .3s ease-in-out"
+            :transition="transition"
         >
             <path
                 :d="linePath"
-                :style="{ transition: 'd .3s ease-in-out' }"
+                :style="{ transition }"
                 :stroke="stylesCmp.stroke ? stylesCmp.stroke : fillColor"
                 :stroke-width="stylesCmp.strokeWidth"
                 :stroke-dasharray="stylesCmp.strokeDasharray"
@@ -36,6 +36,7 @@
                             radius: dotStylesCmp.radius,
                             hoverRadius: dotStylesCmp.hoverRadius,
                         }"
+                        :transition="transition"
                     />
                 </slot>
             </template>
@@ -47,7 +48,8 @@
 import VueTypes from 'vue-types'
 import { line as d3Line, curveMonotoneX } from 'd3'
 import Dot from './Dot.vue'
-import Spread from '../transitions/Spread.vue'
+import animationMixin from '../../mixins/animation'
+import Spread from '../../transitions/Spread.vue'
 
 import { isFunc } from '../../utils/checks'
 
@@ -68,11 +70,12 @@ const dotStylesDefaultProp = {
 export default {
     name: 'WLine',
     type: 'cartesian',
-    inject: ['Cartesian'],
     components: {
         Dot,
         Spread,
     },
+    mixins: [animationMixin],
+    inject: ['Cartesian'],
     props: {
         datakey: VueTypes.string.isRequired,
         legend: VueTypes.string,
@@ -136,22 +139,10 @@ export default {
                 .x(d => this.Cartesian.xScale(d.x))
                 .y(d => this.Cartesian.yScale(d.y))
         },
-        initialLinePath () {
-            const data = this.lineData.map(d => ({
-                x: d.x,
-                y: 0,
-            }))
-            return this.calculateLine(data, this.curve, this.basicLineFn)
-        },
         linePath () {
-            return this.calculateLine(this.lineData, this.curve, this.basicLineFn)
-        },
-    },
-    methods: {
-        calculateLine (data, curve, basicLineFn) {
-            if (curve === false) return basicLineFn(data)
-            const curveFn = isFunc(curve) ? curve : curveMonotoneX
-            return basicLineFn.curve(curveFn)(data)
+            if (this.curve === false) return this.basicLineFn(this.lineData)
+            const curveFn = isFunc(this.curve) ? this.curve : curveMonotoneX
+            return this.basicLineFn.curve(curveFn)(this.lineData)
         },
     },
 }

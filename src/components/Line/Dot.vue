@@ -3,7 +3,7 @@
         :initialProps="{
             r: 0
         }"
-        transition="all .3s ease-in-out"
+        :transition="transition"
     >
         <circle
             :cx="cx"
@@ -20,7 +20,7 @@
 
 <script>
 import VueTypes from 'vue-types'
-import Trans from '../transitions/Trans.vue'
+import Trans from '../../transitions/Trans.vue'
 
 export default {
     name: 'Dot',
@@ -41,6 +41,7 @@ export default {
             radius: VueTypes.number,
             hoverRadius: VueTypes.number,
         }).isRequired,
+        transition: VueTypes.string.isRequired,
     },
 }
 </script>
