@@ -1,5 +1,5 @@
 <template>
-    <g>
+    <g v-if="active">
         <BasicTrans
             :initialProps="{ d: initialLinePath }"
             transition="d .3s ease-in-out"
@@ -74,6 +74,7 @@ export default {
     },
     props: {
         datakey: VueTypes.string.isRequired,
+        legend: VueTypes.string,
         curve: VueTypes.oneOfType([VueTypes.bool, VueTypes.func]).def(false),
         styles: VueTypes.shape({
             stroke: VueTypes.string,
@@ -96,6 +97,9 @@ export default {
     computed: {
         index () {
             return this.$vnode.index
+        },
+        active () {
+            return this.Cartesian.activeCartesians.includes(this.index)
         },
         stylesCmp () {
             return {

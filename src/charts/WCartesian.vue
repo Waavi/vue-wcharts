@@ -33,6 +33,8 @@ export default {
     data () {
         return {
             datakeys: [],
+            activeCartesians: [],
+            legends: [],
             activePoint: {
                 cartesianIndex: null,
                 pointIndex: null,
@@ -142,6 +144,11 @@ export default {
         const cartesians = [] // We need inject necessary props to cartesian slots
         const others = []
         const axis = []
+        const plugins = []
+
+        // Props
+        const activeCartesians = []
+        const legends = []
 
         slots.forEach((slot) => {
             const options = slot.componentOptions
@@ -153,18 +160,25 @@ export default {
             if (!sealed) {
                 return
             }
-            const { datakey } = options.propsData
+            const { datakey, legend } = options.propsData
+            const cartesiansLength = cartesians.length
+
             switch (sealed.type) {
                 case 'cartesian':
                     if (datakey && !includes(datakeys, datakey)) {
                         datakeys.push(datakey)
                     }
-                    slot.index = cartesians.length
+                    activeCartesians.push(cartesiansLength) // Add to actives elements
+                    if (legend) legends.push(legend) // Add to legends elements
+                    slot.index = cartesiansLength
                     cartesians.push(slot)
                     break
                 case 'axis':
                     this.addSpace(Slots.props(options, 'space'))
                     axis.push(slot)
+                    break
+                case 'plugins':
+                    plugins.push(slot)
                     break
                 default:
                     break
@@ -173,10 +187,13 @@ export default {
 
         const { viewWidth, height, autoresize } = this
         this.datakeys = datakeys
+        this.activeCartesians = activeCartesians
+        this.legends = legends
 
         return h(
             'div',
             {
+                class: 'WCartesian',
                 style: {
                     position: 'relative',
                     width: autoresize ? '100%' : `${viewWidth}px`,
@@ -194,6 +211,7 @@ export default {
                     },
                     [others, cartesians, axis]
                 ),
+                plugins,
             ]
         )
     },
