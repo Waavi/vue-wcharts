@@ -100,7 +100,7 @@ export default {
         }
     },
     unmounted () {
-        if (this.autoresize) window.removeEventListener('resize')
+        if (this.autoresize && typeof window !== 'undefined') window.removeEventListener('resize')
     },
     methods: {
         activatePoint ({ cartesianIndex = null, pointIndex = null }, event) {

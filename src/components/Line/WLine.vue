@@ -1,17 +1,18 @@
 <template>
     <g>
-        <BasicTrans
-            :initialProps="{ d: initialLinePath }"
-            transition="d .3s ease-in-out"
+        <Spread
+            axis="x"
+            transition="all .3s ease-in-out"
         >
             <path
                 :d="linePath"
+                :style="{ transition: 'd .3s ease-in-out' }"
                 :stroke="stylesCmp.stroke ? stylesCmp.stroke : fillColor"
                 :stroke-width="stylesCmp.strokeWidth"
                 :stroke-dasharray="stylesCmp.strokeDasharray"
                 fill="none"
             />
-        </BasicTrans>
+        </Spread>
         <g
             v-if="dot"
         >
@@ -46,7 +47,7 @@
 import VueTypes from 'vue-types'
 import { line as d3Line, curveMonotoneX } from 'd3'
 import Dot from './Dot.vue'
-import BasicTrans from '../transitions/BasicTrans.vue'
+import Spread from '../transitions/Spread.vue'
 
 import { isFunc } from '../../utils/checks'
 
@@ -70,7 +71,7 @@ export default {
     inject: ['Cartesian'],
     components: {
         Dot,
-        BasicTrans,
+        Spread,
     },
     props: {
         datakey: VueTypes.string.isRequired,

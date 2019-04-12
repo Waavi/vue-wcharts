@@ -27,7 +27,10 @@
                 />
                 <WYAxis :space="[50, 0, 0, 50]" />
             </WCartesian>
-            <button class="Btn" @click="changeData">
+            <button
+                class="Btn"
+                @click="changeData"
+            >
                 Change Data
             </button>
         </div>

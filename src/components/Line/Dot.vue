@@ -1,10 +1,9 @@
 <template>
-    <BasicTrans
+    <Trans
         :initialProps="{
-            r: 0,
-            cy: Cartesian.canvas.y1
+            r: 0
         }"
-        transition="r .3s ease-in-out, cx .3s ease-in-out, cy .3s ease-in-out"
+        transition="all .3s ease-in-out"
     >
         <circle
             :cx="cx"
@@ -16,19 +15,19 @@
             @mouseenter="Cartesian.activatePoint({ cartesianIndex: cartesianIndex, pointIndex: index }, $event)"
             @mouseleave="Cartesian.activatePoint({}, $event)"
         />
-    </BasicTrans>
+    </Trans>
 </template>
 
 <script>
 import VueTypes from 'vue-types'
-import BasicTrans from '../transitions/BasicTrans.vue'
+import Trans from '../transitions/Trans.vue'
 
 export default {
     name: 'Dot',
     type: 'cartesian',
     inject: ['Cartesian'],
     components: {
-        BasicTrans,
+        Trans,
     },
     props: {
         index: VueTypes.number.isRequired,
