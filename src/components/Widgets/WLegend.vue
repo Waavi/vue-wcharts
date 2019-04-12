@@ -14,10 +14,15 @@
             :data-index="index"
             @click.prevent="handleClick({ legend, index })"
         >
-            <span
-                class="bullet"
-                :style="{ backgroundColor: Cartesian.colors[index] }"
-            />
+            <slot
+                name="bullet"
+                :legend="{ legend, index }"
+            >
+                <span
+                    class="bullet"
+                    :style="{ backgroundColor: Cartesian.colors[index] }"
+                />
+            </slot>
             <span>{{ legend }}</span>
         </a>
     </div>
@@ -64,11 +69,13 @@ export default {
             const justifyContent = this.align === 'center' ? 'center' : `flex-${this.align}`
 
             const top = !horizontal ? '0' : 'auto'
+            const left = horizontal ? '0' : 'auto'
             const width = horizontal ? '100%' : 'auto'
             const height = !horizontal ? '100%' : 'auto'
 
             return {
                 top,
+                left,
                 [position]: '0',
                 width,
                 height,

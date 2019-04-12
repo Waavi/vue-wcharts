@@ -1,5 +1,7 @@
 import { storiesOf } from '@storybook/vue'
-import { boolean, number, color } from '@storybook/addon-knobs'
+import {
+    boolean, number, color, select,
+} from '@storybook/addon-knobs'
 
 import {
     WCartesian, WLine, WXAxis, WYAxis, WLegend,
@@ -165,6 +167,18 @@ storiesOf('Components/LineChart', module)
                     min: 2,
                     max: 8,
                 }),
+                legendPos: select('Legend - Position', {
+                    top: 'top',
+                    bottom: 'bottom',
+                    left: 'left',
+                    right: 'right',
+                }, 'bottom'),
+                legendAlign: select('Legend - Align', {
+                    start: 'start',
+                    center: 'center',
+                    end: 'end',
+                }, 'end'),
+                legendSelectable: boolean('Legend - Selectable', true),
             }
         },
         template: `
@@ -173,7 +187,7 @@ storiesOf('Components/LineChart', module)
                     :dataset="data"
                     :bound="[0, n => n + 1000]"
                     :gap="gap"
-                    style="padding: 0 0 2rem 0;"
+                    style="padding: 0 8rem 2rem 8rem;"
                 >
                     <WLine
                         dot
@@ -208,9 +222,10 @@ storiesOf('Components/LineChart', module)
                         :labelStyles="labelStyles"
                         :space="[50, 0, 0, 50]" />
                     <WLegend
-                        selectable
-                        align="end"
-                        :containerStyles="{ marginBottom: '1rem', paddingRight: '50px' }"
+                        :selectable="legendSelectable"
+                        :position="legendPos"
+                        :align="legendAlign"
+                        :containerStyles="{ margin: '1rem 0', padding: '0 50px' }"
                     />
                 </WCartesian>
             </div>
@@ -275,6 +290,18 @@ storiesOf('Components/LineChart', module)
                     min: 2,
                     max: 8,
                 }),
+                legendPos: select('Legend - Position', {
+                    top: 'top',
+                    bottom: 'bottom',
+                    left: 'left',
+                    right: 'right',
+                }, 'bottom'),
+                legendAlign: select('Legend - Align', {
+                    start: 'start',
+                    center: 'center',
+                    end: 'end',
+                }, 'end'),
+                legendSelectable: boolean('Legend - Selectable', true),
             }
         },
         template: `
@@ -332,9 +359,10 @@ storiesOf('Components/LineChart', module)
                             :labelStyles="labelStyles"
                             :space="[50, 0, 0, 50]" />
                         <WLegend
-                            selectable
-                            align="end"
-                            :containerStyles="{ marginBottom: '1rem', paddingRight: '50px' }"
+                            :position="legendPos"
+                            :selectable="legendSelectable"
+                            :align="legendAlign"
+                            :containerStyles="{ margin: '1rem 0', padding: '0 50px' }"
                         />
                     </WCartesian>
                 </div>
@@ -347,6 +375,7 @@ storiesOf('Components/LineChart', module)
             WLine,
             WXAxis,
             WYAxis,
+            WLegend,
         },
         data () {
             return {
@@ -398,6 +427,23 @@ storiesOf('Components/LineChart', module)
                     min: 2,
                     max: 8,
                 }),
+                legendPos: select('Legend - Position', {
+                    top: 'top',
+                    bottom: 'bottom',
+                    left: 'left',
+                    right: 'right',
+                }, 'bottom'),
+                legendAlign: select('Legend - Align', {
+                    start: 'start',
+                    center: 'center',
+                    end: 'end',
+                }, 'end'),
+                legendSelectable: boolean('Legend - Selectable', true),
+                legendBullet: select('Legend - Bullet', {
+                    star: '★',
+                    phone: '☎',
+                    cross: '☩',
+                }, '★'),
             }
         },
         template: `
@@ -406,20 +452,24 @@ storiesOf('Components/LineChart', module)
                     :dataset="data"
                     :bound="[0, n => n + 1000]"
                     :gap="gap"
+                    style="padding: 0 0 2rem 0;"
                 >
                     <WLine
                         dot
                         :styles="{ stroke: lineColor }"
                         datakey="one"
+                        legend="One Line"
                     />
                     <WLine
                         dot
                         curve
                         datakey="two"
+                        legend="Two Line"
                     />
                     <WLine
                         dot
                         datakey="three"
+                        legend="Three Line"
                     />
                     <WXAxis
                         datakey="name"
@@ -446,6 +496,16 @@ storiesOf('Components/LineChart', module)
                         :axisStyles="axisStyles"
                         :labelStyles="labelStyles"
                         :space="[50, 0, 0, 50]" />
+                    <WLegend
+                        :position="legendPos"
+                        :selectable="legendSelectable"
+                        :align="legendAlign"
+                        :containerStyles="{ margin: '1rem 0', padding: '0 50px' }"
+                    >
+                        <template #bullet="props">
+                            <span style="font-size: 18; margin-right: 10px; color: purple;">{{legendBullet}}</span>
+                        </template>
+                    </WLegend>
                 </WCartesian>
             </div>
             `,
