@@ -9,3 +9,12 @@ export const isString = val => typeof val === 'string'
 export const isObj = val => typeof val === 'object'
 
 export const isArray = val => Array.isArray(val)
+
+export default {
+    isBoolean,
+    isFunc,
+    isNumber,
+    isString,
+    isObj,
+    isArray,
+}

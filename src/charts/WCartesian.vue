@@ -32,6 +32,7 @@ export default {
     },
     data () {
         return {
+            chartReady: !this.autoresize,
             datakeys: [],
             activeCartesians: [],
             legends: [],
@@ -122,6 +123,7 @@ export default {
                 const { width } = this.$el.getBoundingClientRect()
                 this.parentWidth = width
             }
+            this.setChartReady()
         },
         getBound (val, type = 'min') {
             if (typeof val === 'number') return val
@@ -136,6 +138,10 @@ export default {
             if (typeof val === 'function') return val(result)
 
             return result
+        },
+        setChartReady () {
+            this.chartReady = true
+            this.$emit('onChartReady')
         },
     },
     render (h) {
@@ -189,7 +195,6 @@ export default {
         this.datakeys = datakeys
         this.activeCartesians = activeCartesians
         this.legends = legends
-
         return h(
             'div',
             {
@@ -209,9 +214,9 @@ export default {
                             viewBox: `0 0 ${viewWidth} ${height}`,
                         },
                     },
-                    [others, cartesians, axis]
+                    this.chartReady ? [others, cartesians, axis] : []
                 ),
-                plugins,
+                this.chartReady ? plugins : [],
             ]
         )
     },
