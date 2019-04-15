@@ -1,14 +1,62 @@
-import { storiesOf } from '@storybook/vue'
 import {
     boolean, number, color, select,
 } from '@storybook/addon-knobs'
+import { storiesOf } from '@storybook/vue'
+import { curveStep } from 'd3-shape'
 
 import {
     WCartesian, WLine, WXAxis, WYAxis, WLegend,
 } from '../src'
 
+const data = [
+    {
+        name: 'Page A', one: 10, two: 2400, three: 2400,
+    },
+    {
+        name: 'Page B', one: 3000, two: 1398, three: 2210,
+    },
+    {
+        name: 'Page C', one: 2000, two: 9800, three: 2290,
+    },
+    {
+        name: 'Page D', one: 2780, two: 3908, three: 2000,
+    },
+    {
+        name: 'Page E', one: 1890, two: 0, three: 1700,
+    },
+    {
+        name: 'Page F', one: 2390, two: 3800, three: 2500,
+    },
+    {
+        name: 'Page G', one: 3490, two: 4300, three: -10,
+    },
+]
+
 storiesOf('Components/LineChart', module)
-    .add('Default', () => ({
+    .add('Tiny', () => ({
+        components: {
+            WCartesian,
+            WLine,
+        },
+        data () {
+            return {
+                data,
+            }
+        },
+        template: `
+            <div class="Container">
+                <WCartesian
+                    :dataset="data"
+                >
+                    <WLine
+                        curve
+                        datakey="one"
+                    />
+                </WCartesian>
+            </div>
+        `,
+    }))
+    .add('Simple', () => ({
         components: {
             WCartesian,
             WLine,
@@ -17,96 +65,251 @@ storiesOf('Components/LineChart', module)
         },
         data () {
             return {
-                data: [
-                    {
-                        name: 'Page A', one: 10, two: 2400, three: 2400,
-                    },
-                    {
-                        name: 'Page B', one: 3000, two: 1398, three: 2210,
-                    },
-                    {
-                        name: 'Page C', one: 2000, two: 9800, three: 2290,
-                    },
-                    {
-                        name: 'Page D', one: 2780, two: 3908, three: 2000,
-                    },
-                    {
-                        name: 'Page E', one: 1890, two: 0, three: 1700,
-                    },
-                    {
-                        name: 'Page F', one: 2390, two: 3800, three: 2500,
-                    },
-                    {
-                        name: 'Page G', one: 3490, two: 4300, three: -10,
-                    },
-                ],
-                dataKey: !boolean('Categories', false) ? 'name' : null,
-                gap: number('Gap', 0, {
-                    range: true,
-                    min: 0,
-                    max: 75,
-                }),
-                axisStyles: {
-                    stroke: color('Axis color', '#626c91'),
-                },
-                labelStyles: {
-                    fill: color('Font color', '#999'),
-                    fontSize: number('Font size', 12, {
-                        range: true,
-                        min: 8,
-                        max: 25,
-                    }),
-                },
-                lineColor: color('Linear color', 'tomato'),
-                hideLineX: boolean('Line X - Hide', false),
-                hideLineY: boolean('Line Y - Hide', false),
-                hideTickMark: boolean('Ticks - Hide', false),
-                ticksYNum: number('Ticks Y - Num', 5, {
-                    range: true,
-                    min: 2,
-                    max: 8,
-                }),
+                data,
             }
         },
         template: `
             <div class="Container">
                 <WCartesian
                     :dataset="data"
-                    :bound="[0, n => n + 1000]"
-                    :gap="gap"
                 >
                     <WLine
-                        dot
-                        :styles="{ stroke: lineColor }"
                         datakey="one"
                     />
                     <WLine
-                        dot
-                        curve
                         datakey="two"
                     />
                     <WLine
-                        dot
                         datakey="three"
                     />
                     <WXAxis
-                        :datakey="dataKey"
-                        :hideLine="hideLineX"
-                        :hideTickMark="hideTickMark"
-                        :axisStyles="axisStyles"
-                        :labelStyles="labelStyles"
-                        :space="[0, 50, 50, 50]"
+                        datakey="name"
                     />
-                    <WYAxis
-                        :hideLine="hideLineY"
-                        :hideTickMark="hideTickMark"
-                        :ticksNum="ticksYNum"
-                        :axisStyles="axisStyles"
-                        :labelStyles="labelStyles"
-                        :space="[50, 0, 0, 50]" />
+                    <WYAxis />
                 </WCartesian>
             </div>
-            `,
+        `,
+    }))
+    .add('With gradient', () => ({
+        components: {
+            WCartesian,
+            WLine,
+        },
+        data () {
+            return {
+                data,
+            }
+        },
+        template: `
+            <div class="Container">
+                <WCartesian
+                    :dataset="data"
+                >
+                <defs>
+                    <linearGradient
+                        id="color-id"
+                        x1="0"
+                        y1="0"
+                        x2="0"
+                        y2="1"
+                    >
+                        <stop
+                            offset="0"
+                            stop-color="#ffeb3b"
+                        />
+                        <stop
+                            offset="0.5"
+                            stop-color="#48c0b6"
+                        />
+                        <stop
+                            offset="1"
+                            stop-color="#5400e8"
+                        />
+                    </linearGradient>
+                </defs>
+                    <WLine
+                        curve
+                        :styles="{ stroke: 'url(#color-id)', strokeWidth: 2 }"
+                        datakey="one"
+                    />
+                </WCartesian>
+            </div>
+        `,
+    }))
+    .add('Curve', () => ({
+        components: {
+            WCartesian,
+            WLine,
+            WXAxis,
+            WYAxis,
+        },
+        data () {
+            return {
+                data,
+            }
+        },
+        template: `
+            <div class="Container">
+                <WCartesian
+                    :dataset="data"
+                >
+                    <WLine
+                        curve
+                        datakey="one"
+                    />
+                    <WXAxis
+                        datakey="name"
+                    />
+                    <WYAxis />
+                </WCartesian>
+            </div>
+        `,
+    }))
+    .add('With custom curve', () => ({
+        components: {
+            WCartesian,
+            WLine,
+            WXAxis,
+            WYAxis,
+        },
+        data () {
+            return {
+                data,
+                curveStep,
+            }
+        },
+        template: `
+            <div class="Container">
+                <WCartesian
+                    :dataset="data"
+                >
+                    <WLine
+                        dot
+                        :curve="curveStep"
+                        datakey="one"
+                    />
+                    <WXAxis
+                        datakey="name"
+                    />
+                    <WYAxis />
+                </WCartesian>
+            </div>
+        `,
+    }))
+    .add('With dots', () => ({
+        components: {
+            WCartesian,
+            WLine,
+            WXAxis,
+            WYAxis,
+        },
+        data () {
+            return {
+                data,
+            }
+        },
+        template: `
+            <div class="Container">
+                <WCartesian
+                    :dataset="data"
+                >
+                    <WLine
+                        dot
+                        datakey="one"
+                    />
+                    <WXAxis
+                        datakey="name"
+                    />
+                    <WYAxis />
+                </WCartesian>
+            </div>
+        `,
+    }))
+    .add('With custom dots', () => ({
+        components: {
+            WCartesian,
+            WLine,
+            WXAxis,
+            WYAxis,
+        },
+        data () {
+            return {
+                data,
+            }
+        },
+        template: `
+            <div class="Container">
+                <WCartesian
+                    :dataset="data"
+                >
+                    <WLine
+                        dot
+                        datakey="one"
+                    >
+                        <template
+                            #dot="{ dot, styles }"
+                        >
+                            <g
+                                :fill="styles.stroke"
+                            >
+                                <rect
+                                    :x="dot.x - 7"
+                                    :y="dot.y - 7"
+                                    width="14"
+                                    height="14"
+                                />
+                                <text
+                                    :x="dot.x"
+                                    :y="dot.y"
+                                    text-anchor='middle'
+                                    dy="-14">
+                                    {{ dot.value }}
+                                </text>
+                            </g>
+                        </template>
+                    </WLine>
+                    <WXAxis
+                        datakey="name"
+                    />
+                    <WYAxis />
+                </WCartesian>
+            </div>
+        `,
+    }))
+    .add('Responsive', () => ({
+        components: {
+            WCartesian,
+            WLine,
+            WXAxis,
+            WYAxis,
+        },
+        data () {
+            return {
+                data,
+            }
+        },
+        template: `
+            <div class="Container">
+                <WCartesian
+                    responsive
+                    :dataset="data"
+                >
+                    <WLine
+                        datakey="one"
+                    />
+                    <WLine
+                        datakey="two"
+                    />
+                    <WLine
+                        datakey="three"
+                    />
+                    <WXAxis
+                        datakey="name"
+                    />
+                    <WYAxis />
+                </WCartesian>
+            </div>
+        `,
     }))
     .add('Legends', () => ({
         components: {
@@ -118,55 +321,7 @@ storiesOf('Components/LineChart', module)
         },
         data () {
             return {
-                data: [
-                    {
-                        name: 'Page A', one: 10, two: 2400, three: 2400,
-                    },
-                    {
-                        name: 'Page B', one: 3000, two: 1398, three: 2210,
-                    },
-                    {
-                        name: 'Page C', one: 2000, two: 9800, three: 2290,
-                    },
-                    {
-                        name: 'Page D', one: 2780, two: 3908, three: 2000,
-                    },
-                    {
-                        name: 'Page E', one: 1890, two: 0, three: 1700,
-                    },
-                    {
-                        name: 'Page F', one: 2390, two: 3800, three: 2500,
-                    },
-                    {
-                        name: 'Page G', one: 3490, two: 4300, three: -10,
-                    },
-                ],
-                dataKey: !boolean('Categories', false) ? 'name' : null,
-                gap: number('Gap', 0, {
-                    range: true,
-                    min: 0,
-                    max: 75,
-                }),
-                axisStyles: {
-                    stroke: color('Axis color', '#626c91'),
-                },
-                labelStyles: {
-                    fill: color('Font color', '#999'),
-                    fontSize: number('Font size', 12, {
-                        range: true,
-                        min: 8,
-                        max: 25,
-                    }),
-                },
-                lineColor: color('Linear color', 'tomato'),
-                hideLineX: boolean('Line X - Hide', false),
-                hideLineY: boolean('Line Y - Hide', false),
-                hideTickMark: boolean('Ticks - Hide', false),
-                ticksYNum: number('Ticks Y - Num', 5, {
-                    range: true,
-                    min: 2,
-                    max: 8,
-                }),
+                data,
                 legendPos: select('Legend - Position', {
                     top: 'top',
                     bottom: 'bottom',
@@ -183,44 +338,21 @@ storiesOf('Components/LineChart', module)
         },
         template: `
             <div class="Container">
-                <WCartesian
-                    :dataset="data"
-                    :bound="[0, n => n + 1000]"
-                    :gap="gap"
-                    style="padding: 0 8rem 2rem 8rem;"
-                >
+                <WCartesian :dataset="data" style="padding: 0 8rem 2rem 8rem;">
                     <WLine
-                        dot
-                        :styles="{ stroke: lineColor }"
                         datakey="one"
                         legend="One Line"
                     />
                     <WLine
-                        dot
-                        curve
                         datakey="two"
                         legend="Two Line"
                     />
                     <WLine
-                        dot
                         datakey="three"
                         legend="Three Line"
                     />
-                    <WXAxis
-                        :datakey="dataKey"
-                        :hideLine="hideLineX"
-                        :hideTickMark="hideTickMark"
-                        :axisStyles="axisStyles"
-                        :labelStyles="labelStyles"
-                        :space="[0, 50, 50, 50]"
-                    />
-                    <WYAxis
-                        :hideLine="hideLineY"
-                        :hideTickMark="hideTickMark"
-                        :ticksNum="ticksYNum"
-                        :axisStyles="axisStyles"
-                        :labelStyles="labelStyles"
-                        :space="[50, 0, 0, 50]" />
+                    <WXAxis datakey="name" :space="[0, 50, 50, 50]" />
+                    <WYAxis :space="[50, 0, 0, 50]" />
                     <WLegend
                         :selectable="legendSelectable"
                         :position="legendPos"
@@ -231,7 +363,7 @@ storiesOf('Components/LineChart', module)
             </div>
             `,
     }))
-    .add('Responsive', () => ({
+    .add('With custom legends', () => ({
         components: {
             WCartesian,
             WLine,
@@ -241,192 +373,7 @@ storiesOf('Components/LineChart', module)
         },
         data () {
             return {
-                data: [
-                    {
-                        name: 'Page A', one: 10, two: 2400, three: 2400,
-                    },
-                    {
-                        name: 'Page B', one: 3000, two: 1398, three: 2210,
-                    },
-                    {
-                        name: 'Page C', one: 2000, two: 9800, three: 2290,
-                    },
-                    {
-                        name: 'Page D', one: 2780, two: 3908, three: 2000,
-                    },
-                    {
-                        name: 'Page E', one: 1890, two: 0, three: 1700,
-                    },
-                    {
-                        name: 'Page F', one: 2390, two: 3800, three: 2500,
-                    },
-                    {
-                        name: 'Page G', one: 3490, two: 4300, three: -10,
-                    },
-                ],
-                dataKey: !boolean('Categories', false) ? 'name' : null,
-                gap: number('Gap', 0, {
-                    range: true,
-                    min: 0,
-                    max: 75,
-                }),
-                axisStyles: {
-                    stroke: color('Axis color', '#626c91'),
-                },
-                labelStyles: {
-                    fill: color('Font color', '#999'),
-                    fontSize: number('Font size', 12, {
-                        range: true,
-                        min: 8,
-                        max: 25,
-                    }),
-                },
-                lineColor: color('Linear color', 'tomato'),
-                hideLineX: boolean('Line X - Hide', false),
-                hideLineY: boolean('Line Y - Hide', false),
-                hideTickMark: boolean('Ticks - Hide', false),
-                ticksYNum: number('Ticks Y - Num', 5, {
-                    range: true,
-                    min: 2,
-                    max: 8,
-                }),
-                legendPos: select('Legend - Position', {
-                    top: 'top',
-                    bottom: 'bottom',
-                    left: 'left',
-                    right: 'right',
-                }, 'bottom'),
-                legendAlign: select('Legend - Align', {
-                    start: 'start',
-                    center: 'center',
-                    end: 'end',
-                }, 'end'),
-                legendSelectable: boolean('Legend - Selectable', true),
-            }
-        },
-        template: `
-            <div class="Container" style="
-                display: flex;
-                flex-grow: 1;
-                justify-content: center;
-                align-items: center;
-                width: 100%;
-            ">
-                <div class="Wrapper" style="
-                    display: flex;
-                    flex-direction: column;
-                    align-items: center;
-                    width: 90%;
-                    max-width: 800px;
-                ">
-                    <WCartesian
-                        :dataset="data"
-                        :bound="[0, n => n + 1000]"
-                        :gap="gap"
-                        autoresize
-                        style="padding: 0 0 2rem 0;"
-                    >
-                        <WLine
-                            dot
-                            :styles="{ stroke: lineColor }"
-                            datakey="one"
-                            legend="One Line"
-                        />
-                        <WLine
-                            dot
-                            curve
-                            datakey="two"
-                            legend="Two Line"
-                        />
-                        <WLine
-                            dot
-                            datakey="three"
-                            legend="Three Line"
-                        />
-                        <WXAxis
-                            :datakey="dataKey"
-                            :hideLine="hideLineX"
-                            :hideTickMark="hideTickMark"
-                            :axisStyles="axisStyles"
-                            :labelStyles="labelStyles"
-                            :space="[0, 50, 50, 50]"
-                        />
-                        <WYAxis
-                            :hideLine="hideLineY"
-                            :hideTickMark="hideTickMark"
-                            :ticksNum="ticksYNum"
-                            :axisStyles="axisStyles"
-                            :labelStyles="labelStyles"
-                            :space="[50, 0, 0, 50]" />
-                        <WLegend
-                            :position="legendPos"
-                            :selectable="legendSelectable"
-                            :align="legendAlign"
-                            :containerStyles="{ margin: '1rem 0', padding: '0 50px' }"
-                        />
-                    </WCartesian>
-                </div>
-            </div>
-            `,
-    }))
-    .add('Customize', () => ({
-        components: {
-            WCartesian,
-            WLine,
-            WXAxis,
-            WYAxis,
-            WLegend,
-        },
-        data () {
-            return {
-                data: [
-                    {
-                        name: 'Page A', one: 4000, two: 2400, three: 2400,
-                    },
-                    {
-                        name: 'Page B', one: 3000, two: 1398, three: 2210,
-                    },
-                    {
-                        name: 'Page C', one: 2000, two: 9800, three: 2290,
-                    },
-                    {
-                        name: 'Page D', one: 2780, two: 3908, three: 2000,
-                    },
-                    {
-                        name: 'Page E', one: 1890, two: 4800, three: 1700,
-                    },
-                    {
-                        name: 'Page F', one: 2390, two: 3800, three: 2500,
-                    },
-                    {
-                        name: 'Page G', one: 3490, two: 4300, three: 2100,
-                    },
-                ],
-                gap: number('Gap', 20, {
-                    range: true,
-                    min: 0,
-                    max: 75,
-                }),
-                axisStyles: {
-                    stroke: color('Axis color', '#626c91'),
-                },
-                labelStyles: {
-                    fill: color('Font color', '#008BCD'),
-                    fontSize: number('Font size', 12, {
-                        range: true,
-                        min: 8,
-                        max: 25,
-                    }),
-                },
-                lineColor: color('Linear color', '#FF7500'),
-                hideLineX: boolean('Line X - Hide', true),
-                hideLineY: boolean('Line Y - Hide', true),
-                hideTickMark: boolean('Ticks - Hide', true),
-                ticksYNum: number('Ticks Y - Num', 5, {
-                    range: true,
-                    min: 2,
-                    max: 8,
-                }),
+                data,
                 legendPos: select('Legend - Position', {
                     top: 'top',
                     bottom: 'bottom',
@@ -448,28 +395,76 @@ storiesOf('Components/LineChart', module)
         },
         template: `
             <div class="Container">
-                <WCartesian
-                    :dataset="data"
-                    :bound="[0, n => n + 1000]"
-                    :gap="gap"
-                    style="padding: 0 0 2rem 0;"
-                >
+                <WCartesian :dataset="data" style="padding: 0 8rem 2rem 8rem;">
                     <WLine
-                        dot
-                        :styles="{ stroke: lineColor }"
                         datakey="one"
                         legend="One Line"
                     />
                     <WLine
-                        dot
-                        curve
                         datakey="two"
                         legend="Two Line"
                     />
                     <WLine
-                        dot
                         datakey="three"
                         legend="Three Line"
+                    />
+                    <WXAxis datakey="name" :space="[0, 50, 50, 50]" />
+                    <WYAxis :space="[50, 0, 0, 50]" />
+                    <WLegend
+                        :selectable="legendSelectable"
+                        :position="legendPos"
+                        :align="legendAlign"
+                        :containerStyles="{ margin: '1rem 0', padding: '0 50px' }"
+                    >
+                        <template #bullet="{ styles }">
+                            <span :style="{ fontSize: '18', marginRight: '10px', color: styles.color }">{{ legendBullet }}</span>
+                        </template>
+                    </WLegend>
+                </WCartesian>
+            </div>
+            `,
+    }))
+    .add('With custom axis', () => ({
+        components: {
+            WCartesian,
+            WLine,
+            WXAxis,
+            WYAxis,
+            WLegend,
+        },
+        data () {
+            return {
+                data,
+                axisStyles: {
+                    stroke: color('Axis color', '#626c91'),
+                },
+                labelStyles: {
+                    fill: color('Font color', '#008BCD'),
+                    fontSize: number('Font size', 12, {
+                        range: true,
+                        min: 8,
+                        max: 25,
+                    }),
+                },
+                lineColor: color('Linear color', '#FF7500'),
+                hideLineX: boolean('Line X - Hide', true),
+                hideLineY: boolean('Line Y - Hide', true),
+                hideTickMark: boolean('Ticks - Hide', true),
+                ticksYNum: number('Ticks Y - Num', 5, {
+                    range: true,
+                    min: 2,
+                    max: 8,
+                }),
+            }
+        },
+        template: `
+            <div class="Container">
+                <WCartesian
+                    :dataset="data"
+                >
+                    <WLine
+                        curve
+                        datakey="one"
                     />
                     <WXAxis
                         datakey="name"
@@ -495,17 +490,8 @@ storiesOf('Components/LineChart', module)
                         :hideTickMark="hideTickMark"
                         :axisStyles="axisStyles"
                         :labelStyles="labelStyles"
-                        :space="[50, 0, 0, 50]" />
-                    <WLegend
-                        :position="legendPos"
-                        :selectable="legendSelectable"
-                        :align="legendAlign"
-                        :containerStyles="{ margin: '1rem 0', padding: '0 50px' }"
-                    >
-                        <template #bullet="props">
-                            <span style="font-size: 18; margin-right: 10px; color: purple;">{{legendBullet}}</span>
-                        </template>
-                    </WLegend>
+                        :space="[50, 0, 0, 50]"
+                    />
                 </WCartesian>
             </div>
             `,

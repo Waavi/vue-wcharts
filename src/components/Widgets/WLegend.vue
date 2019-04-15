@@ -16,7 +16,12 @@
         >
             <slot
                 name="bullet"
-                :legend="{ legend, index }"
+                :index="index"
+                :legend="legend"
+                :styles="{
+                    color: Cartesian.colors[index],
+                    ...legendStylesCmp
+                }"
             >
                 <span
                     class="bullet"
@@ -36,7 +41,6 @@ const containerStylesDefaultProp = {
 }
 
 const legendStylesDefaultProp = {
-    color: '#999',
     fontSize: '12px',
 }
 

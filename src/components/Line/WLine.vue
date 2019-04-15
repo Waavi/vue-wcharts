@@ -21,16 +21,24 @@
             >
                 <slot
                     name="dot"
-                    :dotItem="dotItem"
+                    :dot="dotItem"
+                    :styles="{
+                        stroke: dotStylesCmp.stroke ? dotStylesCmp.stroke : fillColor,
+                        fill: dotStylesCmp.fill ? dotStylesCmp.fill : fillColor,
+                        strokeWidth: dotStylesCmp.strokeWidth,
+                        radius: dotStylesCmp.radius,
+                        hoverRadius: dotStylesCmp.hoverRadius,
+                    }"
+                    :transition="transition"
                 >
                     <Dot
                         :key="`dot${dotItem.cartesianIndex}${dotItem.index}`"
                         :index="dotItem.index"
                         :cartesianIndex="dotItem.cartesianIndex"
-                        :cx="dotItem.cx"
-                        :cy="dotItem.cy"
+                        :x="dotItem.x"
+                        :y="dotItem.y"
                         :styles="{
-                            stroke:dotStylesCmp.stroke ? dotStylesCmp.stroke : fillColor,
+                            stroke: dotStylesCmp.stroke ? dotStylesCmp.stroke : fillColor,
                             fill: dotStylesCmp.fill ? dotStylesCmp.fill : fillColor,
                             strokeWidth: dotStylesCmp.strokeWidth,
                             radius: dotStylesCmp.radius,
@@ -128,8 +136,9 @@ export default {
         },
         dotsData () {
             return this.dot ? this.Cartesian.dataset.map((item, index) => ({
-                cx: this.Cartesian.xScale(index),
-                cy: this.Cartesian.yScale(item[this.datakey]),
+                x: this.Cartesian.xScale(index),
+                y: this.Cartesian.yScale(item[this.datakey]),
+                value: item[this.datakey],
                 index,
                 cartesianIndex: this.index,
             })) : []

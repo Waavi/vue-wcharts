@@ -8,7 +8,7 @@ export default {
     name: 'WCartesian',
     props: {
         dataset: VueTypes.array.def([]),
-        autoresize: VueTypes.bool.def(false),
+        responsive: VueTypes.bool.def(false),
         height: VueTypes.number.def(400),
         width: VueTypes.number.def(600),
         bound: VueTypes.array.def([]),
@@ -32,7 +32,7 @@ export default {
     },
     data () {
         return {
-            chartReady: !this.autoresize,
+            chartReady: !this.responsive,
             datakeys: [],
             activeCartesians: [],
             legends: [],
@@ -95,7 +95,7 @@ export default {
     },
 
     mounted () {
-        if (this.autoresize) {
+        if (this.responsive) {
             this.resize()
             if (typeof window !== 'undefined') {
                 window.addEventListener('resize', debounce(this.resize, 220))
@@ -103,7 +103,7 @@ export default {
         }
     },
     unmounted () {
-        if (this.autoresize && typeof window !== 'undefined') window.removeEventListener('resize')
+        if (this.responsive && typeof window !== 'undefined') window.removeEventListener('resize')
     },
     methods: {
         activatePoint ({ cartesianIndex = null, pointIndex = null }, event) {
@@ -191,7 +191,7 @@ export default {
             }
         })
 
-        const { viewWidth, height, autoresize } = this
+        const { viewWidth, height, responsive } = this
         this.datakeys = datakeys
         this.activeCartesians = activeCartesians
         this.legends = legends
@@ -201,7 +201,7 @@ export default {
                 class: 'WCartesian',
                 style: {
                     position: 'relative',
-                    width: autoresize ? '100%' : `${viewWidth}px`,
+                    width: responsive ? '100%' : `${viewWidth}px`,
                 },
             },
             [

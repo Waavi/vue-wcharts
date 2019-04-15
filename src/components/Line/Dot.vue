@@ -6,8 +6,8 @@
         :transition="transition"
     >
         <circle
-            :cx="cx"
-            :cy="cy"
+            :cx="x"
+            :cy="y"
             :stroke="styles.stroke"
             :fill="styles.fill"
             :r="Cartesian.activePoint.cartesianIndex === cartesianIndex && Cartesian.activePoint.pointIndex === index ? styles.hoverRadius : styles.radius"
@@ -32,8 +32,8 @@ export default {
     props: {
         index: VueTypes.number.isRequired,
         cartesianIndex: VueTypes.number.isRequired,
-        cx: VueTypes.number.isRequired,
-        cy: VueTypes.number.isRequired,
+        x: VueTypes.number.isRequired,
+        y: VueTypes.number.isRequired,
         styles: VueTypes.shape({
             fill: VueTypes.string,
             stroke: VueTypes.string,

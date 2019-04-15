@@ -4,8 +4,30 @@
             <WCartesian
                 :dataset="data"
                 :bound="[0, n => n + 1000]"
-                autoresize
+                responsive
             >
+                <defs>
+                    <linearGradient
+                        id="color-id"
+                        x1="0"
+                        y1="0"
+                        x2="0"
+                        y2="1"
+                    >
+                        <stop
+                            offset="0"
+                            stop-color="#2c3e50"
+                        />
+                        <stop
+                            offset="0.5"
+                            stop-color="#42b983"
+                        />
+                        <stop
+                            offset="1"
+                            stop-color="#808"
+                        />
+                    </linearGradient>
+                </defs>
                 <WLine
                     dot
                     :styles="{ stroke: 'red', strokeDasharray: '4' }"
@@ -15,6 +37,7 @@
                 <WLine
                     dot
                     curve
+                    :styles="{ stroke: 'url(#color-id)', strokeWidth: 2 }"
                     datakey="two"
                     legend="Two Line"
                 />
