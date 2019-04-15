@@ -10,31 +10,36 @@
                     <linearGradient
                         id="color-id"
                         x1="0"
-                        y1="0"
+                        y1="1"
                         x2="0"
-                        y2="1"
+                        y2="0"
                     >
                         <stop
-                            offset="0"
-                            stop-color="#2c3e50"
-                        />
-                        <stop
-                            offset="0.5"
-                            stop-color="#42b983"
-                        />
-                        <stop
-                            offset="1"
+                            offset="0%"
                             stop-color="#808"
+                            stop-opacity="0.4"
+                        />
+                        <stop
+                            offset="50%"
+                            stop-color="#42b983"
+                            stop-opacity="0.2"
+                        />
+                        <stop
+                            offset="100%"
+                            stop-color="#2c3e50"
+                            stop-opacity="0"
                         />
                     </linearGradient>
                 </defs>
                 <WLine
                     dot
-                    :styles="{ stroke: 'red', strokeDasharray: '4' }"
+                    area
+                    curve
+                    :styles="{ fill: 'url(#color-id)' }"
                     datakey="one"
                     legend="One Line"
                 />
-                <WLine
+                <!-- <WLine
                     dot
                     curve
                     :styles="{ stroke: 'url(#color-id)', strokeWidth: 2 }"
@@ -46,7 +51,7 @@
                     :curve="curveStep"
                     datakey="three"
                     legend="Three Line"
-                />
+                /> -->
                 <WXAxis
                     datakey="name"
                     :space="[0, 50, 50, 50]"

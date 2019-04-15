@@ -10,7 +10,7 @@ import {
 
 const data = [
     {
-        name: 'Page A', one: 10, two: 2400, three: 2400,
+        name: 'Page A', one: 1000, two: 2400, three: 2400,
     },
     {
         name: 'Page B', one: 3000, two: 1398, three: 2210,
@@ -28,7 +28,7 @@ const data = [
         name: 'Page F', one: 2390, two: 3800, three: 2500,
     },
     {
-        name: 'Page G', one: 3490, two: 4300, three: -10,
+        name: 'Page G', one: 3490, two: 4300, three: -1000,
     },
 ]
 
@@ -86,6 +86,42 @@ storiesOf('Components/LineChart', module)
                         datakey="name"
                     />
                     <WYAxis />
+                </WCartesian>
+            </div>
+        `,
+    }))
+    .add('With bounds and gap', () => ({
+        components: {
+            WCartesian,
+            WLine,
+            WXAxis,
+            WYAxis,
+        },
+        data () {
+            return {
+                data,
+            }
+        },
+        template: `
+            <div class="Container">
+                <WCartesian
+                    :bound="[-1000, n => n + 1000]"
+                    :dataset="data"
+                    :gap="25"
+                >
+                    <WLine
+                        datakey="one"
+                    />
+                    <WLine
+                        datakey="two"
+                    />
+                    <WLine
+                        datakey="three"
+                    />
+                    <WXAxis
+                        datakey="name"
+                    />
+                    <WYAxis :space="[0, 0, 0, 50]" />
                 </WCartesian>
             </div>
         `,
@@ -495,4 +531,83 @@ storiesOf('Components/LineChart', module)
                 </WCartesian>
             </div>
             `,
+    }))
+    .add('Area', () => ({
+        components: {
+            WCartesian,
+            WLine,
+            WXAxis,
+            WYAxis,
+        },
+        data () {
+            return {
+                data,
+            }
+        },
+        template: `
+            <div class="Container">
+                <WCartesian
+                    :dataset="data"
+                >
+                    <WLine
+                        area
+                        datakey="one"
+                    />
+                    <WXAxis
+                        datakey="name"
+                    />
+                    <WYAxis />
+                </WCartesian>
+            </div>
+        `,
+    }))
+    .add('Area with gradient', () => ({
+        components: {
+            WCartesian,
+            WLine,
+        },
+        data () {
+            return {
+                data,
+            }
+        },
+        template: `
+            <div class="Container">
+                <WCartesian
+                    :dataset="data"
+                >
+                <defs>
+                    <linearGradient
+                        id="color-id"
+                        x1="0"
+                        y1="1"
+                        x2="0"
+                        y2="0"
+                    >
+                        <stop
+                            offset="0%"
+                            stop-color="#ffeb3b"
+                            stop-opacity="0.6"
+                        />
+                        <stop
+                            offset="30%"
+                            stop-color="#48c0b6"
+                            stop-opacity="0.4"
+                        />
+                        <stop
+                            offset="100%"
+                            stop-color="#5400e8"
+                            stop-opacity="0.2"
+                        />
+                    </linearGradient>
+                </defs>
+                    <WLine
+                        area
+                        curve
+                        datakey="one"
+                        :styles="{ stroke: '#5400e8',fill: 'url(#color-id)' }"
+                    />
+                </WCartesian>
+            </div>
+        `,
     }))
