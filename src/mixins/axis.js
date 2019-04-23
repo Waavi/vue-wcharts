@@ -29,6 +29,7 @@ export default {
         textOffsetY: VueTypes.number.def(20),
         hideLine: VueTypes.bool.def(false),
         hideTickMark: VueTypes.bool.def(false),
+        format: VueTypes.func.def(value => value),
         /** Styles */
         axisStyles: VueTypes.shape({
             stroke: VueTypes.string,
@@ -102,7 +103,7 @@ export default {
                     },
                     text: {
                         index,
-                        value,
+                        value: this.format(value),
                         x: canvas.x0 - this.textOffsetY,
                         y: y + this.labelStylesCmp.fontSize / 3,
                     },

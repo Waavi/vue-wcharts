@@ -527,6 +527,7 @@ storiesOf('Components/LineChart', module)
                         :axisStyles="axisStyles"
                         :labelStyles="labelStyles"
                         :space="[50, 0, 0, 50]"
+                        :format="v => '@' + v"
                     />
                 </WCartesian>
             </div>
