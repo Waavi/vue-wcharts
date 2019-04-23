@@ -23,9 +23,9 @@
                     ...legendStylesCmp
                 }"
             >
-                <div>
+                <div class="Bullet">
                     <span
-                        class="Bullet"
+                        class="Circle"
                         :style="{ backgroundColor: Cartesian.colors[index] }"
                     />
                 </div>
@@ -191,10 +191,14 @@ export default {
 
     .Bullet {
         display: inline-block;
-        height: 10px;
-        width: 10px;
-        border-radius: 50%;
-        margin-right: .5rem;
+
+        .Circle {
+            display: inline-block;
+            height: 10px;
+            width: 10px;
+            border-radius: 50%;
+            margin-right: .5rem;
+        }
     }
 
     .Text {
