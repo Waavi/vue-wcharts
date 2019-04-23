@@ -86,8 +86,8 @@ export default {
             const {
                 dataset, canvas, bounds, padding,
             } = this.Cartesian
-            const num = this.ticksNum || dataset.length
-            const ticks = Maths.genTicks(bounds.min, bounds.max, num).reverse()
+            const numTicks = this.ticksNum || dataset.length
+            const ticks = Maths.genTicks(bounds.min, bounds.max, numTicks).reverse()
             const offset = (padding[0] + padding[2])
             const space = (canvas.height - offset) / (ticks.length - 1)
 
