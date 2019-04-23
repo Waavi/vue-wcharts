@@ -25,10 +25,10 @@
                 />
                 <slot
                     name="tick"
-                    :tick="tick.text"
+                    v-bind="tick.text"
                 >
-                    <Tick
-                        :text="tick.text"
+                    <TickText
+                        v-bind="tick.text"
                         :styles="labelStylesCmp"
                     />
                 </slot>
@@ -39,7 +39,7 @@
 
 <script>
 import VueTypes from 'vue-types'
-import Tick from './Tick.vue'
+import TickText from './TickText.vue'
 import { Maths } from '../../utils'
 
 const axisStylesDefaultProp = {
@@ -61,7 +61,7 @@ export default {
     type: 'axis',
     inject: ['Cartesian'],
     components: {
-        Tick,
+        TickText,
     },
     props: {
         space: VueTypes.arrayOf(VueTypes.number).def([10, 0, 0, 40]),

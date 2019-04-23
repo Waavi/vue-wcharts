@@ -374,7 +374,7 @@ storiesOf('Components/LineChart', module)
         },
         template: `
             <div class="Container">
-                <WCartesian :dataset="data" style="padding: 0 8rem 2rem 8rem;">
+                <WCartesian :dataset="data">
                     <WLine
                         datakey="one"
                         legend="One Line"
@@ -512,9 +512,9 @@ storiesOf('Components/LineChart', module)
                     >
                         <template #tickText="props">
                             <text
-                                :x="props.tick.x"
-                                :y="props.tick.y"
-                                :dy="props.tick.dy"
+                                :x="props.x"
+                                :y="props.y"
+                                :dy="props.dy"
                             >
                                 🤔
                             </text>
