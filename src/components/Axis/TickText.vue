@@ -1,14 +1,14 @@
 <template>
     <text
-        v-if="text"
-        :x="text.x"
-        :y="text.y"
-        :dy="text.dy"
+        v-if="value"
+        :x="x"
+        :y="y"
+        :dy="dy"
         :stroke="stylesCmp.stroke"
         :fill="stylesCmp.fill"
         :font-size="stylesCmp.fontSize"
     >
-        {{ text.value }}
+        {{ value }}
     </text>
 </template>
 
@@ -22,15 +22,13 @@ const stylesDefaultProp = {
 }
 
 export default {
-    name: 'Tick',
+    name: 'TickText',
     props: {
-        text: VueTypes.shape({
-            x: VueTypes.number,
-            y: VueTypes.number,
-            dy: VueTypes.string,
-            index: VueTypes.number,
-            value: VueTypes.oneOfType([String, Number]),
-        }),
+        x: VueTypes.number.def(undefined),
+        y: VueTypes.number.def(undefined),
+        dy: VueTypes.string.def(undefined),
+        index: VueTypes.number.def(undefined),
+        value: VueTypes.oneOfType([String, Number]).def(undefined),
         styles: VueTypes.shape({
             fill: VueTypes.string,
             stroke: VueTypes.string,

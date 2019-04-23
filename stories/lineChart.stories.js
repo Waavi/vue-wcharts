@@ -518,9 +518,9 @@ storiesOf('Components/LineChart', module)
                     >
                         <template #tickText="props">
                             <text
-                                :x="props.tick.x"
-                                :y="props.tick.y"
-                                :dy="props.tick.dy"
+                                :x="props.x"
+                                :y="props.y"
+                                :dy="props.dy"
                             >
                                 🤔
                             </text>
