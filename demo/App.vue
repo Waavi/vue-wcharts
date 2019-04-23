@@ -59,7 +59,7 @@
                 <WYAxis :space="[25, 0, 0, 50]" />
                 <WLegend
                     selectable
-                    position="left"
+                    position="bottom"
                 />
             </WCartesian>
             <button

@@ -363,7 +363,7 @@ storiesOf('Components/LineChart', module)
                     bottom: 'bottom',
                     left: 'left',
                     right: 'right',
-                }, 'left'),
+                }, 'top'),
                 legendAlign: select('Legend - Align', {
                     start: 'start',
                     center: 'center',
@@ -429,7 +429,6 @@ storiesOf('Components/LineChart', module)
                     phone: '☎',
                     cross: '☩',
                 }, '★'),
-                ellipsis: boolean('Legend - Text ellipsis', false),
             }
         },
         template: `
@@ -456,7 +455,6 @@ storiesOf('Components/LineChart', module)
                         :selectable="legendSelectable"
                         :position="legendPos"
                         :align="legendAlign"
-                        :ellipsis="ellipsis"
                     >
                         <template #bullet="{ styles }">
                             <span :style="{ fontSize: '18', marginRight: '10px', color: styles.color }">{{ legendBullet }}</span>
