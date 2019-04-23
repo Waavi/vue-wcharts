@@ -21,7 +21,10 @@ export const getSpacesByPos = (pos, { width, height }, spaces = [0, 0, 0, 0]) =>
 
 export const toPx = num => `${num}px`
 
+export const getIsHorizontal = pos => ['top', 'bottom'].includes(pos)
+
 export default {
     toPx,
+    getIsHorizontal,
     getSpacesByPos,
 }

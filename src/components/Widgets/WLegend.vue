@@ -2,11 +2,11 @@
     <div
         v-if="!!Cartesian.legends.length"
         class="WLegend"
-        :style="styles"
+        :style="styles.component"
     >
         <ul
             class="Wrapper"
-            :style="stylesWrapper"
+            :style="styles.wrapper"
         >
             <li
                 v-for="(legend, index) in Cartesian.legends"
@@ -18,7 +18,7 @@
                     :title="legend"
                     class="Link"
                     :class="{ selectable, selected: Cartesian.activeCartesians.includes(index) }"
-                    :style="legendStylesCmp"
+                    :style="legendStyles"
                     :data-index="index"
                     @click.prevent="handleClick({ legend, index })"
                 >
@@ -28,7 +28,7 @@
                         :legend="legend"
                         :styles="{
                             color: Cartesian.colors[index],
-                            ...legendStylesCmp
+                            ...legendStyles
                         }"
                     >
                         <div class="Bullet">
@@ -47,11 +47,7 @@
 
 <script>
 import VueTypes from 'vue-types'
-import { getSpacesByPos, toPx } from './utils'
-
-const legendStylesDefaultProp = {
-    fontSize: '12px',
-}
+import { toPx, getIsHorizontal, getSpacesByPos } from './utils'
 
 export default {
     name: 'WLegend',
@@ -65,18 +61,14 @@ export default {
         size: VueTypes.number, // Width or height, with different positiion prop top-bottom/left-right
         selectable: VueTypes.bool.def(false),
         selecteds: VueTypes.array.def([]),
-        // Styles
-        legendStyles: VueTypes.shape({
-            color: VueTypes.string,
-            fontSize: VueTypes.string,
-        }).def(() => ({
-            ...legendStylesDefaultProp,
-        })),
+        componentsStyles: VueTypes.object,
+        wrapperStyles: VueTypes.object,
+        legendStyles: VueTypes.object,
     },
     preload ({ parent, props, index }) {
         const { position, size, space } = props
         // Positions
-        const isHorizontal = ['top', 'bottom'].includes(position)
+        const isHorizontal = getIsHorizontal(position)
         const innerWidth = !isHorizontal ? size || 85 : null
         const innerHeight = isHorizontal ? size || 20 : null
         // Spaces
@@ -90,16 +82,7 @@ export default {
     data () {
         return {
             styles: {},
-            stylesWrapper: {},
         }
-    },
-    computed: {
-        legendStylesCmp () {
-            return {
-                ...legendStylesDefaultProp,
-                ...this.legendStyles,
-            }
-        },
     },
     mounted () {
         this.fetchStyles()
@@ -110,7 +93,10 @@ export default {
         */
         fetchStyles () {
             const { position, align, size } = this
-            const isHorizontal = ['top', 'bottom'].includes(position)
+            const isHorizontal = getIsHorizontal(position)
+            // Positions
+            const width = isHorizontal ? '100%' : size || toPx(85)
+            const height = !isHorizontal ? '100%' : size || toPx(20)
             // Spaces
             const [topParent, rightParent, bottomParent, leftParent] = this.Cartesian.space
             const [top, right, bottom, left] = this.space
@@ -125,15 +111,18 @@ export default {
             }
 
             this.styles = {
-                top: !isHorizontal ? 0 : null,
-                [position]: toPx(spaces[position]),
-                width: isHorizontal ? '100%' : size || toPx(85),
-                height: !isHorizontal ? '100%' : size || toPx(20),
-            }
-
-            this.stylesWrapper = {
-                ...aligns[isHorizontal ? 'horizontal' : 'vertical'],
-                justifyContent,
+                component: {
+                    top: !isHorizontal ? 0 : null,
+                    [position]: toPx(spaces[position]),
+                    width,
+                    height,
+                    ...this.componentsStyles,
+                },
+                wrapper: {
+                    ...aligns[isHorizontal ? 'horizontal' : 'vertical'],
+                    justifyContent,
+                    ...this.wrapperStyles,
+                },
             }
         },
         /*
@@ -180,6 +169,7 @@ export default {
 
 .Link {
     display: flex;
+    font-size: 12px;
     opacity: .5;
     transition: opacity .3s ease;
     cursor: default;
