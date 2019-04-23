@@ -9,7 +9,7 @@
             :key="legend"
             :title="legend"
             class="Legend"
-            :class="{ selectable, selected: Cartesian.activeCartesians.includes(index) }"
+            :class="{ selectable, selected: Cartesian.activeCartesians.includes(index), [position]: true }"
             :style="legendStylesCmp"
             :data-index="index"
             @click.prevent="handleClick({ legend, index })"
@@ -23,18 +23,24 @@
                     ...legendStylesCmp
                 }"
             >
-                <span
-                    class="bullet"
-                    :style="{ backgroundColor: Cartesian.colors[index] }"
-                />
+                <div>
+                    <span
+                        class="Bullet"
+                        :style="{ backgroundColor: Cartesian.colors[index] }"
+                    />
+                </div>
             </slot>
-            <span>{{ legend }}</span>
+            <span
+                class="Text"
+                :class="{ ellipsis }"
+            >{{ legend }}</span>
         </a>
     </div>
 </template>
 
 <script>
 import VueTypes from 'vue-types'
+import { getSpacesByPos, toPx } from './utils'
 
 const containerStylesDefaultProp = {
     boxSizing: 'border-box',
@@ -51,10 +57,13 @@ export default {
     props: {
         text: VueTypes.string,
         position: VueTypes.oneOf(['top', 'bottom', 'left', 'right']).def('bottom'),
-        align: VueTypes.oneOf(['start', 'center', 'end']).def('center'),
+        align: VueTypes.oneOf(['start', 'center', 'end']).def('end'),
+        space: VueTypes.arrayOf(VueTypes.number).def([16, 16, 16, 16]),
+        size: VueTypes.number, // Width or height, with different positiion prop top-bottom/left-right
+        ellipsis: VueTypes.bool.def(false), // Alow ellipsis in long texts
         selectable: VueTypes.bool.def(false),
         selecteds: VueTypes.array.def([]),
-        /** Styles */
+        // Styles
         containerStyles: VueTypes.object.def(() => ({
             ...containerStylesDefaultProp,
         })),
@@ -65,30 +74,14 @@ export default {
             ...legendStylesDefaultProp,
         })),
     },
+    data () {
+        return {
+            width: 0,
+            height: 0,
+            styles: {},
+        }
+    },
     computed: {
-        styles () {
-            const { position } = this
-            const horizontal = ['top', 'bottom'].includes(this.position)
-            const flexDirection = !horizontal ? 'column' : 'row'
-            const justifyContent = this.align === 'center' ? 'center' : `flex-${this.align}`
-
-            const top = !horizontal ? '0' : 'auto'
-            const left = horizontal ? '0' : 'auto'
-            const width = horizontal ? '100%' : 'auto'
-            const height = !horizontal ? '100%' : 'auto'
-
-            return {
-                top,
-                left,
-                [position]: '0',
-                width,
-                height,
-                flexDirection,
-                justifyContent,
-                ...containerStylesDefaultProp,
-                ...this.containerStyles,
-            }
-        },
         legendStylesCmp () {
             return {
                 ...legendStylesDefaultProp,
@@ -96,7 +89,64 @@ export default {
             }
         },
     },
+    mounted () {
+        this.fetchStyles()
+    },
     methods: {
+        /*
+        *  Fetch and calc styles
+        */
+        fetchStyles () {
+            const { position, size } = this
+            // Directions
+            const isHorizontal = ['top', 'bottom'].includes(position)
+            const direction = isHorizontal ? 'horizontal' : 'vertical'
+            // Positions
+            const width = !isHorizontal ? size || 85 : null
+            const height = isHorizontal ? size || 20 : null
+            // Spaces
+            const [topParent, rightParent, bottomParent, leftParent] = this.Cartesian.space
+            const [top, right, bottom, left] = this.space
+            const spaces = {
+                top, bottom, left, right,
+            }
+            // Styles by direction
+            const aligns = {
+                vertical: {
+                    start: { top: toPx(topParent) },
+                    end: { bottom: toPx(bottomParent) },
+                    center: {
+                        top: '50%',
+                        transform: `translateY(-50%)`,
+                    },
+                },
+                horizontal: {
+                    start: { left: toPx(leftParent) },
+                    end: { right: toPx(rightParent) },
+                    center: {
+                        left: '50%',
+                        transform: `translateX(-50%)`,
+                    },
+                },
+            }
+
+            // Resize parent
+            const innerWidth = spaces.right + spaces.left + width
+            const innerHeight = spaces.top + spaces.bottom + height
+            this.Cartesian.increaseSpace(getSpacesByPos(position, { width: innerWidth, height: innerHeight }))
+            // Set styles
+            this.styles = {
+                ...aligns[direction][this.align],
+                [position]: toPx(spaces[position]),
+                width: width ? toPx(width) : null,
+                height: height ? toPx(height) : null,
+                ...containerStylesDefaultProp,
+                ...this.containerStyles,
+            }
+        },
+        /*
+        *  Handle on click legend, if has selectable prop true
+        */
         handleClick ({ legend, index }) {
             if (!this.selectable) return
             let actives = [...this.Cartesian.activeCartesians]
@@ -113,13 +163,23 @@ export default {
 <style scoped lang="scss">
 .WLegend {
     position: absolute;
-    display: flex;
 }
 .Legend {
-    margin: 0 0 0 .75rem;
     opacity: .5;
     transition: opacity .3s ease;
     cursor: default;
+
+    &.left, &.right {
+        display: flex;
+    }
+
+    &.left + &.left, &.right + &.right {
+        margin: .5rem 0 0 0;
+    }
+
+    &.top + &.top, &.bottom + &.bottom {
+        margin: 0 0 0 .75rem;
+    }
 
     &.selected {
         opacity: 1;
@@ -129,12 +189,20 @@ export default {
         cursor: pointer;
     }
 
-    .bullet {
+    .Bullet {
         display: inline-block;
         height: 10px;
         width: 10px;
         border-radius: 50%;
         margin-right: .5rem;
+    }
+
+    .Text {
+        &.ellipsis {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
     }
 }
 </style>

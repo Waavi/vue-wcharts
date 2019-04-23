@@ -118,6 +118,9 @@ export default {
                 this.space[i] = Math.max(val, this.space[i] || 0)
             })
         },
+        increaseSpace (space = []) {
+            this.space = space.map((s, i) => s + this.space[i])
+        },
         resize () {
             if (this.$el) {
                 const { width } = this.$el.getBoundingClientRect()
