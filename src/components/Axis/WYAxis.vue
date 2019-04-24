@@ -40,6 +40,7 @@
             v-bind="label"
         >
             <svg
+                v-if="labelText"
                 width="100%"
                 height="100%"
             >
@@ -66,7 +67,7 @@ export default {
     axis: 'y',
     mixins: [axisMixin],
     props: {
-        labelAnchor: VueTypes.string.def('middle'),
+        labelTextAnchor: VueTypes.string.def('middle'),
         space: VueTypes.arrayOf(VueTypes.number).def([10, 0, 0, 40]),
         textOffsetY: VueTypes.number.def(10),
     },
