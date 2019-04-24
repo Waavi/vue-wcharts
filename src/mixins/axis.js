@@ -12,10 +12,17 @@ const markStylesDefaultProp = {
 }
 
 const labelStylesDefaultProp = {
+    fill: '#999',
+}
+
+const tickStylesDefaultProp = {
     stroke: 'none',
     fill: '#999',
     fontSize: 12,
 }
+
+const spaceLabelX = [0, 50, 50, 50]
+const spaceLabelY = [50, 0, 0, 80]
 
 export default {
     type: 'axis',
@@ -25,12 +32,13 @@ export default {
     },
     props: {
         datakey: VueTypes.string,
-        space: VueTypes.arrayOf(VueTypes.number).def([0, 20, 24, 20]),
         textOffsetY: VueTypes.number.def(20),
         hideLine: VueTypes.bool.def(false),
         hideTickMark: VueTypes.bool.def(false),
         numTicks: VueTypes.number.def(0),
         format: VueTypes.func.def(value => value),
+        labelText: VueTypes.string,
+        labelSize: VueTypes.number.def(12),
         /** Styles */
         axisStyles: VueTypes.shape({
             stroke: VueTypes.string,
@@ -42,13 +50,28 @@ export default {
         }).def(() => ({
             ...axisStylesDefaultProp,
         })),
-        labelStyles: VueTypes.shape({
+        labelStyles: VueTypes.object,
+        tickStyles: VueTypes.shape({
             fill: VueTypes.string,
             stroke: VueTypes.string,
             fontSize: VueTypes.oneOfType([String, Number]),
         }).def(() => ({
-            ...labelStylesDefaultProp,
+            ...tickStylesDefaultProp,
         })),
+    },
+    preload ({ parent, props, index }) {
+        const { space, labelText } = props
+        const isX = this.axis === 'x'
+        let spaces = space || this.props.space.default()
+        // Set default space with labelText
+        if (!space && labelText) {
+            spaces = isX ? spaceLabelX : spaceLabelY
+        }
+
+        parent.addSpaceObjects(spaces)
+    },
+    mounted () {
+        if (this.$scopedSlots.label) console.warn('Remember, If you use the label slot, the space prop is mandatory.')
     },
     computed: {
         isX () {
@@ -105,7 +128,7 @@ export default {
                         index,
                         value: this.format(value),
                         x: canvas.x0 - this.textOffsetY,
-                        y: y + this.labelStylesCmp.fontSize / 3,
+                        y: y + this.tickStylesCmp.fontSize / 3,
                     },
                 }
             })
@@ -122,6 +145,27 @@ export default {
         y2 () {
             return this.Cartesian.canvas.y1
         },
+        label () {
+            return {
+                x: this.labelX,
+                y: this.labelY,
+                textAnchor: this.labelAnchor,
+                transform: this.labelTransform,
+                fontSize: this.labelSize,
+            }
+        },
+        labelX () {
+            if (this.isX) return this.Cartesian.canvas.x1
+            return this.Cartesian.canvas.x0 - (this.Cartesian.spaceObjects[3] / 2 + this.textOffsetY)
+        },
+        labelY () {
+            if (this.isX) return this.Cartesian.canvas.y1 + (this.Cartesian.spaceObjects[2] / 2 + this.textOffsetY)
+            return (this.Cartesian.canvas.y1 - this.Cartesian.canvas.y0) / 2 + this.Cartesian.canvas.y0
+        },
+        labelTransform () {
+            if (!this.isX) return `rotate(-90 ${this.labelX} ${this.labelY})`
+            return null
+        },
         axisStylesCmp () {
             return {
                 ...axisStylesDefaultProp,
@@ -134,8 +178,15 @@ export default {
                 ...this.markStyles,
             }
         },
+        tickStylesCmp () {
+            return {
+                ...tickStylesDefaultProp,
+                ...this.tickStyles,
+            }
+        },
         labelStylesCmp () {
             return {
+                fontSize: this.labelSize,
                 ...labelStylesDefaultProp,
                 ...this.labelStyles,
             }
