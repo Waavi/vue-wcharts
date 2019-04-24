@@ -12,7 +12,7 @@
                 v-for="(legend, index) in Cartesian.legends"
                 :key="legend"
                 class="Legend"
-                :class="{[position]: true}"
+                :class="[position]"
             >
                 <a
                     :title="legend"
@@ -60,7 +60,6 @@ export default {
         space: VueTypes.arrayOf(VueTypes.number).def([16, 16, 16, 16]),
         size: VueTypes.number, // Width or height, with different positiion prop top-bottom/left-right
         selectable: VueTypes.bool.def(false),
-        selecteds: VueTypes.array.def([]),
         componentsStyles: VueTypes.object,
         wrapperStyles: VueTypes.object,
         legendStyles: VueTypes.object,
@@ -72,7 +71,7 @@ export default {
         const innerWidth = !isHorizontal ? size || 85 : null
         const innerHeight = isHorizontal ? size || 20 : null
         // Spaces
-        const [top, right, bottom, left] = space || [16, 16, 16, 16]
+        const [top, right, bottom, left] = space || this.props.space.default()
         const width = right + left + innerWidth
         const height = top + bottom + innerHeight
         // Resize parent
