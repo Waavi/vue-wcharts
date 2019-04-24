@@ -24,11 +24,11 @@ const stylesDefaultProp = {
 export default {
     name: 'TickText',
     props: {
-        x: VueTypes.number.def(undefined),
-        y: VueTypes.number.def(undefined),
-        dy: VueTypes.string.def(undefined),
-        index: VueTypes.number.def(undefined),
-        value: VueTypes.oneOfType([String, Number]).def(undefined),
+        x: VueTypes.number,
+        y: VueTypes.number,
+        dy: VueTypes.string,
+        index: VueTypes.number,
+        value: VueTypes.oneOfType([String, Number]),
         styles: VueTypes.shape({
             fill: VueTypes.string,
             stroke: VueTypes.string,
