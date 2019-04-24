@@ -5,7 +5,7 @@ import { storiesOf } from '@storybook/vue'
 import { curveStep } from 'd3-shape'
 
 import {
-    WCartesian, WLine, WXAxis, WYAxis, WLegend,
+    WCartesian, WLine, WXAxis, WYAxis, WLegend, WCartesianGrid,
 } from '../src'
 
 const data = [
@@ -283,16 +283,19 @@ storiesOf('Components/LineChart', module)
                         datakey="one"
                     >
                         <template
-                            #dot="{ dot, styles }"
+                            #dot="{ dot, styles, Cartesian, transition }"
                         >
                             <g
                                 :fill="styles.stroke"
                             >
                                 <rect
-                                    :x="dot.x - 7"
-                                    :y="dot.y - 7"
-                                    width="14"
-                                    height="14"
+                                    :x="Cartesian.activePoint.cartesianIndex === dot.cartesianIndex && Cartesian.activePoint.pointIndex === dot.index ? dot.x - 10 : dot.x - 7"
+                                    :y="Cartesian.activePoint.cartesianIndex === dot.cartesianIndex && Cartesian.activePoint.pointIndex === dot.index ? dot.y - 10 : dot.y - 7"
+                                    :width="Cartesian.activePoint.cartesianIndex === dot.cartesianIndex && Cartesian.activePoint.pointIndex === dot.index ? 20 : 14"
+                                    :height="Cartesian.activePoint.cartesianIndex === dot.cartesianIndex && Cartesian.activePoint.pointIndex === dot.index ? 20 : 14"
+                                    @mouseenter="Cartesian.activatePoint({ cartesianIndex: dot.cartesianIndex, pointIndex: dot.index }, $event)"
+                                    @mouseleave="Cartesian.activatePoint({}, $event)"
+                                    :style="{ transition }"
                                 />
                                 <text
                                     :x="dot.x"
@@ -612,6 +615,75 @@ storiesOf('Components/LineChart', module)
                         datakey="one"
                         :styles="{ stroke: '#5400e8',fill: 'url(#color-id)' }"
                     />
+                </WCartesian>
+            </div>
+        `,
+    }))
+    .add('Grid', () => ({
+        components: {
+            WCartesian,
+            WLine,
+            WCartesianGrid,
+            WXAxis,
+            WYAxis,
+        },
+        data () {
+            return {
+                data,
+                styles: {
+                    stroke: color('Stroke', '#cccccc'),
+                    strokeWidth: number('Stroke Width', 1, {
+                        range: true,
+                        min: 0,
+                        max: 10,
+                    }),
+                    strokeDasharray: number('Stroke Dasharray', 3, {
+                        range: true,
+                        min: 0,
+                        max: 10,
+                    }),
+                },
+                // labelStyles: {
+                //     fill: color('Font color', '#008BCD'),
+                //     fontSize: number('Font size', 12, {
+                //         range: true,
+                //         min: 8,
+                //         max: 25,
+                //     }),
+                // },
+                hideH: boolean('Hide Horizontal Lines', false),
+                hideV: boolean('Hide Vertical Lines', false),
+                numLinesH: number('Number of Horizontal Lines', 0, {
+                    range: true,
+                    min: 0,
+                    max: 100,
+                }),
+                numLinesV: number('Number of Vertical Lines', 0, {
+                    range: true,
+                    min: 0,
+                    max: 100,
+                }),
+            }
+        },
+        template: `
+            <div class="Container">
+                <WCartesian
+                    :dataset="data"
+                >
+                    <WLine
+                        datakey="one"
+                    />
+                    <WXAxis
+                        datakey="name"
+                    />
+                    <WCartesianGrid
+                        :numLinesH="numLinesH"
+                        :numLinesV="numLinesV"
+                        :hideH="hideH"
+                        :hideV="hideV"
+                        :styles="styles"
+                    />
+                    <WYAxis />
                 </WCartesian>
             </div>
         `,
