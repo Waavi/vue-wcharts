@@ -54,13 +54,12 @@
                 /> -->
                 <WXAxis
                     datakey="name"
-                    :space="[0, 50, 50, 50]"
+                    :space="[0, 50, 25, 50]"
                 />
-                <WYAxis :space="[50, 0, 0, 50]" />
+                <WYAxis :space="[25, 0, 0, 50]" />
                 <WLegend
                     selectable
-                    align="end"
-                    :containerStyles="{ marginBottom: '1rem', paddingRight: '50px' }"
+                    position="bottom"
                 />
             </WCartesian>
             <button
@@ -178,7 +177,7 @@ export default {
 .WCartesian {
     border: 1px solid rgba(0,0,0,0.125);
     background: #FFF;
-    padding: 0 0 2rem 0;
+    // padding: 0 0 2rem 0;
 }
 .Btn {
     margin-top: 1rem;

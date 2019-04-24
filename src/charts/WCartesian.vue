@@ -41,6 +41,7 @@ export default {
                 pointIndex: null,
             },
             space: [0, 0, 0, 0],
+            spaceObjects: [0, 0, 0, 0],
             parentWidth: null,
         }
     },
@@ -118,6 +119,12 @@ export default {
                 this.space[i] = Math.max(val, this.space[i] || 0)
             })
         },
+        addSpaceObjects (space = []) {
+            this.addSpace(space)
+            space.forEach((val, i) => {
+                this.spaceObjects[i] = Math.max(val, this.spaceObjects[i] || 0)
+            })
+        },
         resize () {
             if (this.$el) {
                 const { width } = this.$el.getBoundingClientRect()
@@ -166,7 +173,8 @@ export default {
             if (!sealed) {
                 return
             }
-            const { datakey, legend } = options.propsData
+            const { propsData } = options
+            const { datakey, legend } = propsData
             const cartesiansLength = cartesians.length
 
             switch (sealed.type) {
@@ -180,7 +188,7 @@ export default {
                     cartesians.push(slot)
                     break
                 case 'axis':
-                    this.addSpace(Slots.props(options, 'space'))
+                    this.addSpaceObjects(Slots.props(options, 'space'))
                     axis.push(slot)
                     break
                 case 'plugins':
@@ -189,12 +197,17 @@ export default {
                 default:
                     break
             }
+
+            if (sealed.preload) {
+                sealed.preload({ parent: this, props: propsData, index: cartesiansLength })
+            }
         })
 
         const { viewWidth, height, responsive } = this
         this.datakeys = datakeys
         this.activeCartesians = activeCartesians
         this.legends = legends
+
         return h(
             'div',
             {

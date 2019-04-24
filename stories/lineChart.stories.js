@@ -363,18 +363,18 @@ storiesOf('Components/LineChart', module)
                     bottom: 'bottom',
                     left: 'left',
                     right: 'right',
-                }, 'bottom'),
+                }, 'top'),
                 legendAlign: select('Legend - Align', {
                     start: 'start',
                     center: 'center',
                     end: 'end',
-                }, 'end'),
+                }, 'center'),
                 legendSelectable: boolean('Legend - Selectable', true),
             }
         },
         template: `
             <div class="Container">
-                <WCartesian :dataset="data" style="padding: 0 8rem 2rem 8rem;">
+                <WCartesian :dataset="data">
                     <WLine
                         datakey="one"
                         legend="One Line"
@@ -387,13 +387,15 @@ storiesOf('Components/LineChart', module)
                         datakey="three"
                         legend="Three Line"
                     />
-                    <WXAxis datakey="name" :space="[0, 50, 50, 50]" />
-                    <WYAxis :space="[50, 0, 0, 50]" />
+                    <WXAxis
+                        datakey="name"
+                        :space="[0, 50, 25, 50]"
+                    />
+                    <WYAxis :space="[25, 0, 0, 50]" />
                     <WLegend
                         :selectable="legendSelectable"
                         :position="legendPos"
                         :align="legendAlign"
-                        :containerStyles="{ margin: '1rem 0', padding: '0 50px' }"
                     />
                 </WCartesian>
             </div>
@@ -415,12 +417,12 @@ storiesOf('Components/LineChart', module)
                     bottom: 'bottom',
                     left: 'left',
                     right: 'right',
-                }, 'bottom'),
+                }, 'left'),
                 legendAlign: select('Legend - Align', {
                     start: 'start',
                     center: 'center',
                     end: 'end',
-                }, 'end'),
+                }, 'center'),
                 legendSelectable: boolean('Legend - Selectable', true),
                 legendBullet: select('Legend - Bullet', {
                     star: '★',
@@ -431,10 +433,10 @@ storiesOf('Components/LineChart', module)
         },
         template: `
             <div class="Container">
-                <WCartesian :dataset="data" style="padding: 0 8rem 2rem 8rem;">
+                <WCartesian :dataset="data">
                     <WLine
                         datakey="one"
-                        legend="One Line"
+                        legend="Lorem ipsum dolor sit amet consectetur adipisicing"
                     />
                     <WLine
                         datakey="two"
@@ -444,13 +446,15 @@ storiesOf('Components/LineChart', module)
                         datakey="three"
                         legend="Three Line"
                     />
-                    <WXAxis datakey="name" :space="[0, 50, 50, 50]" />
-                    <WYAxis :space="[50, 0, 0, 50]" />
+                    <WXAxis
+                        datakey="name"
+                        :space="[0, 50, 25, 50]"
+                    />
+                    <WYAxis :space="[25, 0, 0, 50]" />
                     <WLegend
                         :selectable="legendSelectable"
                         :position="legendPos"
                         :align="legendAlign"
-                        :containerStyles="{ margin: '1rem 0', padding: '0 50px' }"
                     >
                         <template #bullet="{ styles }">
                             <span :style="{ fontSize: '18', marginRight: '10px', color: styles.color }">{{ legendBullet }}</span>
@@ -512,9 +516,9 @@ storiesOf('Components/LineChart', module)
                     >
                         <template #tickText="props">
                             <text
-                                :x="props.tick.x"
-                                :y="props.tick.y"
-                                :dy="props.tick.dy"
+                                :x="props.x"
+                                :y="props.y"
+                                :dy="props.dy"
                             >
                                 🤔
                             </text>
@@ -527,6 +531,7 @@ storiesOf('Components/LineChart', module)
                         :axisStyles="axisStyles"
                         :labelStyles="labelStyles"
                         :space="[50, 0, 0, 50]"
+                        :format="v => '@' + v"
                     />
                 </WCartesian>
             </div>
