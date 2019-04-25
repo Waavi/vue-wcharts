@@ -528,3 +528,34 @@ storiesOf('Charts/Line', module)
             </div>
         `,
     }))
+    .add('Tooltip', () => ({
+        components: {
+            WCartesian,
+            WLine,
+            WXAxis,
+            WYAxis,
+            WTooltip,
+        },
+        data () {
+            return {
+                data,
+            }
+        },
+        template: `
+            <div class="Container">
+                <WCartesian
+                    :dataset="data"
+                >
+                    <WLine
+                        dot
+                        datakey="one"
+                    />
+                    <WXAxis
+                        datakey="name"
+                    />
+                    <WYAxis />
+                    <WTooltip />
+                </WCartesian>
+            </div>
+        `,
+    }))
