@@ -5,7 +5,7 @@ import { storiesOf } from '@storybook/vue'
 import { curveStep } from 'd3-shape'
 
 import {
-    WCartesian, WLine, WXAxis, WYAxis, WCartesianGrid,
+    WCartesian, WLine, WXAxis, WYAxis, WCartesianGrid, WTooltip,
 } from '../src'
 
 const data = [
@@ -272,6 +272,7 @@ storiesOf('Charts/Line', module)
             WLine,
             WXAxis,
             WYAxis,
+            WTooltip,
         },
         data () {
             return {
@@ -294,12 +295,12 @@ storiesOf('Charts/Line', module)
                                 :fill="styles.stroke"
                             >
                                 <rect
-                                    :x="Cartesian.activePoint.cartesianIndex === dot.cartesianIndex && Cartesian.activePoint.pointIndex === dot.index ? dot.x - 10 : dot.x - 7"
-                                    :y="Cartesian.activePoint.cartesianIndex === dot.cartesianIndex && Cartesian.activePoint.pointIndex === dot.index ? dot.y - 10 : dot.y - 7"
-                                    :width="Cartesian.activePoint.cartesianIndex === dot.cartesianIndex && Cartesian.activePoint.pointIndex === dot.index ? 20 : 14"
-                                    :height="Cartesian.activePoint.cartesianIndex === dot.cartesianIndex && Cartesian.activePoint.pointIndex === dot.index ? 20 : 14"
-                                    @mouseenter="Cartesian.activatePoint({ cartesianIndex: dot.cartesianIndex, pointIndex: dot.index }, $event)"
-                                    @mouseleave="Cartesian.activatePoint({}, $event)"
+                                    :x="Cartesian.active.el && Cartesian.active.el.id === dot.cartesianIndex && Cartesian.active.el.point === dot.index ? dot.x - 10 : dot.x - 7"
+                                    :y="Cartesian.active.el && Cartesian.active.el.id === dot.cartesianIndex && Cartesian.active.el.point === dot.index ? dot.y - 10 : dot.y - 7"
+                                    :width="Cartesian.active.el && Cartesian.active.el.id === dot.cartesianIndex && Cartesian.active.el.point === dot.index ? 20 : 14"
+                                    :height="Cartesian.active.el && Cartesian.active.el.id === dot.cartesianIndex && Cartesian.active.el.point === dot.index ? 20 : 14"
+                                    @mouseenter="Cartesian.setActive({ id: dot.cartesianIndex, point: dot.index }, $event, Cartesian.active.types.point)"
+                                    @mouseleave="Cartesian.cleanActive"
                                     :style="{ transition }"
                                 />
                                 <text
@@ -316,6 +317,7 @@ storiesOf('Charts/Line', module)
                         datakey="name"
                     />
                     <WYAxis />
+                    <WTooltip />
                 </WCartesian>
             </div>
         `,
@@ -491,6 +493,37 @@ storiesOf('Charts/Line', module)
                         :styles="styles"
                     />
                     <WYAxis />
+                </WCartesian>
+            </div>
+        `,
+    }))
+    .add('Tooltip', () => ({
+        components: {
+            WCartesian,
+            WLine,
+            WXAxis,
+            WYAxis,
+            WTooltip,
+        },
+        data () {
+            return {
+                data,
+            }
+        },
+        template: `
+            <div class="Container">
+                <WCartesian
+                    :dataset="data"
+                >
+                    <WLine
+                        dot
+                        datakey="one"
+                    />
+                    <WXAxis
+                        datakey="name"
+                    />
+                    <WYAxis />
+                    <WTooltip />
                 </WCartesian>
             </div>
         `,
