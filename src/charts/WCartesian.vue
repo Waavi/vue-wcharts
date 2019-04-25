@@ -3,8 +3,11 @@ import VueTypes from 'vue-types'
 import { scaleLinear } from 'd3'
 import { pick, includes, debounce } from 'lodash'
 
+import activeMixin from '../mixins/active'
+
 export default {
     name: 'WCartesian',
+    mixins: [activeMixin],
     props: {
         dataset: VueTypes.array.def([]),
         responsive: VueTypes.bool.def(false),
@@ -35,10 +38,6 @@ export default {
             datakeys: [],
             activeCartesians: [],
             legends: [],
-            activePoint: {
-                cartesianIndex: null,
-                pointIndex: null,
-            },
             space: [0, 0, 0, 0],
             spaceObjects: [0, 0, 0, 0],
             parentWidth: null,
@@ -106,13 +105,13 @@ export default {
         if (this.responsive && typeof window !== 'undefined') window.removeEventListener('resize')
     },
     methods: {
-        activatePoint ({ cartesianIndex = null, pointIndex = null }, event) {
-            this.activePoint = {
-                cartesianIndex,
-                pointIndex,
-                event,
-            }
-        },
+        // activatePoint ({ cartesianIndex = null, pointIndex = null }, event) {
+        //     this.activePoint = {
+        //         cartesianIndex,
+        //         pointIndex,
+        //         event,
+        //     }
+        // },
         addSpace (space = []) {
             space.forEach((val, i) => {
                 this.space[i] = Math.max(val, this.space[i] || 0)

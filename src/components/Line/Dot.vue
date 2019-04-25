@@ -10,10 +10,10 @@
             :cy="y"
             :stroke="styles.stroke"
             :fill="styles.fill"
-            :r="Cartesian.activePoint.cartesianIndex === cartesianIndex && Cartesian.activePoint.pointIndex === index ? styles.hoverRadius : styles.radius"
+            :r="rStyle()"
             :stroke-width="styles.strokeWidth"
-            @mouseenter="Cartesian.activatePoint({ cartesianIndex: cartesianIndex, pointIndex: index }, $event)"
-            @mouseleave="Cartesian.activatePoint({}, $event)"
+            @mouseenter="handleMouseEnter"
+            @mouseleave="Cartesian.cleanActive"
         />
     </Trans>
 </template>
@@ -42,6 +42,22 @@ export default {
             hoverRadius: VueTypes.number,
         }).isRequired,
         transition: VueTypes.string.isRequired,
+    },
+    methods: {
+        // Set active element
+        handleMouseEnter (event) {
+            this.Cartesian.setActive(
+                { id: this.cartesianIndex, point: this.index },
+                event,
+                this.Cartesian.active.types.point
+            )
+        },
+        // Return styles active or default point,
+        rStyle () {
+            if (!this.Cartesian.active.el) return this.styles.radius
+            const { el } = this.Cartesian.active
+            return el.id === this.cartesianIndex && el.point === this.index ? this.styles.hoverRadius : this.styles.radius
+        },
     },
 }
 </script>
