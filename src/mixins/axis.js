@@ -12,10 +12,17 @@ const markStylesDefaultProp = {
 }
 
 const labelStylesDefaultProp = {
+    fill: '#999',
+}
+
+const tickStylesDefaultProp = {
     stroke: 'none',
     fill: '#999',
     fontSize: 12,
 }
+
+const spaceLabelX = [0, 50, 50, 50]
+const spaceLabelY = [50, 0, 0, 80]
 
 export default {
     type: 'axis',
@@ -24,14 +31,17 @@ export default {
         TickText,
     },
     props: {
+        // Settings
         datakey: VueTypes.string,
-        space: VueTypes.arrayOf(VueTypes.number).def([0, 20, 24, 20]),
         textOffsetY: VueTypes.number.def(20),
         hideLine: VueTypes.bool.def(false),
         hideTickMark: VueTypes.bool.def(false),
         numTicks: VueTypes.number.def(0),
         format: VueTypes.func.def(value => value),
-        /** Styles */
+        // Label
+        labelText: VueTypes.string,
+        labelSize: VueTypes.number.def(12),
+        // Style
         axisStyles: VueTypes.shape({
             stroke: VueTypes.string,
         }).def(() => ({
@@ -42,30 +52,60 @@ export default {
         }).def(() => ({
             ...axisStylesDefaultProp,
         })),
-        labelStyles: VueTypes.shape({
+        labelStyles: VueTypes.object,
+        tickStyles: VueTypes.shape({
             fill: VueTypes.string,
             stroke: VueTypes.string,
             fontSize: VueTypes.oneOfType([String, Number]),
         }).def(() => ({
-            ...labelStylesDefaultProp,
+            ...tickStylesDefaultProp,
         })),
     },
+    preload ({ parent, props, index }) {
+        const { space, labelText } = props
+        // Check type axi
+        const isX = this.axis === 'x'
+        // Get spaces binding or default
+        let spaces = space || this.props.space.default()
+        // Set default space if has labelText and not space value
+        if (!space && labelText) {
+            spaces = isX ? spaceLabelX : spaceLabelY
+        }
+        // Added spaces of parent
+        parent.addSpaceObjects(spaces)
+    },
+    mounted () {
+        // Show warn if used the label slot, the space prop it is mandatory
+        if (this.$scopedSlots.label) console.warn('Remember, If you use the label slot, the space prop is mandatory.')
+    },
     computed: {
-        isX () {
-            return this.$options.axis === 'x'
-        },
+        // Return name of axis
         id () {
             return this.$options.name
         },
+        // Return and check if axis it is xAxis
+        isX () {
+            return this.$options.axis === 'x'
+        },
+        // Return text-anchor of ticks
         textAnchor () {
             return this.isX ? 'middle' : 'end'
         },
+        // Generate ticks array
         ticks () {
+            const {
+                dataset, canvas, bounds, padding,
+            } = this.Cartesian
+
+            // If xAxis
             if (this.isX) {
-                const { dataset, canvas, padding } = this.Cartesian
+                // Calc offset
                 const offset = padding[1] + padding[3]
+                // Calc space
                 const space = (canvas.width - offset) / (dataset.length - 1)
+                // Generate ticks objects by dataset of parents
                 return dataset.map((props, index) => {
+                    // Calc proportional size between ticks
                     const x = canvas.x0 + (space * index) + padding[3]
                     return {
                         mark: {
@@ -84,15 +124,20 @@ export default {
                     }
                 })
             }
-            const {
-                dataset, canvas, bounds, yScale,
-            } = this.Cartesian
-            const numTicks = this.numTicks || dataset.length
+
+            // Ticks num
+            const numTicks = this.ticksNum || dataset.length
+            // Generate array tick by d3, https://github.com/d3/d3-array
             const getTicksFn = this.numTicks ? genExactNbTicks : genTicks
             const ticks = getTicksFn(bounds.min, bounds.max, numTicks).reverse()
-
+            // Calc offset
+            const offset = (padding[0] + padding[2])
+            // Calc space
+            const space = (canvas.height - offset) / (ticks.length - 1)
+            // Generate ticks objects by ticksNum or dataset of parents
             return ticks.map((value, index) => {
-                const y = yScale(value)
+                // Calc size between ticks with scale parent
+                const y = canvas.y0 + (space * index) + padding[2]
                 return {
                     mark: {
                         index,
@@ -105,40 +150,96 @@ export default {
                         index,
                         value: this.format(value),
                         x: canvas.x0 - this.textOffsetY,
-                        y: y + this.labelStylesCmp.fontSize / 3,
+                        y: y + this.tickStylesCmp.fontSize / 3,
                     },
                 }
             })
         },
+        // Return y2 point
         x1 () {
             return this.Cartesian.canvas.x0
         },
+        // Return y1 point
         y1 () {
             return this.isX ? this.Cartesian.canvas.y1 : this.Cartesian.canvas.y0
         },
+        // Return x2 point
         x2 () {
             return this.isX ? this.Cartesian.canvas.x1 : this.Cartesian.canvas.x0
         },
+        // Return y2 point
         y2 () {
             return this.Cartesian.canvas.y1
         },
+        // Return label config
+        label () {
+            const { labelTextAnchor: textAnchor, labelSize: fontSize } = this
+            // Get setting of label
+            const { x, y, transform } = (this.isX ? this.getLabelXAxis : this.getLabelYAxis)(textAnchor)
+
+            return {
+                x,
+                y,
+                transform,
+                textAnchor,
+                fontSize,
+            }
+        },
+        // Generate styles of axis
         axisStylesCmp () {
             return {
                 ...axisStylesDefaultProp,
                 ...this.axisStyles,
             }
         },
+        // Generate styles of tick
         markStylesCmp () {
             return {
                 ...markStylesDefaultProp,
                 ...this.markStyles,
             }
         },
+        // Generate styles of text
+        tickStylesCmp () {
+            return {
+                ...tickStylesDefaultProp,
+                ...this.tickStyles,
+            }
+        },
+        // Generate styles of label
         labelStylesCmp () {
             return {
+                fontSize: this.labelSize,
                 ...labelStylesDefaultProp,
                 ...this.labelStyles,
             }
+        },
+    },
+    methods: {
+        // Return coords of the label xAxis by align
+        getLabelXAxis (align) {
+            const pos = {
+                start: this.Cartesian.canvas.x0,
+                middle: (this.Cartesian.canvas.x1 - this.Cartesian.canvas.x0) / 2 + this.Cartesian.canvas.x0,
+                end: this.Cartesian.canvas.x1,
+            }
+            const y = this.Cartesian.canvas.y1 + (this.Cartesian.spaceObjects[2] / 2 + this.textOffsetY)
+            const x = pos[align]
+
+            return { x, y }
+        },
+        // Return coords and transform, of the label yAxis by align
+        // Note: Use the <svg></svg> tag in slot, because solve the align vertical of text
+        getLabelYAxis (align) {
+            const pos = {
+                start: this.Cartesian.canvas.y1,
+                middle: (this.Cartesian.canvas.y1 - this.Cartesian.canvas.y0) / 2 + this.Cartesian.canvas.y0,
+                end: this.Cartesian.canvas.y0,
+            }
+            const x = this.Cartesian.canvas.x0 - (this.Cartesian.spaceObjects[3] / 2 + this.textOffsetY)
+            const y = pos[align]
+
+            return { x, y, transform: `rotate(-90 ${x} ${y})` }
         },
     },
 }

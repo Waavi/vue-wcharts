@@ -2,7 +2,6 @@
 import VueTypes from 'vue-types'
 import { scaleLinear } from 'd3'
 import { pick, includes, debounce } from 'lodash'
-import { Slots } from '../utils'
 
 export default {
     name: 'WCartesian',
@@ -188,7 +187,6 @@ export default {
                     cartesians.push(slot)
                     break
                 case 'axis':
-                    this.addSpaceObjects(Slots.props(options, 'space'))
                     axis.push(slot)
                     break
                 case 'plugins':

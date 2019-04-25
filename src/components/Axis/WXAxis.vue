@@ -29,11 +29,32 @@
                 >
                     <TickText
                         v-bind="tick.text"
-                        :styles="labelStylesCmp"
+                        :styles="tickStylesCmp"
                     />
                 </slot>
             </g>
         </template>
+
+        <slot
+            name="label"
+            v-bind="label"
+        >
+            <svg
+                v-if="labelText"
+                width="100%"
+                height="100%"
+            >
+                <text
+                    :x="label.x"
+                    :y="label.y"
+                    :text-anchor="label.textAnchor"
+                    :transform="label.transform"
+                    :style="labelStylesCmp"
+                >
+                    {{ labelText }}
+                </text>
+            </svg>
+        </slot>
     </g>
 </template>
 
@@ -46,6 +67,7 @@ export default {
     axis: 'x',
     mixins: [axisMixin],
     props: {
+        labelTextAnchor: VueTypes.string.def('end'),
         space: VueTypes.arrayOf(VueTypes.number).def([0, 20, 24, 20]),
         textOffsetY: VueTypes.number.def(20),
     },
