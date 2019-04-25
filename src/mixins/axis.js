@@ -79,12 +79,19 @@ export default {
         if (this.$scopedSlots.label) console.warn('Remember, If you use the label slot, the space prop is mandatory.')
     },
     computed: {
-        isX () {
-            return this.$options.axis === 'x'
-        },
+        // Return name of axis
         id () {
             return this.$options.name
         },
+        // Return and check if axis it is xAxis
+        isX () {
+            return this.$options.axis === 'x'
+        },
+        // Return text-anchor of ticks
+        textAnchor () {
+            return this.isX ? 'middle' : 'end'
+        },
+        // Generate ticks array
         ticks () {
             const {
                 dataset, canvas, bounds, padding,
@@ -178,7 +185,7 @@ export default {
                 fontSize,
             }
         },
-        // Generate styles of axi
+        // Generate styles of axis
         axisStylesCmp () {
             return {
                 ...axisStylesDefaultProp,
