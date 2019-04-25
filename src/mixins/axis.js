@@ -85,9 +85,6 @@ export default {
         id () {
             return this.$options.name
         },
-        textAnchor () {
-            return this.isX ? 'middle' : 'end'
-        },
         ticks () {
             const {
                 dataset, canvas, bounds, padding,
@@ -169,29 +166,17 @@ export default {
         },
         // Return label config
         label () {
+            const { labelTextAnchor: textAnchor, labelSize: fontSize } = this
+            // Get setting of label
+            const { x, y, transform } = (this.isX ? this.getLabelXAxis : this.getLabelYAxis)(textAnchor)
+
             return {
-                x: this.labelX,
-                y: this.labelY,
-                textAnchor: this.labelTextAnchor,
-                transform: this.labelTransform,
-                fontSize: this.labelSize,
+                x,
+                y,
+                transform,
+                textAnchor,
+                fontSize,
             }
-        },
-        // Return the X point of label
-        labelX () {
-            if (this.isX) return this.Cartesian.canvas.x1
-            return this.Cartesian.canvas.x0 - (this.Cartesian.spaceObjects[3] / 2 + this.textOffsetY)
-        },
-        // Return the Y point of label
-        labelY () {
-            if (this.isX) return this.Cartesian.canvas.y1 + (this.Cartesian.spaceObjects[2] / 2 + this.textOffsetY)
-            return (this.Cartesian.canvas.y1 - this.Cartesian.canvas.y0) / 2 + this.Cartesian.canvas.y0
-        },
-        // Return transform styl of label
-        labelTransform () {
-            // Rotate the labelY
-            if (!this.isX) return `rotate(-90 ${this.labelX} ${this.labelY})`
-            return null
         },
         // Generate styles of axi
         axisStylesCmp () {
@@ -221,6 +206,32 @@ export default {
                 ...labelStylesDefaultProp,
                 ...this.labelStyles,
             }
+        },
+    },
+    methods: {
+        // Return coords of the label xAxis by align
+        getLabelXAxis (align) {
+            const pos = {
+                start: this.Cartesian.canvas.x0,
+                middle: (this.Cartesian.canvas.x1 - this.Cartesian.canvas.x0) / 2 + this.Cartesian.canvas.x0,
+                end: this.Cartesian.canvas.x1,
+            }
+            const y = this.Cartesian.canvas.y1 + (this.Cartesian.spaceObjects[2] / 2 + this.textOffsetY)
+            const x = pos[align]
+
+            return { x, y }
+        },
+        // Return coords and transform, of the label yAxis by align
+        getLabelYAxis (align) {
+            const pos = {
+                start: this.Cartesian.canvas.y1,
+                middle: (this.Cartesian.canvas.y1 - this.Cartesian.canvas.y0) / 2 + this.Cartesian.canvas.y0,
+                end: this.Cartesian.canvas.y0,
+            }
+            const x = this.Cartesian.canvas.x0 - (this.Cartesian.spaceObjects[3] / 2 + this.textOffsetY)
+            const y = pos[align]
+
+            return { x, y, transform: `rotate(-90 ${x} ${y})` }
         },
     },
 }

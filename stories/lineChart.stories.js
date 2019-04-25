@@ -720,17 +720,6 @@ storiesOf('Components/LineChart', module)
                     <WLine
                         datakey="one"
                     />
-                    <WXAxis
-                        datakey="name"
-                    />
-                    <WCartesianGrid
-                        :numLinesH="numLinesH"
-                        :numLinesV="numLinesV"
-                        :hideH="hideH"
-                        :hideV="hideV"
-                        :styles="styles"
-                    />
-                    <WYAxis />
                     <WLine
                         datakey="two"
                     />
@@ -770,18 +759,6 @@ storiesOf('Components/LineChart', module)
                     middle: 'middle',
                     end: 'end',
                 }, 'middle'),
-                legendSelectable: boolean('Legend - Selectable', true),
-                legendPos: select('Legend - Position', {
-                    top: 'top',
-                    bottom: 'bottom',
-                    left: 'left',
-                    right: 'right',
-                }, 'bottom'),
-                legendAlign: select('Legend - Align', {
-                    start: 'start',
-                    center: 'center',
-                    end: 'end',
-                }, 'center'),
             }
         },
         template: `
@@ -804,6 +781,7 @@ storiesOf('Components/LineChart', module)
                     <WXAxis
                         datakey="name"
                         :space="[0, 50, 50, 50]"
+                        :labelTextAnchor="labelTextXAnchor"
                     >
                         <template #label="label">
                             <svg
@@ -824,7 +802,10 @@ storiesOf('Components/LineChart', module)
                             </svg>
                         </template>
                     </WXAxis>
-                    <WYAxis :space="[50, 0, 0, 100]">
+                    <WYAxis
+                        :space="[50, 0, 0, 100]"
+                        :labelTextAnchor="labelTextYAnchor"
+                    >
                         <template #label="label">
                             <svg
                                 width="100%"
@@ -844,9 +825,9 @@ storiesOf('Components/LineChart', module)
                         </template>
                     </WYAxis>
                     <WLegend
-                        :selectable="legendSelectable"
-                        :position="legendPos"
-                        :align="legendAlign"
+                        position="bottom"
+                        align="center"
+                        selectable
                     />
                 </WCartesian>
             </div>
