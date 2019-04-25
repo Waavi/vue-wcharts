@@ -60,7 +60,6 @@ export default {
             // Select the correct function and generate the value of the lines. ex: [100, 500, 1500, 2500, 5000]
             const getLinesFn = this.numLinesH ? genExactNbTicks : genTicks
             const lines = getLinesFn(bounds.min, bounds.max, numLines).reverse()
-
             // Generate lines coordinates
             return lines.map((value, index) => {
                 const y = yScale(value)

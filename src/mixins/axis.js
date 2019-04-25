@@ -94,7 +94,7 @@ export default {
         // Generate ticks array
         ticks () {
             const {
-                dataset, canvas, bounds, padding,
+                dataset, canvas, bounds, padding, yScale,
             } = this.Cartesian
 
             // If xAxis
@@ -126,18 +126,14 @@ export default {
             }
 
             // Ticks num
-            const numTicks = this.ticksNum || dataset.length
+            const numTicks = this.numTicks || dataset.length
             // Generate array tick by d3, https://github.com/d3/d3-array
             const getTicksFn = this.numTicks ? genExactNbTicks : genTicks
             const ticks = getTicksFn(bounds.min, bounds.max, numTicks).reverse()
-            // Calc offset
-            const offset = (padding[0] + padding[2])
-            // Calc space
-            const space = (canvas.height - offset) / (ticks.length - 1)
             // Generate ticks objects by ticksNum or dataset of parents
             return ticks.map((value, index) => {
                 // Calc size between ticks with scale parent
-                const y = canvas.y0 + (space * index) + padding[2]
+                const y = yScale(value)
                 return {
                     mark: {
                         index,
