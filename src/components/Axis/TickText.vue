@@ -1,6 +1,6 @@
 <template>
     <text
-        v-if="value"
+        v-if="value !== undefined"
         :x="x"
         :y="y"
         :dy="dy"

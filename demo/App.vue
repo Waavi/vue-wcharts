@@ -3,63 +3,26 @@
         <div class="Wrapper">
             <WCartesian
                 :dataset="data"
-                :bound="[0, n => n + 1000]"
                 responsive
             >
-                <defs>
-                    <linearGradient
-                        id="color-id"
-                        x1="0"
-                        y1="1"
-                        x2="0"
-                        y2="0"
-                    >
-                        <stop
-                            offset="0%"
-                            stop-color="#808"
-                            stop-opacity="0.4"
-                        />
-                        <stop
-                            offset="50%"
-                            stop-color="#42b983"
-                            stop-opacity="0.2"
-                        />
-                        <stop
-                            offset="100%"
-                            stop-color="#2c3e50"
-                            stop-opacity="0"
-                        />
-                    </linearGradient>
-                </defs>
                 <WLine
                     dot
-                    area
                     curve
-                    :styles="{ fill: 'url(#color-id)' }"
                     datakey="one"
                     legend="One Line"
                 />
-                <!-- <WLine
-                    dot
-                    curve
-                    :styles="{ stroke: 'url(#color-id)', strokeWidth: 2 }"
-                    datakey="two"
-                    legend="Two Line"
+                <WCartesianGrid
+                    :numLinesH="0"
+                    :numLinesV="0"
+                    :hideH="false"
+                    :hideV="false"
                 />
-                <WLine
-                    dot
-                    :curve="curveStep"
-                    datakey="three"
-                    legend="Three Line"
-                /> -->
                 <WXAxis
                     datakey="name"
                     :space="[0, 50, 25, 50]"
                 />
-                <WYAxis :space="[25, 0, 0, 50]" />
-                <WLegend
-                    selectable
-                    position="bottom"
+                <WYAxis
+                    :space="[25, 0, 0, 50]"
                 />
             </WCartesian>
             <button
@@ -75,7 +38,7 @@
 <script>
 import { curveStep } from 'd3-shape'
 import {
-    WCartesian, WLine, WXAxis, WYAxis, WLegend,
+    WCartesian, WLine, WXAxis, WYAxis, WLegend, WCartesianGrid,
 } from '../src'
 
 const dataOne = [
@@ -122,7 +85,7 @@ const dataTwo = [
         name: 'Page F', one: 5390, two: 6800, three: 7500,
     },
     {
-        name: 'Page G', one: 6490, two: 6300, three: 6100,
+        name: 'Page G', one: 8490, two: 6300, three: 6100,
     },
 ]
 
@@ -134,6 +97,7 @@ export default {
         WXAxis,
         WYAxis,
         WLegend,
+        WCartesianGrid,
     },
     data () {
         return {

@@ -45,6 +45,7 @@
                         radius: dotStylesCmp.radius,
                         hoverRadius: dotStylesCmp.hoverRadius,
                     }"
+                    :Cartesian="Cartesian"
                     :transition="transition"
                 >
                     <Dot

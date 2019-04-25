@@ -1,6 +1,6 @@
 
 import VueTypes from 'vue-types'
-import { Maths } from '../utils'
+import { genTicks, genExactNbTicks } from '../utils/maths'
 import TickText from '../components/Axis/TickText.vue'
 
 const axisStylesDefaultProp = {
@@ -29,6 +29,7 @@ export default {
         textOffsetY: VueTypes.number.def(20),
         hideLine: VueTypes.bool.def(false),
         hideTickMark: VueTypes.bool.def(false),
+        numTicks: VueTypes.number.def(0),
         format: VueTypes.func.def(value => value),
         /** Styles */
         axisStyles: VueTypes.shape({
@@ -84,15 +85,14 @@ export default {
                 })
             }
             const {
-                dataset, canvas, bounds, padding,
+                dataset, canvas, bounds, yScale,
             } = this.Cartesian
-            const numTicks = this.ticksNum || dataset.length
-            const ticks = Maths.genTicks(bounds.min, bounds.max, numTicks).reverse()
-            const offset = (padding[0] + padding[2])
-            const space = (canvas.height - offset) / (ticks.length - 1)
+            const numTicks = this.numTicks || dataset.length
+            const getTicksFn = this.numTicks ? genExactNbTicks : genTicks
+            const ticks = getTicksFn(bounds.min, bounds.max, numTicks).reverse()
 
             return ticks.map((value, index) => {
-                const y = canvas.y0 + (space * index) + padding[2]
+                const y = yScale(value)
                 return {
                     mark: {
                         index,
