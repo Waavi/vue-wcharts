@@ -229,6 +229,7 @@ export default {
             return { x, y }
         },
         // Return coords and transform, of the label yAxis by align
+        // Note: Use the <svg></svg> tag in slot, because solve the align vertical of text
         getLabelYAxis (align) {
             const pos = {
                 start: this.Cartesian.canvas.y1,
