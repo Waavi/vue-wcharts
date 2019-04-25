@@ -68,11 +68,6 @@
     "vue-template-compiler": "^2.5.21"
   },
   "gitHooks": {
-    "pre-push": "lint-staged"
-  },
-  "lint-staged": {
-    "*.{js,vue}": [
-      "yarn validate"
-    ]
+    "pre-push": "yarn validate"
   }
 }
