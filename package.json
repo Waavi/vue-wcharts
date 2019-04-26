@@ -1,7 +1,6 @@
 {
   "name": "vue-wcharts",
   "version": "0.0.1",
-  "private": true,
   "author": "WAAVI",
   "license": "MIT",
   "repository": "waavi/vue-wcharts",

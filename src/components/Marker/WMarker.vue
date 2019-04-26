@@ -2,25 +2,28 @@
 <template>
     <g>
         <line
-            :x1="line.x1"
-            :y1="line.y1"
-            :x2="line.x2"
-            :y2="line.y2"
+            v-bind="line"
             :stroke="stylesCmp.stroke"
             :stroke-width="stylesCmp.strokeWidth"
             :stroke-dasharray="stylesCmp.strokeDasharray"
             fill="none"
         />
-        <text
-            :x="labelPosition.x"
-            :y="labelPosition.y"
-            :dy="labelPosition.dy"
-            :dx="labelPosition.dx"
-            :text-anchor="isX ? 'end' : placement"
-            fill="#000"
+        <slot
+            v-bind="labelCoordinates"
+            :isX="isX"
+            :label="label"
+            :value="value"
+            :placement="placement"
+            :style="labelStylesCmp"
         >
-            {{ label }}
-        </text>
+            <text
+                v-bind="labelCoordinates"
+                :text-anchor="isX ? 'end' : placement"
+                :style="labelStylesCmp"
+            >
+                {{ label }}
+            </text>
+        </slot>
     </g>
 </template>
 
@@ -32,6 +35,10 @@ const stylesDefaultProp = {
     strokeWidth: 1,
     strokeDasharray: '0',
 }
+const labelStylesDefaultProp = {
+    fill: '#333',
+    fontSize: 14,
+}
 
 export default {
     name: 'WMarker',
@@ -40,21 +47,32 @@ export default {
     props: {
         type: VueTypes.oneOf(['y', 'x']).def('y'),
         value: VueTypes.any.isRequired,
-        label: VueTypes.string.isRequired,
+        label: VueTypes.string.def(''),
         placement: VueTypes.oneOf(['start', 'end']).def('end'),
         styles: VueTypes.shape({
             stroke: VueTypes.string,
             strokeWidth: VueTypes.number,
-            strokeDasharray: VueTypes.string,
+            strokeDasharray: VueTypes.oneOfType([VueTypes.string, VueTypes.number]),
         }).def(() => ({
             ...stylesDefaultProp,
         })),
+        labelStyles: VueTypes.object.def(() => ({
+            ...labelStylesDefaultProp,
+        })),
     },
     computed: {
+        // Generate styles of line
         stylesCmp () {
             return {
                 ...stylesDefaultProp,
                 ...this.styles,
+            }
+        },
+        // Generate styles of label
+        labelStylesCmp () {
+            return {
+                ...labelStylesDefaultProp,
+                ...this.labelStyles,
             }
         },
         isX () {
@@ -86,7 +104,7 @@ export default {
                 y2: y,
             }
         },
-        labelPosition () {
+        labelCoordinates () {
             if (this.isX) {
                 return {
                     x: this.line.x1 - 5,
