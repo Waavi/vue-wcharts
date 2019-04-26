@@ -9,26 +9,26 @@
                     dot
                     curve
                     datakey="one"
-                    legend="One Line"
+                />
+                <WLine
+                    dot
+                    curve
+                    datakey="two"
+                />
+                <WLine
+                    dot
+                    curve
+                    datakey="three"
                 />
                 <WCartesianGrid />
-                <WMarker
-                    :value="3500"
-                    label="Y Marker"
-                    placement="end"
-                    type="y"
-                />
-                <WMarker
-                    value="Page C"
-                    label="X Marker"
-                    placement="end"
-                    type="x"
-                />
                 <WXAxis
                     datakey="name"
                     :space="[0, 50, 50, 50]"
                 />
-                <WYAxis />
+                <WYAxis
+                    labelText="Value"
+                />
+                <WTooltip />
             </WCartesian>
             <button
                 class="Btn"
@@ -43,7 +43,7 @@
 <script>
 import { curveStep } from 'd3-shape'
 import {
-    WCartesian, WLine, WXAxis, WYAxis, WCartesianGrid, WMarker,
+    WCartesian, WLine, WXAxis, WYAxis, WCartesianGrid, WTooltip,
 } from '../src'
 
 const dataOne = [
@@ -102,7 +102,7 @@ export default {
         WXAxis,
         WYAxis,
         WCartesianGrid,
-        WMarker,
+        WTooltip,
     },
     data () {
         return {
