@@ -1,11 +1,11 @@
 import {
-    boolean, number, color, select, text,
+    boolean, number, color, object, select,
 } from '@storybook/addon-knobs'
 import { storiesOf } from '@storybook/vue'
 import { curveStep } from 'd3-shape'
 
 import {
-    WCartesian, WLine, WXAxis, WYAxis, WLegend, WCartesianGrid,
+    WCartesian, WLine, WXAxis, WYAxis, WCartesianGrid,
 } from '../src'
 
 const data = [
@@ -40,7 +40,12 @@ storiesOf('Charts/Line', module)
         },
         data () {
             return {
-                data,
+                key: select('Data Key', {
+                    one: 'one',
+                    two: 'two',
+                    three: 'three',
+                }, 'one'),
+                data: object('Data', data),
             }
         },
         template: `
@@ -50,7 +55,7 @@ storiesOf('Charts/Line', module)
                 >
                     <WLine
                         curve
-                        datakey="one"
+                        :datakey="key"
                     />
                 </WCartesian>
             </div>
@@ -350,196 +355,6 @@ storiesOf('Charts/Line', module)
             </div>
         `,
     }))
-    .add('Legends', () => ({
-        components: {
-            WCartesian,
-            WLine,
-            WXAxis,
-            WYAxis,
-            WLegend,
-        },
-        data () {
-            return {
-                data,
-                legendPos: select('Legend - Position', {
-                    top: 'top',
-                    bottom: 'bottom',
-                    left: 'left',
-                    right: 'right',
-                }, 'top'),
-                legendAlign: select('Legend - Align', {
-                    start: 'start',
-                    center: 'center',
-                    end: 'end',
-                }, 'center'),
-                legendSelectable: boolean('Legend - Selectable', true),
-            }
-        },
-        template: `
-            <div class="Container">
-                <WCartesian :dataset="data">
-                    <WLine
-                        datakey="one"
-                        legend="One Line"
-                    />
-                    <WLine
-                        datakey="two"
-                        legend="Two Line"
-                    />
-                    <WLine
-                        datakey="three"
-                        legend="Three Line"
-                    />
-                    <WXAxis
-                        datakey="name"
-                        :space="[0, 50, 25, 50]"
-                    />
-                    <WYAxis :space="[25, 0, 0, 50]" />
-                    <WLegend
-                        :selectable="legendSelectable"
-                        :position="legendPos"
-                        :align="legendAlign"
-                    />
-                </WCartesian>
-            </div>
-            `,
-    }))
-    .add('With custom legends', () => ({
-        components: {
-            WCartesian,
-            WLine,
-            WXAxis,
-            WYAxis,
-            WLegend,
-        },
-        data () {
-            return {
-                data,
-                legendPos: select('Legend - Position', {
-                    top: 'top',
-                    bottom: 'bottom',
-                    left: 'left',
-                    right: 'right',
-                }, 'left'),
-                legendAlign: select('Legend - Align', {
-                    start: 'start',
-                    center: 'center',
-                    end: 'end',
-                }, 'center'),
-                legendSelectable: boolean('Legend - Selectable', true),
-                legendBullet: select('Legend - Bullet', {
-                    star: '★',
-                    phone: '☎',
-                    cross: '☩',
-                }, '★'),
-            }
-        },
-        template: `
-            <div class="Container">
-                <WCartesian :dataset="data">
-                    <WLine
-                        datakey="one"
-                        legend="Lorem ipsum dolor sit amet consectetur adipisicing"
-                    />
-                    <WLine
-                        datakey="two"
-                        legend="Two Line"
-                    />
-                    <WLine
-                        datakey="three"
-                        legend="Three Line"
-                    />
-                    <WXAxis
-                        datakey="name"
-                        :space="[0, 50, 25, 50]"
-                    />
-                    <WYAxis :space="[25, 0, 0, 50]" />
-                    <WLegend
-                        :selectable="legendSelectable"
-                        :position="legendPos"
-                        :align="legendAlign"
-                    >
-                        <template #bullet="{ styles }">
-                            <span :style="{ fontSize: '18', marginRight: '10px', color: styles.color }">{{ legendBullet }}</span>
-                        </template>
-                    </WLegend>
-                </WCartesian>
-            </div>
-            `,
-    }))
-    .add('With custom axis', () => ({
-        components: {
-            WCartesian,
-            WLine,
-            WXAxis,
-            WYAxis,
-            WLegend,
-        },
-        data () {
-            return {
-                data,
-                axisStyles: {
-                    stroke: color('Axis color', '#626c91'),
-                },
-                labelStyles: {
-                    fill: color('Font color', '#008BCD'),
-                    fontSize: number('Font size', 12, {
-                        range: true,
-                        min: 8,
-                        max: 25,
-                    }),
-                },
-                lineColor: color('Linear color', '#FF7500'),
-                hideLineX: boolean('Line X - Hide', true),
-                hideLineY: boolean('Line Y - Hide', true),
-                hideTickMark: boolean('Ticks - Hide', true),
-                ticksYNum: number('Ticks Y - Num', 5, {
-                    range: true,
-                    min: 2,
-                    max: 8,
-                }),
-            }
-        },
-        template: `
-            <div class="Container">
-                <WCartesian
-                    :dataset="data"
-                >
-                    <WLine
-                        curve
-                        datakey="one"
-                    />
-                    <WXAxis
-                        datakey="name"
-                        :hideLine="hideLineX"
-                        :hideTickMark="hideTickMark"
-                        :axisStyles="axisStyles"
-                        :labelStyles="labelStyles"
-                        :space="[0, 50, 50, 50]"
-                    >
-                        <template #tickText="props">
-                            <text
-                                :x="props.x"
-                                :y="props.y"
-                                :dy="props.dy"
-                            >
-                                🤔
-                            </text>
-                        </template>
-                    </WXAxis>
-                    <WYAxis
-                        :ticksNum="ticksYNum"
-                        :hideLine="hideLineY"
-                        :hideTickMark="hideTickMark"
-                        :axisStyles="axisStyles"
-                        :labelStyles="labelStyles"
-                        :space="[50, 0, 0, 50]"
-                        :format="v => '@' + v"
-                    />
-                </WCartesian>
-            </div>
-            `,
-    }))
     .add('Area', () => ({
         components: {
             WCartesian,
@@ -676,151 +491,6 @@ storiesOf('Charts/Line', module)
                         :styles="styles"
                     />
                     <WYAxis />
-                </WCartesian>
-            </div>
-        `,
-    }))
-    .add('Label Axis', () => ({
-        components: {
-            WCartesian,
-            WLine,
-            WXAxis,
-            WYAxis,
-        },
-        data () {
-            return {
-                data,
-                labelTextX: text('Label X', 'Categories'),
-                labelTextXAnchor: select('Label X - Text anchor', {
-                    start: 'start',
-                    middle: 'middle',
-                    end: 'end',
-                }, 'end'),
-                labelTextY: text('Label Y', 'Values'),
-                labelTextYAnchor: select('Label Y - Text anchor', {
-                    start: 'start',
-                    middle: 'middle',
-                    end: 'end',
-                }, 'middle'),
-            }
-        },
-        template: `
-            <div class="Container">
-                <WCartesian
-                    :dataset="data"
-                >
-                    <WLine
-                        datakey="one"
-                    />
-                    <WLine
-                        datakey="two"
-                    />
-                    <WLine
-                        datakey="three"
-                    />
-                    <WXAxis
-                        datakey="name"
-                        :labelText="labelTextX"
-                        :labelTextAnchor="labelTextXAnchor"
-                    />
-                    <WYAxis :labelText="labelTextY" :labelTextAnchor="labelTextYAnchor" />
-                </WCartesian>
-            </div>
-        `,
-    }))
-    .add('With custom label axis', () => ({
-        components: {
-            WCartesian,
-            WLine,
-            WXAxis,
-            WYAxis,
-            WLegend,
-        },
-        data () {
-            return {
-                data,
-                labelTextX: text('Label X', '🤔 Pages'),
-                labelTextXAnchor: select('Label X - Text anchor', {
-                    start: 'start',
-                    middle: 'middle',
-                    end: 'end',
-                }, 'end'),
-                labelTextY: text('Label Y', 'Values'),
-                labelTextYAnchor: select('Label Y - Text anchor', {
-                    start: 'start',
-                    middle: 'middle',
-                    end: 'end',
-                }, 'middle'),
-            }
-        },
-        template: `
-            <div class="Container">
-                <WCartesian
-                    :dataset="data"
-                >
-                    <WLine
-                        datakey="one"
-                        legend="One Line"
-                    />
-                    <WLine
-                        datakey="two"
-                        legend="Two Line"
-                    />
-                    <WLine
-                        datakey="three"
-                        legend="Three Line"
-                    />
-                    <WXAxis
-                        datakey="name"
-                        :space="[0, 50, 50, 50]"
-                        :labelTextAnchor="labelTextXAnchor"
-                    >
-                        <template #label="label">
-                            <svg
-                                width="100%"
-                                height="100%"
-                            >
-                                <text
-                                    :x="label.x"
-                                    :y="label.y"
-                                    :text-anchor="label.textAnchor"
-                                    :transform="label.transform"
-                                    :font-size="14"
-                                    fill="tomato"
-                                    font-family="monospace"
-                                >
-                                    {{ labelTextX }}
-                                </text>
-                            </svg>
-                        </template>
-                    </WXAxis>
-                    <WYAxis
-                        :space="[50, 0, 0, 100]"
-                        :labelTextAnchor="labelTextYAnchor"
-                    >
-                        <template #label="label">
-                            <svg
-                                width="100%"
-                                height="100%"
-                            >
-                                <text
-                                    :x="label.x"
-                                    :y="label.y"
-                                    :text-anchor="label.textAnchor"
-                                    :transform="label.transform"
-                                    :font-size="20"
-                                    fill="blue"
-                                >
-                                    {{ labelTextY }}
-                                </text>
-                            </svg>
-                        </template>
-                    </WYAxis>
-                    <WLegend
-                        position="bottom"
-                        align="center"
-                        selectable
-                    />
                 </WCartesian>
             </div>
         `,

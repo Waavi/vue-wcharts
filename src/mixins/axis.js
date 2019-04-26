@@ -21,7 +21,7 @@ const tickStylesDefaultProp = {
     fontSize: 12,
 }
 
-const spaceLabelX = [0, 50, 50, 50]
+const spaceLabelX = [0, 50, 65, 50]
 const spaceLabelY = [50, 0, 0, 80]
 
 export default {
