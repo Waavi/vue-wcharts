@@ -51,10 +51,6 @@
                 <WYAxis
                     labelText="Value"
                 />
-                <WLegend
-                    selectable
-                    position="bottom"
-                />
                 <WTooltip />
             </WCartesian>
             <button
