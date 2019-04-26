@@ -68,7 +68,9 @@ export default {
             if (type === this.Cartesian.active.types.point) this.selected = this.getPointSelected(el)
 
             // Calc tooltip pos
-            setTimeout(this.calcPos.bind(this, event), 100)
+            this.$nextTick(() => {
+                this.calcPos(event)
+            })
         },
     },
     methods: {
