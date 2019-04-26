@@ -32,7 +32,7 @@ const data = [
     },
 ]
 
-storiesOf('Components/LineChart', module)
+storiesOf('Charts/Line', module)
     .add('Tiny', () => ({
         components: {
             WCartesian,
@@ -645,14 +645,6 @@ storiesOf('Components/LineChart', module)
                         max: 10,
                     }),
                 },
-                // labelStyles: {
-                //     fill: color('Font color', '#008BCD'),
-                //     fontSize: number('Font size', 12, {
-                //         range: true,
-                //         min: 8,
-                //         max: 25,
-                //     }),
-                // },
                 hideH: boolean('Hide Horizontal Lines', false),
                 hideV: boolean('Hide Vertical Lines', false),
                 numLinesH: number('Number of Horizontal Lines', 0, {
