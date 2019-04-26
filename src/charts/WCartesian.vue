@@ -106,13 +106,6 @@ export default {
         if (this.responsive && typeof window !== 'undefined') window.removeEventListener('resize')
     },
     methods: {
-        // activatePoint ({ cartesianIndex = null, pointIndex = null }, event) {
-        //     this.activePoint = {
-        //         cartesianIndex,
-        //         pointIndex,
-        //         event,
-        //     }
-        // },
         addSpace (space = []) {
             space.forEach((val, i) => {
                 this.space[i] = Math.max(val, this.space[i] || 0)

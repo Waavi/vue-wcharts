@@ -1,7 +1,9 @@
 <template>
     <div
         v-if="selected"
+        ref="tooltip"
         class="WTooltip"
+        :class="{ visible }"
         :style="{ top: y, left: x }"
     >
         <slot v-bind="selected">
@@ -34,6 +36,7 @@ export default {
     data () {
         return {
             selected: null,
+            visible: false,
             x: 0,
             y: 0,
         }
@@ -50,24 +53,42 @@ export default {
     },
     watch: {
         'Cartesian.active': function watchActive ({ el, event, type }) {
+            // Reset tooltip if not has selected
             if (!el) {
-                // Clean selected
-                this.selected = null
+                this.reset()
                 return
             }
 
-            // Calc tooltip pos
-            this.calcPos(event)
             // Generate selected Point
             if (type === this.Cartesian.active.types.point) this.selected = this.getPointSelected(el)
+
+            // Calc tooltip pos
+            setTimeout(this.calcPos.bind(this, event), 100)
         },
     },
     methods: {
+        // Show tooltip
+        show () {
+            this.visible = true
+        },
+        // Hide tooltip
+        hide () {
+            this.visible = false
+        },
+        // Reset
+        reset () {
+            this.hide()
+            this.selected = null
+        },
         // Get point values
         getPointSelected ({ id, point }) {
+            // Get line of point
             const line = this.Cartesian.dataset[point]
+            // Get data name of point
             const field = this.Cartesian.datakeys[id]
+            // Get color of cartesian dataset
             const color = this.Cartesian.colors[id]
+            // Get values
             const xAxisVal = line.name
             const yAxisVal = line[field]
 
@@ -79,9 +100,24 @@ export default {
         },
         // Set pos tooltip
         calcPos (event) {
-            const { layerX: x, layerY: y } = event
-            this.x = toPx(x + this.gap)
-            this.y = toPx(y + this.gap)
+            const { layerX, layerY } = event
+            const { viewWidth, height: viewHeight } = this.Cartesian
+            // Add space between point of tooltip
+            let x = layerX + this.gap
+            let y = layerY + this.gap
+            // Get size of tooltip
+            const { clientWidth: elWidth, clientHeight: elHeight } = this.$refs.tooltip || {}
+
+            // Move to left, if tooltip does not fit on the right
+            if (viewWidth <= x + elWidth) x = x - elWidth - this.gap
+            // Move to top, if tooltip does not fit on the bottom
+            if (viewHeight <= y + elHeight) y = y - elHeight - this.gap
+
+            // Set coords
+            this.x = toPx(x)
+            this.y = toPx(y)
+            // Show tooltip
+            setTimeout(this.show, 150)
         },
     },
 }
@@ -96,6 +132,12 @@ export default {
     color: #FFF;
     background: #333;
     font-size: 14px;
+    opacity: 0;
+    transition: opacity .15s ease;
+
+    &.visible {
+        opacity: 1;
+    }
 }
 
 .Wrapper {

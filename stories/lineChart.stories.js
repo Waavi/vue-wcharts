@@ -559,3 +559,55 @@ storiesOf('Charts/Line', module)
             </div>
         `,
     }))
+    .add('With custom tooltip', () => ({
+        components: {
+            WCartesian,
+            WLine,
+            WXAxis,
+            WYAxis,
+            WTooltip,
+        },
+        data () {
+            return {
+                data,
+                styles: {
+                    background: '#eee',
+                },
+                labelStyle: {
+                    color: '#333',
+                    fontSize: '12px',
+                },
+                lineStyle: {
+                    height: '2px',
+                    width: '50px',
+                    marginTop: '5px',
+                    marginBottom: '5px',
+                },
+            }
+        },
+        template: `
+            <div class="Container">
+                <WCartesian
+                    :dataset="data"
+                >
+                    <WLine
+                        dot
+                        datakey="one"
+                    />
+                    <WXAxis
+                        datakey="name"
+                    />
+                    <WYAxis />
+                    <WTooltip :style="styles">
+                        <template #default="tooltip">
+                            <div class="Wrapper">
+                                <div :style="labelStyle"><strong>Category</strong>: {{ tooltip.xAxisVal }}</div>
+                                <div :style="labelStyle"><strong>Point</strong>: {{ tooltip.yAxisVal }}</div>
+                                <div :style="{ ...lineStyle, background: tooltip.color }"></div>
+                            </div>
+                        </template>
+                    </WTooltip>
+                </WCartesian>
+            </div>
+        `,
+    }))
