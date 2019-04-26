@@ -594,6 +594,11 @@ storiesOf('Charts/Line', module)
                         dot
                         datakey="one"
                     />
+                    <WLine
+                        dot
+                        datakey="two"
+                        legend="Two Line"
+                    />
                     <WXAxis
                         datakey="name"
                     />
@@ -605,6 +610,59 @@ storiesOf('Charts/Line', module)
                                 <div :style="labelStyle"><strong>Point</strong>: {{ tooltip.yAxisVal }}</div>
                                 <div :style="{ ...lineStyle, background: tooltip.color }"></div>
                             </div>
+                        </template>
+                    </WTooltip>
+                </WCartesian>
+            </div>
+        `,
+    }))
+    .add('With custom dot in tooltip', () => ({
+        components: {
+            WCartesian,
+            WLine,
+            WXAxis,
+            WYAxis,
+            WTooltip,
+        },
+        data () {
+            return {
+                data,
+                styles: {
+                    background: '#eee',
+                },
+                labelStyle: {
+                    color: '#333',
+                    fontSize: '12px',
+                },
+                lineStyle: {
+                    height: '2px',
+                    width: '50px',
+                    marginTop: '5px',
+                    marginBottom: '5px',
+                },
+            }
+        },
+        template: `
+            <div class="Container">
+                <WCartesian
+                    :dataset="data"
+                >
+                    <WLine
+                        dot
+                        datakey="one"
+                    />
+                    <WLine
+                        dot
+                        datakey="two"
+                        legend="Two Line"
+                    />
+                    <WXAxis
+                        datakey="name"
+                    />
+                    <WYAxis />
+                    <WTooltip>
+                        <template #bullet="selected">
+                            <span :style="{ color: selected.color, marginRight: '5px' }">x</span>
                         </template>
                     </WTooltip>
                 </WCartesian>

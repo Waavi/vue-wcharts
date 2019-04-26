@@ -10,10 +10,15 @@
             <div class="Wrapper">
                 <span class="Title">{{ selected.xAxisVal }}</span>
                 <div class="Value">
-                    <div
-                        class="Bullet"
-                        :style="bulletStyle"
-                    />
+                    <slot
+                        name="bullet"
+                        v-bind="selected"
+                    >
+                        <div
+                            class="Bullet"
+                            :style="bulletStyle"
+                        />
+                    </slot>
                     <span>{{ selected.yAxisVal }}</span>
                 </div>
             </div>
