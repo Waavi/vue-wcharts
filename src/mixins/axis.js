@@ -62,7 +62,7 @@ export default {
         })),
     },
     preload ({ parent, props, index }) {
-        const { space, labelText } = props
+        const { space, labelText, datakey } = props
         // Check type axi
         const isX = this.axis === 'x'
         // Get spaces binding or default
@@ -70,6 +70,9 @@ export default {
         // Set default space if has labelText and not space value
         if (!space && labelText) {
             spaces = isX ? spaceLabelX : spaceLabelY
+        }
+        if (isX) {
+            parent.axisXDatakey = datakey
         }
         // Added spaces of parent
         parent.addSpaceObjects(spaces)

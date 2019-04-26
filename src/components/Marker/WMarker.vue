@@ -80,14 +80,14 @@ export default {
         },
         line () {
             const {
-                dataset, canvas, yScale, padding,
+                dataset, canvas, yScale, padding, axisXDatakey,
             } = this.Cartesian
             if (this.isX) {
                 // Calculate left and right space
                 const offset = padding[1] + padding[3]
                 // Calculate space between lines
                 const space = (canvas.width - offset) / (dataset.length - 1)
-                const index = dataset.findIndex(d => d.name === this.value)
+                const index = dataset.findIndex(d => d[axisXDatakey] === this.value)
                 const x = canvas.x0 + (space * index) + padding[3]
                 return {
                     x1: x,

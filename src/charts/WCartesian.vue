@@ -32,6 +32,7 @@ export default {
     data () {
         return {
             chartReady: !this.responsive,
+            axisXDatakey: null,
             datakeys: [],
             activeCartesians: [],
             legends: [],
