@@ -12,6 +12,18 @@
                     legend="One Line"
                 />
                 <WCartesianGrid />
+                <WMarker
+                    :value="3500"
+                    label="Y Marker"
+                    placement="end"
+                    type="y"
+                />
+                <WMarker
+                    value="Page C"
+                    label="X Marker"
+                    placement="end"
+                    type="x"
+                />
                 <WXAxis
                     datakey="name"
                     :space="[0, 50, 50, 50]"
@@ -31,7 +43,7 @@
 <script>
 import { curveStep } from 'd3-shape'
 import {
-    WCartesian, WLine, WXAxis, WYAxis, WCartesianGrid,
+    WCartesian, WLine, WXAxis, WYAxis, WCartesianGrid, WMarker,
 } from '../src'
 
 const dataOne = [
@@ -90,6 +102,7 @@ export default {
         WXAxis,
         WYAxis,
         WCartesianGrid,
+        WMarker,
     },
     data () {
         return {
