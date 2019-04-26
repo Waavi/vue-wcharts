@@ -11,41 +11,24 @@
                     datakey="one"
                     legend="One Line"
                 />
-                <WCartesianGrid
-                    :numLinesH="0"
-                    :numLinesV="0"
-                    :hideH="false"
-                    :hideV="false"
+                <WCartesianGrid />
+                <WMarker
+                    :value="3500"
+                    label="Y Marker"
+                    placement="end"
+                    type="y"
+                />
+                <WMarker
+                    value="Page C"
+                    label="X Marker"
+                    placement="end"
+                    type="x"
                 />
                 <WXAxis
                     datakey="name"
                     :space="[0, 50, 50, 50]"
-                >
-                    <template #label="label">
-                        <svg
-                            width="100%"
-                            height="100%"
-                        >
-                            <text
-                                :x="label.x"
-                                :y="label.y"
-                                :text-anchor="label.textAnchor"
-                                :transform="label.transform"
-                                :font-size="label.fontSize"
-                                fill="#999"
-                            >
-                                Categories
-                            </text>
-                        </svg>
-                    </template>
-                </WXAxis>
-                <WYAxis
-                    labelText="Value"
                 />
-                <WLegend
-                    selectable
-                    position="bottom"
-                />
+                <WYAxis />
             </WCartesian>
             <button
                 class="Btn"
@@ -60,7 +43,7 @@
 <script>
 import { curveStep } from 'd3-shape'
 import {
-    WCartesian, WLine, WXAxis, WYAxis, WLegend, WCartesianGrid,
+    WCartesian, WLine, WXAxis, WYAxis, WCartesianGrid, WMarker,
 } from '../src'
 
 const dataOne = [
@@ -118,8 +101,8 @@ export default {
         WLine,
         WXAxis,
         WYAxis,
-        WLegend,
         WCartesianGrid,
+        WMarker,
     },
     data () {
         return {
