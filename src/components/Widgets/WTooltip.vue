@@ -67,7 +67,7 @@ export default {
             // Generate selected Point
             if (type === this.Cartesian.active.types.point) this.selected = this.getPointSelected(el)
 
-            // Calc tooltip pos
+            // Calc tooltip pos after rendering html
             this.$nextTick(() => {
                 this.calcPos(event)
             })
@@ -124,7 +124,7 @@ export default {
             this.x = toPx(x)
             this.y = toPx(y)
             // Show tooltip
-            setTimeout(this.show, 150)
+            this.$nextTick(this.show)
         },
     },
 }
