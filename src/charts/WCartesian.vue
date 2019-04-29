@@ -2,6 +2,7 @@
 import VueTypes from 'vue-types'
 import { scaleLinear } from 'd3'
 import { pick, includes, debounce } from 'lodash'
+
 import activeMixin from '../mixins/active'
 
 export default {
