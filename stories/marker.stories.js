@@ -32,7 +32,7 @@ const data = [
 ]
 
 storiesOf('Markers', module)
-    .add('default', () => ({
+    .add('Default', () => ({
         components: {
             WCartesian,
             WLine,

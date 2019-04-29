@@ -61,7 +61,7 @@
                             radius: dotStylesCmp.radius,
                             hoverRadius: dotStylesCmp.hoverRadius,
                         }"
-                        :transition="transition"
+                        :transition="`all 250ms ${transEffect}`"
                     />
                 </slot>
             </template>
