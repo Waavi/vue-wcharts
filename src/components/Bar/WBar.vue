@@ -103,16 +103,7 @@ export default {
             })
         },
     },
-    mounted () {
-        // Set offset in parent to update gap
-        this.Cartesian.offset = this.calcOffset()
-    },
     methods: {
-        // Calc offset of number bars
-        calcOffset () {
-            const gap = this.width / 2 * this.barsLength + this.width
-            return [0, gap, 0, gap]
-        },
         // Set active element
         handleMouseEnter (event) {
             const point = (event.target.dataset || {}).id

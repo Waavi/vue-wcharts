@@ -14,14 +14,17 @@
                 <WBar
                     legend="One Bar"
                     datakey="one"
+                    :width="30"
                 />
                 <WBar
                     datakey="two"
                     legend="Two Bar"
+                    :width="30"
                 />
                 <WBar
                     datakey="three"
                     legend="Three Bar"
+                    :width="30"
                 />
                 <WXAxis
                     datakey="name"

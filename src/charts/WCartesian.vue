@@ -42,7 +42,6 @@ export default {
             space: [0, 0, 0, 0], // Spaces all elements
             spaceObjects: [0, 0, 0, 0], // Spaces of objects (Axis)
             parentWidth: null, // Width of chart
-            offset: [0, 0, 0, 0], // Offset of bars
         }
     },
     computed: {
@@ -92,6 +91,23 @@ export default {
         padding () {
             const gap = Array.isArray(this.gap) ? this.gap : Array(4).fill(this.gap)
             return gap.map((item, index) => item + this.offset[index])
+        },
+        // Offset of bars
+        offset () {
+            const { barAllWidth, barMap } = this.snap
+            const barsLength = (barMap || []).length
+            const gap = Array(4).fill(0)
+
+            if (barsLength) {
+                // Checked if width of bars it is higher than canvas width
+                const margin = this.width <= barAllWidth * (this.dataset || []).length
+                    ? this.width % barAllWidth
+                    : barAllWidth / barsLength
+                gap[1] = margin
+                gap[3] = margin
+                return gap
+            }
+            return gap
         },
     },
 
