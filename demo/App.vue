@@ -5,25 +5,7 @@
                 :dataset="data"
                 responsive
             >
-                <WLine
-                    dot
-                    curve
-                    datakey="one"
-                    legend="One Line"
-                />
-                <WCartesianGrid />
-                <WMarker
-                    :value="3500"
-                    label="Y Marker"
-                    placement="end"
-                    type="y"
-                />
-                <WMarker
-                    value="Page C"
-                    label="X Marker"
-                    placement="end"
-                    type="x"
-                />
+                <WBar datakey="one" />
                 <WXAxis
                     datakey="name"
                     :space="[0, 50, 50, 50]"
@@ -43,7 +25,7 @@
 <script>
 import { curveStep } from 'd3-shape'
 import {
-    WCartesian, WLine, WXAxis, WYAxis, WCartesianGrid, WMarker,
+    WCartesian, WBar, WXAxis, WYAxis,
 } from '../src'
 
 const dataOne = [
@@ -98,11 +80,9 @@ export default {
     name: 'App',
     components: {
         WCartesian,
-        WLine,
+        WBar,
         WXAxis,
         WYAxis,
-        WCartesianGrid,
-        WMarker,
     },
     data () {
         return {
