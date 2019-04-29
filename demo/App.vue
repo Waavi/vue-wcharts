@@ -4,8 +4,11 @@
             <WCartesian
                 :dataset="data"
                 responsive
+                :bound="[0]"
             >
                 <WBar datakey="one" />
+                <WBar datakey="two" />
+                <WBar datakey="three" />
                 <WXAxis
                     datakey="name"
                     :space="[0, 50, 50, 50]"
@@ -46,7 +49,7 @@
 <script>
 import { curveStep } from 'd3-shape'
 import {
-    WCartesian, WBar, WXAxis, WYAxis,
+    WCartesian, WBar, WXAxis, WYAxis, WTooltip,
 } from '../src'
 
 const dataOne = [
@@ -104,6 +107,7 @@ export default {
         WBar,
         WXAxis,
         WYAxis,
+        WTooltip,
     },
     data () {
         return {

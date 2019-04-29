@@ -35,13 +35,14 @@ export default {
     data () {
         return {
             chartReady: !this.responsive,
-            axisXDatakey: null,
-            datakeys: [],
-            activeCartesians: [],
-            legends: [],
-            space: [0, 0, 0, 0],
-            spaceObjects: [0, 0, 0, 0],
-            parentWidth: null,
+            axisXDatakey: null, // Datakey name of Xaxis
+            datakeys: [], // dataKeys Selected data
+            activeCartesians: [], // Cartesian elem actives
+            legends: [], // Legends
+            space: [0, 0, 0, 0], // Spaces all elements
+            spaceObjects: [0, 0, 0, 0], // Spaces of objects (Axis)
+            offset: [0, 0, 0, 0], // Offset of bars
+            parentWidth: null, // Width of chart
         }
     },
     computed: {
@@ -89,8 +90,8 @@ export default {
             }
         },
         padding () {
-            if (Array.isArray(this.gap)) return this.gap
-            return Array(4).fill(this.gap)
+            const gap = Array.isArray(this.gap) ? this.gap : Array(4).fill(this.gap)
+            return gap.map((item, index) => item + this.offset[index])
         },
     },
 
