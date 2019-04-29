@@ -41,8 +41,8 @@ export default {
             legends: [], // Legends
             space: [0, 0, 0, 0], // Spaces all elements
             spaceObjects: [0, 0, 0, 0], // Spaces of objects (Axis)
-            offset: [0, 0, 0, 0], // Offset of bars
             parentWidth: null, // Width of chart
+            offset: [0, 0, 0, 0], // Offset of bars
         }
     },
     computed: {
@@ -156,6 +156,9 @@ export default {
         const activeCartesians = []
         const legends = []
 
+        // Reset snap to manage bars
+        this.snap = {}
+
         slots.forEach((slot) => {
             const options = slot.componentOptions
             if (!options) {
@@ -172,9 +175,7 @@ export default {
 
             switch (sealed.type) {
                 case 'cartesian':
-                    if (datakey && !includes(datakeys, datakey)) {
-                        datakeys.push(datakey)
-                    }
+                    datakeys.push(datakey) // Add datekeys. Removed unique datakey condiition to use multiple elements
                     activeCartesians.push(cartesiansLength) // Add to actives elements
                     if (legend) legends.push(legend) // Add to legends elements
                     slot.index = cartesiansLength

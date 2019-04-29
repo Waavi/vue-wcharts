@@ -6,33 +6,30 @@
                 responsive
                 :bound="[0]"
             >
-                <WBar datakey="one" />
-                <WBar datakey="two" />
-                <WBar datakey="three" />
+                <WLine
+                    datakey="two"
+                    area
+                    legend="One Line"
+                />
+                <WBar
+                    legend="One Bar"
+                    datakey="one"
+                />
+                <WBar
+                    datakey="two"
+                    legend="Two Bar"
+                />
+                <WBar
+                    datakey="three"
+                    legend="Three Bar"
+                />
                 <WXAxis
                     datakey="name"
-                    :space="[0, 50, 50, 50]"
-                >
-                    <template #label="label">
-                        <svg
-                            width="100%"
-                            height="100%"
-                        >
-                            <text
-                                :x="label.x"
-                                :y="label.y"
-                                :text-anchor="label.textAnchor"
-                                :transform="label.transform"
-                                :font-size="label.fontSize"
-                                fill="#999"
-                            >
-                                Categories
-                            </text>
-                        </svg>
-                    </template>
-                </WXAxis>
-                <WYAxis
-                    labelText="Value"
+                    :space="[0, 50, 80, 50]"
+                />
+                <WYAxis :space="[25, 0, 0, 50]" />
+                <WLegend
+                    selectable
                 />
                 <WTooltip />
             </WCartesian>
@@ -49,7 +46,7 @@
 <script>
 import { curveStep } from 'd3-shape'
 import {
-    WCartesian, WBar, WXAxis, WYAxis, WTooltip,
+    WCartesian, WBar, WXAxis, WYAxis, WTooltip, WLine, WLegend,
 } from '../src'
 
 const dataOne = [
@@ -108,6 +105,8 @@ export default {
         WXAxis,
         WYAxis,
         WTooltip,
+        WLine,
+        WLegend,
     },
     data () {
         return {

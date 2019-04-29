@@ -3,63 +3,81 @@
         v-if="active"
         id="Bar"
     >
-        <Spread
-            axis="y"
+        <Trans
+            v-for="(bar, key) in bars"
+            :key="key"
+            :initialProps="{
+                height: 0,
+                y: Cartesian.canvas.y1
+            }"
             :transition="transition"
         >
             <rect
-                v-for="(bar, key) in bars"
-                :key="key"
+                :data-id="key"
                 :x="bar.x"
                 :y="bar.y"
                 :width="bar.width"
                 :height="bar.height"
                 :fill="fillColor"
+                :style="{ transition }"
                 @mouseenter="handleMouseEnter"
                 @mouseleave="Cartesian.cleanActive"
             />
-        </Spread>
+        </Trans>
     </g>
 </template>
 
 <script>
 import VueTypes from 'vue-types'
 import animationMixin from '../../mixins/animation'
-import Spread from '../../transitions/Spread.vue'
+import Trans from '../../transitions/Trans.vue'
+
+const DEFAULT_WIDTH = 20
 
 export default {
     name: 'WBar',
     type: 'cartesian',
     components: {
-        Spread,
+        Trans,
     },
     mixins: [animationMixin],
     inject: ['Cartesian'],
     props: {
         datakey: VueTypes.string.isRequired,
-        width: VueTypes.number.def(20),
+        legend: VueTypes.string,
+        width: VueTypes.number.def(DEFAULT_WIDTH),
         color: VueTypes.string,
     },
+    preload ({ parent, props, index }) {
+        const { snap } = parent
+        const width = props.width || DEFAULT_WIDTH
+
+        snap.barMap = [].concat(snap.barMap || [], index)
+        snap.barAllWidth = snap.barAllWidth || 0
+        snap.barOffset = [].concat(snap.barOffset || [], snap.barAllWidth)
+        snap.barAllWidth += width
+    },
     computed: {
-        // Index cartesian elem
-        index () {
+        // Id cartesian elem
+        id () {
             return this.$vnode.index
         },
         // Active elem
         active () {
-            return this.Cartesian.activeCartesians.includes(this.index)
+            return this.Cartesian.activeCartesians.includes(this.id)
         },
         // Check color custom or default
         fillColor () {
-            return this.color || this.Cartesian.colors[this.index]
+            return this.color || this.Cartesian.colors[this.id]
         },
         barsLength () {
-            return (this.Cartesian.activeCartesians || []).length
+            return (this.Cartesian.snap.barMap || []).length
         },
         // Margin
         margin () {
             const half = (this.width / 2)
-            return (half * this.barsLength) - (this.width * this.index)
+            const index = this.Cartesian.snap.barMap.indexOf(this.id)
+            return (half * this.barsLength) - (this.width * index)
         },
         // Bars
         bars () {
@@ -97,8 +115,9 @@ export default {
         },
         // Set active element
         handleMouseEnter (event) {
+            const point = (event.target.dataset || {}).id
             this.Cartesian.setActive(
-                { id: this.index, point: this.index },
+                { id: this.id, point },
                 event,
                 this.Cartesian.active.types.point
             )
