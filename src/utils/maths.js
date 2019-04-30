@@ -2,13 +2,6 @@
 import { tickStep } from 'd3-array/src/ticks'
 
 /**
- * Positive
- */
-export function positive (value) {
-    return value >= 0 ? value : 0
-}
-
-/**
  * Returns nick ticks
  */
 export function genTicks (min, max, count) {
@@ -57,6 +50,5 @@ export function genExactNbTicks (min, max, count) {
 
 export default {
     genTicks,
-    genExactNbTicks,
-    positive
+    genExactNbTicks
 }

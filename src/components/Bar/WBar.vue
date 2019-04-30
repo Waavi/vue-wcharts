@@ -49,7 +49,6 @@
 import VueTypes from 'vue-types'
 import animationMixin from '../../mixins/animation'
 import Trans from '../../transitions/Trans.vue'
-import { positive } from '../../utils/maths'
 
 const DEFAULT_WIDTH = 20
 
@@ -68,7 +67,7 @@ export default {
     inject: ['Cartesian'],
     props: {
         datakey: VueTypes.string.isRequired,
-        legend: VueTypes.string, // To apply filters
+        legend: VueTypes.string, // Prop to apply filters
         showLabel: VueTypes.bool.def(false),
         labelSize: VueTypes.number.def(12),
         labelTextAnchor: VueTypes.oneOf(['start', 'middle', 'end']).def('middle'),
@@ -104,6 +103,12 @@ export default {
         fill () {
             return this.color || this.Cartesian.colors[this.id]
         },
+        // Get yAxis origin by bounds.min or zero
+        y () {
+            const { bounds, yScale } = this.Cartesian
+            const min = Math.max(bounds.min, 0)
+            return yScale(min)
+        },
         // Margin
         margin () {
             const { snap, stacked } = this.Cartesian
@@ -117,24 +122,22 @@ export default {
             const { canvas, padding, yScale } = this.Cartesian
             const space = (canvas.width - (padding[1] + padding[3])) / (this.points.length - 1)
 
+            // Generate Bars
             return this.points.map((value, index) => {
-                // Escape negative values
-                const point = positive(value)
-                // Generate props
-                const height = canvas.y1 - yScale(point)
+                const dimension = this.y - yScale(value)
                 const x = (canvas.x0 + (space * index) + padding[3]) - this.margin
-                const y = canvas.y1 - height
-                const label = this.showLabel ? this.getLabel({ x, y, value }) : undefined
+                const y = this.y - Math.max(dimension, 0)
 
                 return {
                     x,
                     y,
                     width: this.width,
-                    height,
-                    label,
+                    height: Math.abs(dimension),
+                    label: this.getLabel({ x, y, value }),
                 }
             })
         },
+        // Label styles
         labelStylesCmp () {
             return {
                 ...labelStylesDefaultProp,
@@ -145,14 +148,9 @@ export default {
     methods: {
         // Generate label of bar
         getLabel ({ x, y, value }) {
-            const { canvas } = this.Cartesian
-            // Escape negative and zero values
-            const isValid = value > 0
-            const position = isValid ? this.labelPosition : 'outside'
-            const height = isValid ? y : canvas.y1
-            // Align
+            if (!this.showLabel) return undefined
             const horizontal = x + this.width / 2
-            const vertical = canvas.y0 + this.labelTop(height)[position]
+            const vertical = this.Cartesian.canvas.y0 + this.labelTop(y)[this.labelPosition]
 
             return {
                 x: horizontal,

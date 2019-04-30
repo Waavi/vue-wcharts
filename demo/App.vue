@@ -4,36 +4,24 @@
             <WCartesian
                 :dataset="data"
                 responsive
-                :bound="[0]"
             >
-                <WLine
-                    datakey="two"
-                    area
-                    legend="One Line"
-                />
                 <WBar
                     legend="One Bar"
                     datakey="one"
                     showLabel
-                    labelPosition="inside"
                     :width="30"
-                    :labelStyles="{ fill: '#eee' }"
                 />
                 <WBar
                     datakey="two"
                     legend="Two Bar"
                     showLabel
-                    labelPosition="inside"
                     :width="30"
-                    :labelStyles="{ fill: '#eee' }"
                 />
                 <WBar
                     datakey="three"
                     legend="Three Bar"
                     showLabel
-                    labelPosition="inside"
                     :width="30"
-                    :labelStyles="{ fill: '#eee' }"
                 />
                 <WXAxis
                     datakey="name"
@@ -63,13 +51,13 @@ import {
 
 const dataOne = [
     {
-        name: 'Page A', one: 4000, two: 2400, three: 2400,
+        name: 'Page A', one: 4000, two: -2400, three: 2300,
     },
     {
-        name: 'Page B', one: 3000, two: 1398, three: 2210,
+        name: 'Page B', one: 3000, two: 2210, three: 1398,
     },
     {
-        name: 'Page C', one: 2000, two: 9800, three: 0,
+        name: 'Page C', one: 9800, two: 2200, three: 0,
     },
     {
         name: 'Page D', one: 2780, two: 3908, three: 2000,
@@ -78,7 +66,7 @@ const dataOne = [
         name: 'Page E', one: 1890, two: 4800, three: 1700,
     },
     {
-        name: 'Page F', one: 2390, two: 3800, three: -2500,
+        name: 'Page F', one: -2390, two: 3800, three: -2500,
     },
     {
         name: 'Page G', one: 3490, two: 4300, three: 2100,

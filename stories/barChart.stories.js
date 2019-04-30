@@ -116,13 +116,7 @@ storiesOf('Charts/Bar', module)
                 <WCartesian
                     :dataset="data"
                     responsive
-                    :bound="[0]"
                 >
-                    <WLine
-                        datakey="two"
-                        area
-                        legend="One Line"
-                    />
                     <WBar
                         legend="One Bar"
                         datakey="one"
@@ -146,6 +140,10 @@ storiesOf('Charts/Bar', module)
                         :labelPosition="labelPosition"
                         :labelTextAnchor="labelTextAnchor"
                         :width="width"
+                    />
+                    <WLine
+                        datakey="two"
+                        legend="One Line"
                     />
                     <WXAxis
                         datakey="name"
