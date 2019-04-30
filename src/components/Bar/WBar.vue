@@ -22,7 +22,7 @@
                     :y="bar.y"
                     :width="bar.width"
                     :height="bar.height"
-                    :fill="fillColor"
+                    :fill="fill"
                     :style="{ styles, transition }"
                 />
                 <slot
@@ -49,11 +49,13 @@
 import VueTypes from 'vue-types'
 import animationMixin from '../../mixins/animation'
 import Trans from '../../transitions/Trans.vue'
+import { positive } from '../../utils/maths'
 
 const DEFAULT_WIDTH = 20
 
 const labelStylesDefaultProp = {
     fill: '#333',
+    cursor: 'default',
 }
 
 export default {
@@ -94,12 +96,13 @@ export default {
         active () {
             return this.Cartesian.activeCartesians.includes(this.id)
         },
-        // Check color custom or default
-        fillColor () {
-            return this.color || this.Cartesian.colors[this.id]
+        // Points
+        points () {
+            return this.Cartesian.dataset.map(data => data[this.datakey])
         },
-        barsLength () {
-            return (this.Cartesian.snap.barMap || []).length
+        // Check color custom or default
+        fill () {
+            return this.color || this.Cartesian.colors[this.id]
         },
         // Margin
         margin () {
@@ -107,28 +110,21 @@ export default {
             const half = (this.width / 2)
             if (stacked) return half
             const index = snap.barMap.indexOf(this.id)
-            return (half * this.barsLength) - (this.width * index)
+            return (half * snap.barMap.length) - (this.width * index)
         },
         // Bars
         bars () {
-            const {
-                canvas, dataset, padding, yScale,
-            } = this.Cartesian
-            // Calc offset
-            const offset = padding[1] + padding[3]
-            // Calc space
-            const space = (canvas.width - offset) / (dataset.length - 1)
+            const { canvas, padding, yScale } = this.Cartesian
+            const space = (canvas.width - (padding[1] + padding[3])) / (this.points.length - 1)
 
-            return dataset.map((item, index) => {
-                // Get value of datakey
-                const value = item[this.datakey]
+            return this.points.map((value, index) => {
                 // Escape negative values
-                const scaleValue = value >= 0 ? value : 0
+                const point = positive(value)
                 // Generate props
-                const height = canvas.y1 - yScale(scaleValue)
+                const height = canvas.y1 - yScale(point)
                 const x = (canvas.x0 + (space * index) + padding[3]) - this.margin
                 const y = canvas.y1 - height
-                const label = this.showLabel ? this.generateLabel({ x, y, value }) : undefined
+                const label = this.showLabel ? this.getLabel({ x, y, value }) : undefined
 
                 return {
                     x,
@@ -148,15 +144,15 @@ export default {
     },
     methods: {
         // Generate label of bar
-        generateLabel ({ x, y, value }) {
+        getLabel ({ x, y, value }) {
             const { canvas } = this.Cartesian
             // Escape negative and zero values
             const isValid = value > 0
             const position = isValid ? this.labelPosition : 'outside'
-            const space = isValid ? y : canvas.y1
+            const height = isValid ? y : canvas.y1
             // Align
             const horizontal = x + this.width / 2
-            const vertical = canvas.y0 + this.labelPositions(space)[position]
+            const vertical = canvas.y0 + this.labelTop(height)[position]
 
             return {
                 x: horizontal,
@@ -165,7 +161,7 @@ export default {
             }
         },
         // Calc label positions
-        labelPositions (y) {
+        labelTop (y) {
             return {
                 outside: y - this.labelSize * 2 - this.labelSize / 2,
                 inside: y - this.labelSize,
