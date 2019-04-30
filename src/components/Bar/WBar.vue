@@ -13,18 +13,17 @@
             :transition="transition"
         >
             <g
-                :id="`Bar-${key}`"
+                :id="key"
+                @mouseenter="handleMouseEnter"
+                @mouseleave="Cartesian.cleanActive"
             >
                 <rect
-                    :data-id="key"
                     :x="bar.x"
                     :y="bar.y"
                     :width="bar.width"
                     :height="bar.height"
                     :fill="fillColor"
                     :style="{ styles, transition }"
-                    @mouseenter="handleMouseEnter"
-                    @mouseleave="Cartesian.cleanActive"
                 />
                 <slot
                     name="label"
@@ -104,8 +103,10 @@ export default {
         },
         // Margin
         margin () {
+            const { snap, stacked } = this.Cartesian
             const half = (this.width / 2)
-            const index = this.Cartesian.snap.barMap.indexOf(this.id)
+            if (stacked) return half
+            const index = snap.barMap.indexOf(this.id)
             return (half * this.barsLength) - (this.width * index)
         },
         // Bars
@@ -127,7 +128,7 @@ export default {
                 const height = canvas.y1 - yScale(scaleValue)
                 const x = (canvas.x0 + (space * index) + padding[3]) - this.margin
                 const y = canvas.y1 - height
-                const label = this.showLabel ? this.generateLabel({ value, x, y }) : undefined
+                const label = this.showLabel ? this.generateLabel({ x, y, value }) : undefined
 
                 return {
                     x,
@@ -147,29 +148,32 @@ export default {
     },
     methods: {
         // Generate label of bar
-        generateLabel ({ value, x, y }) {
-            // Escape negative values
+        generateLabel ({ x, y, value }) {
             const { canvas } = this.Cartesian
-            const posY = value > 0 ? y : canvas.y1
-            // Calc coords
-            const lx = x + this.width / 2
-            const ly = canvas.y0 + this.labelY(posY)
+            // Escape negative and zero values
+            const isValid = value > 0
+            const position = isValid ? this.labelPosition : 'outside'
+            const space = isValid ? y : canvas.y1
+            // Align
+            const horizontal = x + this.width / 2
+            const vertical = canvas.y0 + this.labelPositions(space)[position]
 
             return {
-                x: lx,
-                y: ly,
+                x: horizontal,
+                y: vertical,
                 value,
             }
         },
-        // Get labelY by labelPosition prop
-        labelY (y) {
-            return this.labelPosition === 'outside'
-                ? y - this.labelSize * 2 - this.labelSize / 2
-                : y - this.labelSize
+        // Calc label positions
+        labelPositions (y) {
+            return {
+                outside: y - this.labelSize * 2 - this.labelSize / 2,
+                inside: y - this.labelSize,
+            }
         },
         // Set active element
         handleMouseEnter (event) {
-            const point = (event.target.dataset || {}).id
+            const point = (event.target || {}).id
             this.Cartesian.setActive(
                 { id: this.id, point },
                 event,

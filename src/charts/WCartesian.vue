@@ -11,6 +11,7 @@ export default {
     props: {
         dataset: VueTypes.array.def([]),
         responsive: VueTypes.bool.def(false),
+        stacked: VueTypes.bool.def(false),
         height: VueTypes.number.def(400),
         width: VueTypes.number.def(600),
         bound: VueTypes.array.def([]),

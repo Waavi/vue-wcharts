@@ -15,32 +15,25 @@
                     legend="One Bar"
                     datakey="one"
                     showLabel
+                    labelPosition="inside"
                     :width="30"
-                >
-                    <template #label="label">
-                        <text
-                            :x="label.x"
-                            :y="0"
-                            :font-size="12"
-                            text-anchor="middle"
-                            fill="DarkOrange"
-                            :style="{ transform: `translateY(${label.y}px)` }"
-                        >
-                            {{ label.value }}
-                        </text>
-                    </template>
-                </WBar>
+                    :labelStyles="{ fill: '#eee' }"
+                />
                 <WBar
                     datakey="two"
                     legend="Two Bar"
                     showLabel
+                    labelPosition="inside"
                     :width="30"
+                    :labelStyles="{ fill: '#eee' }"
                 />
                 <WBar
                     datakey="three"
                     legend="Three Bar"
                     showLabel
+                    labelPosition="inside"
                     :width="30"
+                    :labelStyles="{ fill: '#eee' }"
                 />
                 <WXAxis
                     datakey="name"
