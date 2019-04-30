@@ -41,6 +41,8 @@ export default {
         // Label
         labelText: VueTypes.string,
         labelSize: VueTypes.number.def(12),
+        // Negative axis
+        hideNegativeAxis: VueTypes.bool.def(false),
         // Style
         axisStyles: VueTypes.shape({
             stroke: VueTypes.string,
@@ -133,6 +135,8 @@ export default {
             // Generate array tick by d3, https://github.com/d3/d3-array
             const getTicksFn = this.numTicks ? genExactNbTicks : genTicks
             const ticks = getTicksFn(bounds.min, bounds.max, numTicks).reverse()
+            // Added 0 tick if has nevagative bound.min and hideNegativeAxis it is false
+            if (bounds.min < 0 && !ticks.includes(0) && !this.hideNegativeAxis) ticks.push(0)
             // Generate ticks objects by ticksNum or dataset of parents
             return ticks.map((value, index) => {
                 // Calc size between ticks with scale parent
