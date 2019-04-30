@@ -102,7 +102,8 @@ export default {
                 // Checked if width of bars it is higher than canvas width
                 const margin = this.width <= barAllWidth * (this.dataset || []).length
                     ? this.width % barAllWidth
-                    : barAllWidth / barsLength
+                    : barAllWidth
+
                 gap[1] = margin
                 gap[3] = margin
                 return gap

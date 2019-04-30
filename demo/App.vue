@@ -14,16 +14,32 @@
                 <WBar
                     legend="One Bar"
                     datakey="one"
+                    showLabel
                     :width="30"
-                />
+                >
+                    <template #label="label">
+                        <text
+                            :x="label.x"
+                            :y="0"
+                            :font-size="12"
+                            text-anchor="middle"
+                            fill="DarkOrange"
+                            :style="{ transform: `translateY(${label.y}px)` }"
+                        >
+                            {{ label.value }}
+                        </text>
+                    </template>
+                </WBar>
                 <WBar
                     datakey="two"
                     legend="Two Bar"
+                    showLabel
                     :width="30"
                 />
                 <WBar
                     datakey="three"
                     legend="Three Bar"
+                    showLabel
                     :width="30"
                 />
                 <WXAxis
@@ -60,7 +76,7 @@ const dataOne = [
         name: 'Page B', one: 3000, two: 1398, three: 2210,
     },
     {
-        name: 'Page C', one: 2000, two: 9800, three: 2290,
+        name: 'Page C', one: 2000, two: 9800, three: 0,
     },
     {
         name: 'Page D', one: 2780, two: 3908, three: 2000,
@@ -69,7 +85,7 @@ const dataOne = [
         name: 'Page E', one: 1890, two: 4800, three: 1700,
     },
     {
-        name: 'Page F', one: 2390, two: 3800, three: 2500,
+        name: 'Page F', one: 2390, two: 3800, three: -2500,
     },
     {
         name: 'Page G', one: 3490, two: 4300, three: 2100,

@@ -1,7 +1,7 @@
 <template>
     <g
         v-if="active"
-        id="Bar"
+        id="Bars"
     >
         <Trans
             v-for="(bar, key) in bars"
@@ -12,17 +12,36 @@
             }"
             :transition="transition"
         >
-            <rect
-                :data-id="key"
-                :x="bar.x"
-                :y="bar.y"
-                :width="bar.width"
-                :height="bar.height"
-                :fill="fillColor"
-                :style="{ transition }"
-                @mouseenter="handleMouseEnter"
-                @mouseleave="Cartesian.cleanActive"
-            />
+            <g
+                :id="`Bar-${key}`"
+            >
+                <rect
+                    :data-id="key"
+                    :x="bar.x"
+                    :y="bar.y"
+                    :width="bar.width"
+                    :height="bar.height"
+                    :fill="fillColor"
+                    :style="{ styles, transition }"
+                    @mouseenter="handleMouseEnter"
+                    @mouseleave="Cartesian.cleanActive"
+                />
+                <slot
+                    name="label"
+                    v-bind="bar.label"
+                >
+                    <text
+                        v-if="bar.label"
+                        :x="bar.label.x"
+                        :y="0"
+                        :text-anchor="labelTextAnchor"
+                        :font-size="labelSize"
+                        :style="{ ...labelStylesCmp, transition, transform: `translateY(${bar.label.y}px)` }"
+                    >
+                        {{ bar.label.value }}
+                    </text>
+                </slot>
+            </g>
         </Trans>
     </g>
 </template>
@@ -34,6 +53,10 @@ import Trans from '../../transitions/Trans.vue'
 
 const DEFAULT_WIDTH = 20
 
+const labelStylesDefaultProp = {
+    fill: '#333',
+}
+
 export default {
     name: 'WBar',
     type: 'cartesian',
@@ -44,9 +67,15 @@ export default {
     inject: ['Cartesian'],
     props: {
         datakey: VueTypes.string.isRequired,
-        legend: VueTypes.string,
+        legend: VueTypes.string, // To apply filters
+        showLabel: VueTypes.bool.def(false),
+        labelSize: VueTypes.number.def(12),
+        labelTextAnchor: VueTypes.oneOf(['start', 'middle', 'end']).def('middle'),
+        labelPosition: VueTypes.oneOf(['inside', 'outside']).def('outside'),
+        labelStyles: VueTypes.object,
         width: VueTypes.number.def(DEFAULT_WIDTH),
         color: VueTypes.string,
+        styles: VueTypes.object,
     },
     preload ({ parent, props, index }) {
         const { snap } = parent
@@ -90,20 +119,54 @@ export default {
             const space = (canvas.width - offset) / (dataset.length - 1)
 
             return dataset.map((item, index) => {
+                // Get value of datakey
+                const value = item[this.datakey]
+                // Escape negative values
+                const scaleValue = value >= 0 ? value : 0
+                // Generate props
+                const height = canvas.y1 - yScale(scaleValue)
                 const x = (canvas.x0 + (space * index) + padding[3]) - this.margin
-                const height = canvas.y1 - yScale(item[this.datakey])
                 const y = canvas.y1 - height
+                const label = this.showLabel ? this.generateLabel({ value, x, y }) : undefined
 
                 return {
                     x,
                     y,
                     width: this.width,
                     height,
+                    label,
                 }
             })
         },
+        labelStylesCmp () {
+            return {
+                ...labelStylesDefaultProp,
+                ...this.labelStyles,
+            }
+        },
     },
     methods: {
+        // Generate label of bar
+        generateLabel ({ value, x, y }) {
+            // Escape negative values
+            const { canvas } = this.Cartesian
+            const posY = value > 0 ? y : canvas.y1
+            // Calc coords
+            const lx = x + this.width / 2
+            const ly = canvas.y0 + this.labelY(posY)
+
+            return {
+                x: lx,
+                y: ly,
+                value,
+            }
+        },
+        // Get labelY by labelPosition prop
+        labelY (y) {
+            return this.labelPosition === 'outside'
+                ? y - this.labelSize * 2 - this.labelSize / 2
+                : y - this.labelSize
+        },
         // Set active element
         handleMouseEnter (event) {
             const point = (event.target.dataset || {}).id
