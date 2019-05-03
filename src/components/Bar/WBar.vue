@@ -95,10 +95,6 @@ export default {
         active () {
             return this.Cartesian.activeCartesians.includes(this.id)
         },
-        // Points
-        points () {
-            return this.Cartesian.dataset.map(data => data[this.datakey])
-        },
         // Check color custom or default
         fill () {
             return this.color || this.Cartesian.colors[this.id]
@@ -111,29 +107,58 @@ export default {
         },
         // Margin
         margin () {
+            const { id, width } = this
             const { snap, stacked } = this.Cartesian
-            const half = (this.width / 2)
-            if (stacked) return half
-            const index = snap.barMap.indexOf(this.id)
-            return (half * snap.barMap.length) - (this.width * index)
+            const index = snap.barMap.indexOf(id)
+
+            return stacked
+                ? -width / 2
+                : snap.barOffset[index] - (snap.barAllWidth / 2)
+        },
+        // Points
+        points () {
+            const {
+                padding, bounds, canvas, curData,
+            } = this.Cartesian
+            const low = bounds.min
+            const { x0, y1, height } = canvas
+            const yRatio = height / (bounds.max - bounds.min)
+
+            const data = curData.filter(arr => arr.key === this.datakey)[0] || []
+            const space = (canvas.width - (padding[1] + padding[3])) / (data.length - 1)
+
+            return data.map((value, i) => {
+                let [start, end] = value
+                const label = end
+
+                if (start < 0) {
+                    [end, start] = value
+                }
+
+                start = Math.max(low, start)
+
+                const y = !end ? this.y : y1 - (end - low) * yRatio
+                const y0 = !start ? this.y : y1 - (start - low) * yRatio
+                const x = (x0 + (space * i) + padding[3])
+
+                return [x, y, y0, label]
+            })
         },
         // Bars
         bars () {
-            const { canvas, padding, yScale } = this.Cartesian
-            const space = (canvas.width - (padding[1] + padding[3])) / (this.points.length - 1)
-
-            // Generate Bars
-            return this.points.map((value, index) => {
-                const dimension = this.y - yScale(value)
-                const x = (canvas.x0 + (space * index) + padding[3]) - this.margin
-                const y = this.y - Math.max(dimension, 0)
+            return this.points.map((point, index) => {
+                const [x0, y0, y1, value] = point
+                const height = y1 - y0
+                const x = x0 + this.margin
+                const y = height < 0 ? y1 : y0
+                const label = this.getLabel({ x, y, value })
 
                 return {
                     x,
                     y,
                     width: this.width,
-                    height: Math.abs(dimension),
-                    label: this.getLabel({ x, y, value }),
+                    height: Math.abs(height),
+                    label,
                 }
             })
         },
@@ -149,8 +174,11 @@ export default {
         // Generate label of bar
         getLabel ({ x, y, value }) {
             if (!this.showLabel) return undefined
+            const { stacked, canvas } = this.Cartesian
+            if (stacked && this.id !== this.getLastBarActive()) return undefined
+
             const horizontal = x + this.width / 2
-            const vertical = this.Cartesian.canvas.y0 + this.labelTop(y)[this.labelPosition]
+            const vertical = canvas.y0 + this.labelTop(y)[this.labelPosition]
 
             return {
                 x: horizontal,
@@ -167,12 +195,30 @@ export default {
         },
         // Set active element
         handleMouseEnter (event) {
-            const point = (event.target || {}).id
-            this.Cartesian.setActive(
-                { id: this.id, point },
-                event,
-                this.Cartesian.active.types.point
+            const {
+                stacked, curData, setActive, colors, snap,
+            } = this.Cartesian
+            const { id } = event.target
+            const line = this.Cartesian.dataset[id]
+
+            const values = curData.map(item => ({
+                color: colors[snap.barMap[item.index]],
+                value: line[item.key],
+                key: item.key,
+            }))
+            const value = stacked ? values : [values.find(v => v.key === this.datakey)]
+
+            setActive(
+                { id: this.id, value },
+                event
             )
+        },
+        // Return id of last bar active
+        getLastBarActive () {
+            const { snap, activeCartesians } = this.Cartesian
+            const bars = [...snap.barMap].reverse()
+            const cartesians = [...activeCartesians].reverse()
+            return cartesians.find(el => bars.includes(el))
         },
     },
 }

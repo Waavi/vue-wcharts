@@ -1,5 +1,6 @@
 /* eslint-disable */
 import { tickStep } from 'd3-array/src/ticks'
+import { isNumber } from './checks'
 
 /**
  * Returns nick ticks
@@ -48,7 +49,14 @@ export function genExactNbTicks (min, max, count) {
     return ticks
 }
 
+export function bound (data, type, key) {
+    return Math[type](
+        ...data.map(arr => Math[type](...arr.map(item => item[key]).filter(isNumber)))
+    )
+}
+
 export default {
     genTicks,
-    genExactNbTicks
+    genExactNbTicks,
+    bound
 }

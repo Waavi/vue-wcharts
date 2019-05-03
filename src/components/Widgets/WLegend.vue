@@ -47,6 +47,7 @@
 
 <script>
 import VueTypes from 'vue-types'
+import { sortBy } from 'lodash'
 import { toPx, getIsHorizontal, getSpacesByPos } from './utils'
 
 export default {
@@ -134,7 +135,7 @@ export default {
             if (!actives.includes(index)) actives.push(index)
             else actives = actives.filter(n => n !== index)
 
-            this.Cartesian.activeCartesians = actives
+            this.Cartesian.activeCartesians = sortBy(actives)
         },
     },
 }

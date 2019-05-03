@@ -8,18 +8,22 @@
     >
         <slot v-bind="selected">
             <div class="Wrapper">
-                <span class="Title">{{ selected.xAxisVal }}</span>
-                <div class="Value">
+                <span class="Title">{{ selected.label }}</span>
+                <div
+                    v-for="(value, index) in selected.value"
+                    :key="index"
+                    class="Value"
+                >
                     <slot
                         name="bullet"
                         v-bind="selected"
                     >
                         <div
                             class="Bullet"
-                            :style="bulletStyle"
+                            :style="{ background: value.color }"
                         />
                     </slot>
-                    <span>{{ selected.yAxisVal }}</span>
+                    <span>{{ value.value }}</span>
                 </div>
             </div>
         </slot>
@@ -57,15 +61,19 @@ export default {
         },
     },
     watch: {
-        'Cartesian.active': function watchActive ({ el, event, type }) {
+        'Cartesian.active': function watchActive ({ el, event }) {
             // Reset tooltip if not has selected
             if (!el) {
                 this.reset()
                 return
             }
 
-            // Generate selected Point
-            if (type === this.Cartesian.active.types.point) this.selected = this.getPointSelected(el)
+            // Set selected
+            const { id, value } = el
+            this.selected = {
+                label: this.getLabel(id),
+                value,
+            }
 
             // Calc tooltip pos after rendering html
             this.$nextTick(() => {
@@ -87,23 +95,10 @@ export default {
             this.hide()
             this.selected = null
         },
-        // Get point values
-        getPointSelected ({ id, point }) {
-            // Get line of point
-            const line = this.Cartesian.dataset[point]
-            // Get data name of point
-            const field = this.Cartesian.datakeys[id]
-            // Get color of cartesian dataset
-            const color = this.Cartesian.colors[id]
-            // Get values
-            const xAxisVal = line.name
-            const yAxisVal = line[field]
-
-            return {
-                xAxisVal,
-                yAxisVal,
-                color,
-            }
+        // Return label xAxis by id
+        getLabel (id) {
+            const { dataset, axisXDatakey } = this.Cartesian
+            return dataset[id][axisXDatakey]
         },
         // Set pos tooltip
         calcPos (event) {

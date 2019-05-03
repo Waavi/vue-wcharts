@@ -5,6 +5,9 @@
                 :dataset="data"
                 responsive
             >
+                <WLine datakey="one" />
+                <WLine datakey="two" />
+
                 <WBar
                     legend="One Bar"
                     datakey="one"
@@ -110,7 +113,7 @@ export default {
     },
     data () {
         return {
-            data: dataOne,
+            data: dataTwo,
             curveStep,
         }
     },

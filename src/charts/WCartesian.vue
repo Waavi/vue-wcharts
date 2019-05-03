@@ -1,7 +1,10 @@
 <script>
 import VueTypes from 'vue-types'
 import { scaleLinear } from 'd3'
-import { pick, debounce } from 'lodash'
+import stack from 'd3-shape/src/stack'
+import stackOffsetDiverging from 'd3-shape/src/offset/diverging'
+import { debounce, noop } from 'lodash'
+import { bound } from '../utils/maths'
 
 import activeMixin from '../mixins/active'
 
@@ -111,8 +114,12 @@ export default {
             }
             return gap
         },
+        curData () {
+            return stack()
+                .keys(this.datakeys)
+                .offset(this.stacked ? stackOffsetDiverging : noop)(this.dataset)
+        },
     },
-
     mounted () {
         if (this.responsive) {
             this.resize()
@@ -147,12 +154,11 @@ export default {
             if (typeof val === 'number') return val
 
             const isMin = type === 'min'
-            const values = this.dataset.reduce((acc, d) => {
-                const picked = pick(d, this.datakeys)
-                return [...acc, ...Object.values(picked)]
-            }, [])
+            let result = bound(this.curData, type, isMin ? 0 : 1)
 
-            const result = isMin ? Math.min(...values) : Math.max(...values)
+            if (isMin && result === 0) {
+                result = bound(this.curData, 'min', 1)
+            }
             if (typeof val === 'function') return val(result)
 
             return result
@@ -193,7 +199,7 @@ export default {
 
             switch (sealed.type) {
                 case 'cartesian':
-                    datakeys.push(datakey) // Add datekeys. Removed unique datakey condiition to use multiple elements
+                    if (datakey && datakeys.indexOf(datakey) < 0) datakeys.push(datakey) // Add datekeys. Removed unique datakey condiition to use multiple elements
                     activeCartesians.push(cartesiansLength) // Add to actives elements
                     if (legend) legends.push(legend) // Add to legends elements
                     slot.index = cartesiansLength

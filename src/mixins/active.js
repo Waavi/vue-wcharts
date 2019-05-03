@@ -1,12 +1,6 @@
-const TYPES = {
-    point: 'POINT',
-}
-
 const initial = {
     el: null,
     event: null,
-    type: null,
-    types: TYPES,
 }
 
 export default {
