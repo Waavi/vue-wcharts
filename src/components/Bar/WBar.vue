@@ -124,21 +124,29 @@ export default {
             const { x0, y1, height } = canvas
             const yRatio = height / (bounds.max - bounds.min)
 
+            // Filter data by datakey
             const data = curData.filter(arr => arr.key === this.datakey)[0] || []
+            // Calc space between bars
             const space = (canvas.width - (padding[1] + padding[3])) / (data.length - 1)
 
+            // Generate points array
             return data.map((value, i) => {
                 let [start, end] = value
                 const label = end
 
+                // If start value is negative, reverse values
                 if (start < 0) {
                     [end, start] = value
                 }
 
+                // Calc max value
                 start = Math.max(low, start)
 
+                // Calc yAxis, if value is negative the yAxis it's bound.min
                 const y = !end ? this.y : y1 - (end - low) * yRatio
+                // Calc yAxis separation between points, if has stacked bars
                 const y0 = !start ? this.y : y1 - (start - low) * yRatio
+                // Calc xAxis pos
                 const x = (x0 + (space * i) + padding[3])
 
                 return [x, y, y0, label]
@@ -146,11 +154,14 @@ export default {
         },
         // Bars
         bars () {
+            // Generate bars array
             return this.points.map((point, index) => {
                 const [x0, y0, y1, value] = point
+                // Generate coords
                 const height = y1 - y0
                 const x = x0 + this.margin
                 const y = height < 0 ? y1 : y0
+                // Get bar label
                 const label = this.getLabel({ x, y, value })
 
                 return {
@@ -174,15 +185,17 @@ export default {
         // Generate label of bar
         getLabel ({ x, y, value }) {
             if (!this.showLabel) return undefined
+            // If has stacked bars, only last bar shown the label
             const { stacked, canvas } = this.Cartesian
             if (stacked && this.id !== this.getLastBarActive()) return undefined
 
-            const horizontal = x + this.width / 2
-            const vertical = canvas.y0 + this.labelTop(y)[this.labelPosition]
+            // Calc position of label [x, y]
+            const x0 = x + this.width / 2
+            const y1 = canvas.y0 + this.labelTop(y)[this.labelPosition]
 
             return {
-                x: horizontal,
-                y: vertical,
+                x: x0,
+                y: y1,
                 value,
             }
         },
@@ -201,17 +214,17 @@ export default {
             const { id } = event.target
             const line = this.Cartesian.dataset[id]
 
+            // Generate tooltip config
             const values = curData.map(item => ({
                 color: colors[snap.barMap[item.index]],
                 value: line[item.key],
                 key: item.key,
             }))
+            // Set multiple values if has stacked bars, or set only one value
             const value = stacked ? values : [values.find(v => v.key === this.datakey)]
 
-            setActive(
-                { id: this.id, value },
-                event
-            )
+            // Set active bar to show tooltip
+            setActive({ id: this.id, value }, event)
         },
         // Return id of last bar active
         getLastBarActive () {

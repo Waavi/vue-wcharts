@@ -49,16 +49,21 @@ export default {
         }
     },
     computed: {
+        // yScale with scaleLinear of d3
+        // ref: https://github.com/d3/d3-scale#_continuous
         yScale () {
             return scaleLinear()
                 .domain([this.bounds.min, this.bounds.max])
                 .range([this.canvas.y1 - this.padding[2], this.canvas.y0 + this.padding[0]])
         },
+        // xScale with scaleLinear of d3
+        // ref: https://github.com/d3/d3-scale#_continuous
         xScale () {
             return scaleLinear()
                 .domain([0, this.dataset.length - 1])
                 .range([this.canvas.x0 + this.padding[3], this.canvas.x1 - this.padding[1]])
         },
+        // Bounds
         bounds () {
             if (this.datakeys.length) {
                 const [boundMin, boundMax] = this.bound
@@ -73,9 +78,11 @@ export default {
                 min: 0,
             }
         },
+        // View size, include canvas and paddings/margins
         viewWidth () {
             return this.parentWidth || this.width
         },
+        // Canvas size
         canvas () {
             const { viewWidth, height, space: margin } = this
             const x0 = margin[3]
@@ -92,11 +99,14 @@ export default {
                 y1,
             }
         },
+        // Generate padding by array or number.
+        // return [10, 10, 10, 10]
         padding () {
             const gap = Array.isArray(this.gap) ? this.gap : Array(4).fill(this.gap)
             return gap.map((item, index) => item + this.offset[index])
         },
         // Offset of bars
+        // return [10, 10, 10, 10]
         offset () {
             const { barAllWidth, barMap } = this.snap
             const barsLength = (barMap || []).length
@@ -114,6 +124,8 @@ export default {
             }
             return gap
         },
+        // Return stacked data or data dataset without transform, of datakeys and dataset props
+        // ref: https://github.com/d3/d3-shape#stacks
         curData () {
             return stack()
                 .keys(this.datakeys)
@@ -121,6 +133,7 @@ export default {
         },
     },
     mounted () {
+        // Added listenner if has response prop to true
         if (this.responsive) {
             this.resize()
             if (typeof window !== 'undefined') {
@@ -129,20 +142,24 @@ export default {
         }
     },
     unmounted () {
+        // Remove listenner response
         if (this.responsive && typeof window !== 'undefined') window.removeEventListener('resize')
     },
     methods: {
+        // Add spaces
         addSpace (space = []) {
             space.forEach((val, i) => {
                 this.space[i] = Math.max(val, this.space[i] || 0)
             })
         },
+        // Add spaces of objects els
         addSpaceObjects (space = []) {
             this.addSpace(space)
             space.forEach((val, i) => {
                 this.spaceObjects[i] = Math.max(val, this.spaceObjects[i] || 0)
             })
         },
+        // Resize chart on event emited
         resize () {
             if (this.$el) {
                 const { width } = this.$el.getBoundingClientRect()
@@ -150,6 +167,7 @@ export default {
             }
             this.setChartReady()
         },
+        // Calc min/max bound values
         getBound (val, type = 'min') {
             if (typeof val === 'number') return val
 
@@ -163,6 +181,7 @@ export default {
 
             return result
         },
+        // Set and emit chartReady
         setChartReady () {
             this.chartReady = true
             this.$emit('onChartReady')
