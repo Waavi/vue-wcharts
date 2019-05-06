@@ -7,6 +7,7 @@
         :stroke="stylesCmp.stroke"
         :fill="stylesCmp.fill"
         :font-size="stylesCmp.fontSize"
+        :style="stylesCmp"
     >
         {{ value }}
     </text>
@@ -29,13 +30,7 @@ export default {
         dy: VueTypes.string,
         index: VueTypes.number,
         value: VueTypes.oneOfType([String, Number]),
-        styles: VueTypes.shape({
-            fill: VueTypes.string,
-            stroke: VueTypes.string,
-            fontSize: VueTypes.oneOfType([String, Number]),
-        }).def(() => ({
-            ...stylesDefaultProp,
-        })),
+        styles: VueTypes.object,
     },
     computed: {
         stylesCmp () {

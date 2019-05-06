@@ -44,24 +44,10 @@ export default {
         // Negative axis
         hideNegativeAxis: VueTypes.bool.def(false),
         // Style
-        axisStyles: VueTypes.shape({
-            stroke: VueTypes.string,
-        }).def(() => ({
-            ...axisStylesDefaultProp,
-        })),
-        markStyles: VueTypes.shape({
-            stroke: VueTypes.string,
-        }).def(() => ({
-            ...axisStylesDefaultProp,
-        })),
+        axisStyles: VueTypes.object,
+        markStyles: VueTypes.object,
         labelStyles: VueTypes.object,
-        tickStyles: VueTypes.shape({
-            fill: VueTypes.string,
-            stroke: VueTypes.string,
-            fontSize: VueTypes.oneOfType([String, Number]),
-        }).def(() => ({
-            ...tickStylesDefaultProp,
-        })),
+        tickStyles: VueTypes.object,
     },
     preload ({ parent, props, index }) {
         const { space, labelText, datakey } = props
