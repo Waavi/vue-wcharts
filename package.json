@@ -14,7 +14,7 @@
     "stylelint": "node_modules/stylelint/bin/stylelint.js ./src --formatter verbose",
     "validate": "yarn test && yarn lint && yarn stylelint"
   },
-  "main": "dist/WCharts.umd.js",
+  "main": "src/index.js",
   "browser": "dist/WCharts.common.js",
   "unpkg": "dist/WCharts.umd.min.js",
   "jsDelivr": "dist/WCharts.umd.min.js",
