@@ -55,12 +55,24 @@
                 </text>
             </svg>
         </slot>
+
+        <line
+            v-if="!hideNegativeAxis && negativeAxis"
+            v-bind="negativeAxis"
+            :style="negativeAxisStylesCmp"
+        />
     </g>
 </template>
 
 <script>
 import VueTypes from 'vue-types'
 import axisMixin from '../../mixins/axis'
+
+const negativeAxisStylesDefaultProp = {
+    stroke: '#999',
+    strokeWidth: 1,
+    strokeDasharray: '0',
+}
 
 export default {
     name: 'WXAxis',
@@ -70,6 +82,28 @@ export default {
         labelTextAnchor: VueTypes.string.def('end'),
         space: VueTypes.arrayOf(VueTypes.number).def([0, 20, 24, 20]),
         textOffsetY: VueTypes.number.def(20),
+        negativeAxisStyles: VueTypes.object.def({}),
+    },
+    computed: {
+        negativeAxis () {
+            const {
+                canvas, yScale, bounds, snap,
+            } = this.Cartesian
+            if (bounds.min >= 0 || !Object.keys(snap).length) return null
+            const y = yScale(0)
+            return {
+                x1: canvas.x0,
+                y1: y,
+                x2: canvas.x1,
+                y2: y,
+            }
+        },
+        negativeAxisStylesCmp () {
+            return {
+                ...negativeAxisStylesDefaultProp,
+                ...this.negativeAxisStyles,
+            }
+        },
     },
 }
 </script>

@@ -5,46 +5,34 @@
                 :dataset="data"
                 responsive
             >
-                <WLine
-                    dot
-                    curve
+                <WLine datakey="one" />
+                <WLine datakey="two" />
+
+                <WBar
+                    legend="One Bar"
                     datakey="one"
+                    showLabel
+                    :width="30"
                 />
-                <WLine
-                    dot
-                    curve
+                <WBar
                     datakey="two"
+                    legend="Two Bar"
+                    showLabel
+                    :width="30"
                 />
-                <WLine
-                    dot
-                    curve
+                <WBar
                     datakey="three"
+                    legend="Three Bar"
+                    showLabel
+                    :width="30"
                 />
-                <WCartesianGrid />
                 <WXAxis
                     datakey="name"
-                    :space="[0, 50, 50, 50]"
-                >
-                    <template #label="label">
-                        <svg
-                            width="100%"
-                            height="100%"
-                        >
-                            <text
-                                :x="label.x"
-                                :y="label.y"
-                                :text-anchor="label.textAnchor"
-                                :transform="label.transform"
-                                :font-size="label.fontSize"
-                                fill="#999"
-                            >
-                                Categories
-                            </text>
-                        </svg>
-                    </template>
-                </WXAxis>
-                <WYAxis
-                    labelText="Value"
+                    :space="[0, 50, 80, 50]"
+                />
+                <WYAxis :space="[25, 0, 0, 50]" />
+                <WLegend
+                    selectable
                 />
                 <WTooltip />
             </WCartesian>
@@ -61,18 +49,18 @@
 <script>
 import { curveStep } from 'd3-shape'
 import {
-    WCartesian, WLine, WXAxis, WYAxis, WCartesianGrid, WTooltip,
+    WCartesian, WBar, WXAxis, WYAxis, WTooltip, WLine, WLegend,
 } from '../src'
 
 const dataOne = [
     {
-        name: 'Page A', one: 4000, two: 2400, three: 2400,
+        name: 'Page A', one: 4000, two: -2400, three: 2300,
     },
     {
-        name: 'Page B', one: 3000, two: 1398, three: 2210,
+        name: 'Page B', one: 3000, two: 2210, three: 1398,
     },
     {
-        name: 'Page C', one: 2000, two: 9800, three: 2290,
+        name: 'Page C', one: 9800, two: 2200, three: 0,
     },
     {
         name: 'Page D', one: 2780, two: 3908, three: 2000,
@@ -81,7 +69,7 @@ const dataOne = [
         name: 'Page E', one: 1890, two: 4800, three: 1700,
     },
     {
-        name: 'Page F', one: 2390, two: 3800, three: 2500,
+        name: 'Page F', one: -2390, two: 3800, three: -2500,
     },
     {
         name: 'Page G', one: 3490, two: 4300, three: 2100,
@@ -116,15 +104,16 @@ export default {
     name: 'App',
     components: {
         WCartesian,
-        WLine,
+        WBar,
         WXAxis,
         WYAxis,
-        WCartesianGrid,
         WTooltip,
+        WLine,
+        WLegend,
     },
     data () {
         return {
-            data: dataOne,
+            data: dataTwo,
             curveStep,
         }
     },

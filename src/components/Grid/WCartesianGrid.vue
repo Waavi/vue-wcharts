@@ -37,7 +37,7 @@ export default {
         styles: VueTypes.shape({
             stroke: VueTypes.string,
             strokeWidth: VueTypes.number,
-            strokeDasharray: VueTypes.string,
+            strokeDasharray: VueTypes.oneOfType([String, Number]),
         }).def(() => ({
             ...stylesDefaultProp,
         })),

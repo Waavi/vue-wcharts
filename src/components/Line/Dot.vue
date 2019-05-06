@@ -46,10 +46,23 @@ export default {
     methods: {
         // Set active element
         handleMouseEnter (event) {
-            this.Cartesian.setActive(
-                { id: this.cartesianIndex, point: this.index },
-                event,
-                this.Cartesian.active.types.point
+            const {
+                dataset, datakeys, colors, setActive,
+            } = this.Cartesian
+            const line = dataset[this.index]
+            const key = datakeys[this.cartesianIndex]
+            const color = colors[this.cartesianIndex]
+            const value = line[key]
+
+            setActive(
+                {
+                    id: this.cartesianIndex,
+                    value: [{
+                        value,
+                        color,
+                    }],
+                },
+                event
             )
         },
         // Return styles active or default point,

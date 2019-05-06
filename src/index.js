@@ -1,4 +1,4 @@
 export { WCartesian } from './charts'
 export {
-    WLine, WXAxis, WYAxis, WLegend, WCartesianGrid, WMarker, WTooltip,
+    WLine, WBar, WXAxis, WYAxis, WLegend, WCartesianGrid, WMarker, WTooltip,
 } from './components'
