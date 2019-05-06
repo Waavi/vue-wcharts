@@ -16,8 +16,10 @@ function install (Vue) {
     Vue.component('WBar', WBar)
     Vue.component('WXAxis', WXAxis)
     Vue.component('WYAxis', WYAxis)
-    Vue.component('WTooltip', WTooltip)
     Vue.component('WLegend', WLegend)
+    Vue.component('WCartesianGrid', WCartesianGrid)
+    Vue.component('WMarker', WMarker)
+    Vue.component('WTooltip', WTooltip)
 }
 
 export default install
@@ -25,6 +27,7 @@ export default install
 export {
     WCartesian,
     WLine,
+    WBar,
     WXAxis,
     WYAxis,
     WLegend,
