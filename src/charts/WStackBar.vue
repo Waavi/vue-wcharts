@@ -79,16 +79,19 @@ export default {
 .WStackBar {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     width: 100%;
 }
 
 .Label {
+    font-size: 14px;
+    font-weight: bold;
     margin-right: 35px;
 }
 
 .Value {
     position: absolute;
-    top: 100%;
+    top: calc(100% + 5px);
     left: 0;
     font-size: 12px;
     font-weight: bold;
