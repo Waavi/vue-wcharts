@@ -1,4 +1,4 @@
-import { WCartesian } from './charts'
+import { WCartesian, WStackBar } from './charts'
 import {
     WLine,
     WBar,
@@ -13,6 +13,7 @@ import {
 function install (Vue) {
     [
         WCartesian,
+        WStackBar,
         WLine,
         WBar,
         WXAxis,
@@ -30,6 +31,7 @@ export default install
 
 export {
     WCartesian,
+    WStackBar,
     WLine,
     WBar,
     WXAxis,
