@@ -108,11 +108,10 @@ export default {
         // Offset of bars
         // return [10, 10, 10, 10]
         offset () {
-            const { barAllWidth, barMap } = this.snap
-            const barsLength = (barMap || []).length
+            const { barAllWidth, barIds = [] } = this.snap
             const gap = Array(4).fill(0)
 
-            if (barsLength) {
+            if (barIds.length) {
                 // Checked if width of bars it is higher than canvas width
                 const margin = this.width <= barAllWidth * (this.dataset || []).length
                     ? this.width % barAllWidth
@@ -122,6 +121,7 @@ export default {
                 gap[3] = margin
                 return gap
             }
+
             return gap
         },
         // Return stacked data or data dataset without transform, of datakeys and dataset props
@@ -189,7 +189,7 @@ export default {
     },
     render (h) {
         const slots = this.$slots.default || []
-        const datakeys = [] // We need get slots datakey prop to calculate max and min values for the scales
+        let datakeys = [] // We need get slots datakey prop to calculate max and min values for the scales
         const cartesians = [] // We need inject necessary props to cartesian slots
         const others = []
         const axis = []
@@ -218,9 +218,13 @@ export default {
 
             switch (sealed.type) {
                 case 'cartesian':
-                    if (datakey && datakeys.indexOf(datakey) < 0) datakeys.push(datakey) // Add datekeys. Removed unique datakey condiition to use multiple elements
-                    activeCartesians.push(cartesiansLength) // Add to actives elements
-                    if (legend) legends.push(legend) // Add to legends elements
+                    // Add datekeys. Removed unique datakey condiition to use multiple elements
+                    if (datakey) datakeys = [...datakeys.filter(key => key !== datakey), datakey]
+                    // Add to actives elements
+                    activeCartesians.push(cartesiansLength)
+                    // Add to legends elements
+                    if (legend) legends.push(legend)
+                    // Add slot
                     slot.index = cartesiansLength
                     cartesians.push(slot)
                     break

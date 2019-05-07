@@ -78,13 +78,19 @@ export default {
         styles: VueTypes.object,
     },
     preload ({ parent, props, index }) {
-        const { snap } = parent
-        const width = props.width || DEFAULT_WIDTH
+        const { snap, colors } = parent
+        const { datakey, width, color } = props
 
-        snap.barMap = [].concat(snap.barMap || [], index)
+        // Added id of bars
+        snap.barIds = [].concat(snap.barIds || [], index)
+        // Set datakeys by id
+        snap.barsByDatakeys = { ...snap.barsByDatakeys, [index]: datakey }
+        // Set colors
+        snap.barsDatakeysColors = { ...snap.barsDatakeysColors, [datakey]: color || colors[index] }
+        // Calc dimension
         snap.barAllWidth = snap.barAllWidth || 0
         snap.barOffset = [].concat(snap.barOffset || [], snap.barAllWidth)
-        snap.barAllWidth += width
+        snap.barAllWidth += width || DEFAULT_WIDTH
     },
     computed: {
         // Id cartesian elem
@@ -97,7 +103,7 @@ export default {
         },
         // Check color custom or default
         fill () {
-            return this.color || this.Cartesian.colors[this.id]
+            return this.Cartesian.snap.barsDatakeysColors[this.datakey]
         },
         // Get yAxis origin by bounds.min or zero
         y () {
@@ -109,7 +115,7 @@ export default {
         margin () {
             const { id, width } = this
             const { snap, stacked } = this.Cartesian
-            const index = snap.barMap.indexOf(id)
+            const index = snap.barIds.indexOf(id)
 
             return stacked
                 ? -width / 2
@@ -205,27 +211,32 @@ export default {
         // Set active element
         handleMouseEnter (event) {
             const {
-                stacked, curData, setActive, colors, snap,
+                stacked, curData, setActive, snap, axisXDatakey,
             } = this.Cartesian
             const { id } = event.target
             const line = this.Cartesian.dataset[id]
+            const label = line[axisXDatakey]
 
             // Generate tooltip config
-            const values = curData.map(item => ({
-                color: colors[snap.barMap[item.index]],
-                value: line[item.key],
-                key: item.key,
-            }))
+            const values = curData.map((item) => {
+                const { key } = item
+                const color = snap.barsDatakeysColors[key]
+                const value = item[id].data[key]
+                return {
+                    key,
+                    color,
+                    value,
+                }
+            })
             // Set multiple values if has stacked bars, or set only one value
             const value = stacked ? values : [values.find(v => v.key === this.datakey)]
-
             // Set active bar to show tooltip
-            setActive({ id: this.id, value }, event)
+            setActive({ id: this.id, label, value }, event)
         },
         // Return id of last bar active
         getLastBarActive () {
             const { snap, activeCartesians } = this.Cartesian
-            const bars = [...snap.barMap].reverse()
+            const bars = [...snap.barIds].reverse()
             const cartesians = [...activeCartesians].reverse()
             return cartesians.find(el => bars.includes(el))
         },

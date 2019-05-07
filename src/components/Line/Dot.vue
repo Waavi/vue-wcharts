@@ -47,16 +47,18 @@ export default {
         // Set active element
         handleMouseEnter (event) {
             const {
-                dataset, datakeys, colors, setActive,
+                dataset, datakeys, colors, setActive, axisXDatakey,
             } = this.Cartesian
             const line = dataset[this.index]
             const key = datakeys[this.cartesianIndex]
             const color = colors[this.cartesianIndex]
             const value = line[key]
+            const label = line[axisXDatakey]
 
             setActive(
                 {
                     id: this.cartesianIndex,
+                    label,
                     value: [{
                         value,
                         color,

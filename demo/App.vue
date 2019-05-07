@@ -4,7 +4,13 @@
             <WCartesian
                 :dataset="data"
                 responsive
+                stacked
             >
+                <WLine
+                    datakey="two"
+                    area
+                    legend="One Line"
+                />
                 <WBar
                     legend="One Bar"
                     datakey="one"

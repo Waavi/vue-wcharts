@@ -69,11 +69,7 @@ export default {
             }
 
             // Set selected
-            const { id, value } = el
-            this.selected = {
-                label: this.getLabel(id),
-                value,
-            }
+            this.selected = el
 
             // Calc tooltip pos after rendering html
             this.$nextTick(() => {
@@ -94,11 +90,6 @@ export default {
         reset () {
             this.hide()
             this.selected = null
-        },
-        // Return label xAxis by id
-        getLabel (id) {
-            const { dataset, axisXDatakey } = this.Cartesian
-            return dataset[id][axisXDatakey]
         },
         // Set pos tooltip
         calcPos (event) {
