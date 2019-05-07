@@ -5,9 +5,6 @@
                 :dataset="data"
                 responsive
             >
-                <WLine datakey="one" />
-                <WLine datakey="two" />
-
                 <WBar
                     legend="One Bar"
                     datakey="one"
@@ -32,6 +29,8 @@
                 />
                 <WYAxis :space="[25, 0, 0, 50]" />
                 <WLegend
+                    position="top"
+                    align="end"
                     selectable
                 />
                 <WTooltip />

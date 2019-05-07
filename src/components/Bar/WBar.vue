@@ -161,8 +161,9 @@ export default {
                 const height = y1 - y0
                 const x = x0 + this.margin
                 const y = height < 0 ? y1 : y0
-                // Get bar label
-                const label = this.getLabel({ x, y, value })
+                const label = this.getLabel({
+                    x, y, value, height,
+                })
 
                 return {
                     x,
@@ -183,27 +184,22 @@ export default {
     },
     methods: {
         // Generate label of bar
-        getLabel ({ x, y, value }) {
+        getLabel ({
+            x, y, value, height,
+        }) {
             if (!this.showLabel) return undefined
             // If has stacked bars, only last bar shown the label
-            const { stacked, canvas } = this.Cartesian
-            if (stacked && this.id !== this.getLastBarActive()) return undefined
+            if (this.Cartesian.stacked && this.id !== this.getLastBarActive()) return undefined
 
             // Calc position of label [x, y]
+            const top = (this.labelPosition === 'outside' ? this.labelSize : -(this.labelSize))
             const x0 = x + this.width / 2
-            const y1 = canvas.y0 + this.labelTop(y)[this.labelPosition]
+            const y1 = y - top + this.labelSize / 2
 
             return {
                 x: x0,
                 y: y1,
                 value,
-            }
-        },
-        // Calc label positions
-        labelTop (y) {
-            return {
-                outside: y - this.labelSize * 2 - this.labelSize / 2,
-                inside: y - this.labelSize,
             }
         },
         // Set active element
