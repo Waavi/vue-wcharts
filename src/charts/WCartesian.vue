@@ -7,10 +7,11 @@ import { debounce, noop } from 'lodash'
 import { bound } from '../utils/maths'
 
 import activeMixin from '../mixins/active'
+import themeMixin from '../mixins/theme'
 
 export default {
     name: 'WCartesian',
-    mixins: [activeMixin],
+    mixins: [activeMixin, themeMixin],
     props: {
         dataset: VueTypes.array.def([]),
         responsive: VueTypes.bool.def(false),
@@ -22,14 +23,6 @@ export default {
             VueTypes.number,
             VueTypes.arrayOf(VueTypes.number).def([0, 0, 0, 0]),
         ]).def(0),
-        colors: VueTypes.array.def([
-            '#3fb1e3',
-            '#6be6c1',
-            '#626c91',
-            '#a0a7e6',
-            '#c4ebad',
-            '#96dee8',
-        ]),
     },
     provide () {
         return {

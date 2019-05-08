@@ -1,11 +1,6 @@
 
 <template>
     <div class="WStackBar">
-        <span
-            v-if="label"
-            class="Label"
-            :style="labelStyles"
-        >{{ label }}</span>
         <div
             v-if="stacks"
             class="Stacks"
@@ -16,9 +11,11 @@
                 class="Stack"
                 :style="{
                     ...stackStyles,
+                    opacity: launchAnimation ? 1 : 0,
                     background: stack.color,
                     maxWidth: `${stack.width}%`,
-                    zIndex: stack.zIndex
+                    paddingRight: `${offset}px`,
+                    marginLeft: stack.id > 0 && `-${offset}px`
                 }"
             >
                 <span
@@ -28,7 +25,7 @@
                         color: stack.color
                     }"
                 >
-                    {{ stack.value }}</span>
+                    {{ stack.value }} {{ stack.id }}</span>
             </div>
         </div>
     </div>
@@ -37,29 +34,31 @@
 <script>
 import VueTypes from 'vue-types'
 
-const MIN_WIDTH = 3
+import animationMixin from '../../mixins/animation'
+import themeMixin from '../../mixins/theme'
+
+const MIN_WIDTH = 4
 
 export default {
     name: 'WStackBar',
+    mixins: [themeMixin, animationMixin],
     props: {
         total: VueTypes.number,
-        values: VueTypes.arrayOf(VueTypes.number),
-        label: VueTypes.string,
-        labelStyles: VueTypes.object,
+        values: VueTypes.arrayOf(VueTypes.number).def([]),
         showValue: VueTypes.bool,
         stackStyles: VueTypes.object.def({}),
-        colors: VueTypes.array.def([
-            '#3fb1e3',
-            '#6be6c1',
-            '#626c91',
-            '#a0a7e6',
-            '#c4ebad',
-            '#96dee8',
-        ]),
+        delay: VueTypes.number.def(300),
+    },
+    data () {
+        return {
+            launchAnimation: false,
+            offset: MIN_WIDTH,
+        }
     },
     computed: {
         stacks () {
-            return this.values.reduce((acc, value, index) => {
+            const values = this.launchAnimation ? this.values : Array.from({ length: this.values.length })
+            return values.reduce((acc, value, index) => {
                 const width = (value * 100 / this.total)
                 acc.push({
                     id: index,
@@ -73,6 +72,14 @@ export default {
             }, [])
         },
     },
+    mounted () {
+        setTimeout(this.launch, this.delay)
+    },
+    methods: {
+        launch () {
+            this.launchAnimation = true
+        },
+    },
 }
 </script>
 <style scoped lang="scss">
@@ -81,12 +88,6 @@ export default {
     justify-content: space-between;
     align-items: center;
     width: 100%;
-}
-
-.Label {
-    font-size: 14px;
-    font-weight: bold;
-    margin-right: 35px;
 }
 
 .Value {
@@ -101,18 +102,19 @@ export default {
     position: relative;
     display: flex;
     flex: 1;
+
+    > div {
+        position: relative;
+        display: flex;
+        flex: 1;
+    }
 }
 .Stack {
     position: relative;
     height: 20px;
     width: 100%;
     max-width: 0%;
-    padding-right: 4px;
     border-radius: 3px;
     transition: all 250ms ease;
-
-    & + & {
-        margin-left: -4px;
-    }
 }
 </style>
