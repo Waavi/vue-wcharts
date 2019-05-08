@@ -1,4 +1,4 @@
-import { WCartesian, WStackBar } from './charts'
+import { WCartesian, WStackBar, WLegendTiny } from './charts'
 import {
     WLine,
     WBar,
@@ -17,6 +17,7 @@ const install = (Vue, opts) => {
     const core = [
         WCartesian,
         WStackBar,
+        WLegendTiny,
     ]
 
     const components = [
@@ -45,6 +46,7 @@ export default install
 export {
     WCartesian,
     WStackBar,
+    WLegendTiny,
     WLine,
     WBar,
     WXAxis,
