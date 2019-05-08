@@ -25,6 +25,7 @@
                     <slot
                         v-if="!stack.hide && showValue"
                         name="value"
+                        :index="stack.id"
                         :value="stack.value"
                         :percentage="stack.width|percentage"
                         :color="stack.color"
