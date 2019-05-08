@@ -18,14 +18,24 @@
                     marginLeft: stack.id > 0 && `-${offset}px`
                 }"
             >
-                <span
-                    v-if="!stack.hide && showValue"
+                <div
                     class="Value"
-                    :style="{
-                        color: stack.color
-                    }"
+                    :style="valueStyles"
                 >
-                    {{ stack.value }}{{ showPercentage ? ` (${stack.width.toFixed(2)}%)` : '' }}</span>
+                    <slot
+                        v-if="!stack.hide && showValue"
+                        name="value"
+                        :value="stack.value"
+                        :percentage="stack.width|percentage"
+                        :color="stack.color"
+                    >
+                        <span
+                            :style="{
+                                color: stack.color
+                            }"
+                        >{{ stack.value }}</span>
+                    </slot>
+                </div>
             </div>
         </div>
     </div>
@@ -41,12 +51,17 @@ const MIN_WIDTH = 4
 
 export default {
     name: 'WStackBar',
+    filters: {
+        percentage (value) {
+            return `${value.toFixed(2)}%`
+        },
+    },
     mixins: [themeMixin, animationMixin],
     props: {
         total: VueTypes.number,
         values: VueTypes.arrayOf(VueTypes.number).def([]),
+        valueStyles: VueTypes.object,
         showValue: VueTypes.bool.def(false),
-        showPercentage: VueTypes.bool.def(false),
         stackStyles: VueTypes.object.def({}),
         delay: VueTypes.number.def(300),
     },
