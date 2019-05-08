@@ -25,7 +25,7 @@
                         color: stack.color
                     }"
                 >
-                    {{ stack.value }} {{ stack.id }}</span>
+                    {{ stack.value }}{{ showPercentage ? ` (${stack.width.toFixed(2)}%)` : '' }}</span>
             </div>
         </div>
     </div>
@@ -45,7 +45,8 @@ export default {
     props: {
         total: VueTypes.number,
         values: VueTypes.arrayOf(VueTypes.number).def([]),
-        showValue: VueTypes.bool,
+        showValue: VueTypes.bool.def(false),
+        showPercentage: VueTypes.bool.def(false),
         stackStyles: VueTypes.object.def({}),
         delay: VueTypes.number.def(300),
     },
@@ -94,8 +95,12 @@ export default {
     position: absolute;
     top: calc(100% + 5px);
     left: 0;
+    max-width: 100%;
     font-size: 12px;
     font-weight: bold;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .Stacks {
