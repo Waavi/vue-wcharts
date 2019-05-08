@@ -9,11 +9,17 @@ import {
     WMarker,
     WTooltip,
 } from './components'
+import { setOptions } from './config'
 
-function install (Vue) {
-    [
+const install = (Vue, opts) => {
+    setOptions(opts)
+
+    const core = [
         WCartesian,
         WStackBar,
+    ]
+
+    const components = [
         WLine,
         WBar,
         WXAxis,
@@ -22,7 +28,14 @@ function install (Vue) {
         WCartesianGrid,
         WMarker,
         WTooltip,
-    ].forEach((c) => {
+    ]
+
+    core.forEach((c) => {
+        Vue.component(c.name, c)
+    })
+
+    // Instance components
+    components.forEach((c) => {
         Vue.component(c.name, c)
     })
 }
