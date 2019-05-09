@@ -1,3 +1,2 @@
 export { default as WCartesian } from './WCartesian.vue'
-export { default as WLegendTiny } from './WLegendTiny/WLegendTiny.vue'
-export * from './WStackBar'
+export { default as WStackBar } from './WStackBar.vue'

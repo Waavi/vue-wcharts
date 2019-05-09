@@ -45,8 +45,8 @@
 <script>
 import VueTypes from 'vue-types'
 
-import animationMixin from '../../mixins/animation'
-import themeMixin from '../../mixins/theme'
+import animationMixin from '../mixins/animation'
+import themeMixin from '../mixins/theme'
 
 const MIN_WIDTH = 4
 

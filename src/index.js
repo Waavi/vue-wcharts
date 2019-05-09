@@ -1,10 +1,11 @@
-import { WCartesian, WStackBar, WLegendTiny } from './charts'
+import { WCartesian, WStackBar } from './charts'
 import {
     WLine,
     WBar,
     WXAxis,
     WYAxis,
     WLegend,
+    WLegends,
     WCartesianGrid,
     WMarker,
     WTooltip,
@@ -17,7 +18,7 @@ const install = (Vue, opts) => {
     const core = [
         WCartesian,
         WStackBar,
-        WLegendTiny,
+        WLegend,
     ]
 
     const components = [
@@ -25,7 +26,7 @@ const install = (Vue, opts) => {
         WBar,
         WXAxis,
         WYAxis,
-        WLegend,
+        WLegends,
         WCartesianGrid,
         WMarker,
         WTooltip,
@@ -46,12 +47,12 @@ export default install
 export {
     WCartesian,
     WStackBar,
-    WLegendTiny,
     WLine,
     WBar,
     WXAxis,
     WYAxis,
     WLegend,
+    WLegends,
     WCartesianGrid,
     WMarker,
     WTooltip,

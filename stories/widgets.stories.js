@@ -4,7 +4,7 @@ import {
 import { storiesOf } from '@storybook/vue'
 
 import {
-    WCartesian, WLine, WXAxis, WYAxis, WLegend,
+    WCartesian, WLine, WXAxis, WYAxis, WLegends, WLegend,
 } from '../src'
 
 const data = [
@@ -32,13 +32,39 @@ const data = [
 ]
 
 storiesOf('Widgets', module)
+    .add('Legend', () => ({
+        components: {
+            WLegend,
+        },
+        data () {
+            return {
+                legends: [
+                    'Corrective costs',
+                    'Preventive costs',
+                    'Future costs',
+                ],
+            }
+        },
+        template: `
+            <div class="Container">
+                <WLegend
+                    v-for="(legend, index) in legends"
+                    :key="index"
+                    :index="index"
+                    :text="legend"
+                    :style="{ marginBottom: '10px' }"
+                    active
+                />
+            </div>
+            `,
+    }))
     .add('Legends', () => ({
         components: {
             WCartesian,
             WLine,
             WXAxis,
             WYAxis,
-            WLegend,
+            WLegends,
         },
         data () {
             return {
@@ -77,7 +103,7 @@ storiesOf('Widgets', module)
                         :space="[0, 50, 25, 50]"
                     />
                     <WYAxis :space="[25, 0, 0, 50]" />
-                    <WLegend
+                    <WLegends
                         :selectable="legendSelectable"
                         :position="legendPos"
                         :align="legendAlign"
@@ -86,13 +112,13 @@ storiesOf('Widgets', module)
             </div>
             `,
     }))
-    .add('With custom legends', () => ({
+    .add('Legends custom', () => ({
         components: {
             WCartesian,
             WLine,
             WXAxis,
             WYAxis,
-            WLegend,
+            WLegends,
         },
         data () {
             return {
@@ -136,15 +162,15 @@ storiesOf('Widgets', module)
                         :space="[0, 50, 25, 50]"
                     />
                     <WYAxis :space="[25, 0, 0, 50]" />
-                    <WLegend
+                    <WLegends
                         :selectable="legendSelectable"
                         :position="legendPos"
                         :align="legendAlign"
                     >
-                        <template #bullet="{ styles }">
-                            <span :style="{ fontSize: '18', marginRight: '10px', color: styles.color }">{{ legendBullet }}</span>
+                        <template #bullet="{ color }">
+                            <span :style="{ fontSize: '18', marginRight: '10px', color }">{{ legendBullet }}</span>
                         </template>
-                    </WLegend>
+                    </WLegends>
                 </WCartesian>
             </div>
             `,
