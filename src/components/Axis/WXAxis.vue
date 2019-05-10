@@ -88,7 +88,7 @@ export default {
         negativeAxis () {
             const {
                 canvas, yScale, bounds, snap,
-            } = this.Cartesian
+            } = this.Chart
             if (bounds.min >= 0 || !Object.keys(snap).length) return null
             const y = yScale(0)
             return {

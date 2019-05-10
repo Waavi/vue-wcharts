@@ -28,7 +28,7 @@ const stylesDefaultProp = {
 export default {
     name: 'WCartesianGrid',
     type: 'cartesian',
-    inject: ['Cartesian'],
+    inject: ['Chart'],
     props: {
         hideH: VueTypes.bool.def(false),
         hideV: VueTypes.bool.def(false),
@@ -54,7 +54,7 @@ export default {
             if (this.hideH) return []
             const {
                 dataset, canvas, bounds, yScale,
-            } = this.Cartesian
+            } = this.Chart
             // Calculate number of lines to paint
             const numLines = this.numLinesH || dataset.length
             // Select the correct function and generate the value of the lines. ex: [100, 500, 1500, 2500, 5000]
@@ -76,7 +76,7 @@ export default {
             if (this.hideV) return []
             const {
                 dataset, canvas, padding,
-            } = this.Cartesian
+            } = this.Chart
             // Calculate number of lines to generate
             const numLines = this.numLinesV || dataset.length
             // Calculate left and right space

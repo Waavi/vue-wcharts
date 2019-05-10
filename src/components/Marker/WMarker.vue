@@ -43,7 +43,7 @@ const labelStylesDefaultProp = {
 export default {
     name: 'WMarker',
     type: 'cartesian',
-    inject: ['Cartesian'],
+    inject: ['Chart'],
     props: {
         type: VueTypes.oneOf(['y', 'x']).def('y'),
         value: VueTypes.any.isRequired,
@@ -81,7 +81,7 @@ export default {
         line () {
             const {
                 dataset, canvas, yScale, padding, axisXDatakey,
-            } = this.Cartesian
+            } = this.Chart
             if (this.isX) {
                 // Calculate left and right space
                 const offset = padding[1] + padding[3]

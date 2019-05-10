@@ -26,7 +26,7 @@ const spaceLabelY = [50, 0, 0, 80]
 
 export default {
     type: 'axis',
-    inject: ['Cartesian'],
+    inject: ['Chart'],
     components: {
         TickText,
     },
@@ -86,7 +86,7 @@ export default {
         ticks () {
             const {
                 dataset, canvas, bounds, padding, yScale,
-            } = this.Cartesian
+            } = this.Chart
 
             // If xAxis
             if (this.isX) {
@@ -146,19 +146,19 @@ export default {
         },
         // Return y2 point
         x1 () {
-            return this.Cartesian.canvas.x0
+            return this.Chart.canvas.x0
         },
         // Return y1 point
         y1 () {
-            return this.isX ? this.Cartesian.canvas.y1 : this.Cartesian.canvas.y0
+            return this.isX ? this.Chart.canvas.y1 : this.Chart.canvas.y0
         },
         // Return x2 point
         x2 () {
-            return this.isX ? this.Cartesian.canvas.x1 : this.Cartesian.canvas.x0
+            return this.isX ? this.Chart.canvas.x1 : this.Chart.canvas.x0
         },
         // Return y2 point
         y2 () {
-            return this.Cartesian.canvas.y1
+            return this.Chart.canvas.y1
         },
         // Return label config
         label () {
@@ -208,11 +208,11 @@ export default {
         // Return coords of the label xAxis by align
         getLabelXAxis (align) {
             const pos = {
-                start: this.Cartesian.canvas.x0,
-                middle: (this.Cartesian.canvas.x1 - this.Cartesian.canvas.x0) / 2 + this.Cartesian.canvas.x0,
-                end: this.Cartesian.canvas.x1,
+                start: this.Chart.canvas.x0,
+                middle: (this.Chart.canvas.x1 - this.Chart.canvas.x0) / 2 + this.Chart.canvas.x0,
+                end: this.Chart.canvas.x1,
             }
-            const y = this.Cartesian.canvas.y1 + (this.Cartesian.spaceObjects[2] / 2 + this.textOffsetY)
+            const y = this.Chart.canvas.y1 + (this.Chart.spaceObjects[2] / 2 + this.textOffsetY)
             const x = pos[align]
 
             return { x, y }
@@ -221,11 +221,11 @@ export default {
         // Note: Use the <svg></svg> tag in slot, because solve the align vertical of text
         getLabelYAxis (align) {
             const pos = {
-                start: this.Cartesian.canvas.y1,
-                middle: (this.Cartesian.canvas.y1 - this.Cartesian.canvas.y0) / 2 + this.Cartesian.canvas.y0,
-                end: this.Cartesian.canvas.y0,
+                start: this.Chart.canvas.y1,
+                middle: (this.Chart.canvas.y1 - this.Chart.canvas.y0) / 2 + this.Chart.canvas.y0,
+                end: this.Chart.canvas.y0,
             }
-            const x = this.Cartesian.canvas.x0 - (this.Cartesian.spaceObjects[3] / 2 + this.textOffsetY)
+            const x = this.Chart.canvas.x0 - (this.Chart.spaceObjects[3] / 2 + this.textOffsetY)
             const y = pos[align]
 
             return { x, y, transform: `rotate(-90 ${x} ${y})` }

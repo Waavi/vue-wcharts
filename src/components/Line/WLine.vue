@@ -45,7 +45,7 @@
                         radius: dotStylesCmp.radius,
                         hoverRadius: dotStylesCmp.hoverRadius,
                     }"
-                    :Cartesian="Cartesian"
+                    :Chart="Chart"
                     :transition="transition"
                 >
                     <Dot
@@ -101,7 +101,7 @@ export default {
         Spread,
     },
     mixins: [animationMixin],
-    inject: ['Cartesian'],
+    inject: ['Chart'],
     props: {
         datakey: VueTypes.string.isRequired,
         legend: VueTypes.string,
@@ -131,7 +131,7 @@ export default {
             return this.$vnode.index
         },
         active () {
-            return this.Cartesian.activeCartesians.includes(this.index)
+            return this.Chart.activeElements.includes(this.index)
         },
         stylesCmp () {
             return {
@@ -146,18 +146,18 @@ export default {
             }
         },
         fillColor () {
-            return this.Cartesian.colors[this.index]
+            return this.Chart.colors[this.index]
         },
         lineData () {
-            return this.Cartesian.dataset.map((item, index) => ({
+            return this.Chart.dataset.map((item, index) => ({
                 x: index,
                 y: item[this.datakey],
             }))
         },
         dotsData () {
-            return this.dot ? this.Cartesian.dataset.map((item, index) => ({
-                x: this.Cartesian.xScale(index),
-                y: this.Cartesian.yScale(item[this.datakey]),
+            return this.dot ? this.Chart.dataset.map((item, index) => ({
+                x: this.Chart.xScale(index),
+                y: this.Chart.yScale(item[this.datakey]),
                 value: item[this.datakey],
                 index,
                 cartesianIndex: this.index,
@@ -165,8 +165,8 @@ export default {
         },
         genLine () {
             return d3Line()
-                .x(d => this.Cartesian.xScale(d.x))
-                .y(d => this.Cartesian.yScale(d.y))
+                .x(d => this.Chart.xScale(d.x))
+                .y(d => this.Chart.yScale(d.y))
         },
         linePath () {
             if (this.curve === false) return this.genLine(this.lineData)
@@ -175,9 +175,9 @@ export default {
         },
         genArea () {
             if (!this.area) return null
-            return d3Area().x(d => this.Cartesian.xScale(d.x))
-                .y0(this.Cartesian.canvas.y1)
-                .y1(d => this.Cartesian.yScale(d.y))
+            return d3Area().x(d => this.Chart.xScale(d.x))
+                .y0(this.Chart.canvas.y1)
+                .y1(d => this.Chart.yScale(d.y))
         },
         areaPath () {
             if (!this.area) return null

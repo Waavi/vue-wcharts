@@ -1,6 +1,6 @@
 <template>
     <div
-        v-if="!!Cartesian.legends.length"
+        v-if="!!Chart.legends.length"
         class="WLegends"
         :style="styles.component"
     >
@@ -9,7 +9,7 @@
             :style="styles.wrapper"
         >
             <li
-                v-for="(legend, index) in Cartesian.legends"
+                v-for="(legend, index) in Chart.legends"
                 :key="legend"
                 class="Legend"
                 :class="[position]"
@@ -18,7 +18,7 @@
                     :key="index"
                     :index="index"
                     :text="legend"
-                    :selected="Cartesian.activeCartesians.includes(index)"
+                    :selected="Chart.activeElements.includes(index)"
                     :style="legendStyles"
                     @onClick="handleClick"
                 >
@@ -52,7 +52,7 @@ import WLegend from './WLegend.vue'
 export default {
     name: 'WLegends',
     type: 'plugins',
-    inject: ['Cartesian'],
+    inject: ['Chart'],
     components: {
         WLegend,
     },
@@ -100,7 +100,7 @@ export default {
             const width = isHorizontal ? '100%' : size || toPx(85)
             const height = !isHorizontal ? '100%' : size || toPx(20)
             // Spaces
-            const [topParent, rightParent, bottomParent, leftParent] = this.Cartesian.space
+            const [topParent, rightParent, bottomParent, leftParent] = this.Chart.space
             const [top, right, bottom, left] = this.space
             const spaces = {
                 top, bottom, left, right,
@@ -132,12 +132,12 @@ export default {
         */
         handleClick ({ legend, index }) {
             if (!this.selectable) return
-            let actives = [...this.Cartesian.activeCartesians]
+            let actives = [...this.Chart.activeElements]
 
             if (!actives.includes(index)) actives.push(index)
             else actives = actives.filter(n => n !== index)
 
-            this.Cartesian.activeCartesians = sortBy(actives)
+            this.Chart.activeElements = sortBy(actives)
         },
     },
 }

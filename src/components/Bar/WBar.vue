@@ -8,14 +8,14 @@
             :key="key"
             :initialProps="{
                 height: 0,
-                y: Cartesian.canvas.y1
+                y: Chart.canvas.y1
             }"
             :transition="transition"
         >
             <g
                 :id="key"
                 @mouseenter="handleMouseEnter"
-                @mouseleave="Cartesian.cleanActive"
+                @mouseleave="Chart.cleanActive"
             >
                 <rect
                     :x="bar.x"
@@ -64,7 +64,7 @@ export default {
         Trans,
     },
     mixins: [animationMixin],
-    inject: ['Cartesian'],
+    inject: ['Chart'],
     props: {
         datakey: VueTypes.string.isRequired,
         legend: VueTypes.string, // Prop to apply filters
@@ -99,22 +99,22 @@ export default {
         },
         // Active elem
         active () {
-            return this.Cartesian.activeCartesians.includes(this.id)
+            return this.Chart.activeElements.includes(this.id)
         },
         // Check color custom or default
         fill () {
-            return this.Cartesian.snap.barsDatakeysColors[this.datakey]
+            return this.Chart.snap.barsDatakeysColors[this.datakey]
         },
         // Get yAxis origin by bounds.min or zero
         y () {
-            const { bounds, yScale } = this.Cartesian
+            const { bounds, yScale } = this.Chart
             const min = Math.max(bounds.min, 0)
             return yScale(min)
         },
         // Margin
         margin () {
             const { id, width } = this
-            const { snap, stacked } = this.Cartesian
+            const { snap, stacked } = this.Chart
             const index = snap.barIds.indexOf(id)
 
             return stacked
@@ -125,7 +125,7 @@ export default {
         points () {
             const {
                 padding, bounds, canvas, curData,
-            } = this.Cartesian
+            } = this.Chart
             const low = bounds.min
             const { x0, y1, height } = canvas
             const yRatio = height / (bounds.max - bounds.min)
@@ -195,7 +195,7 @@ export default {
         }) {
             if (!this.showLabel) return undefined
             // If has stacked bars, only last bar shown the label
-            if (this.Cartesian.stacked && this.id !== this.getLastBarActive()) return undefined
+            if (this.Chart.stacked && this.id !== this.getLastBarActive()) return undefined
 
             // Calc position of label [x, y]
             const top = (this.labelPosition === 'outside' ? this.labelSize : -(this.labelSize))
@@ -212,9 +212,9 @@ export default {
         handleMouseEnter (event) {
             const {
                 stacked, curData, setActive, snap, axisXDatakey,
-            } = this.Cartesian
+            } = this.Chart
             const { id } = event.target
-            const line = this.Cartesian.dataset[id]
+            const line = this.Chart.dataset[id]
             const label = line[axisXDatakey]
 
             // Generate tooltip config
@@ -235,9 +235,9 @@ export default {
         },
         // Return id of last bar active
         getLastBarActive () {
-            const { snap, activeCartesians } = this.Cartesian
+            const { snap, activeElements } = this.Chart
             const bars = [...snap.barIds].reverse()
-            const cartesians = [...activeCartesians].reverse()
+            const cartesians = [...activeElements].reverse()
             return cartesians.find(el => bars.includes(el))
         },
     },

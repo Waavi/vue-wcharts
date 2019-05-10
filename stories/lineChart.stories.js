@@ -289,18 +289,18 @@ storiesOf('Charts/Line', module)
                         datakey="one"
                     >
                         <template
-                            #dot="{ dot, styles, Cartesian, transition }"
+                            #dot="{ dot, styles, Chart, transition }"
                         >
                             <g
                                 :fill="styles.stroke"
                             >
                                 <rect
-                                    :x="Cartesian.active.el && Cartesian.active.el.id === dot.cartesianIndex && Cartesian.active.el.point === dot.index ? dot.x - 10 : dot.x - 7"
-                                    :y="Cartesian.active.el && Cartesian.active.el.id === dot.cartesianIndex && Cartesian.active.el.point === dot.index ? dot.y - 10 : dot.y - 7"
-                                    :width="Cartesian.active.el && Cartesian.active.el.id === dot.cartesianIndex && Cartesian.active.el.point === dot.index ? 20 : 14"
-                                    :height="Cartesian.active.el && Cartesian.active.el.id === dot.cartesianIndex && Cartesian.active.el.point === dot.index ? 20 : 14"
-                                    @mouseenter="Cartesian.setActive({ id: dot.cartesianIndex, point: dot.index }, $event, Cartesian.active.types.point)"
-                                    @mouseleave="Cartesian.cleanActive"
+                                    :x="Chart.active.el && Chart.active.el.id === dot.cartesianIndex && Chart.active.el.point === dot.index ? dot.x - 10 : dot.x - 7"
+                                    :y="Chart.active.el && Chart.active.el.id === dot.cartesianIndex && Chart.active.el.point === dot.index ? dot.y - 10 : dot.y - 7"
+                                    :width="Chart.active.el && Chart.active.el.id === dot.cartesianIndex && Chart.active.el.point === dot.index ? 20 : 14"
+                                    :height="Chart.active.el && Chart.active.el.id === dot.cartesianIndex && Chart.active.el.point === dot.index ? 20 : 14"
+                                    @mouseenter="Chart.setActive({ id: dot.cartesianIndex, point: dot.index }, $event, Chart.active.types.point)"
+                                    @mouseleave="Chart.cleanActive"
                                     :style="{ transition }"
                                 />
                                 <text
@@ -528,7 +528,7 @@ storiesOf('Charts/Line', module)
             </div>
         `,
     }))
-    .add('Tooltip', () => ({
+    .add('With custom dot in tooltip', () => ({
         components: {
             WCartesian,
             WLine,
@@ -539,6 +539,19 @@ storiesOf('Charts/Line', module)
         data () {
             return {
                 data,
+                styles: {
+                    background: '#eee',
+                },
+                labelStyle: {
+                    color: '#333',
+                    fontSize: '12px',
+                },
+                lineStyle: {
+                    height: '2px',
+                    width: '50px',
+                    marginTop: '5px',
+                    marginBottom: '5px',
+                },
             }
         },
         template: `
@@ -550,11 +563,20 @@ storiesOf('Charts/Line', module)
                         dot
                         datakey="one"
                     />
+                    <WLine
+                        dot
+                        datakey="two"
+                        legend="Two Line"
+                    />
                     <WXAxis
                         datakey="name"
                     />
                     <WYAxis />
-                    <WTooltip />
+                    <WTooltip>
+                        <template #bullet="selected">
+                            <span :style="{ color: selected.color, marginRight: '5px' }">x</span>
+                        </template>
+                    </WTooltip>
                 </WCartesian>
             </div>
         `,
@@ -610,200 +632,6 @@ storiesOf('Charts/Line', module)
                                 <div :style="labelStyle"><strong>Point</strong>: {{ tooltip.yAxisVal }}</div>
                                 <div :style="{ ...lineStyle, background: tooltip.color }"></div>
                             </div>
-                        </template>
-                    </WTooltip>
-                </WCartesian>
-            </div>
-        `,
-    }))
-    .add('With custom dot in tooltip', () => ({
-        components: {
-            WCartesian,
-            WLine,
-            WXAxis,
-            WYAxis,
-            WTooltip,
-        },
-        data () {
-            return {
-                data,
-                styles: {
-                    background: '#eee',
-                },
-                labelStyle: {
-                    color: '#333',
-                    fontSize: '12px',
-                },
-                lineStyle: {
-                    height: '2px',
-                    width: '50px',
-                    marginTop: '5px',
-                    marginBottom: '5px',
-                },
-            }
-        },
-        template: `
-            <div class="Container">
-                <WCartesian
-                    :dataset="data"
-                >
-                    <WLine
-                        dot
-                        datakey="one"
-                    />
-                    <WLine
-                        dot
-                        datakey="two"
-                        legend="Two Line"
-                    />
-                    <WXAxis
-                        datakey="name"
-                    />
-                    <WYAxis />
-                    <WTooltip>
-                        <template #bullet="selected">
-                            <span :style="{ color: selected.color, marginRight: '5px' }">x</span>
-                        </template>
-                    </WTooltip>
-                </WCartesian>
-            </div>
-        `,
-    }))
-    .add('Tooltip', () => ({
-        components: {
-            WCartesian,
-            WLine,
-            WXAxis,
-            WYAxis,
-            WTooltip,
-        },
-        data () {
-            return {
-                data,
-            }
-        },
-        template: `
-            <div class="Container">
-                <WCartesian
-                    :dataset="data"
-                >
-                    <WLine
-                        dot
-                        datakey="one"
-                    />
-                    <WXAxis
-                        datakey="name"
-                    />
-                    <WYAxis />
-                    <WTooltip />
-                </WCartesian>
-            </div>
-        `,
-    }))
-    .add('With custom tooltip', () => ({
-        components: {
-            WCartesian,
-            WLine,
-            WXAxis,
-            WYAxis,
-            WTooltip,
-        },
-        data () {
-            return {
-                data,
-                styles: {
-                    background: '#eee',
-                },
-                labelStyle: {
-                    color: '#333',
-                    fontSize: '12px',
-                },
-                lineStyle: {
-                    height: '2px',
-                    width: '50px',
-                    marginTop: '5px',
-                    marginBottom: '5px',
-                },
-            }
-        },
-        template: `
-            <div class="Container">
-                <WCartesian
-                    :dataset="data"
-                >
-                    <WLine
-                        dot
-                        datakey="one"
-                    />
-                    <WLine
-                        dot
-                        datakey="two"
-                        legend="Two Line"
-                    />
-                    <WXAxis
-                        datakey="name"
-                    />
-                    <WYAxis />
-                    <WTooltip :style="styles">
-                        <template #default="tooltip">
-                            <div class="Wrapper">
-                                <div :style="labelStyle"><strong>Category</strong>: {{ tooltip.xAxisVal }}</div>
-                                <div :style="labelStyle"><strong>Point</strong>: {{ tooltip.yAxisVal }}</div>
-                                <div :style="{ ...lineStyle, background: tooltip.color }"></div>
-                            </div>
-                        </template>
-                    </WTooltip>
-                </WCartesian>
-            </div>
-        `,
-    }))
-    .add('With custom dot in tooltip', () => ({
-        components: {
-            WCartesian,
-            WLine,
-            WXAxis,
-            WYAxis,
-            WTooltip,
-        },
-        data () {
-            return {
-                data,
-                styles: {
-                    background: '#eee',
-                },
-                labelStyle: {
-                    color: '#333',
-                    fontSize: '12px',
-                },
-                lineStyle: {
-                    height: '2px',
-                    width: '50px',
-                    marginTop: '5px',
-                    marginBottom: '5px',
-                },
-            }
-        },
-        template: `
-            <div class="Container">
-                <WCartesian
-                    :dataset="data"
-                >
-                    <WLine
-                        dot
-                        datakey="one"
-                    />
-                    <WLine
-                        dot
-                        datakey="two"
-                        legend="Two Line"
-                    />
-                    <WXAxis
-                        datakey="name"
-                    />
-                    <WYAxis />
-                    <WTooltip>
-                        <template #bullet="selected">
-                            <span :style="{ color: selected.color, marginRight: '5px' }">x</span>
                         </template>
                     </WTooltip>
                 </WCartesian>
