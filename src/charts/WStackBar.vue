@@ -53,6 +53,7 @@ const MIN_WIDTH = 4
 export default {
     name: 'WStackBar',
     filters: {
+        // Transform value to percentage string
         percentage (value) {
             return `${value.toFixed(2)}%`
         },
@@ -73,10 +74,15 @@ export default {
         }
     },
     computed: {
+        // Used total prop binding or the sum of all values
+        totalValue () {
+            return this.total || this.values.reduce((a, b) => a + b)
+        },
+        // Generate and calc stack values
         stacks () {
             const values = this.launchAnimation ? this.values : Array.from({ length: this.values.length })
             return values.reduce((acc, value, index) => {
-                const width = (value * 100 / this.total)
+                const width = (value * 100 / this.totalValue)
                 acc.push({
                     id: index,
                     value,
@@ -90,9 +96,11 @@ export default {
         },
     },
     mounted () {
+        // Added delay to animate stack
         setTimeout(this.launch, this.delay)
     },
     methods: {
+        // Enable launch animation
         launch () {
             this.launchAnimation = true
         },

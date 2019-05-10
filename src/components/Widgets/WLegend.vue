@@ -40,6 +40,7 @@ export default {
         color: VueTypes.string,
     },
     computed: {
+        // Get color value. Color prop, Color theme by index or color by defualt
         colorCmp () {
             if (this.color) return this.color
             if (this.index) return this.colors[this.index]

@@ -15,7 +15,6 @@ storiesOf('Components', module)
         data () {
             return {
                 data: {
-                    total: 71.6,
                     legends: ['M&R ToEx', 'Unavailability costs'],
                     values: [67.3, 4.3],
                 },
@@ -25,7 +24,6 @@ storiesOf('Components', module)
         template: `
             <div class="Container">
                 <WStackBar
-                    :total="data.total"
                     :values="data.values"
                     :showValue="showValue"
                 >
