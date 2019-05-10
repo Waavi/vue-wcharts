@@ -34,7 +34,7 @@
                     :space="[0, 50, 80, 50]"
                 />
                 <WYAxis :space="[25, 0, 0, 50]" />
-                <WLegend
+                <WLegends
                     position="top"
                     align="end"
                     selectable
@@ -54,7 +54,7 @@
 <script>
 import { curveStep } from 'd3-shape'
 import {
-    WCartesian, WBar, WXAxis, WYAxis, WTooltip, WLine, WLegend,
+    WCartesian, WBar, WXAxis, WYAxis, WTooltip, WLine, WLegends,
 } from '../src'
 
 const dataOne = [
@@ -114,7 +114,7 @@ export default {
         WYAxis,
         WTooltip,
         WLine,
-        WLegend,
+        WLegends,
     },
     data () {
         return {
