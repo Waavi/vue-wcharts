@@ -1,46 +1,25 @@
 <template>
     <div class="Container">
         <div class="Wrapper">
-            <WCartesian
-                :dataset="data"
-                responsive
-                stacked
-            >
-                <WLine
-                    datakey="two"
-                    area
-                    legend="One Line"
-                />
-                <WBar
-                    legend="One Bar"
-                    datakey="one"
-                    showLabel
-                    :width="30"
-                />
-                <WBar
-                    datakey="two"
-                    legend="Two Bar"
-                    showLabel
-                    :width="30"
-                />
-                <WBar
-                    datakey="three"
-                    legend="Three Bar"
-                    showLabel
-                    :width="30"
-                />
-                <WXAxis
-                    datakey="name"
-                    :space="[0, 50, 80, 50]"
-                />
-                <WYAxis :space="[25, 0, 0, 50]" />
-                <WLegends
-                    position="top"
-                    align="end"
-                    selectable
-                />
-                <WTooltip />
-            </WCartesian>
+            <div class="Tabs">
+                <button
+                    class="Btn"
+                    @click="activeComponent = 'Cartesian'"
+                >
+                    Cartesian
+                </button>
+                <button
+                    class="Btn"
+                    @click="activeComponent = 'Pie'"
+                >
+                    Cartesian
+                </button>
+            </div>
+            <component
+                :is="activeComponent"
+                class="Chart"
+                :data="data"
+            />
             <button
                 class="Btn"
                 @click="changeData"
@@ -53,9 +32,7 @@
 
 <script>
 import { curveStep } from 'd3-shape'
-import {
-    WCartesian, WBar, WXAxis, WYAxis, WTooltip, WLine, WLegends,
-} from '../src'
+import Cartesian from './Cartesian.vue'
 
 const dataOne = [
     {
@@ -108,17 +85,12 @@ const dataTwo = [
 export default {
     name: 'App',
     components: {
-        WCartesian,
-        WBar,
-        WXAxis,
-        WYAxis,
-        WTooltip,
-        WLine,
-        WLegends,
+        Cartesian,
     },
     data () {
         return {
             data: dataTwo,
+            activeComponent: 'Cartesian',
             curveStep,
         }
     },
@@ -155,7 +127,13 @@ export default {
     width: 90%;
     max-width: 800px;
 }
-.WCartesian {
+.Tabs {
+    margin-bottom: 50px;
+    > * {
+        margin: 0 15px;
+    }
+}
+.Chart {
     border: 1px solid rgba(0,0,0,0.125);
     background: #FFF;
     // padding: 0 0 2rem 0;

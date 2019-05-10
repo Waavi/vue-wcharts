@@ -6,13 +6,11 @@ import stackOffsetDiverging from 'd3-shape/src/offset/diverging'
 import { noop } from 'lodash'
 import { bound } from '../utils/maths'
 
-import activeMixin from '../mixins/active'
-import themeMixin from '../mixins/theme'
-import basicMixin from '../mixins/basic'
+import chartMixin from '../mixins/chart'
 
 export default {
     name: 'WCartesian',
-    mixins: [basicMixin, activeMixin, themeMixin],
+    mixins: [chartMixin],
     props: {
         stacked: VueTypes.bool.def(false),
         bound: VueTypes.array.def([]),
@@ -20,11 +18,6 @@ export default {
             VueTypes.number,
             VueTypes.arrayOf(VueTypes.number).def([0, 0, 0, 0]),
         ]).def(0),
-    },
-    provide () {
-        return {
-            Chart: this,
-        }
     },
     data () {
         return {

@@ -1,4 +1,4 @@
-import { WCartesian, WStackBar } from './charts'
+import { WCartesian, WPieChart, WStackBar } from './charts'
 import {
     WLine,
     WBar,
@@ -12,11 +12,12 @@ import {
 } from './components'
 import { setOptions } from './config'
 
-const install = (Vue, opts) => {
+const install = (Vue, opts = {}) => {
     setOptions(opts)
 
     const core = [
         WCartesian,
+        WPieChart,
         WStackBar,
         WLegend,
     ]
@@ -46,6 +47,7 @@ export default install
 
 export {
     WCartesian,
+    WPieChart,
     WStackBar,
     WLine,
     WBar,
