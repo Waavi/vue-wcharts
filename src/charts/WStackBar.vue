@@ -7,7 +7,8 @@
         >
             <div
                 v-for="stack in stacks"
-                :key="stack.id"
+                v-show="!(stack.value <= 0)"
+                :key="`stack-${stack.id}`"
                 class="Stack"
                 :style="{
                     ...stackStyles,
@@ -38,6 +39,23 @@
                     </slot>
                 </div>
             </div>
+
+            <div
+                v-for="marker in stackMarkers"
+                v-show="!(marker.value <= 0)"
+                :key="`marker-${marker.id}`"
+                class="Marker"
+                :style="{
+                    left: `${marker.left}%`
+                }"
+            >
+                <slot
+                    name="marker"
+                    :value="marker"
+                >
+                    <div :data-value="marker.value" />
+                </slot>
+            </div>
         </div>
     </div>
 </template>
@@ -62,6 +80,7 @@ export default {
     props: {
         total: VueTypes.number,
         values: VueTypes.arrayOf(VueTypes.number).def([]),
+        markers: VueTypes.arrayOf(VueTypes.number).def([]),
         valueStyles: VueTypes.object,
         showValue: VueTypes.bool.def(false),
         stackStyles: VueTypes.object.def({}),
@@ -93,6 +112,15 @@ export default {
 
                 return acc
             }, [])
+        },
+        // Generate and calc markers values
+        stackMarkers () {
+            const markers = this.launchAnimation ? this.markers : []
+            return markers.map((value, index) => ({
+                id: index,
+                left: (value * 100 / this.totalValue),
+                value,
+            }))
         },
     },
     mounted () {
@@ -132,7 +160,7 @@ export default {
     display: flex;
     flex: 1;
 
-    > div {
+    > .Stack {
         position: relative;
         display: flex;
         flex: 1;
@@ -145,5 +173,15 @@ export default {
     max-width: 0%;
     border-radius: 3px;
     transition: all 250ms ease;
+}
+
+.Marker {
+    position: absolute;
+    top: 0;
+    width: 10px;
+    height: 10px;
+    background: white;
+    transform: rotate(45deg) translateY(7px);
+    outline: 1px solid;
 }
 </style>
