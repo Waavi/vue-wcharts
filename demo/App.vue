@@ -12,7 +12,7 @@
                     class="Btn"
                     @click="activeComponent = 'Pie'"
                 >
-                    Cartesian
+                    Pie
                 </button>
             </div>
             <component
@@ -32,7 +32,7 @@
 
 <script>
 import { curveStep } from 'd3-shape'
-import Cartesian from './Cartesian.vue'
+import { Cartesian, Pie } from './sections'
 
 const dataOne = [
     {
@@ -86,11 +86,12 @@ export default {
     name: 'App',
     components: {
         Cartesian,
+        Pie,
     },
     data () {
         return {
             data: dataTwo,
-            activeComponent: 'Cartesian',
+            activeComponent: 'Pie',
             curveStep,
         }
     },
@@ -146,5 +147,6 @@ export default {
     color: #FFF;
     font-size: 16px;
     outline: none;
+    cursor: pointer;
 }
 </style>

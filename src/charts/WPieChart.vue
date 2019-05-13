@@ -1,6 +1,9 @@
 <script>
+import chartMixin from '../mixins/chart'
+
 export default {
     name: 'WPieChart',
+    mixins: [chartMixin],
     render (h) {
         const slots = this.$slots.default || []
         let datakeys = [] // We need get slots datakey prop to calculate max and min values for the scales

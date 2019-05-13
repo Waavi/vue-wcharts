@@ -43,10 +43,13 @@
 
 <script>
 import { curveStep } from 'd3-shape'
+import VueTypes from 'vue-types'
 
 export default {
-    name: 'App',
-    props: ['data'],
+    name: 'Cartesian',
+    props: {
+        data: VueTypes.any,
+    },
     data () {
         return {
             curveStep,
