@@ -159,15 +159,12 @@ export default {
     position: relative;
     display: flex;
     flex: 1;
-
-    > .Stack {
-        position: relative;
-        display: flex;
-        flex: 1;
-    }
 }
+
 .Stack {
     position: relative;
+    display: flex;
+    flex: 1;
     height: 20px;
     width: 100%;
     max-width: 0%;
