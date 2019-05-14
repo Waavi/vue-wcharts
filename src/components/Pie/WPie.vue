@@ -93,6 +93,7 @@ export default {
         },
         // Slot styles
         contentStyles () {
+            // eslint-disable-next-line
             const [height, width] = this.curRadius
             const size = `${width * 2}px`
             return {
