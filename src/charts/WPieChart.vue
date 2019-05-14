@@ -64,7 +64,7 @@ export default {
         return h(
             'div',
             {
-                class: 'WCartesian',
+                class: 'WPieChart',
                 style: {
                     position: 'relative',
                     width: responsive ? '100%' : `${viewWidth}px`,

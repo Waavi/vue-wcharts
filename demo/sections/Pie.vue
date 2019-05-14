@@ -3,7 +3,10 @@
         :dataset="data"
         responsive
     >
-        <p>Pie</p>
+        <WPie
+            datakey="one"
+            :radius="[0, 150]"
+        />
     </WPieChart>
 </template>
 

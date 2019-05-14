@@ -8,6 +8,7 @@ import {
     WLegends,
     WCartesianGrid,
     WMarker,
+    WPie,
     WTooltip,
 } from './components'
 import { setOptions } from './config'
@@ -30,6 +31,7 @@ const install = (Vue, opts = {}) => {
         WLegends,
         WCartesianGrid,
         WMarker,
+        WPie,
         WTooltip,
     ]
 
@@ -57,5 +59,6 @@ export {
     WLegends,
     WCartesianGrid,
     WMarker,
+    WPie,
     WTooltip,
 }
