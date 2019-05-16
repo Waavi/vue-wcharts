@@ -41,6 +41,7 @@ storiesOf('Pie', module)
         data () {
             return {
                 data,
+                stroke: color('Stroke color', 'black'),
             }
         },
         template: `
@@ -48,7 +49,7 @@ storiesOf('Pie', module)
                 <WPieChart
                     :dataset="data"
                 >
-                    <WPie datakey="one"/>
+                    <WPie datakey="one" :stroke="stroke"/>
                 </WPieChart>
             </div>
         `,

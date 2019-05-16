@@ -15,7 +15,12 @@
             :fill="path.fill"
             :stroke="path.stroke"
             :style="styles"
+            :class="{
+                disabled: activePath !== null && activePath !== index,
+                enabled: activePath !== null && activePath === index
+            }"
             @mouseenter="handleMouseEnter"
+            @mouseleave="handleMouseLeave"
             @click="handleClick"
         />
     </g>
@@ -44,6 +49,11 @@ export default {
         styles: VueTypes.object,
         stroke: VueTypes.string.def('#FFF'),
         fill: VueTypes.string,
+    },
+    data () {
+        return {
+            activePath: null,
+        }
     },
     computed: {
         // Id cartesian elem
@@ -107,9 +117,13 @@ export default {
             const { id } = event.target
             const value = this.curValues[id]
             const el = { id: this.id, value }
+            this.activePath = parseInt(id, 0)
 
             this.Chart.setActive(el, event)
             this.$emit('onHover', el)
+        },
+        handleMouseLeave () {
+            this.activePath = null
         },
         handleClick (event) {
             const { id } = event.target
@@ -126,5 +140,11 @@ export default {
 .WPie {
     position: relative;
     transform: translate(50%, 50%);
+}
+.enabled {
+    opacity: 1;
+}
+.disabled {
+    opacity: 0.5;
 }
 </style>
