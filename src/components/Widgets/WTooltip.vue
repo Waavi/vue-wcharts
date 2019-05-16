@@ -8,7 +8,10 @@
     >
         <slot v-bind="selected">
             <div class="Wrapper">
-                <span class="Title">{{ selected.label }}</span>
+                <span
+                    v-if="selected.label"
+                    class="Title"
+                >{{ selected.label }}</span>
                 <div
                     v-for="(value, index) in selected.value"
                     :key="index"
@@ -37,7 +40,7 @@ import { toPx } from './utils'
 export default {
     name: 'WTooltip',
     type: 'plugins',
-    inject: ['Cartesian'],
+    inject: ['Chart'],
     props: {
         id: VueTypes.string,
         gap: VueTypes.number.def(10),
@@ -61,7 +64,7 @@ export default {
         },
     },
     watch: {
-        'Cartesian.active': function watchActive ({ el, event }) {
+        'Chart.active': function watchActive ({ el, event }) {
             // Reset tooltip if not has selected
             if (!el) {
                 this.reset()
@@ -94,7 +97,7 @@ export default {
         // Set pos tooltip
         calcPos (event) {
             const { layerX, layerY } = event
-            const { viewWidth, height: viewHeight } = this.Cartesian
+            const { viewWidth, height: viewHeight } = this.Chart
             // Add space between point of tooltip
             let x = layerX + this.gap
             let y = layerY + this.gap

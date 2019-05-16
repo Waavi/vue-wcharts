@@ -13,7 +13,7 @@
             :r="rStyle()"
             :stroke-width="styles.strokeWidth"
             @mouseenter="handleMouseEnter"
-            @mouseleave="Cartesian.cleanActive"
+            @mouseleave="Chart.cleanActive"
         />
     </Trans>
 </template>
@@ -25,7 +25,7 @@ import Trans from '../../transitions/Trans.vue'
 export default {
     name: 'Dot',
     type: 'cartesian',
-    inject: ['Cartesian'],
+    inject: ['Chart'],
     components: {
         Trans,
     },
@@ -48,7 +48,7 @@ export default {
         handleMouseEnter (event) {
             const {
                 dataset, datakeys, colors, setActive, axisXDatakey,
-            } = this.Cartesian
+            } = this.Chart
             const line = dataset[this.index]
             const key = datakeys[this.cartesianIndex]
             const color = colors[this.cartesianIndex]
@@ -69,8 +69,8 @@ export default {
         },
         // Return styles active or default point,
         rStyle () {
-            if (!this.Cartesian.active.el) return this.styles.radius
-            const { el } = this.Cartesian.active
+            if (!this.Chart.active.el) return this.styles.radius
+            const { el } = this.Chart.active
             return el.id === this.cartesianIndex && el.point === this.index ? this.styles.hoverRadius : this.styles.radius
         },
     },

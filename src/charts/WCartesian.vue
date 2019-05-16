@@ -3,42 +3,25 @@ import VueTypes from 'vue-types'
 import { scaleLinear } from 'd3'
 import stack from 'd3-shape/src/stack'
 import stackOffsetDiverging from 'd3-shape/src/offset/diverging'
-import { debounce, noop } from 'lodash'
+import { noop } from 'lodash'
 import { bound } from '../utils/maths'
 
-import activeMixin from '../mixins/active'
-import themeMixin from '../mixins/theme'
+import chartMixin from '../mixins/chart'
 
 export default {
     name: 'WCartesian',
-    mixins: [activeMixin, themeMixin],
+    mixins: [chartMixin],
     props: {
-        dataset: VueTypes.array.def([]),
-        responsive: VueTypes.bool.def(false),
         stacked: VueTypes.bool.def(false),
-        height: VueTypes.number.def(400),
-        width: VueTypes.number.def(600),
         bound: VueTypes.array.def([]),
         gap: VueTypes.oneOfType([
             VueTypes.number,
             VueTypes.arrayOf(VueTypes.number).def([0, 0, 0, 0]),
         ]).def(0),
     },
-    provide () {
-        return {
-            Cartesian: this,
-        }
-    },
     data () {
         return {
-            chartReady: !this.responsive,
             axisXDatakey: null, // Datakey name of Xaxis
-            datakeys: [], // dataKeys Selected data
-            activeCartesians: [], // Cartesian elem actives
-            legends: [], // Legends
-            space: [0, 0, 0, 0], // Spaces all elements
-            spaceObjects: [0, 0, 0, 0], // Spaces of objects (Axis)
-            parentWidth: null, // Width of chart
         }
     },
     computed: {
@@ -69,27 +52,6 @@ export default {
             return {
                 max: 0,
                 min: 0,
-            }
-        },
-        // View size, include canvas and paddings/margins
-        viewWidth () {
-            return this.parentWidth || this.width
-        },
-        // Canvas size
-        canvas () {
-            const { viewWidth, height, space: margin } = this
-            const x0 = margin[3]
-            const y0 = margin[0]
-            const y1 = height - margin[2]
-            const x1 = viewWidth - margin[1]
-
-            return {
-                x0,
-                y0,
-                width: x1 - x0,
-                height: y1 - y0,
-                x1,
-                y1,
             }
         },
         // Generate padding by array or number.
@@ -125,41 +87,7 @@ export default {
                 .offset(this.stacked ? stackOffsetDiverging : noop)(this.dataset)
         },
     },
-    mounted () {
-        // Added listenner if has response prop to true
-        if (this.responsive) {
-            this.resize()
-            if (typeof window !== 'undefined') {
-                window.addEventListener('resize', debounce(this.resize, 220))
-            }
-        }
-    },
-    unmounted () {
-        // Remove listenner response
-        if (this.responsive && typeof window !== 'undefined') window.removeEventListener('resize')
-    },
     methods: {
-        // Add spaces
-        addSpace (space = []) {
-            space.forEach((val, i) => {
-                this.space[i] = Math.max(val, this.space[i] || 0)
-            })
-        },
-        // Add spaces of objects els
-        addSpaceObjects (space = []) {
-            this.addSpace(space)
-            space.forEach((val, i) => {
-                this.spaceObjects[i] = Math.max(val, this.spaceObjects[i] || 0)
-            })
-        },
-        // Resize chart on event emited
-        resize () {
-            if (this.$el) {
-                const { width } = this.$el.getBoundingClientRect()
-                this.parentWidth = width
-            }
-            this.setChartReady()
-        },
         // Calc min/max bound values
         getBound (val, type = 'min') {
             if (typeof val === 'number') return val
@@ -174,11 +102,6 @@ export default {
 
             return result
         },
-        // Set and emit chartReady
-        setChartReady () {
-            this.chartReady = true
-            this.$emit('onChartReady')
-        },
     },
     render (h) {
         const slots = this.$slots.default || []
@@ -189,7 +112,7 @@ export default {
         const plugins = []
 
         // Props
-        const activeCartesians = []
+        const activeElements = []
         const legends = []
 
         // Reset snap to manage bars
@@ -214,7 +137,7 @@ export default {
                     // Add datekeys. Removed unique datakey condiition to use multiple elements
                     if (datakey) datakeys = [...datakeys.filter(key => key !== datakey), datakey]
                     // Add to actives elements
-                    activeCartesians.push(cartesiansLength)
+                    activeElements.push(cartesiansLength)
                     // Add to legends elements
                     if (legend) legends.push(legend)
                     // Add slot
@@ -238,7 +161,7 @@ export default {
 
         const { viewWidth, height, responsive } = this
         this.datakeys = datakeys
-        this.activeCartesians = activeCartesians
+        this.activeElements = activeElements
         this.legends = legends
 
         return h(
