@@ -7,6 +7,7 @@
             datakey="one"
             :radius="[0, 150]"
         />
+        <WTooltip />
     </WPieChart>
 </template>
 

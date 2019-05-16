@@ -50,6 +50,7 @@ storiesOf('Pie', module)
                     :dataset="data"
                 >
                     <WPie datakey="one" :stroke="stroke"/>
+                    <WTooltip />
                 </WPieChart>
             </div>
         `,
@@ -91,6 +92,7 @@ storiesOf('Pie', module)
                             </div>
                         </template>
                     </WPie>
+                    <WTooltip />
                 </WPieChart>
             </div>
             `,

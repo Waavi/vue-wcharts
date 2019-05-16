@@ -102,8 +102,7 @@ export default {
         },
         // Slot styles
         contentStyles () {
-            // eslint-disable-next-line
-            const [height, width] = this.curRadius
+            const [, width] = this.curRadius
             const size = `${width * 2}px`
             return {
                 width: size,
@@ -114,24 +113,30 @@ export default {
     },
     methods: {
         handleMouseEnter (event) {
-            const { id } = event.target
-            const value = this.curValues[id]
-            const el = { id: this.id, value }
-            this.activePath = parseInt(id, 0)
-
-            this.Chart.setActive(el, event)
-            this.$emit('onHover', el)
+            this.activePath = parseInt(event.target.id, 0)
+            this.handleActive(event, 'onHover')
         },
         handleMouseLeave () {
             this.activePath = null
+            this.Chart.cleanActive()
         },
         handleClick (event) {
+            this.handleActive(event, 'onClick')
+        },
+        handleActive (event, eventName) {
             const { id } = event.target
             const value = this.curValues[id]
-            const el = { id: this.id, value }
+            const color = this.fill || this.Chart.colors[id]
+            const el = {
+                id: this.id,
+                value: [{
+                    value,
+                    color,
+                }],
+            }
 
             this.Chart.setActive(el, event)
-            this.$emit('onClick', el)
+            this.$emit(eventName, el)
         },
     },
 }
