@@ -4,7 +4,7 @@
         class="WPie"
     >
         <foreignObject :style="contentStyles">
-            <slot :values="curValues" />
+            <slot :values="values" />
         </foreignObject>
 
         <path
@@ -78,6 +78,15 @@ export default {
         // Values
         curValues () {
             return this.Chart.dataset.map(item => item[this.datakey])
+        },
+        // Values
+        values () {
+            const total = this.curValues.reduce((acc, a) => acc + a, 0)
+            return this.Chart.dataset.map((item, index) => ({
+                ...item,
+                percentage: item[this.datakey] * 100 / total,
+                color: this.Chart.colors[index],
+            }))
         },
         // Generate arrry of arcs
         arcs () {

@@ -56,6 +56,16 @@
                     <div :data-value="marker.value" />
                 </slot>
             </div>
+
+            <div
+                v-if="launchAnimation"
+                class="End"
+            >
+                <slot
+                    name="end"
+                    :total="sumValues"
+                />
+            </div>
         </div>
     </div>
 </template>
@@ -85,29 +95,34 @@ export default {
         showValue: VueTypes.bool.def(false),
         stackStyles: VueTypes.object.def({}),
         delay: VueTypes.number.def(300),
+        minWidth: VueTypes.number,
     },
     data () {
         return {
             launchAnimation: false,
-            offset: MIN_WIDTH,
+            offset: this.minWidth || MIN_WIDTH,
         }
     },
     computed: {
         // Used total prop binding or the sum of all values
-        totalValue () {
-            return this.total || this.values.reduce((a, b) => a + b)
+        totalValues () {
+            return this.total || this.sumValues
+        },
+        // Sum values
+        sumValues () {
+            return this.values.reduce((a, b) => a + b)
         },
         // Generate and calc stack values
         stacks () {
             const values = this.launchAnimation ? this.values : Array.from({ length: this.values.length })
             return values.reduce((acc, value, index) => {
-                const width = (value * 100 / this.totalValue)
+                const width = (value * 100 / this.totalValues)
                 acc.push({
                     id: index,
                     value,
                     color: this.colors[index],
                     width,
-                    hide: width < MIN_WIDTH,
+                    hide: width < this.offset,
                 })
 
                 return acc
@@ -118,7 +133,7 @@ export default {
             const markers = this.launchAnimation ? this.markers : []
             return markers.map((value, index) => ({
                 id: index,
-                left: (value * 100 / this.totalValue),
+                left: (value * 100 / this.totalValues),
                 value,
             }))
         },
@@ -159,6 +174,7 @@ export default {
     position: relative;
     display: flex;
     flex: 1;
+    align-items: center;
 }
 
 .Stack {
