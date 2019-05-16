@@ -3,6 +3,10 @@
         v-if="active"
         class="WPie"
     >
+        <foreignObject :style="contentStyles">
+            <slot :values="curValues" />
+        </foreignObject>
+
         <path
             v-for="(path, index) in paths"
             :id="index"
@@ -14,13 +18,6 @@
             @mouseenter="handleMouseEnter"
             @click="handleClick"
         />
-
-        <foreignObject
-            class="WPieContent"
-            :style="contentStyles"
-        >
-            <slot :values="curValues" />
-        </foreignObject>
     </g>
 </template>
 
@@ -36,6 +33,7 @@ export default {
     inject: ['Chart'],
     props: {
         datakey: VueTypes.string.isRequired,
+        labelkey: VueTypes.string.def('name'),
         angles: VueTypes.oneOfType([
             VueTypes.number,
             VueTypes.arrayOf(VueTypes.number).def([0, Math.PI * 2]),
@@ -45,6 +43,8 @@ export default {
             VueTypes.arrayOf(VueTypes.number).def([0, 100]),
         ]).def([0, 100]),
         styles: VueTypes.object,
+        stroke: VueTypes.string.def('#FFF'),
+        fill: VueTypes.string,
     },
     computed: {
         // Id cartesian elem
@@ -77,7 +77,7 @@ export default {
                 .endAngle(this.curAngles[1])
                 .sortValues(noop)(this.curValues)
         },
-        // Return the path of angle
+        // Return the path of angles
         draw () {
             return arc()
                 .innerRadius(this.curRadius[0])
@@ -87,8 +87,8 @@ export default {
         paths () {
             return this.arcs.map(this.draw).map((d, index) => ({
                 d,
-                fill: this.Chart.colors[index],
-                stroke: '#fff',
+                fill: this.fill || this.Chart.colors[index],
+                stroke: this.stroke,
             }))
         },
         // Slot styles
@@ -106,18 +106,16 @@ export default {
     methods: {
         handleMouseEnter (event) {
             const { id } = event.target
-            const label = 'Pie'
             const value = this.curValues[id]
-            const el = { id: this.id, label, value }
+            const el = { id: this.id, value }
 
             this.Chart.setActive(el, event)
             this.$emit('onHover', el)
         },
         handleClick (event) {
             const { id } = event.target
-            const label = 'Pie'
             const value = this.curValues[id]
-            const el = { id: this.id, label, value }
+            const el = { id: this.id, value }
 
             this.Chart.setActive(el, event)
             this.$emit('onClick', el)
