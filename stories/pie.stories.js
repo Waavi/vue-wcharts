@@ -41,7 +41,7 @@ storiesOf('Pie', module)
         data () {
             return {
                 data,
-                stroke: color('Stroke color', 'black'),
+                stroke: color('Stroke color', '#FFF'),
             }
         },
         template: `

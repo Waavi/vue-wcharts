@@ -136,7 +136,7 @@ export default {
             }
 
             this.Chart.setActive(el, event)
-            this.$emit(eventName, el)
+            this.$emit(eventName || 'onEvent', el)
         },
     },
 }
