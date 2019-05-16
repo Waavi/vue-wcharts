@@ -75,10 +75,25 @@ export default {
             // Return a empty array if we don't want to show vertical lines
             if (this.hideV) return []
             const {
-                dataset, canvas, padding,
+                dataset, canvas, padding, xBounds, xScale, scatter,
             } = this.Chart
             // Calculate number of lines to generate
             const numLines = this.numLinesV || dataset.length
+            if (scatter) {
+                // Select the correct function and generate the value of the lines. ex: [100, 500, 1500, 2500, 5000]
+                const getLinesFn = this.numLinesH ? genExactNbTicks : genTicks
+                const lines = getLinesFn(xBounds.min, xBounds.max, numLines).reverse()
+                // Generate lines coordinates
+                return lines.map((value, index) => {
+                    const x = xScale(value)
+                    return {
+                        x1: x,
+                        y1: canvas.y0,
+                        x2: x,
+                        y2: canvas.y1,
+                    }
+                })
+            }
             // Calculate left and right space
             const offset = padding[1] + padding[3]
             // Calculate space between lines

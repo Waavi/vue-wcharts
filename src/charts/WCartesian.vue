@@ -13,7 +13,9 @@ export default {
     mixins: [chartMixin],
     props: {
         stacked: VueTypes.bool.def(false),
+        scatter: VueTypes.bool.def(false),
         bound: VueTypes.array.def([]),
+        xBound: VueTypes.array.def([]),
         gap: VueTypes.oneOfType([
             VueTypes.number,
             VueTypes.arrayOf(VueTypes.number).def([0, 0, 0, 0]),
@@ -21,7 +23,8 @@ export default {
     },
     data () {
         return {
-            axisXDatakey: null, // Datakey name of Xaxis
+            axisXDatakey: null, // Datakey name of XAxis
+            axisYDatakey: null, // Datakey name of YAxis
         }
     },
     computed: {
@@ -36,19 +39,31 @@ export default {
         // ref: https://github.com/d3/d3-scale#_continuous
         xScale () {
             return scaleLinear()
-                .domain([0, this.dataset.length - 1])
+                .domain(this.scatter ? [this.xBounds.min, this.xBounds.max] : [0, this.dataset.length - 1])
                 .range([this.canvas.x0 + this.padding[3], this.canvas.x1 - this.padding[1]])
         },
-        // Bounds
+        // bounds
         bounds () {
-            if (this.datakeys.length) {
+            if (this.datakeys.length || this.axisYDatakey) {
                 const [boundMin, boundMax] = this.bound
                 return {
                     min: this.getBound(boundMin),
                     max: this.getBound(boundMax, 'max'),
                 }
             }
-
+            return {
+                max: 0,
+                min: 0,
+            }
+        },
+        xBounds () {
+            if (this.scatter && this.axisXDatakey) {
+                const [boundMin, boundMax] = this.xBound
+                return {
+                    min: this.getBound(boundMin, 'min', 'x'),
+                    max: this.getBound(boundMax, 'max', 'x'),
+                }
+            }
             return {
                 max: 0,
                 min: 0,
@@ -89,14 +104,20 @@ export default {
     },
     methods: {
         // Calc min/max bound values
-        getBound (val, type = 'min') {
+        getBound (val, type = 'min', axis = 'y') {
             if (typeof val === 'number') return val
 
             const isMin = type === 'min'
-            let result = bound(this.curData, type, isMin ? 0 : 1)
+            let result = 0
+            if (this.scatter) {
+                const values = this.dataset.map(d => (d[axis === 'y' ? this.axisYDatakey : this.axisXDatakey]))
+                result = isMin ? Math.min(...values) : Math.max(...values)
+            } else {
+                result = bound(this.curData, type, isMin ? 0 : 1)
 
-            if (isMin && result === 0) {
-                result = bound(this.curData, 'min', 1)
+                if (isMin && result === 0) {
+                    result = bound(this.curData, 'min', 1)
+                }
             }
             if (typeof val === 'function') return val(result)
 
