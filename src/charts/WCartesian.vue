@@ -23,8 +23,10 @@ export default {
     },
     data () {
         return {
-            axisXDatakey: null, // Datakey name of XAxis
-            axisYDatakey: null, // Datakey name of YAxis
+            axisXDatakey: null, // Datakey of XAxis
+            axisYDatakey: null, // Datakey of YAxis
+            axisZDatakey: null, // Datakey of ZAxis
+            axisZRange: null, // Range of ZAxis
         }
     },
     computed: {
@@ -38,9 +40,21 @@ export default {
         // xScale with scaleLinear of d3
         // ref: https://github.com/d3/d3-scale#_continuous
         xScale () {
+            const domain = this.scatter ? [this.xBounds.min, this.xBounds.max] : [0, this.dataset.length - 1]
             return scaleLinear()
-                .domain(this.scatter ? [this.xBounds.min, this.xBounds.max] : [0, this.dataset.length - 1])
+                .domain(domain)
                 .range([this.canvas.x0 + this.padding[3], this.canvas.x1 - this.padding[1]])
+        },
+        // xScale with scaleLinear of d3
+        // ref: https://github.com/d3/d3-scale#_continuous
+        zScale () {
+            if (this.scatter) {
+                const [rangeMin, rangeMax] = this.axisZRange
+                const { min: boundMin, max: boundMax } = this.zBounds
+                const factor = (rangeMax - rangeMin) / (boundMax - boundMin)
+                return val => (Math.sqrt((rangeMin === rangeMax ? rangeMin : (factor * rangeMin) + (val * factor) + 1) / Math.PI))
+            }
+            return val => val
         },
         // bounds
         bounds () {
@@ -62,6 +76,19 @@ export default {
                 return {
                     min: this.getBound(boundMin, 'min', 'x'),
                     max: this.getBound(boundMax, 'max', 'x'),
+                }
+            }
+            return {
+                max: 0,
+                min: 0,
+            }
+        },
+        zBounds () {
+            if (this.scatter && this.axisZDatakey) {
+                const values = this.dataset.map(d => (d[this.axisZDatakey]))
+                return {
+                    min: Math.min(...values),
+                    max: Math.max(...values),
                 }
             }
             return {

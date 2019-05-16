@@ -2,8 +2,10 @@ import { WCartesian, WPieChart, WStackBar } from './charts'
 import {
     WLine,
     WBar,
+    WScatter,
     WXAxis,
     WYAxis,
+    WZAxis,
     WLegend,
     WLegends,
     WCartesianGrid,
@@ -26,8 +28,10 @@ const install = (Vue, opts = {}) => {
     const components = [
         WLine,
         WBar,
+        WScatter,
         WXAxis,
         WYAxis,
+        WZAxis,
         WLegends,
         WCartesianGrid,
         WMarker,

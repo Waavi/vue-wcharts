@@ -14,6 +14,10 @@
             datakey="one"
             :space="[25, 0, 0, 50]"
         />
+        <WZAxis
+            datakey="three"
+            :range="[100, 500]"
+        />
     </WCartesian>
 </template>
 
