@@ -16,12 +16,9 @@ export default {
         scatter: VueTypes.bool.def(false),
         bound: VueTypes.array.def([]),
         xBound: VueTypes.array.def([]),
-        gap: VueTypes.oneOfType([
-            VueTypes.number,
-            VueTypes.arrayOf(VueTypes.number).def([0, 0, 0, 0]),
-        ]).def(0),
+        gap: VueTypes.oneOfType([VueTypes.number, VueTypes.arrayOf(VueTypes.number).def([0, 0, 0, 0])]).def(0),
     },
-    data () {
+    data() {
         return {
             axisXDatakey: null, // Datakey of XAxis
             axisYDatakey: null, // Datakey of YAxis
@@ -32,14 +29,14 @@ export default {
     computed: {
         // yScale with scaleLinear of d3
         // ref: https://github.com/d3/d3-scale#_continuous
-        yScale () {
+        yScale() {
             return scaleLinear()
                 .domain([this.bounds.min, this.bounds.max])
                 .range([this.canvas.y1 - this.padding[2], this.canvas.y0 + this.padding[0]])
         },
         // xScale with scaleLinear of d3
         // ref: https://github.com/d3/d3-scale#_continuous
-        xScale () {
+        xScale() {
             const domain = this.scatter ? [this.xBounds.min, this.xBounds.max] : [0, this.dataset.length - 1]
             return scaleLinear()
                 .domain(domain)
@@ -47,17 +44,16 @@ export default {
         },
         // xScale with scaleLinear of d3
         // ref: https://github.com/d3/d3-scale#_continuous
-        zScale () {
+        zScale() {
             if (this.scatter) {
                 const [rangeMin, rangeMax] = this.axisZRange
                 const { min: boundMin, max: boundMax } = this.zBounds
-                const factor = (rangeMax - rangeMin) / (boundMax - boundMin)
-                return val => (Math.sqrt((rangeMin === rangeMax ? rangeMin : (factor * rangeMin) + (val * factor) + 1) / Math.PI))
+                return val => Math.sqrt((((val - boundMin) / (boundMax - boundMin)) * (rangeMax - rangeMin) + rangeMin) / Math.PI)
             }
             return val => val
         },
         // bounds
-        bounds () {
+        bounds() {
             if (this.datakeys.length || this.axisYDatakey) {
                 const [boundMin, boundMax] = this.bound
                 return {
@@ -70,7 +66,7 @@ export default {
                 min: 0,
             }
         },
-        xBounds () {
+        xBounds() {
             if (this.scatter && this.axisXDatakey) {
                 const [boundMin, boundMax] = this.xBound
                 return {
@@ -83,9 +79,9 @@ export default {
                 min: 0,
             }
         },
-        zBounds () {
+        zBounds() {
             if (this.scatter && this.axisZDatakey) {
-                const values = this.dataset.map(d => (d[this.axisZDatakey]))
+                const values = this.dataset.map(d => d[this.axisZDatakey])
                 return {
                     min: Math.min(...values),
                     max: Math.max(...values),
@@ -98,21 +94,19 @@ export default {
         },
         // Generate padding by array or number.
         // return [10, 10, 10, 10]
-        padding () {
+        padding() {
             const gap = Array.isArray(this.gap) ? this.gap : Array(4).fill(this.gap)
             return gap.map((item, index) => item + this.offset[index])
         },
         // Offset of bars
         // return [10, 10, 10, 10]
-        offset () {
+        offset() {
             const { barAllWidth, barIds = [] } = this.snap
             const gap = Array(4).fill(0)
 
             if (barIds.length) {
                 // Checked if width of bars it is higher than canvas width
-                const margin = this.width <= barAllWidth * (this.dataset || []).length
-                    ? this.width % barAllWidth
-                    : barAllWidth
+                const margin = this.width <= barAllWidth * (this.dataset || []).length ? this.width % barAllWidth : barAllWidth
 
                 gap[1] = margin
                 gap[3] = margin
@@ -123,7 +117,7 @@ export default {
         },
         // Return stacked data or data dataset without transform, of datakeys and dataset props
         // ref: https://github.com/d3/d3-shape#stacks
-        curData () {
+        curData() {
             return stack()
                 .keys(this.datakeys)
                 .offset(this.stacked ? stackOffsetDiverging : noop)(this.dataset)
@@ -131,13 +125,13 @@ export default {
     },
     methods: {
         // Calc min/max bound values
-        getBound (val, type = 'min', axis = 'y') {
+        getBound(val, type = 'min', axis = 'y') {
             if (typeof val === 'number') return val
 
             const isMin = type === 'min'
             let result = 0
             if (this.scatter) {
-                const values = this.dataset.map(d => (d[axis === 'y' ? this.axisYDatakey : this.axisXDatakey]))
+                const values = this.dataset.map(d => d[axis === 'y' ? this.axisYDatakey : this.axisXDatakey])
                 result = isMin ? Math.min(...values) : Math.max(...values)
             } else {
                 result = bound(this.curData, type, isMin ? 0 : 1)
@@ -151,7 +145,7 @@ export default {
             return result
         },
     },
-    render (h) {
+    render(h) {
         const slots = this.$slots.default || []
         let datakeys = [] // We need get slots datakey prop to calculate max and min values for the scales
         const cartesians = [] // We need inject necessary props to cartesian slots
@@ -166,7 +160,7 @@ export default {
         // Reset snap to manage bars
         this.snap = {}
 
-        slots.forEach((slot) => {
+        slots.forEach(slot => {
             const options = slot.componentOptions
             if (!options) {
                 others.push(slot)

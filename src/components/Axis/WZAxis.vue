@@ -6,7 +6,7 @@ export default {
     axis: 'z',
     props: {
         datakey: VueTypes.string.isRequired,
-        range: VueTypes.array.def([64, 64]),
+        range: VueTypes.array.def([100, 100]),
     },
     preload ({ parent, props, index }) {
         const { datakey, range } = props
