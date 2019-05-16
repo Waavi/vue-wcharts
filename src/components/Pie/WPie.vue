@@ -33,7 +33,6 @@ export default {
     inject: ['Chart'],
     props: {
         datakey: VueTypes.string.isRequired,
-        labelkey: VueTypes.string.def('name'),
         angles: VueTypes.oneOfType([
             VueTypes.number,
             VueTypes.arrayOf(VueTypes.number).def([0, Math.PI * 2]),
