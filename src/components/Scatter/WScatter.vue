@@ -25,6 +25,7 @@
                         stroke: stylesCmp.stroke ? stylesCmp.stroke : fillColor,
                         fill: stylesCmp.fill ? stylesCmp.fill : fillColor,
                         strokeWidth: stylesCmp.strokeWidth,
+                        opacity: stylesCmp.opacity,
                         radius: dotItem.z,
                         hoverRadius: dotItem.z,
                     }"
@@ -42,6 +43,7 @@
                             stroke: stylesCmp.stroke ? stylesCmp.stroke : fillColor,
                             fill: stylesCmp.fill ? stylesCmp.fill : fillColor,
                             strokeWidth: stylesCmp.strokeWidth,
+                            opacity: stylesCmp.opacity,
                             radius: dotItem.z,
                             hoverRadius: dotItem.z,
                         }"
@@ -76,6 +78,7 @@ const stylesDefaultProp = {
     strokeWidth: 0,
     radius: 4,
     hoverRadius: 8,
+    opacity: 0.8,
 }
 
 export default {
@@ -105,6 +108,7 @@ export default {
             strokeWidth: VueTypes.number,
             radius: VueTypes.number,
             hoverRadius: VueTypes.number,
+            opacity: VueTypes.number,
         }).def(() => ({
             ...stylesDefaultProp,
         })),
@@ -132,6 +136,7 @@ export default {
             return this.Chart.colors[this.index]
         },
         lineData () {
+            // We sort values becouse we want a left to right line
             return sortBy(this.Chart.dataset, this.Chart.axisXDatakey).map((item, index) => ({
                 x: item[this.Chart.axisXDatakey],
                 y: item[this.Chart.axisYDatakey],
@@ -158,10 +163,10 @@ export default {
                             value: `${axisYName}: ${item[axisYDatakey]}`,
                             color,
                         },
-                        {
+                        axisZDatakey ? {
                             value: `${axisZName}: ${item[axisZDatakey]}`,
                             color,
-                        },
+                        } : null,
                     ],
                 },
                 value: item[axisYDatakey],

@@ -18,7 +18,7 @@ export default {
         xBound: VueTypes.array.def([]),
         gap: VueTypes.oneOfType([VueTypes.number, VueTypes.arrayOf(VueTypes.number).def([0, 0, 0, 0])]).def(0),
     },
-    data() {
+    data () {
         return {
             axisXDatakey: null, // Datakey of XAxis
             axisYDatakey: null, // Datakey of YAxis
@@ -32,22 +32,21 @@ export default {
     computed: {
         // yScale with scaleLinear of d3
         // ref: https://github.com/d3/d3-scale#_continuous
-        yScale() {
+        yScale () {
             return scaleLinear()
                 .domain([this.bounds.min, this.bounds.max])
                 .range([this.canvas.y1 - this.padding[2], this.canvas.y0 + this.padding[0]])
         },
         // xScale with scaleLinear of d3
         // ref: https://github.com/d3/d3-scale#_continuous
-        xScale() {
+        xScale () {
             const domain = this.scatter ? [this.xBounds.min, this.xBounds.max] : [0, this.dataset.length - 1]
             return scaleLinear()
                 .domain(domain)
                 .range([this.canvas.x0 + this.padding[3], this.canvas.x1 - this.padding[1]])
         },
-        // xScale with scaleLinear of d3
-        // ref: https://github.com/d3/d3-scale#_continuous
-        zScale() {
+        // zScale calculate like Recharts
+        zScale () {
             if (this.scatter) {
                 const [rangeMin, rangeMax] = this.axisZRange
                 const { min: boundMin, max: boundMax } = this.zBounds
@@ -56,7 +55,7 @@ export default {
             return val => val
         },
         // bounds
-        bounds() {
+        bounds () {
             if (this.datakeys.length || this.axisYDatakey) {
                 const [boundMin, boundMax] = this.bound
                 return {
@@ -69,7 +68,7 @@ export default {
                 min: 0,
             }
         },
-        xBounds() {
+        xBounds () {
             if (this.scatter && this.axisXDatakey) {
                 const [boundMin, boundMax] = this.xBound
                 return {
@@ -82,7 +81,7 @@ export default {
                 min: 0,
             }
         },
-        zBounds() {
+        zBounds () {
             if (this.scatter && this.axisZDatakey) {
                 const values = this.dataset.map(d => d[this.axisZDatakey])
                 return {
@@ -97,13 +96,13 @@ export default {
         },
         // Generate padding by array or number.
         // return [10, 10, 10, 10]
-        padding() {
+        padding () {
             const gap = Array.isArray(this.gap) ? this.gap : Array(4).fill(this.gap)
             return gap.map((item, index) => item + this.offset[index])
         },
         // Offset of bars
         // return [10, 10, 10, 10]
-        offset() {
+        offset () {
             const { barAllWidth, barIds = [] } = this.snap
             const gap = Array(4).fill(0)
 
@@ -120,7 +119,7 @@ export default {
         },
         // Return stacked data or data dataset without transform, of datakeys and dataset props
         // ref: https://github.com/d3/d3-shape#stacks
-        curData() {
+        curData () {
             return stack()
                 .keys(this.datakeys)
                 .offset(this.stacked ? stackOffsetDiverging : noop)(this.dataset)
@@ -128,7 +127,7 @@ export default {
     },
     methods: {
         // Calc min/max bound values
-        getBound(val, type = 'min', axis = 'y') {
+        getBound (val, type = 'min', axis = 'y') {
             if (typeof val === 'number') return val
 
             const isMin = type === 'min'
@@ -148,10 +147,11 @@ export default {
             return result
         },
     },
-    render(h) {
+    render (h) {
         const slots = this.$slots.default || []
         let datakeys = [] // We need get slots datakey prop to calculate max and min values for the scales
         const cartesians = [] // We need inject necessary props to cartesian slots
+        const grid = []
         const others = []
         const axis = []
         const plugins = []
@@ -163,7 +163,7 @@ export default {
         // Reset snap to manage bars
         this.snap = {}
 
-        slots.forEach(slot => {
+        slots.forEach((slot) => {
             const options = slot.componentOptions
             if (!options) {
                 others.push(slot)
@@ -188,6 +188,9 @@ export default {
                     // Add slot
                     slot.index = cartesiansLength
                     cartesians.push(slot)
+                    break
+                case 'grid':
+                    grid.push(slot)
                     break
                 case 'axis':
                     axis.push(slot)
@@ -228,7 +231,7 @@ export default {
                             viewBox: `0 0 ${viewWidth} ${height}`,
                         },
                     },
-                    this.chartReady ? [others, cartesians, axis] : []
+                    this.chartReady ? [others, grid, cartesians, axis] : []
                 ),
                 this.chartReady ? plugins : [],
             ]

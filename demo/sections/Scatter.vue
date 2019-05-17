@@ -6,8 +6,8 @@
         :bound="[n => n - 1000,n => n + 1000]"
         :xBound="[n => n - 1000,n => n + 1000]"
     >
-        <WScatter />
         <WCartesianGrid />
+        <WScatter />
         <WXAxis
             name="one"
             datakey="one"

@@ -27,7 +27,7 @@ const stylesDefaultProp = {
 
 export default {
     name: 'WCartesianGrid',
-    type: 'cartesian',
+    type: 'grid',
     inject: ['Chart'],
     props: {
         hideH: VueTypes.bool.def(false),

@@ -101,6 +101,7 @@ export default {
 
             // If xAxis
             if (this.isX) {
+                // If is scatter, x axis is non categorical
                 if (scatter) {
                     // Ticks num
                     const numTicks = this.numTicks || dataset.length

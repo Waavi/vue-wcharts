@@ -10,7 +10,7 @@
             dot
             legend="One Line"
         />
-        <!-- <WBar
+        <WBar
             legend="One Bar"
             datakey="one"
             showLabel
@@ -27,7 +27,7 @@
             legend="Three Bar"
             showLabel
             :width="30"
-        /> -->
+        />
         <WXAxis
             datakey="name"
             :space="[0, 50, 80, 50]"

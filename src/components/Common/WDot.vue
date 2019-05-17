@@ -12,6 +12,7 @@
             :fill="styles.fill"
             :r="rStyle"
             :stroke-width="styles.strokeWidth"
+            :style="{ opacity: styles.opacity }"
             @mouseenter="handleMouseEnter"
             @mouseleave="Chart.cleanActive"
         />
@@ -40,6 +41,7 @@ export default {
             strokeWidth: VueTypes.number,
             radius: VueTypes.number,
             hoverRadius: VueTypes.number,
+            opacity: VueTypes.number,
         }).isRequired,
         transition: VueTypes.string.isRequired,
         info: VueTypes.shape({
