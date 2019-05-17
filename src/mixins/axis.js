@@ -32,6 +32,7 @@ export default {
     },
     props: {
         // Settings
+        name: VueTypes.string.def(''),
         datakey: VueTypes.string,
         textOffsetY: VueTypes.number.def(20),
         hideLine: VueTypes.bool.def(false),
@@ -50,8 +51,10 @@ export default {
         tickStyles: VueTypes.object,
     },
     preload ({ parent, props, index }) {
-        const { space, labelText, datakey } = props
-        // Check type axi
+        const {
+            space, labelText, datakey, name,
+        } = props
+        // Check type axis
         const isX = this.axis === 'x'
         // Get spaces binding or default
         let spaces = space || this.props.space.default()
@@ -59,11 +62,15 @@ export default {
         if (!space && labelText) {
             spaces = isX ? spaceLabelX : spaceLabelY
         }
-        if (isX) {
-            parent.axisXDatakey = datakey
-        }
         // Added spaces of parent
         parent.addSpaceObjects(spaces)
+        if (isX) {
+            parent.axisXDatakey = datakey
+            parent.axisXName = name || ''
+        } else {
+            parent.axisYDatakey = datakey
+            parent.axisYName = name || ''
+        }
     },
     mounted () {
         // Show warn if used the label slot, the space prop it is mandatory
@@ -78,6 +85,10 @@ export default {
         isX () {
             return this.$options.axis === 'x'
         },
+        // Return and check if axis it is yAxis
+        isY () {
+            return this.$options.axis === 'y'
+        },
         // Return text-anchor of ticks
         textAnchor () {
             return this.isX ? 'middle' : 'end'
@@ -85,11 +96,39 @@ export default {
         // Generate ticks array
         ticks () {
             const {
-                dataset, canvas, bounds, padding, yScale,
+                dataset, canvas, bounds, xBounds, padding, yScale, xScale, scatter,
             } = this.Chart
 
             // If xAxis
             if (this.isX) {
+                // If is scatter, x axis is non categorical
+                if (scatter) {
+                    // Ticks num
+                    const numTicks = this.numTicks || dataset.length
+                    // Generate array tick by d3, https://github.com/d3/d3-array
+                    const getTicksFn = this.numTicks ? genExactNbTicks : genTicks
+                    const ticks = getTicksFn(xBounds.min, xBounds.max, numTicks).reverse()
+                    // Generate ticks objects by ticksNum or dataset of parents
+                    return ticks.map((value, index) => {
+                        // Calc size between ticks with scale parent
+                        const x = xScale(value)
+                        return {
+                            mark: {
+                                index,
+                                x1: x,
+                                y1: canvas.y1,
+                                x2: x,
+                                y2: canvas.y1 + 5,
+                            },
+                            text: {
+                                index,
+                                value: this.format(value),
+                                x: x + this.tickStylesCmp.fontSize / 3,
+                                y: canvas.y1 + this.textOffsetY,
+                            },
+                        }
+                    })
+                }
                 // Calc offset
                 const offset = padding[1] + padding[3]
                 // Calc space

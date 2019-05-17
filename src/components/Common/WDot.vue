@@ -10,8 +10,9 @@
             :cy="y"
             :stroke="styles.stroke"
             :fill="styles.fill"
-            :r="rStyle()"
+            :r="rStyle"
             :stroke-width="styles.strokeWidth"
+            :style="{ opacity: styles.opacity }"
             @mouseenter="handleMouseEnter"
             @mouseleave="Chart.cleanActive"
         />
@@ -23,7 +24,7 @@ import VueTypes from 'vue-types'
 import Trans from '../../transitions/Trans.vue'
 
 export default {
-    name: 'Dot',
+    name: 'WDot',
     type: 'cartesian',
     inject: ['Chart'],
     components: {
@@ -40,38 +41,31 @@ export default {
             strokeWidth: VueTypes.number,
             radius: VueTypes.number,
             hoverRadius: VueTypes.number,
+            opacity: VueTypes.number,
         }).isRequired,
         transition: VueTypes.string.isRequired,
+        info: VueTypes.shape({
+            id: VueTypes.any,
+            label: VueTypes.any,
+            value: VueTypes.array,
+        }).loose,
     },
-    methods: {
-        // Set active element
-        handleMouseEnter (event) {
-            const {
-                dataset, datakeys, colors, setActive, axisXDatakey,
-            } = this.Chart
-            const line = dataset[this.index]
-            const key = datakeys[this.cartesianIndex]
-            const color = colors[this.cartesianIndex]
-            const value = line[key]
-            const label = line[axisXDatakey]
-
-            setActive(
-                {
-                    id: this.cartesianIndex,
-                    label,
-                    value: [{
-                        value,
-                        color,
-                    }],
-                },
-                event
-            )
-        },
+    computed: {
         // Return styles active or default point,
         rStyle () {
             if (!this.Chart.active.el) return this.styles.radius
             const { el } = this.Chart.active
             return el.id === this.cartesianIndex && el.point === this.index ? this.styles.hoverRadius : this.styles.radius
+        },
+    },
+    methods: {
+        // Set active element
+        handleMouseEnter (event) {
+            const { setActive } = this.Chart
+            setActive(
+                this.info,
+                event
+            )
         },
     },
 }

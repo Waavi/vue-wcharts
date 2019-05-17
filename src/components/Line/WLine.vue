@@ -48,12 +48,13 @@
                     :Chart="Chart"
                     :transition="transition"
                 >
-                    <Dot
+                    <WDot
                         :key="`dot${dotItem.cartesianIndex}${dotItem.index}`"
                         :index="dotItem.index"
                         :cartesianIndex="dotItem.cartesianIndex"
                         :x="dotItem.x"
                         :y="dotItem.y"
+                        :info="dotItem.info"
                         :styles="{
                             stroke: dotStylesCmp.stroke ? dotStylesCmp.stroke : fillColor,
                             fill: dotStylesCmp.fill ? dotStylesCmp.fill : fillColor,
@@ -72,7 +73,7 @@
 <script>
 import VueTypes from 'vue-types'
 import { line as d3Line, area as d3Area, curveMonotoneX } from 'd3'
-import Dot from './Dot.vue'
+import { WDot } from '../Common'
 import animationMixin from '../../mixins/animation'
 import Spread from '../../transitions/Spread.vue'
 
@@ -97,7 +98,7 @@ export default {
     name: 'WLine',
     type: 'cartesian',
     components: {
-        Dot,
+        WDot,
         Spread,
     },
     mixins: [animationMixin],
@@ -155,13 +156,35 @@ export default {
             }))
         },
         dotsData () {
-            return this.dot ? this.Chart.dataset.map((item, index) => ({
-                x: this.Chart.xScale(index),
-                y: this.Chart.yScale(item[this.datakey]),
-                value: item[this.datakey],
-                index,
-                cartesianIndex: this.index,
-            })) : []
+            if (this.dot) {
+                const {
+                    dataset, xScale, yScale, datakeys, colors, axisXDatakey,
+                } = this.Chart
+                const color = colors[this.index]
+                return dataset.map((item, index) => {
+                    const line = dataset[index]
+                    const key = datakeys[this.index]
+                    const value = line[key]
+                    const label = line[axisXDatakey]
+                    return {
+                        x: xScale(index),
+                        y: yScale(item[this.datakey]),
+                        info: {
+                            id: this.index,
+                            point: index,
+                            label,
+                            value: [{
+                                value,
+                                color,
+                            }],
+                        },
+                        value: item[this.datakey],
+                        index,
+                        cartesianIndex: this.index,
+                    }
+                })
+            }
+            return []
         },
         genLine () {
             return d3Line()

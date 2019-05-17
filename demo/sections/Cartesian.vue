@@ -7,6 +7,7 @@
         <WLine
             datakey="two"
             area
+            dot
             legend="One Line"
         />
         <WBar

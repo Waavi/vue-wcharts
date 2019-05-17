@@ -2,14 +2,17 @@ import { WCartesian, WPieChart, WStackBar } from './charts'
 import {
     WLine,
     WBar,
+    WScatter,
     WXAxis,
     WYAxis,
+    WZAxis,
     WLegend,
     WLegends,
     WCartesianGrid,
     WMarker,
     WPie,
     WTooltip,
+    WDot,
 } from './components'
 import { setOptions } from './config'
 
@@ -26,13 +29,16 @@ const install = (Vue, opts = {}) => {
     const components = [
         WLine,
         WBar,
+        WScatter,
         WXAxis,
         WYAxis,
+        WZAxis,
         WLegends,
         WCartesianGrid,
         WMarker,
         WPie,
         WTooltip,
+        WDot,
     ]
 
     core.forEach((c) => {
@@ -52,9 +58,12 @@ export {
     WPieChart,
     WStackBar,
     WLine,
+    WScatter,
+    WDot,
     WBar,
     WXAxis,
     WYAxis,
+    WZAxis,
     WLegend,
     WLegends,
     WCartesianGrid,

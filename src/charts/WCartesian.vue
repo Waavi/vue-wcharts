@@ -13,15 +13,20 @@ export default {
     mixins: [chartMixin],
     props: {
         stacked: VueTypes.bool.def(false),
+        scatter: VueTypes.bool.def(false),
         bound: VueTypes.array.def([]),
-        gap: VueTypes.oneOfType([
-            VueTypes.number,
-            VueTypes.arrayOf(VueTypes.number).def([0, 0, 0, 0]),
-        ]).def(0),
+        xBound: VueTypes.array.def([]),
+        gap: VueTypes.oneOfType([VueTypes.number, VueTypes.arrayOf(VueTypes.number).def([0, 0, 0, 0])]).def(0),
     },
     data () {
         return {
-            axisXDatakey: null, // Datakey name of Xaxis
+            axisXDatakey: null, // Datakey of XAxis
+            axisYDatakey: null, // Datakey of YAxis
+            axisZDatakey: null, // Datakey of ZAxis
+            axisXName: null, // Name of XAxis
+            axisYName: null, // Name of YAxis
+            axisZName: null, // Name of ZAxis
+            axisZRange: null, // Range of ZAxis
         }
     },
     computed: {
@@ -35,20 +40,55 @@ export default {
         // xScale with scaleLinear of d3
         // ref: https://github.com/d3/d3-scale#_continuous
         xScale () {
+            const domain = this.scatter ? [this.xBounds.min, this.xBounds.max] : [0, this.dataset.length - 1]
             return scaleLinear()
-                .domain([0, this.dataset.length - 1])
+                .domain(domain)
                 .range([this.canvas.x0 + this.padding[3], this.canvas.x1 - this.padding[1]])
         },
-        // Bounds
+        // zScale calculate like Recharts
+        zScale () {
+            if (this.scatter && this.axisZDatakey) {
+                const [rangeMin, rangeMax] = this.axisZRange
+                const { min: boundMin, max: boundMax } = this.zBounds
+                return val => Math.sqrt((((val - boundMin) / (boundMax - boundMin)) * (rangeMax - rangeMin) + rangeMin) / Math.PI)
+            }
+            return val => val
+        },
+        // bounds
         bounds () {
-            if (this.datakeys.length) {
+            if (this.datakeys.length || this.axisYDatakey) {
                 const [boundMin, boundMax] = this.bound
                 return {
                     min: this.getBound(boundMin),
                     max: this.getBound(boundMax, 'max'),
                 }
             }
-
+            return {
+                max: 0,
+                min: 0,
+            }
+        },
+        xBounds () {
+            if (this.scatter && this.axisXDatakey) {
+                const [boundMin, boundMax] = this.xBound
+                return {
+                    min: this.getBound(boundMin, 'min', 'x'),
+                    max: this.getBound(boundMax, 'max', 'x'),
+                }
+            }
+            return {
+                max: 0,
+                min: 0,
+            }
+        },
+        zBounds () {
+            if (this.scatter && this.axisZDatakey) {
+                const values = this.dataset.map(d => d[this.axisZDatakey])
+                return {
+                    min: Math.min(...values),
+                    max: Math.max(...values),
+                }
+            }
             return {
                 max: 0,
                 min: 0,
@@ -68,9 +108,7 @@ export default {
 
             if (barIds.length) {
                 // Checked if width of bars it is higher than canvas width
-                const margin = this.width <= barAllWidth * (this.dataset || []).length
-                    ? this.width % barAllWidth
-                    : barAllWidth
+                const margin = this.width <= barAllWidth * (this.dataset || []).length ? this.width % barAllWidth : barAllWidth
 
                 gap[1] = margin
                 gap[3] = margin
@@ -89,14 +127,20 @@ export default {
     },
     methods: {
         // Calc min/max bound values
-        getBound (val, type = 'min') {
+        getBound (val, type = 'min', axis = 'y') {
             if (typeof val === 'number') return val
 
             const isMin = type === 'min'
-            let result = bound(this.curData, type, isMin ? 0 : 1)
+            let result = 0
+            if (this.scatter) {
+                const values = this.dataset.map(d => d[axis === 'y' ? this.axisYDatakey : this.axisXDatakey])
+                result = isMin ? Math.min(...values) : Math.max(...values)
+            } else {
+                result = bound(this.curData, type, isMin ? 0 : 1)
 
-            if (isMin && result === 0) {
-                result = bound(this.curData, 'min', 1)
+                if (isMin && result === 0) {
+                    result = bound(this.curData, 'min', 1)
+                }
             }
             if (typeof val === 'function') return val(result)
 
@@ -107,6 +151,7 @@ export default {
         const slots = this.$slots.default || []
         let datakeys = [] // We need get slots datakey prop to calculate max and min values for the scales
         const cartesians = [] // We need inject necessary props to cartesian slots
+        const grid = []
         const others = []
         const axis = []
         const plugins = []
@@ -143,6 +188,9 @@ export default {
                     // Add slot
                     slot.index = cartesiansLength
                     cartesians.push(slot)
+                    break
+                case 'grid':
+                    grid.push(slot)
                     break
                 case 'axis':
                     axis.push(slot)
@@ -183,7 +231,7 @@ export default {
                             viewBox: `0 0 ${viewWidth} ${height}`,
                         },
                     },
-                    this.chartReady ? [others, cartesians, axis] : []
+                    this.chartReady ? [others, grid, cartesians, axis] : []
                 ),
                 this.chartReady ? plugins : [],
             ]

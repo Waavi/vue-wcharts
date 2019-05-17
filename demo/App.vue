@@ -14,7 +14,14 @@
                 >
                     Pie
                 </button>
+                <button
+                    class="Btn"
+                    @click="activeComponent = 'Scatter'"
+                >
+                    Scatter
+                </button>
             </div>
+            <h2>{{ activeComponent }}</h2>
             <component
                 :is="activeComponent"
                 class="Chart"
@@ -31,8 +38,7 @@
 </template>
 
 <script>
-import { curveStep } from 'd3-shape'
-import { Cartesian, Pie } from './sections'
+import { Cartesian, Pie, Scatter } from './sections'
 
 const dataOne = [
     {
@@ -87,12 +93,12 @@ export default {
     components: {
         Cartesian,
         Pie,
+        Scatter,
     },
     data () {
         return {
             data: dataTwo,
-            activeComponent: 'Pie',
-            curveStep,
+            activeComponent: 'Scatter',
         }
     },
     methods: {
