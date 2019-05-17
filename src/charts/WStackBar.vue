@@ -8,6 +8,7 @@
             <div
                 v-for="stack in stacks"
                 v-show="!(stack.value <= 0)"
+                :id="stack.id"
                 :key="`stack-${stack.id}`"
                 class="Stack"
                 :style="{
@@ -18,6 +19,8 @@
                     paddingRight: `${offset}px`,
                     marginLeft: stack.id > 0 && `-${offset}px`
                 }"
+                @mouseenter="handleMouseEnter"
+                @mouseleave="handleMouseLeave"
             >
                 <div
                     class="Value"
@@ -40,14 +43,44 @@
                 </div>
             </div>
 
+            <WTooltip>
+                <template #default="tooltip">
+                    <div class="Wrapper">
+                        <div class="flex row-center">
+                            <div
+                                class="Bullet"
+                                :style="{ background: tooltip.value[0].color }"
+                            />
+                            <WText
+                                color="white"
+                                size="sm"
+                                weight="bold"
+                                class="mb-0"
+                            >
+                                <slot
+                                    name="tooltip"
+                                    :value="tooltip.value[0].value"
+                                >
+                                    {{ tooltip.value[0].value }}
+                                </slot>
+                            </WText>
+                        </div>
+                    </div>
+                </template>
+            </WTooltip>
+
             <div
                 v-for="marker in stackMarkers"
                 v-show="!(marker.value <= 0)"
+                :id="marker.id"
                 :key="`marker-${marker.id}`"
+                data-type="marker"
                 class="Marker"
                 :style="{
                     left: `${marker.left}%`
                 }"
+                @mouseenter="handleMouseEnter"
+                @mouseleave="handleMouseLeave"
             >
                 <slot
                     name="marker"
@@ -73,6 +106,7 @@
 <script>
 import VueTypes from 'vue-types'
 
+import activeMixin from '../mixins/active'
 import animationMixin from '../mixins/animation'
 import themeMixin from '../mixins/theme'
 
@@ -80,19 +114,29 @@ const MIN_WIDTH = 4
 
 export default {
     name: 'WStackBar',
+    provide () {
+        return {
+            Chart: this,
+        }
+    },
     filters: {
         // Transform value to percentage string
         percentage (value) {
             return `${value.toFixed(2)}%`
         },
     },
-    mixins: [themeMixin, animationMixin],
+    mixins: [
+        activeMixin,
+        themeMixin,
+        animationMixin,
+    ],
     props: {
         total: VueTypes.number,
         values: VueTypes.arrayOf(VueTypes.number).def([]),
         markers: VueTypes.arrayOf(VueTypes.number).def([]),
         valueStyles: VueTypes.object,
         showValue: VueTypes.bool.def(false),
+        withoutTooltip: VueTypes.bool.def(false),
         stackStyles: VueTypes.object.def({}),
         delay: VueTypes.number.def(300),
         minWidth: VueTypes.number,
@@ -146,6 +190,33 @@ export default {
         // Enable launch animation
         launch () {
             this.launchAnimation = true
+        },
+        // Set active bar element, to show tooltip
+        handleMouseEnter (event) {
+            if (this.withoutTooltip) return
+            const { id, offsetLeft, dataset } = event.target
+            const value = this[dataset.type !== 'marker' ? 'getStack' : 'getMarker'](id)
+            this.setActive({ id, value, offsetLeft }, event)
+        },
+        // Clean active element, to hide tooltip
+        handleMouseLeave () {
+            this.cleanActive()
+        },
+        // Return stack value of id
+        getStack (id) {
+            return [{
+                key: id,
+                color: this.colors[id],
+                value: this.stacks[id].value,
+            }]
+        },
+        // Return marker value of id
+        getMarker (id) {
+            return [{
+                key: id,
+                color: '#FFF',
+                value: this.stackMarkers[id].value,
+            }]
         },
     },
 }
