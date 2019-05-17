@@ -14163,6 +14163,15 @@ vue-types@^1.5.3:
   dependencies:
     lodash "^4.17.10"
 
+"vue-wcharts@https://github.com/Waavi/vue-wcharts.git#0.0.5-beta":
+  version "0.0.1"
+  resolved "https://github.com/Waavi/vue-wcharts.git#1cff5c91eff2a69e3a443996b8438b4423547cbd"
+  dependencies:
+    d3 "^5.9.2"
+    d3-shape "^1.3.5"
+    lodash "^4.17.11"
+    vue-types "^1.5.3"
+
 vue@^2.6.6, vue@^2.6.9:
   version "2.6.10"
   resolved "https://registry.yarnpkg.com/vue/-/vue-2.6.10.tgz#a72b1a42a4d82a721ea438d1b6bf55e66195c637"
