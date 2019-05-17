@@ -26,6 +26,9 @@ export default {
             axisXDatakey: null, // Datakey of XAxis
             axisYDatakey: null, // Datakey of YAxis
             axisZDatakey: null, // Datakey of ZAxis
+            axisXName: null, // Name of XAxis
+            axisYName: null, // Name of YAxis
+            axisZName: null, // Name of ZAxis
             axisZRange: null, // Range of ZAxis
         }
     },

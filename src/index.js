@@ -12,6 +12,7 @@ import {
     WMarker,
     WPie,
     WTooltip,
+    WDot,
 } from './components'
 import { setOptions } from './config'
 
@@ -37,6 +38,7 @@ const install = (Vue, opts = {}) => {
         WMarker,
         WPie,
         WTooltip,
+        WDot,
     ]
 
     core.forEach((c) => {

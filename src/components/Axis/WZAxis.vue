@@ -5,12 +5,14 @@ export default {
     name: 'WZAxis',
     axis: 'z',
     props: {
+        name: VueTypes.string.def(''),
         datakey: VueTypes.string.isRequired,
         range: VueTypes.array.def([64, 64]),
     },
     preload ({ parent, props, index }) {
-        const { datakey, range } = props
+        const { datakey, range, name } = props
         parent.axisZDatakey = datakey
+        parent.axisZName = name || ''
         parent.axisZRange = range
     },
 }

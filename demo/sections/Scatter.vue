@@ -3,21 +3,27 @@
         :dataset="data"
         responsive
         scatter
+        :bound="[n => n - 1000,n => n + 1000]"
+        :xBound="[n => n - 1000,n => n + 1000]"
     >
         <WScatter />
         <WCartesianGrid />
         <WXAxis
-            datakey="two"
+            name="one"
+            datakey="one"
             :space="[0, 50, 80, 50]"
         />
         <WYAxis
-            datakey="one"
+            name="two"
+            datakey="two"
             :space="[25, 0, 0, 50]"
         />
         <WZAxis
+            name="three"
             datakey="three"
-            :range="[100, 500]"
+            :range="[100, 5000]"
         />
+        <WTooltip />
     </WCartesian>
 </template>
 

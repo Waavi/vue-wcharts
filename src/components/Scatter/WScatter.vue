@@ -31,12 +31,13 @@
                     :Chart="Chart"
                     :transition="transition"
                 >
-                    <Dot
+                    <WDot
                         :key="`dot${dotItem.cartesianIndex}${dotItem.index}`"
                         :index="dotItem.index"
                         :cartesianIndex="dotItem.cartesianIndex"
                         :x="dotItem.x"
                         :y="dotItem.y"
+                        :info="dotItem.info"
                         :styles="{
                             stroke: stylesCmp.stroke ? stylesCmp.stroke : fillColor,
                             fill: stylesCmp.fill ? stylesCmp.fill : fillColor,
@@ -56,7 +57,7 @@
 import VueTypes from 'vue-types'
 import { sortBy } from 'lodash'
 import { line as d3Line, curveMonotoneX } from 'd3'
-import Dot from '../Line/Dot.vue'
+import { WDot } from '../Common'
 import animationMixin from '../../mixins/animation'
 import Spread from '../../transitions/Spread.vue'
 
@@ -81,7 +82,7 @@ export default {
     name: 'WScatter',
     type: 'cartesian',
     components: {
-        Dot,
+        WDot,
         Spread,
     },
     mixins: [animationMixin],
@@ -138,12 +139,31 @@ export default {
         },
         dotsData () {
             const {
-                dataset, xScale, yScale, zScale, axisXDatakey, axisYDatakey, axisZDatakey,
+                dataset, xScale, yScale, zScale, axisXDatakey, axisYDatakey, axisZDatakey, axisXName, axisYName, axisZName, colors,
             } = this.Chart
+            const color = colors[this.index]
             return dataset.map((item, index) => ({
                 x: xScale(item[axisXDatakey]),
                 y: yScale(item[axisYDatakey]),
                 z: zScale(item[axisZDatakey]),
+                info: {
+                    id: this.index,
+                    label: '',
+                    value: [
+                        {
+                            value: `${axisXName}: ${item[axisXDatakey]}`,
+                            color,
+                        },
+                        {
+                            value: `${axisYName}: ${item[axisYDatakey]}`,
+                            color,
+                        },
+                        {
+                            value: `${axisZName}: ${item[axisZDatakey]}`,
+                            color,
+                        },
+                    ],
+                },
                 value: item[axisYDatakey],
                 index,
                 cartesianIndex: this.index,

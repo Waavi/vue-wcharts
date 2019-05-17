@@ -32,6 +32,7 @@ export default {
     },
     props: {
         // Settings
+        name: VueTypes.string.def(''),
         datakey: VueTypes.string,
         textOffsetY: VueTypes.number.def(20),
         hideLine: VueTypes.bool.def(false),
@@ -50,7 +51,9 @@ export default {
         tickStyles: VueTypes.object,
     },
     preload ({ parent, props, index }) {
-        const { space, labelText, datakey } = props
+        const {
+            space, labelText, datakey, name,
+        } = props
         // Check type axis
         const isX = this.axis === 'x'
         // Get spaces binding or default
@@ -63,8 +66,10 @@ export default {
         parent.addSpaceObjects(spaces)
         if (isX) {
             parent.axisXDatakey = datakey
+            parent.axisXName = name || ''
         } else {
             parent.axisYDatakey = datakey
+            parent.axisYName = name || ''
         }
     },
     mounted () {
