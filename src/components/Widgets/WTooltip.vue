@@ -8,10 +8,16 @@
     >
         <slot v-bind="selected">
             <div class="Wrapper">
-                <span
-                    v-if="selected.label"
-                    class="Title"
-                >{{ selected.label }}</span>
+                <slot
+                    name="label"
+                    :label="selected.label"
+                >
+                    <span
+                        v-if="selected.label"
+                        class="Title"
+                    >{{ selected.label }}</span>
+                </slot>
+
                 <div
                     v-for="(value, index) in selected.value"
                     :key="index"
@@ -26,7 +32,13 @@
                             :style="{ background: value.color }"
                         />
                     </slot>
-                    <span>{{ value.value }}</span>
+
+                    <slot
+                        name="value"
+                        v-bind="value"
+                    >
+                        <span>{{ value.value }}</span>
+                    </slot>
                 </div>
             </div>
         </slot>
