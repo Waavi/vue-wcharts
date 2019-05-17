@@ -76,8 +76,7 @@ const stylesDefaultProp = {
     fill: '',
     stroke: '',
     strokeWidth: 0,
-    radius: 4,
-    hoverRadius: 8,
+    radius: 8,
     opacity: 0.8,
 }
 
@@ -107,7 +106,6 @@ export default {
             stroke: VueTypes.string,
             strokeWidth: VueTypes.number,
             radius: VueTypes.number,
-            hoverRadius: VueTypes.number,
             opacity: VueTypes.number,
         }).def(() => ({
             ...stylesDefaultProp,
@@ -150,23 +148,25 @@ export default {
             return dataset.map((item, index) => ({
                 x: xScale(item[axisXDatakey]),
                 y: yScale(item[axisYDatakey]),
-                z: zScale(item[axisZDatakey]),
+                z: axisZDatakey ? zScale(item[axisZDatakey]) : this.stylesCmp.radius,
                 info: {
                     id: this.index,
                     label: '',
                     value: [
-                        {
-                            value: `${axisXName}: ${item[axisXDatakey]}`,
-                            color,
-                        },
-                        {
-                            value: `${axisYName}: ${item[axisYDatakey]}`,
-                            color,
-                        },
-                        axisZDatakey ? {
+                        ...[
+                            {
+                                value: `${axisXName}: ${item[axisXDatakey]}`,
+                                color,
+                            },
+                            {
+                                value: `${axisYName}: ${item[axisYDatakey]}`,
+                                color,
+                            },
+                        ],
+                        ...(axisZDatakey ? [{
                             value: `${axisZName}: ${item[axisZDatakey]}`,
                             color,
-                        } : null,
+                        }] : []),
                     ],
                 },
                 value: item[axisYDatakey],

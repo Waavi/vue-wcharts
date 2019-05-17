@@ -47,7 +47,7 @@ export default {
         },
         // zScale calculate like Recharts
         zScale () {
-            if (this.scatter) {
+            if (this.scatter && this.axisZDatakey) {
                 const [rangeMin, rangeMax] = this.axisZRange
                 const { min: boundMin, max: boundMax } = this.zBounds
                 return val => Math.sqrt((((val - boundMin) / (boundMax - boundMin)) * (rangeMax - rangeMin) + rangeMin) / Math.PI)

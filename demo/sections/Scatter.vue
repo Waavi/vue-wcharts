@@ -7,7 +7,7 @@
         :xBound="[n => n - 1000,n => n + 1000]"
     >
         <WCartesianGrid />
-        <WScatter />
+        <WScatter legend="One Scatter" />
         <WXAxis
             name="one"
             datakey="one"
@@ -24,6 +24,11 @@
             :range="[100, 5000]"
         />
         <WTooltip />
+
+        <WLegends
+            position="bottom"
+            align="end"
+        />
     </WCartesian>
 </template>
 
