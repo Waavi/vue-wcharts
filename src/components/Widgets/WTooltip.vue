@@ -98,9 +98,10 @@ export default {
         calcPos (event) {
             const { layerX, layerY } = event
             const { viewWidth, height: viewHeight } = this.Chart
+            const { offsetLeft = 0, offsetTop = 0 } = this.selected
             // Add space between point of tooltip
-            let x = layerX + this.gap
-            let y = layerY + this.gap
+            let x = layerX + this.gap + offsetLeft
+            let y = layerY + this.gap + offsetTop
             // Get size of tooltip
             const { clientWidth: elWidth, clientHeight: elHeight } = this.$refs.tooltip || {}
 
@@ -129,6 +130,7 @@ export default {
     background: #333;
     font-size: 14px;
     opacity: 0;
+    z-index: 1;
     transition: opacity .15s ease;
 
     &.visible {
