@@ -3,43 +3,57 @@
     <div class="WStackBar">
         <div
             v-if="stacks"
-            class="Stacks"
+            class="Container"
         >
             <div
-                v-for="stack in stacks"
-                v-show="!(stack.value <= 0)"
-                :id="stack.id"
-                :key="`stack-${stack.id}`"
-                class="Stack"
-                :style="{
-                    ...stackStyles,
-                    opacity: launchAnimation ? 1 : 0,
-                    background: stack.color,
-                    maxWidth: `${stack.width}%`,
-                    paddingRight: `${offset}px`,
-                    marginLeft: stack.id > 0 && `-${offset}px`
-                }"
-                @mouseenter="handleMouseEnter"
-                @mouseleave="handleMouseLeave"
+                v-if="launchAnimation"
+                class="Start"
+            >
+                <slot
+                    name="start"
+                    :total="sumValues"
+                />
+            </div>
+
+            <div
+                v-if="stacks"
+                class="Stacks"
             >
                 <div
-                    class="Value"
-                    :style="valueStyles"
+                    v-for="(stack, index) in stacks"
+                    v-show="!(stack.value <= 0)"
+                    :id="stack.id"
+                    :key="`stack-${stack.id}`"
+                    class="Stack"
+                    :class="{ First: index === 0, Last: index === stacks.length - 1 }"
+                    :style="{
+                        ...stackStyles,
+                        opacity: launchAnimation ? 1 : 0,
+                        background: stack.color,
+                        maxWidth: `${stack.width}%`,
+                    }"
+                    @mouseenter="handleMouseEnter"
+                    @mouseleave="handleMouseLeave"
                 >
-                    <slot
-                        v-if="!stack.hide && showValue"
-                        name="value"
-                        :index="stack.id"
-                        :value="stack.value"
-                        :percentage="stack.width|percentage"
-                        :color="stack.color"
+                    <div
+                        class="Value"
+                        :style="valueStyles"
                     >
-                        <span
-                            :style="{
-                                color: stack.color
-                            }"
-                        >{{ stack.value }}</span>
-                    </slot>
+                        <slot
+                            v-if="!stack.hide && showValue"
+                            name="value"
+                            :index="stack.id"
+                            :value="stack.value"
+                            :percentage="stack.width|percentage"
+                            :color="stack.color"
+                        >
+                            <span
+                                :style="{
+                                    color: stack.color
+                                }"
+                            >{{ stack.value }}</span>
+                        </slot>
+                    </div>
                 </div>
             </div>
 
@@ -160,6 +174,7 @@ export default {
         stacks () {
             const values = this.launchAnimation ? this.values : Array.from({ length: this.values.length })
             return values.reduce((acc, value, index) => {
+                if (value === 0) return acc
                 const width = (value * 100 / this.totalValues)
                 acc.push({
                     id: index,
@@ -229,6 +244,13 @@ export default {
     width: 100%;
 }
 
+.Container {
+    position: relative;
+    display: flex;
+    flex: 1;
+    align-items: center;
+}
+
 .Value {
     position: absolute;
     top: calc(100% + 5px);
@@ -242,10 +264,12 @@ export default {
 }
 
 .Stacks {
-    position: relative;
     display: flex;
     flex: 1;
     align-items: center;
+    height: 20px;
+    border-radius: 3px;
+    overflow: hidden;
 }
 
 .Stack {
@@ -255,8 +279,12 @@ export default {
     height: 20px;
     width: 100%;
     max-width: 0%;
-    border-radius: 3px;
     transition: all 250ms ease;
+
+    &.Last {
+        border-top-right-radius: 3px;
+        border-bottom-right-radius: 3px;
+    }
 }
 
 .Marker {
