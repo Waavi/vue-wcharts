@@ -219,10 +219,11 @@ export default {
         },
         // Return stack value of id
         getStack (id) {
+            const { value } = this.stacks.find(stack => stack.id === parseInt(id, 0)) || {}
             return [{
                 key: id,
                 color: this.colors[id],
-                value: this.stacks[id].value,
+                value,
             }]
         },
         // Return marker value of id
