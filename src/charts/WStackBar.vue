@@ -269,8 +269,6 @@ export default {
     flex: 1;
     align-items: center;
     height: 20px;
-    border-radius: 3px;
-    overflow: hidden;
 }
 
 .Stack {
@@ -281,6 +279,11 @@ export default {
     width: 100%;
     max-width: 0%;
     transition: all 250ms ease;
+
+    &.First {
+        border-top-left-radius: 3px;
+        border-bottom-left-radius: 3px;
+    }
 
     &.Last {
         border-top-right-radius: 3px;
