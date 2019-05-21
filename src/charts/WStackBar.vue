@@ -73,7 +73,7 @@
                             >
                                 <slot
                                     name="tooltip"
-                                    :value="tooltip.value[0].value"
+                                    v-bind="tooltip.value[0]"
                                 >
                                     {{ tooltip.value[0].value }}
                                 </slot>
@@ -219,11 +219,12 @@ export default {
         },
         // Return stack value of id
         getStack (id) {
-            const { value } = this.stacks.find(stack => stack.id === parseInt(id, 0)) || {}
+            const { value, width } = this.stacks.find(stack => stack.id === parseInt(id, 0)) || {}
             return [{
                 key: id,
                 color: this.colors[id],
                 value,
+                width,
             }]
         },
         // Return marker value of id
