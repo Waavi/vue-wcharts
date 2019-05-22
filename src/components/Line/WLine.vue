@@ -33,11 +33,13 @@
             v-if="dot"
         >
             <template
-                v-for="dotItem in dotsData"
+                v-for="(dotItem, id) in dotsData"
             >
                 <slot
                     name="dot"
                     :dot="dotItem"
+                    :first="id === 0"
+                    :last="id === dotsData.length - 1"
                     :styles="{
                         stroke: dotStylesCmp.stroke ? dotStylesCmp.stroke : fillColor,
                         fill: dotStylesCmp.fill ? dotStylesCmp.fill : fillColor,
