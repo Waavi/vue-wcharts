@@ -123,17 +123,16 @@ export default {
     },
     watch: {
         active (newValue) {
-            console.log(newValue)
             this.activePath = newValue
         },
     },
     methods: {
         handleMouseEnter (event) {
-            if (this.active === undefined) this.activePath = parseInt(event.target.id, 0)
+            if ([null, undefined].includes(this.active)) this.activePath = parseInt(event.target.id, 0)
             this.handleActive(event, 'onHover')
         },
         handleMouseLeave () {
-            if (this.active === undefined) this.activePath = null
+            if ([null, undefined].includes(this.active)) this.activePath = null
             this.Chart.cleanActive()
         },
         handleClick (event) {
