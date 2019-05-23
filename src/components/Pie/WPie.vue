@@ -137,7 +137,7 @@ export default {
             const value = this.curValues[id]
             const color = this.fill || this.Chart.colors[id]
             const el = {
-                id: this.id,
+                id,
                 value: [{
                     value,
                     color,
