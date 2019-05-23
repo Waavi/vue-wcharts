@@ -5,6 +5,8 @@
         :class="{ selected, active }"
         :style="styles"
         @click.prevent="$emit('onClick', { text, index })"
+        @mouseenter="$emit('onMouseenter', { text, index })"
+        @mouseleave="$emit('onMouseleave', { text, index })"
     >
         <slot
             name="bullet"

@@ -49,7 +49,7 @@ export default {
         styles: VueTypes.object,
         stroke: VueTypes.string.def('#FFF'),
         fill: VueTypes.string,
-        active: VueTypes.number,
+        active: VueTypes.oneOfType([Number, null]),
     },
     data () {
         return {
@@ -123,6 +123,7 @@ export default {
     },
     watch: {
         active (newValue) {
+            console.log(newValue)
             this.activePath = newValue
         },
     },
