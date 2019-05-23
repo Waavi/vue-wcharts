@@ -1,6 +1,6 @@
 <template>
     <g
-        v-if="active"
+        v-if="visible"
         class="WPie"
     >
         <foreignObject :style="contentStyles">
@@ -49,6 +49,7 @@ export default {
         styles: VueTypes.object,
         stroke: VueTypes.string.def('#FFF'),
         fill: VueTypes.string,
+        active: VueTypes.number,
     },
     data () {
         return {
@@ -61,7 +62,7 @@ export default {
             return this.$vnode.index
         },
         // Active elem
-        active () {
+        visible () {
             return this.Chart.activeElements.includes(this.id)
         },
         curRadius () {
@@ -120,13 +121,18 @@ export default {
             }
         },
     },
+    watch: {
+        active (newValue) {
+            this.activePath = newValue
+        },
+    },
     methods: {
         handleMouseEnter (event) {
-            this.activePath = parseInt(event.target.id, 0)
+            if (this.active === undefined) this.activePath = parseInt(event.target.id, 0)
             this.handleActive(event, 'onHover')
         },
         handleMouseLeave () {
-            this.activePath = null
+            if (this.active === undefined) this.activePath = null
             this.Chart.cleanActive()
         },
         handleClick (event) {
