@@ -1,5 +1,5 @@
 <template>
-    <Trans
+    <WTrans
         :initialProps="{
             r: 0
         }"
@@ -16,19 +16,19 @@
             @mouseenter="handleMouseEnter"
             @mouseleave="Chart.cleanActive"
         />
-    </Trans>
+    </WTrans>
 </template>
 
 <script>
 import VueTypes from 'vue-types'
-import Trans from '../../transitions/Trans.vue'
+import { WTrans } from '../../transitions'
 
 export default {
     name: 'WDot',
     type: 'cartesian',
     inject: ['Chart'],
     components: {
-        Trans,
+        WTrans,
     },
     props: {
         index: VueTypes.number.isRequired,

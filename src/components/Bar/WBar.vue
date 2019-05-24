@@ -3,7 +3,7 @@
         v-if="active"
         id="Bars"
     >
-        <Trans
+        <WTrans
             v-for="(bar, key) in bars"
             :key="key"
             :initialProps="{
@@ -41,14 +41,14 @@
                     </text>
                 </slot>
             </g>
-        </Trans>
+        </WTrans>
     </g>
 </template>
 
 <script>
 import VueTypes from 'vue-types'
 import animationMixin from '../../mixins/animation'
-import Trans from '../../transitions/Trans.vue'
+import { WTrans } from '../../transitions'
 
 const DEFAULT_WIDTH = 20
 
@@ -61,7 +61,7 @@ export default {
     name: 'WBar',
     type: 'cartesian',
     components: {
-        Trans,
+        WTrans,
     },
     mixins: [animationMixin],
     inject: ['Chart'],

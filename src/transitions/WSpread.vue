@@ -1,9 +1,9 @@
 <script>
 import VueTypes from 'vue-types'
-import Trans from './Trans.vue'
+import WTrans from './WTrans.vue'
 
 export default {
-    name: 'Spread',
+    name: 'WSpread',
     functional: true,
     props: {
         axis: VueTypes.oneOf(['x', 'y']).isRequired,
@@ -12,7 +12,7 @@ export default {
 
     render (h, { children, props, parent }) {
         // eslint-disable-next-line no-underscore-dangle
-        const id = `Spread${parent._uid}`
+        const id = `WSpread${parent._uid}`
         const { axis, transition } = props
 
         return h('g', [
@@ -26,7 +26,7 @@ export default {
                     },
                     [
                         h(
-                            Trans,
+                            WTrans,
                             {
                                 props: {
                                     initialProps: {

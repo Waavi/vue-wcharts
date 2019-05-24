@@ -1,6 +1,6 @@
 <template>
     <g v-if="active">
-        <Spread
+        <WSpread
             axis="x"
             :transition="transition"
         >
@@ -28,7 +28,7 @@
                 :style="{ transition }"
                 :fill="stylesCmp.fill ? stylesCmp.fill : `url(#areaGradient${_uid})`"
             />
-        </Spread>
+        </WSpread>
         <g
             v-if="dot"
         >
@@ -77,7 +77,7 @@ import VueTypes from 'vue-types'
 import { line as d3Line, area as d3Area, curveMonotoneX } from 'd3'
 import { WDot } from '../Common'
 import animationMixin from '../../mixins/animation'
-import Spread from '../../transitions/Spread.vue'
+import { WSpread } from '../../transitions'
 
 import { isFunc } from '../../utils/checks'
 
@@ -101,7 +101,7 @@ export default {
     type: 'cartesian',
     components: {
         WDot,
-        Spread,
+        WSpread,
     },
     mixins: [animationMixin],
     inject: ['Chart'],
