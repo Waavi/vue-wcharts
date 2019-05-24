@@ -120,9 +120,12 @@ export default {
         // Return stacked data or data dataset without transform, of datakeys and dataset props
         // ref: https://github.com/d3/d3-shape#stacks
         curData () {
+            const datakeys = this.stacked ? Object.values((this.snap || {}).barsByDatakeys || []) : this.datakeys
+            const stacked = this.stacked ? stackOffsetDiverging : noop
+
             return stack()
-                .keys(this.datakeys)
-                .offset(this.stacked ? stackOffsetDiverging : noop)(this.dataset)
+                .keys(datakeys)
+                .offset(stacked)(this.dataset)
         },
     },
     methods: {
