@@ -14,6 +14,10 @@ import {
     WTooltip,
     WDot,
 } from './components'
+import {
+    WTrans,
+    WSpread,
+} from './transitions'
 import { setOptions } from './config'
 
 const install = (Vue, opts = {}) => {
@@ -41,6 +45,12 @@ const install = (Vue, opts = {}) => {
         WDot,
     ]
 
+    const common = [
+        WTrans,
+        WSpread,
+    ]
+
+    // Chart components
     core.forEach((c) => {
         Vue.component(c.name, c)
     })
@@ -49,14 +59,21 @@ const install = (Vue, opts = {}) => {
     components.forEach((c) => {
         Vue.component(c.name, c)
     })
+
+    // Common and transtions components
+    common.forEach((c) => {
+        Vue.component(c.name, c)
+    })
 }
 
 export default install
 
 export {
+    // Core
     WCartesian,
     WPieChart,
     WStackBar,
+    // Components
     WLine,
     WScatter,
     WDot,
@@ -70,4 +87,7 @@ export {
     WMarker,
     WPie,
     WTooltip,
+    // Common
+    WTrans,
+    WSpread,
 }

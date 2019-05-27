@@ -2,7 +2,7 @@
 import VueTypes from 'vue-types'
 
 export default {
-    name: 'Trans',
+    name: 'WTrans',
     functional: true,
     props: {
         initialProps: VueTypes.object.isRequired,

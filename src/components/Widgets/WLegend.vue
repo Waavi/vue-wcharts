@@ -21,7 +21,9 @@
                 />
             </div>
         </slot>
-        <span class="Text">{{ text }}</span>
+        <slot :text="text">
+            <span class="Text">{{ text }}</span>
+        </slot>
     </a>
 </template>
 

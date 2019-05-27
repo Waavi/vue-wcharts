@@ -1,6 +1,6 @@
 <template>
     <g v-if="active">
-        <Spread
+        <WSpread
             v-if="line"
             axis="x"
             :transition="transition"
@@ -13,7 +13,7 @@
                 :stroke-dasharray="lineStylesCmp.strokeDasharray"
                 fill="none"
             />
-        </Spread>
+        </WSpread>
         <g>
             <template
                 v-for="dotItem in dotsData"
@@ -61,7 +61,7 @@ import { sortBy } from 'lodash'
 import { line as d3Line, curveMonotoneX } from 'd3'
 import { WDot } from '../Common'
 import animationMixin from '../../mixins/animation'
-import Spread from '../../transitions/Spread.vue'
+import { WSpread } from '../../transitions'
 
 import { isFunc } from '../../utils/checks'
 
@@ -85,7 +85,7 @@ export default {
     type: 'cartesian',
     components: {
         WDot,
-        Spread,
+        WSpread,
     },
     mixins: [animationMixin],
     inject: ['Chart'],
