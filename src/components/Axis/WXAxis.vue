@@ -27,7 +27,7 @@
                     name="tickText"
                     v-bind="tick.text"
                 >
-                    <TickText
+                    <WTickText
                         v-bind="tick.text"
                         :styles="tickStylesCmp"
                     />

@@ -23,7 +23,7 @@ const stylesDefaultProp = {
 }
 
 export default {
-    name: 'TickText',
+    name: 'WTickText',
     props: {
         x: VueTypes.number,
         y: VueTypes.number,

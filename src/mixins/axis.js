@@ -1,7 +1,7 @@
 
 import VueTypes from 'vue-types'
 import { genTicks, genExactNbTicks } from '../utils/maths'
-import TickText from '../components/Axis/TickText.vue'
+import WTickText from '../components/Axis/WTickText.vue'
 
 const axisStylesDefaultProp = {
     stroke: '#999',
@@ -28,7 +28,7 @@ export default {
     type: 'axis',
     inject: ['Chart'],
     components: {
-        TickText,
+        WTickText,
     },
     props: {
         // Settings

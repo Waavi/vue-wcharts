@@ -131,7 +131,7 @@ storiesOf('Charts/Bar', module)
                     middle: 'middle',
                     end: 'end',
                 }, 'middle'),
-                width: 30,
+                width: 25,
                 data: object('Data', data),
             }
         },
@@ -209,7 +209,7 @@ storiesOf('Charts/Bar', module)
                     middle: 'middle',
                     end: 'end',
                 }, 'middle'),
-                width: 30,
+                width: 25,
                 data: object('Data', data),
             }
         },
@@ -314,7 +314,7 @@ storiesOf('Charts/Bar', module)
                     middle: 'middle',
                     end: 'end',
                 }, 'middle'),
-                width: 30,
+                width: 25,
                 data: object('Data', dataTwo),
             }
         },
@@ -389,7 +389,7 @@ storiesOf('Charts/Bar', module)
                     middle: 'middle',
                     end: 'end',
                 }, 'middle'),
-                width: 30,
+                width: 25,
                 data: object('Data', dataTwo),
             }
         },
