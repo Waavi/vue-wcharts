@@ -61,10 +61,12 @@
                 <template #default="tooltip">
                     <div class="Wrapper">
                         <div class="flex row-center">
-                            <div
-                                class="Bullet"
-                                :style="{ background: tooltip.value[0].color }"
-                            />
+                            <div class="Bullet">
+                                <div
+                                    class="Bullet"
+                                    :style="{ background: tooltip.value[0].color }"
+                                />
+                            </div>
                             <WText
                                 color="white"
                                 size="sm"
@@ -300,5 +302,9 @@ export default {
     background: white;
     transform: rotate(45deg) translateY(7px);
     outline: 1px solid;
+}
+
+.Bullet {
+    line-height: 0.9;
 }
 </style>
