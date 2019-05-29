@@ -92,6 +92,7 @@ export default {
     props: {
         legend: VueTypes.string,
         curve: VueTypes.oneOfType([VueTypes.bool, VueTypes.func]).def(false),
+        line: VueTypes.bool.def(false),
         lineStyles: VueTypes.shape({
             fill: VueTypes.string,
             stroke: VueTypes.string,
@@ -100,7 +101,6 @@ export default {
         }).def(() => ({
             ...lineStylesDefaultProp,
         })),
-        line: VueTypes.bool.def(false),
         styles: VueTypes.shape({
             fill: VueTypes.string,
             stroke: VueTypes.string,

@@ -13,12 +13,12 @@
             :isX="isX"
             :label="label"
             :value="value"
-            :placement="placement"
+            :placement="labelAlign"
             :style="labelStylesCmp"
         >
             <text
                 v-bind="labelCoordinates"
-                :text-anchor="isX ? 'end' : placement"
+                :text-anchor="isX ? 'end' : labelAlign"
                 :style="labelStylesCmp"
             >
                 {{ label }}
@@ -48,7 +48,7 @@ export default {
         type: VueTypes.oneOf(['y', 'x']).def('y'),
         value: VueTypes.any.isRequired,
         label: VueTypes.string.def(''),
-        placement: VueTypes.oneOf(['start', 'end']).def('end'),
+        labelAlign: VueTypes.oneOf(['start', 'end']).def('end'),
         styles: VueTypes.shape({
             stroke: VueTypes.string,
             strokeWidth: VueTypes.number,
@@ -108,12 +108,12 @@ export default {
             if (this.isX) {
                 return {
                     x: this.line.x1 - 5,
-                    y: this.placement === 'end' ? this.line.y1 : this.line.y2 + 5,
-                    dy: this.placement === 'end' ? 15 : -10,
+                    y: this.labelAlign === 'end' ? this.line.y1 : this.line.y2 + 5,
+                    dy: this.labelAlign === 'end' ? 15 : -10,
                 }
             }
             return {
-                x: this.placement === 'end' ? this.line.x2 - 5 : this.line.x1 + 5,
+                x: this.labelAlign === 'end' ? this.line.x2 - 5 : this.line.x1 + 5,
                 y: this.line.y1,
                 dy: -10,
             }
