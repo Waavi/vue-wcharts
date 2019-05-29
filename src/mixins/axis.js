@@ -201,7 +201,7 @@ export default {
         },
         // Return label config
         label () {
-            const { labelPosition: textAnchor, labelSize: fontSize } = this
+            const { labelAlign: textAnchor, labelSize: fontSize } = this
             // Get setting of label
             const { x, y, transform } = (this.isX ? this.getLabelXAxis : this.getLabelYAxis)(textAnchor)
 

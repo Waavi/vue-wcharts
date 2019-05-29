@@ -179,9 +179,9 @@ storiesOf('Axis', module)
                     <WXAxis
                         datakey="name"
                         :labelText="labelTextX"
-                        :labelPosition="labelTextXAnchor"
+                        :labelAlign="labelTextXAnchor"
                     />
-                    <WYAxis :labelText="labelTextY" :labelPosition="labelTextYAnchor" />
+                    <WYAxis :labelText="labelTextY" :labelAlign="labelTextYAnchor" />
                 </WCartesian>
             </div>
         `,
@@ -230,7 +230,7 @@ storiesOf('Axis', module)
                     <WXAxis
                         datakey="name"
                         :space="[0, 50, 80, 50]"
-                        :labelPosition="labelTextXAnchor"
+                        :labelAlign="labelTextXAnchor"
                     >
                         <template #label="label">
                             <svg
@@ -252,7 +252,7 @@ storiesOf('Axis', module)
                     </WXAxis>
                     <WYAxis
                         :space="[50, 0, 0, 100]"
-                        :labelPosition="labelTextYAnchor"
+                        :labelAlign="labelTextYAnchor"
                     >
                         <template #label="label">
                             <svg
