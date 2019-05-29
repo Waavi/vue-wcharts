@@ -30,7 +30,17 @@ The UMD build is also available on unpkg.com (unpkg):
 $ git clone https://github.com/Waavi/vue-wcharts.git
 $ cd vue-wcharts && yarn
 $ yarn serve
+
+# Run tests
+$ yarn test
+
+# Lints and fixes files
+yarn run lint
+
+# Build
+yarn build
 ```
+
 <br/>
 <br/>
 

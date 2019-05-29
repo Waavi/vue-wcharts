@@ -1,5 +1,5 @@
 module.exports = {
-    title: 'vue-wcharts',
+    title: 'vue-wcharts | Waavi',
     description: 'Doc to used vue-wcharts.',
     dest: 'dist',
     head: [
@@ -16,18 +16,24 @@ module.exports = {
         ['meta', { name: 'msapplication-TileColor', content: '#000000' }]
     ],
     themeConfig: {
+        logo: '/logo.png',
         repo: 'waavi/vue-wcharts',
         nav: [
-            { text: 'Guide', link: '/guide/introduction' },
-            { text: 'Api', link: '/api/' },
-            { text: 'Example', link: '/examples/' },
+            { text: 'Guide', link: '/docs/guide/getting-started' },
+            { text: 'Api', link: '/docs/api/charts' },
+            { text: 'Examples', link: '/docs/examples/' },
         ],
         sidebar: {
-            '/guide/': [
-                ['introduction', 'Introduction'],
+            '/docs/guide/': [
                 ['getting-started', 'Getting Started'],
                 ['feedback', 'Feedback'],
                 ['license', 'License'],
+            ],
+            '/docs/api/': [
+                ['charts', 'Charts'],
+                ['components', 'Components'],
+                ['widgets', 'Widgets'],
+                ['transitions', 'Transitions'],
             ],
         },
     }
