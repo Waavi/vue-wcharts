@@ -211,11 +211,11 @@ export default {
         // Set active element
         handleMouseEnter (event) {
             const {
-                stacked, curData, setActive, snap, axisXDatakey,
+                stacked, curData, setActive, snap, axis,
             } = this.Chart
             const { id } = event.target
             const line = this.Chart.dataset[id]
-            const label = line[axisXDatakey]
+            const label = line[axis.x.datakey]
 
             // Generate tooltip config
             const values = curData.map((item) => {

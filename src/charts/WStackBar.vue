@@ -67,19 +67,12 @@
                                     :style="{ background: tooltip.value[0].color }"
                                 />
                             </div>
-                            <WText
-                                color="white"
-                                size="sm"
-                                weight="bold"
-                                class="mb-0"
+                            <slot
+                                name="tooltip"
+                                v-bind="tooltip.value[0]"
                             >
-                                <slot
-                                    name="tooltip"
-                                    v-bind="tooltip.value[0]"
-                                >
-                                    {{ tooltip.value[0].value }}
-                                </slot>
-                            </WText>
+                                {{ tooltip.value[0].value }}
+                            </slot>
                         </div>
                     </div>
                 </template>
@@ -123,6 +116,7 @@
 import VueTypes from 'vue-types'
 
 import activeMixin from '../mixins/active'
+import { WTooltip } from '../components/Widgets'
 import animationMixin from '../mixins/animation'
 import themeMixin from '../mixins/theme'
 
@@ -130,6 +124,9 @@ const MIN_WIDTH = 4
 
 export default {
     name: 'WStackBar',
+    components: {
+        WTooltip,
+    },
     provide () {
         return {
             Chart: this,

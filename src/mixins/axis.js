@@ -34,7 +34,7 @@ export default {
         // Settings
         name: VueTypes.string.def(''),
         datakey: VueTypes.string,
-        textOffsetY: VueTypes.number.def(20),
+        textOffset: VueTypes.number.def(20),
         hideLine: VueTypes.bool.def(false),
         hideTickMark: VueTypes.bool.def(false),
         numTicks: VueTypes.number.def(0),
@@ -65,11 +65,11 @@ export default {
         // Added spaces of parent
         parent.addSpaceObjects(spaces)
         if (isX) {
-            parent.axisXDatakey = datakey
-            parent.axisXName = name || ''
+            parent.axis.x.datakey = datakey
+            parent.axis.x.name = name || ''
         } else {
-            parent.axisYDatakey = datakey
-            parent.axisYName = name || ''
+            parent.axis.y.datakey = datakey
+            parent.axis.y.name = name || ''
         }
     },
     mounted () {
@@ -124,7 +124,7 @@ export default {
                                 index,
                                 value: this.format(value),
                                 x: x + this.tickStylesCmp.fontSize / 3,
-                                y: canvas.y1 + this.textOffsetY,
+                                y: canvas.y1 + this.textOffset,
                             },
                         }
                     })
@@ -149,7 +149,7 @@ export default {
                             index,
                             value: props[this.datakey] || index,
                             x,
-                            y: canvas.y1 + this.textOffsetY,
+                            y: canvas.y1 + this.textOffset,
                         },
                     }
                 })
@@ -177,7 +177,7 @@ export default {
                     text: {
                         index,
                         value: this.format(value),
-                        x: canvas.x0 - this.textOffsetY,
+                        x: canvas.x0 - this.textOffset,
                         y: y + this.tickStylesCmp.fontSize / 3,
                     },
                 }
@@ -251,7 +251,7 @@ export default {
                 middle: (this.Chart.canvas.x1 - this.Chart.canvas.x0) / 2 + this.Chart.canvas.x0,
                 end: this.Chart.canvas.x1,
             }
-            const y = this.Chart.canvas.y1 + (this.Chart.spaceObjects[2] / 2 + this.textOffsetY)
+            const y = this.Chart.canvas.y1 + (this.Chart.spaceObjects[2] / 2 + this.textOffset)
             const x = pos[align]
 
             return { x, y }
@@ -264,7 +264,7 @@ export default {
                 middle: (this.Chart.canvas.y1 - this.Chart.canvas.y0) / 2 + this.Chart.canvas.y0,
                 end: this.Chart.canvas.y0,
             }
-            const x = this.Chart.canvas.x0 - (this.Chart.spaceObjects[3] / 2 + this.textOffsetY)
+            const x = this.Chart.canvas.x0 - (this.Chart.spaceObjects[3] / 2 + this.textOffset)
             const y = pos[align]
 
             return { x, y, transform: `rotate(-90 ${x} ${y})` }
