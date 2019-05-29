@@ -27,7 +27,7 @@
                     class="Stack"
                     :class="{ First: index === 0, Last: index === stacks.length - 1 }"
                     :style="{
-                        ...stackStyles,
+                        ...styles,
                         opacity: launchAnimation ? 1 : 0,
                         background: stack.color,
                         maxWidth: `${stack.width}%`,
@@ -37,10 +37,10 @@
                 >
                     <div
                         class="Value"
-                        :style="valueStyles"
+                        :style="labelStyles"
                     >
                         <slot
-                            v-if="!stack.hide && showValue"
+                            v-if="!stack.hide && showLabel"
                             name="value"
                             :index="stack.id"
                             :value="stack.value"
@@ -148,12 +148,12 @@ export default {
     ],
     props: {
         total: VueTypes.number,
-        values: VueTypes.arrayOf(VueTypes.number).def([]),
+        dataset: VueTypes.arrayOf(VueTypes.number).def([]),
         markers: VueTypes.arrayOf(VueTypes.number).def([]),
-        valueStyles: VueTypes.object,
-        showValue: VueTypes.bool.def(false),
+        labelStyles: VueTypes.object,
+        showLabel: VueTypes.bool.def(false),
         withoutTooltip: VueTypes.bool.def(false),
-        stackStyles: VueTypes.object.def({}),
+        styles: VueTypes.object.def({}),
         delay: VueTypes.number.def(300),
         minWidth: VueTypes.number,
     },
@@ -170,11 +170,11 @@ export default {
         },
         // Sum values
         sumValues () {
-            return this.values.reduce((a, b) => a + b)
+            return this.dataset.reduce((a, b) => a + b)
         },
         // Generate and calc stack values
         stacks () {
-            const values = this.launchAnimation ? this.values : Array.from({ length: this.values.length })
+            const values = this.launchAnimation ? this.dataset : Array.from({ length: this.dataset.length })
             return values.reduce((acc, value, index) => {
                 if (value === 0) return acc
                 const width = (value * 100 / this.totalValues)
