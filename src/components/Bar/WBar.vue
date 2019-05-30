@@ -35,23 +35,20 @@
                         :align="labelAlign"
                         :size="labelSize"
                     >
-                        {{ bar.label.value }}
-                        </text>
-                    </slot>
-                    <text
-                        :x="bar.label.x"
-                        :y="0"
-                        :text-anchor="labelAlign"
-                        :font-size="labelSize"
-                        :style="{ ...labelStylesCmp, transition, transform: `translateY(${bar.label.y}px)` }"
-                    >
-                        <slot
-                            name="labelValue"
-                            v-bind="bar.label"
+                        <text
+                            :x="bar.label.x"
+                            :y="0"
+                            :text-anchor="labelAlign"
+                            :font-size="labelSize"
+                            :style="{ ...labelStylesCmp, transition, transform: `translateY(${bar.label.y}px)` }"
                         >
-                            {{ bar.label.value }}
-                        </slot>
-                    </text>
+                            <slot
+                                name="labelValue"
+                                v-bind="bar.label"
+                            >
+                                {{ bar.label.value }}
+                            </slot>
+                        </text>
                     </slot>
                 </g>
                 <g
