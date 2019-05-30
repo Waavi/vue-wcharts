@@ -33,7 +33,7 @@
                         v-if="bar.label"
                         :x="bar.label.x"
                         :y="0"
-                        :text-anchor="labelTextAnchor"
+                        :text-anchor="labelAlign"
                         :font-size="labelSize"
                         :style="{ ...labelStylesCmp, transition, transform: `translateY(${bar.label.y}px)` }"
                     >
@@ -70,7 +70,7 @@ export default {
         legend: VueTypes.string, // Prop to apply filters
         showLabel: VueTypes.bool.def(false),
         labelSize: VueTypes.number.def(12),
-        labelTextAnchor: VueTypes.oneOf(['start', 'middle', 'end']).def('middle'),
+        labelAlign: VueTypes.oneOf(['start', 'middle', 'end']).def('middle'),
         labelPosition: VueTypes.oneOf(['inside', 'outside']).def('outside'),
         labelStyles: VueTypes.object,
         width: VueTypes.number.def(DEFAULT_WIDTH),
@@ -211,11 +211,11 @@ export default {
         // Set active element
         handleMouseEnter (event) {
             const {
-                stacked, curData, setActive, snap, axisXDatakey,
+                stacked, curData, setActive, snap, axis,
             } = this.Chart
             const { id } = event.target
             const line = this.Chart.dataset[id]
-            const label = line[axisXDatakey]
+            const label = line[axis.x.datakey]
 
             // Generate tooltip config
             const values = curData.map((item) => {

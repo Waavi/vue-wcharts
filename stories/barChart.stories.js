@@ -126,7 +126,7 @@ storiesOf('Charts/Bar', module)
                     inside: 'inside',
                     outside: 'outside',
                 }, 'outside'),
-                labelTextAnchor: select('Label text-anchor', {
+                labelAlign: select('Label align', {
                     start: 'start',
                     middle: 'middle',
                     end: 'end',
@@ -146,7 +146,7 @@ storiesOf('Charts/Bar', module)
                         datakey="one"
                         :showLabel="showLabel"
                         :labelPosition="labelPosition"
-                        :labelTextAnchor="labelTextAnchor"
+                        :labelAlign="labelAlign"
                         :width="width"
                     />
                     <WBar
@@ -154,7 +154,7 @@ storiesOf('Charts/Bar', module)
                         legend="Two Bar"
                         :showLabel="showLabel"
                         :labelPosition="labelPosition"
-                        :labelTextAnchor="labelTextAnchor"
+                        :labelAlign="labelAlign"
                         :width="width"
                     />
                     <WBar
@@ -162,7 +162,7 @@ storiesOf('Charts/Bar', module)
                         legend="Three Bar"
                         :showLabel="showLabel"
                         :labelPosition="labelPosition"
-                        :labelTextAnchor="labelTextAnchor"
+                        :labelAlign="labelAlign"
                         :width="width"
                     />
                     <WLine
@@ -204,7 +204,7 @@ storiesOf('Charts/Bar', module)
                     inside: 'inside',
                     outside: 'outside',
                 }, 'outside'),
-                labelTextAnchor: select('Label text-anchor', {
+                labelAlign: select('Label align', {
                     start: 'start',
                     middle: 'middle',
                     end: 'end',
@@ -230,7 +230,7 @@ storiesOf('Charts/Bar', module)
                         datakey="one"
                         :showLabel="showLabel"
                         :labelPosition="labelPosition"
-                        :labelTextAnchor="labelTextAnchor"
+                        :labelAlign="labelAlign"
                         :width="width"
                     >
                         <template #label="label">
@@ -259,7 +259,7 @@ storiesOf('Charts/Bar', module)
                         legend="Three Bar"
                         :showLabel="showLabel"
                         :labelPosition="labelPosition"
-                        :labelTextAnchor="labelTextAnchor"
+                        :labelAlign="labelAlign"
                         :width="width"
                     >
                         <template #label="label">
@@ -309,7 +309,7 @@ storiesOf('Charts/Bar', module)
                     inside: 'inside',
                     outside: 'outside',
                 }, 'outside'),
-                labelTextAnchor: select('Label text-anchor', {
+                labelAlign: select('Label align', {
                     start: 'start',
                     middle: 'middle',
                     end: 'end',
@@ -330,7 +330,7 @@ storiesOf('Charts/Bar', module)
                         datakey="one"
                         :showLabel="showLabel"
                         :labelPosition="labelPosition"
-                        :labelTextAnchor="labelTextAnchor"
+                        :labelAlign="labelAlign"
                         :width="width"
                     />
                     <WBar
@@ -338,7 +338,7 @@ storiesOf('Charts/Bar', module)
                         legend="Two Bar"
                         :showLabel="showLabel"
                         :labelPosition="labelPosition"
-                        :labelTextAnchor="labelTextAnchor"
+                        :labelAlign="labelAlign"
                         :width="width"
                     />
                     <WBar
@@ -346,7 +346,7 @@ storiesOf('Charts/Bar', module)
                         legend="Three Bar"
                         :showLabel="showLabel"
                         :labelPosition="labelPosition"
-                        :labelTextAnchor="labelTextAnchor"
+                        :labelAlign="labelAlign"
                         :width="width"
                     />
                     <WXAxis
@@ -384,7 +384,7 @@ storiesOf('Charts/Bar', module)
                     inside: 'inside',
                     outside: 'outside',
                 }, 'outside'),
-                labelTextAnchor: select('Label text-anchor', {
+                labelAlign: select('Label align', {
                     start: 'start',
                     middle: 'middle',
                     end: 'end',
@@ -405,7 +405,7 @@ storiesOf('Charts/Bar', module)
                         datakey="one"
                         :showLabel="showLabel"
                         :labelPosition="labelPosition"
-                        :labelTextAnchor="labelTextAnchor"
+                        :labelAlign="labelAlign"
                         :width="width"
                     />
                     <WBar
@@ -413,7 +413,7 @@ storiesOf('Charts/Bar', module)
                         legend="Two Bar"
                         :showLabel="showLabel"
                         :labelPosition="labelPosition"
-                        :labelTextAnchor="labelTextAnchor"
+                        :labelAlign="labelAlign"
                         :width="width"
                     />
                     <WBar
@@ -421,7 +421,7 @@ storiesOf('Charts/Bar', module)
                         legend="Three Bar"
                         :showLabel="showLabel"
                         :labelPosition="labelPosition"
-                        :labelTextAnchor="labelTextAnchor"
+                        :labelAlign="labelAlign"
                         :width="width"
                     />
                     <WLine datakey="one" />

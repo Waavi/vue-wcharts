@@ -79,9 +79,9 @@ export default {
     axis: 'x',
     mixins: [axisMixin],
     props: {
-        labelTextAnchor: VueTypes.string.def('end'),
+        labelAlign: VueTypes.string.def('end'),
         space: VueTypes.arrayOf(VueTypes.number).def([0, 20, 24, 20]),
-        textOffsetY: VueTypes.number.def(20),
+        textOffset: VueTypes.number.def(20),
         negativeAxisStyles: VueTypes.object.def({}),
     },
     computed: {

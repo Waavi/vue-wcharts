@@ -20,13 +20,21 @@ export default {
     },
     data () {
         return {
-            axisXDatakey: null, // Datakey of XAxis
-            axisYDatakey: null, // Datakey of YAxis
-            axisZDatakey: null, // Datakey of ZAxis
-            axisXName: null, // Name of XAxis
-            axisYName: null, // Name of YAxis
-            axisZName: null, // Name of ZAxis
-            axisZRange: null, // Range of ZAxis
+            axis: {
+                x: {
+                    datakey: null,
+                    name: null,
+                },
+                y: {
+                    datakey: null,
+                    name: null,
+                },
+                z: {
+                    datakey: null,
+                    name: null,
+                    range: null,
+                },
+            },
         }
     },
     computed: {
@@ -47,8 +55,8 @@ export default {
         },
         // zScale calculate like Recharts
         zScale () {
-            if (this.scatter && this.axisZDatakey) {
-                const [rangeMin, rangeMax] = this.axisZRange
+            if (this.scatter && this.axis.z.datakey) {
+                const [rangeMin, rangeMax] = this.axis.z.range
                 const { min: boundMin, max: boundMax } = this.zBounds
                 return val => Math.sqrt((((val - boundMin) / (boundMax - boundMin)) * (rangeMax - rangeMin) + rangeMin) / Math.PI)
             }
@@ -56,7 +64,7 @@ export default {
         },
         // bounds
         bounds () {
-            if (this.datakeys.length || this.axisYDatakey) {
+            if (this.datakeys.length || this.axis.y.datakey) {
                 const [boundMin, boundMax] = this.bound
                 return {
                     min: this.getBound(boundMin),
@@ -69,7 +77,7 @@ export default {
             }
         },
         xBounds () {
-            if (this.scatter && this.axisXDatakey) {
+            if (this.scatter && this.axis.x.datakey) {
                 const [boundMin, boundMax] = this.xBound
                 return {
                     min: this.getBound(boundMin, 'min', 'x'),
@@ -82,8 +90,8 @@ export default {
             }
         },
         zBounds () {
-            if (this.scatter && this.axisZDatakey) {
-                const values = this.dataset.map(d => d[this.axisZDatakey])
+            if (this.scatter && this.axis.z.datakey) {
+                const values = this.dataset.map(d => d[this.axis.z.datakey])
                 return {
                     min: Math.min(...values),
                     max: Math.max(...values),
@@ -136,7 +144,7 @@ export default {
             const isMin = type === 'min'
             let result = 0
             if (this.scatter) {
-                const values = this.dataset.map(d => d[axis === 'y' ? this.axisYDatakey : this.axisXDatakey])
+                const values = this.dataset.map(d => d[axis === 'y' ? this.axis.y.datakey : this.axis.x.datakey])
                 result = isMin ? Math.min(...values) : Math.max(...values)
             } else {
                 result = bound(this.curData, type, isMin ? 0 : 1)

@@ -16,16 +16,16 @@ storiesOf('Components', module)
             return {
                 data: {
                     legends: ['M&R ToEx', 'Unavailability costs'],
-                    values: [67.3, 4.3],
+                    dataset: [67.3, 4.3],
                 },
-                showValue: boolean('Show value', true),
+                showLabel: boolean('Show value', true),
             }
         },
         template: `
             <div class="Container">
                 <WStackBar
-                    :values="data.values"
-                    :showValue="showValue"
+                    :dataset="data.dataset"
+                    :showLabel="showLabel"
                 >
                     <template #value="{ value, percentage, color }">
                         <span>{{ value }}</span>
@@ -43,10 +43,10 @@ storiesOf('Components', module)
                 data: {
                     total: 71.6,
                     legends: ['M&R ToEx', 'Unavailability costs'],
-                    values: [37.3, 10.3, 23.6],
+                    dataset: [37.3, 10.3, 23.6],
                 },
-                showValue: boolean('Show value', true),
-                valueStyles: object('Styles values', {
+                showLabel: boolean('Show label', true),
+                labelSstyles: object('Label Styles', {
                     top: '4px',
                     left: '6px',
                     color: 'white',
@@ -57,9 +57,9 @@ storiesOf('Components', module)
             <div class="Container">
                 <WStackBar
                     :total="data.total"
-                    :values="data.values"
-                    :showValue="showValue"
-                    :valueStyles="valueStyles"
+                    :dataset="data.dataset"
+                    :showLabel="showLabel"
+                    :labelStyles="labelSstyles"
                 >
                     <template #value="{ value, percentage, color }">
                         <span>{{ value }}€ ({{ percentage }})</span>

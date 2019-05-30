@@ -14,7 +14,7 @@
             :d="path.d"
             :fill="path.fill"
             :stroke="path.stroke"
-            :style="styles"
+            :style="stylesCmp"
             :class="{
                 disabled: activePath !== null && activePath !== index,
                 enabled: activePath !== null && activePath === index
@@ -28,9 +28,13 @@
 
 <script>
 import VueTypes from 'vue-types'
-import { noop } from 'lodash'
+import { noop, omit } from 'lodash'
 import pie from 'd3-shape/src/pie'
 import arc from 'd3-shape/src/arc'
+
+const stylesDefaultProp = {
+    stroke: '#FFF',
+}
 
 export default {
     name: 'WPie',
@@ -46,9 +50,11 @@ export default {
             VueTypes.number,
             VueTypes.arrayOf(VueTypes.number).def([0, 100]),
         ]).def([0, 100]),
-        styles: VueTypes.object,
-        stroke: VueTypes.string.def('#FFF'),
-        fill: VueTypes.string,
+        styles: VueTypes.shape({
+            stroke: VueTypes.string,
+        }).loose.def(() => ({
+            ...stylesDefaultProp,
+        })),
         active: VueTypes.oneOfType([Number, null]),
     },
     data () {
@@ -57,6 +63,12 @@ export default {
         }
     },
     computed: {
+        stylesCmp () {
+            return {
+                ...omit(stylesDefaultProp, ['stroke']),
+                ...omit(this.styles, ['stroke']),
+            }
+        },
         // Id cartesian elem
         id () {
             return this.$vnode.index
@@ -106,8 +118,8 @@ export default {
         paths () {
             return this.arcs.map(this.draw).map((d, index) => ({
                 d,
-                fill: this.fill || this.Chart.colors[index],
-                stroke: this.stroke,
+                fill: this.Chart.colors[index],
+                stroke: this.styles.stroke,
             }))
         },
         // Slot styles

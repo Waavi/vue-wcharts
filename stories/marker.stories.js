@@ -67,12 +67,12 @@ storiesOf('Markers', module)
                 },
                 labelTextX: text('Marker X', 'Marker X'),
                 valueX: select('Value Marker Y', valueXOptions, valueXOptions['Page C']),
-                labelTextXAnchor: select('Marker X - Placement', {
+                labelTextXAnchor: select('Marker X - Align', {
                     start: 'start',
                     end: 'end',
                 }, 'end'),
                 labelTextY: text('Marker Y', 'Marker Y'),
-                labelTextYAnchor: select('Marker Y - Placement', {
+                labelTextYAnchor: select('Marker Y - Align', {
                     start: 'start',
                     end: 'end',
                 }, 'end'),
@@ -97,7 +97,7 @@ storiesOf('Markers', module)
                         :labelStyles="labelStyles"
                         :value="valueY"
                         :label="labelTextY"
-                        :placement="labelTextYAnchor"
+                        :labelAlign="labelTextYAnchor"
                         type="y"
                     />
                     <WMarker
@@ -105,7 +105,7 @@ storiesOf('Markers', module)
                         :labelStyles="labelStyles"
                         :value="valueX"
                         :label="labelTextX"
-                        :placement="labelTextXAnchor"
+                        :labelAlign="labelTextXAnchor"
                         type="x"
                     />
                     <WXAxis datakey="name" />
