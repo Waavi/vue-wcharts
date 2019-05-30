@@ -77,8 +77,9 @@ export default {
         color: VueTypes.string,
         styles: VueTypes.object,
     },
+    // It's called by parent components to necessary calcs before be rendering
     preload ({ parent, props, index }) {
-        const { snap, colors } = parent
+        const { snap, colors, stacked } = parent
         const { datakey, width, color } = props
 
         // Added id of bars
@@ -90,7 +91,7 @@ export default {
         // Calc dimension
         snap.barAllWidth = snap.barAllWidth || 0
         snap.barOffset = [].concat(snap.barOffset || [], snap.barAllWidth)
-        snap.barAllWidth += width || DEFAULT_WIDTH
+        snap.barAllWidth = (stacked ? width : snap.barAllWidth + width) || DEFAULT_WIDTH
     },
     computed: {
         // Id cartesian elem
