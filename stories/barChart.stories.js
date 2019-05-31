@@ -39,7 +39,7 @@ const dataTwo = [
         name: 'Page B', one: 2000, two: 2398, three: 1210,
     },
     {
-        name: 'Page C', one: 2500, two: 8800, three: 1290,
+        name: 'Page C', one: 10, two: 8800, three: 1290,
     },
     {
         name: 'Page D', one: 1780, two: 1908, three: 2000,
@@ -305,10 +305,6 @@ storiesOf('Charts/Bar', module)
                     three: 'three',
                 }, 'one'),
                 showLabel: boolean('Show label', true),
-                labelPosition: select('Label position', {
-                    inside: 'inside',
-                    outside: 'outside',
-                }, 'outside'),
                 labelAlign: select('Label align', {
                     start: 'start',
                     middle: 'middle',
@@ -330,7 +326,6 @@ storiesOf('Charts/Bar', module)
                         legend="One Bar"
                         datakey="one"
                         :showLabel="showLabel"
-                        :labelPosition="labelPosition"
                         :labelAlign="labelAlign"
                         :width="width"
                     />
@@ -338,7 +333,6 @@ storiesOf('Charts/Bar', module)
                         datakey="two"
                         legend="Two Bar"
                         :showLabel="showLabel"
-                        :labelPosition="labelPosition"
                         :labelAlign="labelAlign"
                         :width="width"
                     />
@@ -346,7 +340,6 @@ storiesOf('Charts/Bar', module)
                         datakey="three"
                         legend="Three Bar"
                         :showLabel="showLabel"
-                        :labelPosition="labelPosition"
                         :labelAlign="labelAlign"
                         :width="width"
                     />
