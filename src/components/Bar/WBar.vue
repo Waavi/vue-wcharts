@@ -28,6 +28,9 @@
                 <slot
                     name="label"
                     v-bind="bar.label"
+                    :styles="{ ...labelStylesCmp, transition, transform: `translateY(${bar.label.y}px)` }"
+                    :align="labelAlign"
+                    :size="labelSize"
                 >
                     <text
                         v-if="bar.label"
@@ -37,7 +40,12 @@
                         :font-size="labelSize"
                         :style="{ ...labelStylesCmp, transition, transform: `translateY(${bar.label.y}px)` }"
                     >
-                        {{ bar.label.value }}
+                        <slot
+                            name="labelValue"
+                            v-bind="bar.label"
+                        >
+                            {{ bar.label.value }}
+                        </slot>
                     </text>
                 </slot>
             </g>
@@ -196,7 +204,7 @@ export default {
         }) {
             if (!this.showLabel) return undefined
             // If has stacked bars, only last bar shown the label
-            if (this.Chart.stacked && this.id !== this.getLastBarActive()) return undefined
+            // if (this.Chart.stacked && this.id !== this.getLastBarActive()) return undefined
 
             // Calc position of label [x, y]
             const top = (this.labelPosition === 'outside' ? this.labelSize : -(this.labelSize))
