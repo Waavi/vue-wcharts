@@ -16,7 +16,7 @@
             :stroke="path.stroke"
             :style="{
                 ...pathStylesCmp,
-                opacity: activePath === null ? 1 : activePath === index ? 1 : 0.5,
+                opacity: activePath === null ? 1 : activePath === index ? 1 : opacityDisabled,
             }"
             @mouseenter="handleMouseEnter"
             @mouseleave="handleMouseLeave"
@@ -62,6 +62,7 @@ export default {
         }).loose.def(() => ({
             ...pathStylesDefaultProp,
         })),
+        opacityDisabled: VueTypes.number.def(0.5),
         active: VueTypes.oneOfType([Number, null]),
     },
     data () {
