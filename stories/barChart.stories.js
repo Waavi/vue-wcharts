@@ -362,6 +362,64 @@ storiesOf('Charts/Bar', module)
             </div>
         `,
     }))
+    .add('Stacked with stacked label', () => ({
+        components: {
+            WCartesian,
+            WBar,
+            WLine,
+            WXAxis,
+            WYAxis,
+            WLegends,
+            WTooltip,
+        },
+        data () {
+            return {
+                key: select('Data Key', {
+                    one: 'one',
+                    two: 'two',
+                    three: 'three',
+                }, 'one'),
+                showStackedLabel: boolean('Show stacked label', true),
+                width: 25,
+                data: object('Data', dataTwo),
+            }
+        },
+        template: `
+            <div class="Container">
+                <WCartesian
+                    :dataset="data"
+                    responsive
+                    stacked
+                >
+                    <WBar
+                        legend="One Bar"
+                        datakey="one"
+                        :width="width"
+                    />
+                    <WBar
+                        datakey="two"
+                        legend="Two Bar"
+                        :width="width"
+                    />
+                    <WBar
+                        datakey="three"
+                        legend="Three Bar"
+                        :showStackedLabel="showStackedLabel"
+                        :width="width"
+                    />
+                    <WXAxis
+                        datakey="name"
+                        :space="[0, 50, 80, 50]"
+                    />
+                    <WYAxis :space="[25, 0, 0, 50]" />
+                    <WLegends
+                        selectable
+                    />
+                    <WTooltip />
+                </WCartesian>
+            </div>
+        `,
+    }))
     .add('Stacked with line', () => ({
         components: {
             WCartesian,
