@@ -1,7 +1,7 @@
 <template>
     <g
         v-if="visible"
-        :style="pieStylesCmp"
+        :style="stylesCmp"
     >
         <foreignObject :style="contentStyles">
             <slot :values="values" />
@@ -31,7 +31,7 @@ import { noop, omit } from 'lodash'
 import pie from 'd3-shape/src/pie'
 import arc from 'd3-shape/src/arc'
 
-const pieStylesDefaultProp = {
+const stylesDefaultProp = {
     position: 'relative',
     transform: 'translate(50%, 50%)',
 }
@@ -54,8 +54,8 @@ export default {
             VueTypes.number,
             VueTypes.arrayOf(VueTypes.number).def([0, 100]),
         ]).def([0, 100]),
-        pieStyles: VueTypes.object.def({
-            ...pieStylesDefaultProp,
+        styles: VueTypes.object.def({
+            ...stylesDefaultProp,
         }),
         pathStyles: VueTypes.shape({
             stroke: VueTypes.string,
@@ -71,10 +71,10 @@ export default {
         }
     },
     computed: {
-        pieStylesCmp () {
+        stylesCmp () {
             return {
-                ...pieStylesDefaultProp,
-                ...this.pieStyles,
+                ...stylesDefaultProp,
+                ...this.styles,
             }
         },
         pathStylesCmp () {
