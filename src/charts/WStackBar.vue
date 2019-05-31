@@ -296,7 +296,7 @@ export default {
     top: 0;
     width: 10px;
     height: 10px;
-    background: white;
+    background: #FFF;
     transform: rotate(45deg) translateY(7px);
     outline: 1px solid;
 }
