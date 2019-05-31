@@ -30,6 +30,7 @@
                 >
                     <slot
                         name="label"
+                        v-bind="bar.label"
                         :styles="{ ...labelStylesCmp, transition, transform: `translateY(${bar.label.y}px)` }"
                         :align="labelAlign"
                         :size="labelSize"
@@ -55,6 +56,7 @@
                 >
                     <slot
                         name="stackedLabel"
+                        v-bind="bar.stackedLabel"
                         :styles="{ ...stackedLabelStylesCmp, transition, transform: `translateY(${bar.stackedLabel.y}px)` }"
                         :align="stackedLabelAlign"
                         :size="stackedLabelSize"
@@ -253,8 +255,11 @@ export default {
         }) {
             if (!this.showLabel) return undefined
 
+            // Not render inside label if doesnt enter correctly
+            if (height < this.labelSize * 2) return undefined
+
             // Calc position of label [x, y]
-            const top = (this.labelPosition === 'outside' ? this.labelSize : -(this.labelSize))
+            const top = (this.Chart.stacked || this.labelPosition === 'inside' ? -(this.labelSize) : this.labelSize)
             const x0 = x + this.width / 2
             const y1 = y - top + this.labelSize / 2
 
