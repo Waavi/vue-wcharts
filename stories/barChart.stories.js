@@ -324,6 +324,7 @@ storiesOf('Charts/Bar', module)
                     :dataset="data"
                     responsive
                     stacked
+                    :bound="[0]"
                 >
                     <WBar
                         legend="One Bar"
@@ -388,6 +389,7 @@ storiesOf('Charts/Bar', module)
             <div class="Container">
                 <WCartesian
                     :dataset="data"
+                    :bound="[0]"
                     responsive
                     stacked
                 >
@@ -405,6 +407,73 @@ storiesOf('Charts/Bar', module)
                         datakey="three"
                         legend="Three Bar"
                         :showStackedLabel="showStackedLabel"
+                        :width="width"
+                    />
+                    <WXAxis
+                        datakey="name"
+                        :space="[0, 50, 80, 50]"
+                    />
+                    <WYAxis :space="[25, 0, 0, 50]" />
+                    <WLegends
+                        selectable
+                    />
+                    <WTooltip />
+                </WCartesian>
+            </div>
+        `,
+    }))
+    .add('Stacked with custom stacked label', () => ({
+        components: {
+            WCartesian,
+            WBar,
+            WLine,
+            WXAxis,
+            WYAxis,
+            WLegends,
+            WTooltip,
+        },
+        data () {
+            return {
+                showStackedLabel: boolean('Show stacked label', true),
+                stackedLabelSize: select('Stacked Label Size', {
+                    8: '8',
+                    12: '12',
+                    16: '16',
+                }, '16'),
+                stackedLabelAlign: select('Stacked Label Align', {
+                    start: 'start',
+                    middle: 'middle',
+                    end: 'end',
+                }, 'middle'),
+                width: 25,
+                data: object('Data', dataTwo),
+            }
+        },
+        template: `
+            <div class="Container">
+                <WCartesian
+                    :dataset="data"
+                    :bound="[0]"
+                    responsive
+                    stacked
+                >
+                    <WBar
+                        legend="One Bar"
+                        datakey="one"
+                        :width="width"
+                    />
+                    <WBar
+                        datakey="two"
+                        legend="Two Bar"
+                        :width="width"
+                    />
+                    <WBar
+                        datakey="three"
+                        legend="Three Bar"
+                        :showStackedLabel="showStackedLabel"
+                        :stackedLabelSize="stackedLabelSize"
+                        :stackedLabelAlign="stackedLabelAlign"
+                        :stackedLabelStyles="{ fill: 'black' }"
                         :width="width"
                     />
                     <WXAxis
@@ -455,6 +524,7 @@ storiesOf('Charts/Bar', module)
             <div class="Container">
                 <WCartesian
                     :dataset="data"
+                    :bound="[0]"
                     responsive
                     stacked
                 >

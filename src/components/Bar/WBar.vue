@@ -30,7 +30,6 @@
                 >
                     <slot
                         name="label"
-                        v-bind="bar.label"
                         :styles="{ ...labelStylesCmp, transition, transform: `translateY(${bar.label.y}px)` }"
                         :align="labelAlign"
                         :size="labelSize"
@@ -56,18 +55,17 @@
                 >
                     <slot
                         name="stackedLabel"
-                        v-bind="bar.stackedLabel"
-                        :styles="{ ...labelStylesCmp, transition, transform: `translateY(${bar.stackedLabel.y}px)` }"
-                        :align="labelAlign"
-                        :size="labelSize"
+                        :styles="{ ...stackedLabelStylesCmp, transition, transform: `translateY(${bar.stackedLabel.y}px)` }"
+                        :align="stackedLabelAlign"
+                        :size="stackedLabelSize"
                     >
                         <text
                             v-if="bar.stackedLabel"
                             :x="bar.stackedLabel.x"
                             :y="0"
-                            :text-anchor="labelAlign"
-                            :font-size="labelSize"
-                            :style="{ ...labelStylesCmp, transition, transform: `translateY(${bar.stackedLabel.y}px)` }"
+                            :text-anchor="stackedLabelAlign"
+                            :font-size="stackedLabelSize"
+                            :style="{ ...stackedLabelStylesCmp, transition, transform: `translateY(${bar.stackedLabel.y}px)` }"
                         >
                             <slot
                                 name="stackedLabelValue"
@@ -95,6 +93,11 @@ const labelStylesDefaultProp = {
     cursor: 'default',
 }
 
+const stackedLabelStylesDefaultProp = {
+    fill: '#333',
+    cursor: 'default',
+}
+
 export default {
     name: 'WBar',
     type: 'cartesian',
@@ -107,11 +110,14 @@ export default {
         datakey: VueTypes.string.isRequired,
         legend: VueTypes.string, // Prop to apply filters
         showLabel: VueTypes.bool.def(false),
-        showStackedLabel: VueTypes.bool.def(false),
         labelSize: VueTypes.number.def(12),
         labelAlign: VueTypes.oneOf(['start', 'middle', 'end']).def('middle'),
         labelPosition: VueTypes.oneOf(['inside', 'outside']).def('outside'),
         labelStyles: VueTypes.object,
+        showStackedLabel: VueTypes.bool.def(false),
+        stackedLabelSize: VueTypes.number.def(12),
+        stackedLabelAlign: VueTypes.oneOf(['start', 'middle', 'end']).def('middle'),
+        stackedLabelStyles: VueTypes.object,
         width: VueTypes.number.def(DEFAULT_WIDTH),
         color: VueTypes.string,
         styles: VueTypes.object,
@@ -232,6 +238,13 @@ export default {
                 ...this.labelStyles,
             }
         },
+        // Stacked label styles
+        stackedLabelStylesCmp () {
+            return {
+                ...stackedLabelStylesDefaultProp,
+                ...this.stackedLabelStyles,
+            }
+        },
     },
     methods: {
         // Generate label of bar
@@ -266,9 +279,9 @@ export default {
             if (this.showLabel && this.labelPosition === 'outside') return undefined
 
             // Calc position of label [x, y]
-            const top = this.labelSize
+            const top = this.stackedLabelSize
             const x0 = x + this.width / 2
-            const y1 = y - top + this.labelSize / 2
+            const y1 = y - top + this.stackedLabelSize / 2
 
             return {
                 x: x0,
