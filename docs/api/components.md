@@ -30,7 +30,34 @@ TODO:
 
 ## WMarker
 
-TODO:
+*Component to show a reference line in the chart.*
+
+### Parent components
+**[\<WCartesian />](/docs/api/charts.html#wcartesian)**
+
+### Properties
+| Property | Type | Default value | Description |
+|----------|------|---------------|-------------|
+| type | oneOf(['y', 'x']) | y | Axis direction |
+| value | any | Required property | Value in the choosen axis |
+| label | string | Required property | Label of the marker |
+| labelAlign | oneOf(['start', 'end']) | Required property |  |
+| styles | object | ```{stroke: '#333',strokeWidth: 1,strokeDasharray: '0'}``` | Line styles |
+| labelStyles | object | ```{fill: '#333',fontSize: 14}``` | Label styles |
+
+### Slots
+
+-   #### labelCoordinates
+
+    *Slot to customize marker's label*
+
+    | Property | Description |
+    |----------|-------------|
+    | isX | Boolean to indicate if the marker is in axis x or y |
+    | label | Label value |
+    | value | Marker value in choosen axis |
+    | align | Label align |
+    | style | Label styles |
 
 ## WDot
 
