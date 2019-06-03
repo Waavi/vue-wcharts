@@ -26,7 +26,36 @@ TODO:
 
 ## WScatter
 
-TODO:
+*Scatter chart.*
+
+### Parent components
+**[\<WCartesian />](/docs/api/charts.html#wcartesian)**
+
+### Child components
+**[\<WDot />](#wdot)**
+**[\<WSpread />](/docs/api/transitions.html#wtrans)**
+
+### Properties
+| Property | Type | Default value | Description |
+|----------|------|---------------|-------------|
+| legend | string | | Legend's text |
+| curve | bool, func | false | Curve of the line |
+| line | bool | false | Draw a line joining the dots |
+| lineStyles | object | ```{fill: '',stroke: '',strokeWidth: 1,strokeDasharray: '0'}``` | Line styles |
+| styles | object | ```{fill: '',stroke: '',strokeWidth: 0,radius: 8,opacity: 0.8}``` | Dot styles |
+
+### Slots
+
+-   #### dot
+
+    *Slot to customize the dot*
+
+    | Property | Description |
+    |----------|-------------|
+    | dot | Dot item value (x, y, z, info, value, index and cartesianIndex) |
+    | styles | Dot styles |
+    | Chart | Chart api (WCartesian reference) |
+    | transition | CSS transition value |
 
 ## WMarker
 
@@ -65,6 +94,7 @@ TODO:
 
 ### Parent components
 **[\<WLine />](#wline)**
+**[\<WScatter />](#wscatter)**
 **[\<WCartesian />](/docs/api/charts.html#wcartesian)**
 
 ### Child components
