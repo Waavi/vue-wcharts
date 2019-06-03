@@ -1,3 +1,6 @@
+---
+sidebarDepth: 3
+---
 # Components
 
 ## WXAxis
@@ -14,7 +17,44 @@ TODO:
 
 ## WLine
 
-TODO:
+*Line component.*
+
+### Parent components
+**[\<WCartesian />](/docs/api/charts.html#wcartesian)**
+
+### Child components
+**[\<WDot />](#wdot)**
+**[\<WSpread />](/docs/api/transitions.html#wspread)**
+
+### Properties
+| Property | Type | Default value | Description |
+|----------|------|---------------|-------------|
+| datakey | string | Required property | The key of dataset |
+| legend | string |  | Legend's text |
+| curve | bool, func | false | Curve of the line, you can specify the curve function |
+| area | bool | false | If true set, area will be drawn  |
+| styles | object | ```{fill: '',stroke: '',strokeWidth: 1,strokeDasharray: '0'}``` | Line styles |
+| dot | bool | false | If true set, dots will be drawn |
+| dotStyles | object | ```{fill: '',stroke: '',strokeWidth: 0,radius: 4,hoverRadius: 8}``` | Dot styles |
+| animated | bool | true | If true set, animation will be executed |
+| transDuration | number | 1 | Transition duration in seconds |
+| transEffect | string | ease | Transition effect |
+
+### Slots
+
+-   #### dot
+
+    *Slot to customize the dot*
+
+    | Property | Description |
+    |----------|-------------|
+    | dot | Dot item value (x, y, z, info, value, index and cartesianIndex) |
+    | first | If it is true, this dot is the first |
+    | last | If it is true, this dot is the last |
+    | styles | Dot styles |
+    | Chart | Chart api (WCartesian reference) |
+    | transition | CSS transition value |
+
 
 ## WPie
 
@@ -51,10 +91,13 @@ TODO:
 | Property | Type | Default value | Description |
 |----------|------|---------------|-------------|
 | legend | string | | Legend's text |
-| curve | bool, func | false | Curve of the line |
+| curve | bool, func | false | Curve of the line, you can choose the curve function if you want |
 | line | bool | false | Draw a line joining the dots |
 | lineStyles | object | ```{fill: '',stroke: '',strokeWidth: 1,strokeDasharray: '0'}``` | Line styles |
 | styles | object | ```{fill: '',stroke: '',strokeWidth: 0,radius: 8,opacity: 0.8}``` | Dot styles |
+| animated | bool | true | If true set, animation will be executed |
+| transDuration | number | 1 | Transition duration in seconds |
+| transEffect | string | ease | Transition effect |
 
 ### Slots
 
