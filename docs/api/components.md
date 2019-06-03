@@ -5,15 +5,139 @@ sidebarDepth: 3
 
 ## WXAxis
 
-TODO:
+*X axis component.*
+
+### Parent components
+**[\<WCartesian />](/docs/api/charts.html#wcartesian)**
+
+### Child components
+**[\<WTickText />](#wticktext)**
+
+### Properties
+| Property | Type | Default value | Description |
+|----------|------|---------------|-------------|
+| name | string | '' | Axis name, it is usually used for tooltip |
+| datakey | string | Required property | The key of dataset |
+| space | array | [0, 20, 24, 20] | Space between svg borders and the axis |
+| textOffset | number | 20 | Tick text offset |
+| hideLine | bool | false | It true set, line won't be drawn |
+| hideTickMark | bool | false | It true set, line won't be drawn |
+| hideNegativeAxis | bool | false | It true set, negative axis won't be drawn |
+| numTicks | number | 0 | Number of ticks |
+| format | func | value => value | Formatted tick text function |
+| labelAlign | oneOf(['start', 'middle', 'end']) | end | Axis label position |
+| labelText | string |  | Axis label |
+| labelSize | number | 12 | Label size |
+| axisStyles | object | ```{stroke: '#999'}``` | Axis line styles |
+| labelStyles | object | ```{fill: '#999'}``` | Label styles |
+| markStyles | object | ```{stroke: '#999'}``` | Tick mark styles |
+| tickStyles | object | ```{stroke: 'none',fill: '#999',fontSize: 12}``` | Tick text styles |
+| negativeAxisStyles | object | ```{stroke: '#999',strokeWidth: 1,strokeDasharray: '0'}``` | Negative axis styles |
+
+### Slots
+
+-   #### tickText
+
+    *Slot to customize the tick text*
+
+    | Property | Description |
+    |----------|-------------|
+    | index | Index of the tick |
+    | x | X coordinate |
+    | y | Y coordinate |
+    | value | Text value |
+
+-   #### label
+
+    *Slot to customize the label text*
+
+    | Property | Description |
+    |----------|-------------|
+    | x | X coordinate |
+    | y | Y coordinate |
+    | textAnchor | Text anchor style |
+    | transform | Transform style |
+    | styles | Label styles |
 
 ## WYAxis
 
-TODO:
+*Y axis component.*
+
+### Parent components
+**[\<WCartesian />](/docs/api/charts.html#wcartesian)**
+
+### Child components
+**[\<WTickText />](#wticktext)**
+
+### Properties
+| Property | Type | Default value | Description |
+|----------|------|---------------|-------------|
+| name | string | '' | Axis name, it is usually used for tooltip |
+| datakey | string | | The key of dataset |
+| space | array | [10, 0, 0, 40] | Space between svg borders and the axis |
+| textOffset | number | 10 | Tick text offset |
+| hideLine | bool | false | It true set, line won't be drawn |
+| hideTickMark | bool | false | It true set, line won't be drawn |
+| numTicks | number | 0 | Number of ticks |
+| format | func | value => value | Formatted tick text function |
+| labelAlign | oneOf(['start', 'middle', 'end']) | start | Axis label position |
+| labelText | string |  | Axis label |
+| labelSize | number | 12 | Label size |
+| axisStyles | object | ```{stroke: '#999'}``` | Axis line styles |
+| labelStyles | object | ```{fill: '#999'}``` | Label styles |
+| markStyles | object | ```{stroke: '#999'}``` | Tick mark styles |
+| tickStyles | object | ```{stroke: 'none',fill: '#999',fontSize: 12}``` | Tick text styles |
+
+### Slots
+
+-   #### tickText
+
+    *Slot to customize the tick text*
+
+    | Property | Description |
+    |----------|-------------|
+    | index | Index of the tick |
+    | x | X coordinate |
+    | y | Y coordinate |
+    | value | Text value |
+
+-   #### label
+
+    *Slot to customize the label text*
+
+    | Property | Description |
+    |----------|-------------|
+    | x | X coordinate |
+    | y | Y coordinate |
+    | textAnchor | Text anchor style |
+    | transform | Transform style |
+    | styles | Label styles |
 
 ## WZAxis
 
-TODO:
+*Z axis component.*
+
+### Parent components
+**[\<WCartesian />](/docs/api/charts.html#wcartesian)**
+
+### Properties
+| Property | Type | Default value | Description |
+|----------|------|---------------|-------------|
+| name | string | '' | Axis name, it is usually used for tooltip |
+| datakey | string | Required property | The key of dataset |
+| range | array | [100, 100] | Range of the axis |
+| textOffset | number | 10 | Tick text offset |
+| hideLine | bool | false | It true set, line won't be drawn |
+| hideTickMark | bool | false | It true set, line won't be drawn |
+| numTicks | number | 0 | Number of ticks |
+| format | func | value => value | Formatted tick text function |
+| labelAlign | oneOf(['start', 'middle', 'end']) | start | Axis label position |
+| labelText | string |  | Axis label |
+| labelSize | number | 12 | Label size |
+| axisStyles | object | ```{stroke: '#999'}``` | Axis line styles |
+| labelStyles | object | ```{fill: '#999'}``` | Label styles |
+| markStyles | object | ```{stroke: '#999'}``` | Tick mark styles |
+| tickStyles | object | ```{stroke: 'none',fill: '#999',fontSize: 12}``` | Tick text styles |
 
 ## WLine
 
