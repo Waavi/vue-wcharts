@@ -13,6 +13,7 @@ import {
     WPie,
     WTooltip,
     WDot,
+    WBullet,
 } from './components'
 import {
     WTrans,
@@ -43,6 +44,7 @@ const install = (Vue, opts = {}) => {
         WPie,
         WTooltip,
         WDot,
+        WBullet,
     ]
 
     const common = [
@@ -87,6 +89,7 @@ export {
     WMarker,
     WPie,
     WTooltip,
+    WBullet,
     // Common
     WTrans,
     WSpread,

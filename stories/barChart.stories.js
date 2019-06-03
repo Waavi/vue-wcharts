@@ -429,10 +429,10 @@ storiesOf('Charts/Bar', module)
             return {
                 showStackedLabel: boolean('Show stacked label', true),
                 stackedLabelSize: select('Stacked Label Size', {
-                    8: '8',
-                    12: '12',
-                    16: '16',
-                }, '16'),
+                    8: 8,
+                    12: 12,
+                    16: 16,
+                }, 16),
                 stackedLabelAlign: select('Stacked Label Align', {
                     start: 'start',
                     middle: 'middle',
