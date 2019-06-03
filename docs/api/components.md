@@ -22,7 +22,19 @@ TODO:
 
 ## WCartesianGrid
 
-TODO:
+*Grid component.*
+
+### Parent components
+**[\<WCartesian />](/docs/api/charts.html#wcartesian)**
+
+### Properties
+| Property | Type | Default value | Description |
+|----------|------|---------------|-------------|
+| hideH | bool | false | Hide horizontal lines |
+| hideV | bool | false | Hide vertical lines |
+| numLinesH | number | 0 | Number of horizontal lines |
+| numLinesV | number | 0 | Number of vertical lines |
+| styles | object | ```{stroke: '#ccc',strokeWidth: 1,strokeDasharray: '3'}``` | Line styles |
 
 ## WScatter
 
