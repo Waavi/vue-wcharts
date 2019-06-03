@@ -2,7 +2,7 @@
 
 ## WSpread
 
-Transition componente to make left to right or bottom to top animations.
+*Transition componente to make left to right or bottom to top animations.*
 
 ### Properties
 | Property | Type | Default value | Example | Description |
@@ -12,7 +12,7 @@ Transition componente to make left to right or bottom to top animations.
 
 ## WTrans
 
-Transition component to make initial transitions.
+*Transition component to make initial transitions.*
 
 ### Properties
 | Property | Type | Default value | Example | Description |

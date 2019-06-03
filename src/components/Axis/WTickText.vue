@@ -15,6 +15,7 @@
 
 <script>
 import VueTypes from 'vue-types'
+import { omit } from 'lodash'
 
 const stylesDefaultProp = {
     fill: 'none',
@@ -30,13 +31,17 @@ export default {
         dy: VueTypes.string,
         index: VueTypes.number,
         value: VueTypes.oneOfType([String, Number]),
-        styles: VueTypes.object,
+        styles: VueTypes.shape({
+            fill: VueTypes.string,
+            stroke: VueTypes.string,
+            fontSize: VueTypes.number,
+        }).loose.def(() => ({ ...stylesDefaultProp })),
     },
     computed: {
         stylesCmp () {
             return {
-                ...stylesDefaultProp,
-                ...this.styles,
+                ...omit(stylesDefaultProp, ['stroke', 'fill', 'fontSize']),
+                ...omit(this.styles, ['stroke', 'fill', 'fontSize']),
             }
         },
     },
