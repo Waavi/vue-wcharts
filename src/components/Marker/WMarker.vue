@@ -13,7 +13,7 @@
             :isX="isX"
             :label="label"
             :value="value"
-            :placement="labelAlign"
+            :align="labelAlign"
             :style="labelStylesCmp"
         >
             <text
