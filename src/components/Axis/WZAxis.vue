@@ -11,9 +11,9 @@ export default {
     },
     preload ({ parent, props, index }) {
         const { datakey, range, name } = props
-        parent.axisZDatakey = datakey
-        parent.axisZName = name || ''
-        parent.axisZRange = range
+        parent.axis.z.datakey = datakey
+        parent.axis.z.name = name || ''
+        parent.axis.z.range = range
     },
 }
 </script>

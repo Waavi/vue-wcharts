@@ -1,7 +1,7 @@
 <template>
     <g
         v-if="visible"
-        class="WPie"
+        :style="stylesCmp"
     >
         <foreignObject :style="contentStyles">
             <slot :values="values" />
@@ -14,10 +14,9 @@
             :d="path.d"
             :fill="path.fill"
             :stroke="path.stroke"
-            :style="styles"
-            :class="{
-                disabled: activePath !== null && activePath !== index,
-                enabled: activePath !== null && activePath === index
+            :style="{
+                ...pathStylesCmp,
+                opacity: activePath === null ? 1 : activePath === index ? 1 : opacityDisabled,
             }"
             @mouseenter="handleMouseEnter"
             @mouseleave="handleMouseLeave"
@@ -28,9 +27,18 @@
 
 <script>
 import VueTypes from 'vue-types'
-import { noop } from 'lodash'
+import { noop, omit } from 'lodash'
 import pie from 'd3-shape/src/pie'
 import arc from 'd3-shape/src/arc'
+
+const stylesDefaultProp = {
+    position: 'relative',
+    transform: 'translate(50%, 50%)',
+}
+
+const pathStylesDefaultProp = {
+    stroke: '#FFF',
+}
 
 export default {
     name: 'WPie',
@@ -46,9 +54,15 @@ export default {
             VueTypes.number,
             VueTypes.arrayOf(VueTypes.number).def([0, 100]),
         ]).def([0, 100]),
-        styles: VueTypes.object,
-        stroke: VueTypes.string.def('#FFF'),
-        fill: VueTypes.string,
+        styles: VueTypes.object.def({
+            ...stylesDefaultProp,
+        }),
+        pathStyles: VueTypes.shape({
+            stroke: VueTypes.string,
+        }).loose.def(() => ({
+            ...pathStylesDefaultProp,
+        })),
+        opacityDisabled: VueTypes.number.def(0.5),
         active: VueTypes.oneOfType([Number, null]),
     },
     data () {
@@ -57,6 +71,18 @@ export default {
         }
     },
     computed: {
+        stylesCmp () {
+            return {
+                ...stylesDefaultProp,
+                ...this.styles,
+            }
+        },
+        pathStylesCmp () {
+            return {
+                ...omit(pathStylesDefaultProp, ['stroke']),
+                ...omit(this.pathStyles, ['stroke']),
+            }
+        },
         // Id cartesian elem
         id () {
             return this.$vnode.index
@@ -106,8 +132,8 @@ export default {
         paths () {
             return this.arcs.map(this.draw).map((d, index) => ({
                 d,
-                fill: this.fill || this.Chart.colors[index],
-                stroke: this.stroke,
+                fill: this.Chart.colors[index],
+                stroke: this.pathStyles.stroke,
             }))
         },
         // Slot styles
@@ -156,15 +182,3 @@ export default {
     },
 }
 </script>
-<style lang="scss" scoped>
-.WPie {
-    position: relative;
-    transform: translate(50%, 50%);
-}
-.enabled {
-    opacity: 1;
-}
-.disabled {
-    opacity: 0.5;
-}
-</style>

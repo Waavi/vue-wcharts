@@ -25,21 +25,59 @@
                     :fill="fill"
                     :style="{ styles, transition }"
                 />
-                <slot
-                    name="label"
-                    v-bind="bar.label"
+                <g
+                    v-if="bar.label"
                 >
-                    <text
-                        v-if="bar.label"
-                        :x="bar.label.x"
-                        :y="0"
-                        :text-anchor="labelTextAnchor"
-                        :font-size="labelSize"
-                        :style="{ ...labelStylesCmp, transition, transform: `translateY(${bar.label.y}px)` }"
+                    <slot
+                        name="label"
+                        v-bind="bar.label"
+                        :styles="{ ...labelStylesCmp, transition, transform: `translateY(${bar.label.y}px)` }"
+                        :align="labelAlign"
+                        :size="labelSize"
                     >
-                        {{ bar.label.value }}
-                    </text>
-                </slot>
+                        <text
+                            :x="bar.label.x"
+                            :y="0"
+                            :text-anchor="labelAlign"
+                            :font-size="labelSize"
+                            :style="{ ...labelStylesCmp, transition, transform: `translateY(${bar.label.y}px)` }"
+                        >
+                            <slot
+                                name="labelValue"
+                                v-bind="bar.label"
+                            >
+                                {{ bar.label.value }}
+                            </slot>
+                        </text>
+                    </slot>
+                </g>
+                <g
+                    v-if="bar.stackedLabel"
+                >
+                    <slot
+                        name="stackedLabel"
+                        v-bind="bar.stackedLabel"
+                        :styles="{ ...stackedLabelStylesCmp, transition, transform: `translateY(${bar.stackedLabel.y}px)` }"
+                        :align="stackedLabelAlign"
+                        :size="stackedLabelSize"
+                    >
+                        <text
+                            v-if="bar.stackedLabel"
+                            :x="bar.stackedLabel.x"
+                            :y="0"
+                            :text-anchor="stackedLabelAlign"
+                            :font-size="stackedLabelSize"
+                            :style="{ ...stackedLabelStylesCmp, transition, transform: `translateY(${bar.stackedLabel.y}px)` }"
+                        >
+                            <slot
+                                name="stackedLabelValue"
+                                v-bind="bar.stackedLabel"
+                            >
+                                {{ bar.stackedLabel.stackedValue }}
+                            </slot>
+                        </text>
+                    </slot>
+                </g>
             </g>
         </WTrans>
     </g>
@@ -57,6 +95,11 @@ const labelStylesDefaultProp = {
     cursor: 'default',
 }
 
+const stackedLabelStylesDefaultProp = {
+    fill: '#333',
+    cursor: 'default',
+}
+
 export default {
     name: 'WBar',
     type: 'cartesian',
@@ -70,15 +113,20 @@ export default {
         legend: VueTypes.string, // Prop to apply filters
         showLabel: VueTypes.bool.def(false),
         labelSize: VueTypes.number.def(12),
-        labelTextAnchor: VueTypes.oneOf(['start', 'middle', 'end']).def('middle'),
+        labelAlign: VueTypes.oneOf(['start', 'middle', 'end']).def('middle'),
         labelPosition: VueTypes.oneOf(['inside', 'outside']).def('outside'),
         labelStyles: VueTypes.object,
+        showStackedLabel: VueTypes.bool.def(false),
+        stackedLabelSize: VueTypes.number.def(12),
+        stackedLabelAlign: VueTypes.oneOf(['start', 'middle', 'end']).def('middle'),
+        stackedLabelStyles: VueTypes.object,
         width: VueTypes.number.def(DEFAULT_WIDTH),
         color: VueTypes.string,
         styles: VueTypes.object,
     },
+    // It's called by parent components to necessary calcs before be rendering
     preload ({ parent, props, index }) {
-        const { snap, colors } = parent
+        const { snap, colors, stacked } = parent
         const { datakey, width, color } = props
 
         // Added id of bars
@@ -90,7 +138,7 @@ export default {
         // Calc dimension
         snap.barAllWidth = snap.barAllWidth || 0
         snap.barOffset = [].concat(snap.barOffset || [], snap.barAllWidth)
-        snap.barAllWidth += width || DEFAULT_WIDTH
+        snap.barAllWidth = (stacked ? width : snap.barAllWidth + width) || DEFAULT_WIDTH
     },
     computed: {
         // Id cartesian elem
@@ -138,7 +186,8 @@ export default {
             // Generate points array
             return data.map((value, i) => {
                 let [start, end] = value
-                const label = end
+                const label = end - start
+                const stackedValue = end
 
                 // If start value is negative, reverse values
                 if (start < 0) {
@@ -155,20 +204,23 @@ export default {
                 // Calc xAxis pos
                 const x = (x0 + (space * i) + padding[3])
 
-                return [x, y, y0, label]
+                return [x, y, y0, label, stackedValue]
             })
         },
         // Bars
         bars () {
             // Generate bars array
             return this.points.map((point, index) => {
-                const [x0, y0, y1, value] = point
+                const [x0, y0, y1, value, stackedValue] = point
                 // Generate coords
                 const height = y1 - y0
                 const x = x0 + this.margin
                 const y = height < 0 ? y1 : y0
                 const label = this.getLabel({
                     x, y, value, height,
+                })
+                const stackedLabel = this.getStackedLabel({
+                    x, y, stackedValue, height,
                 })
 
                 return {
@@ -177,6 +229,7 @@ export default {
                     width: this.width,
                     height: Math.abs(height),
                     label,
+                    stackedLabel,
                 }
             })
         },
@@ -187,6 +240,13 @@ export default {
                 ...this.labelStyles,
             }
         },
+        // Stacked label styles
+        stackedLabelStylesCmp () {
+            return {
+                ...stackedLabelStylesDefaultProp,
+                ...this.stackedLabelStyles,
+            }
+        },
     },
     methods: {
         // Generate label of bar
@@ -194,11 +254,15 @@ export default {
             x, y, value, height,
         }) {
             if (!this.showLabel) return undefined
-            // If has stacked bars, only last bar shown the label
-            if (this.Chart.stacked && this.id !== this.getLastBarActive()) return undefined
+
+            // Not render inside label if doesnt enter correctly
+            if (height < this.labelSize * 2) return undefined
+
+            // Warn user if set inside position on stacked bar chart: forbidden position
+            if (this.Chart.stacked && this.labelPosition === 'inside') console.warn("labelPosition cannot be set to 'outside' position on stacked bar chart")
 
             // Calc position of label [x, y]
-            const top = (this.labelPosition === 'outside' ? this.labelSize : -(this.labelSize))
+            const top = (this.Chart.stacked || this.labelPosition === 'inside' ? -(this.labelSize) : this.labelSize)
             const x0 = x + this.width / 2
             const y1 = y - top + this.labelSize / 2
 
@@ -208,14 +272,39 @@ export default {
                 value,
             }
         },
+        getStackedLabel ({
+            x, y, stackedValue, height,
+        }) {
+            if (!this.showStackedLabel) return undefined
+
+            // Only render if is stacked
+            if (!this.Chart.stacked) return undefined
+
+            // Only last bar shown the stacked label
+            if (this.id !== this.getLastBarActive()) return undefined
+
+            // If label is printed outside, not render staked label
+            if (this.showLabel && this.labelPosition === 'outside') return undefined
+
+            // Calc position of label [x, y]
+            const top = this.stackedLabelSize
+            const x0 = x + this.width / 2
+            const y1 = y - top + this.stackedLabelSize / 2
+
+            return {
+                x: x0,
+                y: y1,
+                stackedValue,
+            }
+        },
         // Set active element
         handleMouseEnter (event) {
             const {
-                stacked, curData, setActive, snap, axisXDatakey,
+                stacked, curData, setActive, snap, axis,
             } = this.Chart
             const { id } = event.target
             const line = this.Chart.dataset[id]
-            const label = line[axisXDatakey]
+            const label = line[axis.x.datakey]
 
             // Generate tooltip config
             const values = curData.map((item) => {

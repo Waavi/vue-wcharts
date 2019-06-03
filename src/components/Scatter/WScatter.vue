@@ -92,6 +92,7 @@ export default {
     props: {
         legend: VueTypes.string,
         curve: VueTypes.oneOfType([VueTypes.bool, VueTypes.func]).def(false),
+        line: VueTypes.bool.def(false),
         lineStyles: VueTypes.shape({
             fill: VueTypes.string,
             stroke: VueTypes.string,
@@ -100,7 +101,6 @@ export default {
         }).def(() => ({
             ...lineStylesDefaultProp,
         })),
-        line: VueTypes.bool.def(false),
         styles: VueTypes.shape({
             fill: VueTypes.string,
             stroke: VueTypes.string,
@@ -135,41 +135,41 @@ export default {
         },
         lineData () {
             // We sort values becouse we want a left to right line
-            return sortBy(this.Chart.dataset, this.Chart.axisXDatakey).map((item, index) => ({
-                x: item[this.Chart.axisXDatakey],
-                y: item[this.Chart.axisYDatakey],
+            return sortBy(this.Chart.dataset, this.Chart.axis.x.datakey).map((item, index) => ({
+                x: item[this.Chart.axis.x.datakey],
+                y: item[this.Chart.axis.y.datakey],
             }))
         },
         dotsData () {
             const {
-                dataset, xScale, yScale, zScale, axisXDatakey, axisYDatakey, axisZDatakey, axisXName, axisYName, axisZName, colors,
+                dataset, xScale, yScale, zScale, axis, colors,
             } = this.Chart
             const color = colors[this.index]
             return dataset.map((item, index) => ({
-                x: xScale(item[axisXDatakey]),
-                y: yScale(item[axisYDatakey]),
-                z: axisZDatakey ? zScale(item[axisZDatakey]) : this.stylesCmp.radius,
+                x: xScale(item[axis.x.datakey]),
+                y: yScale(item[axis.y.datakey]),
+                z: axis.z.datakey ? zScale(item[axis.z.datakey]) : this.stylesCmp.radius,
                 info: {
                     id: this.index,
                     label: '',
                     value: [
                         ...[
                             {
-                                value: `${axisXName}: ${item[axisXDatakey]}`,
+                                value: `${axis.x.name}: ${item[axis.x.datakey]}`,
                                 color,
                             },
                             {
-                                value: `${axisYName}: ${item[axisYDatakey]}`,
+                                value: `${axis.y.name}: ${item[axis.y.datakey]}`,
                                 color,
                             },
                         ],
-                        ...(axisZDatakey ? [{
-                            value: `${axisZName}: ${item[axisZDatakey]}`,
+                        ...(axis.z.datakey ? [{
+                            value: `${axis.z.name}: ${item[axis.z.datakey]}`,
                             color,
                         }] : []),
                     ],
                 },
-                value: item[axisYDatakey],
+                value: item[axis.y.datakey],
                 index,
                 cartesianIndex: this.index,
             }))

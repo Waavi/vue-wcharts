@@ -160,14 +160,14 @@ export default {
         dotsData () {
             if (this.dot) {
                 const {
-                    dataset, xScale, yScale, datakeys, colors, axisXDatakey,
+                    dataset, xScale, yScale, datakeys, colors, axis,
                 } = this.Chart
                 const color = colors[this.index]
                 return dataset.map((item, index) => {
                     const line = dataset[index]
                     const key = datakeys[this.index]
                     const value = line[key]
-                    const label = line[axisXDatakey]
+                    const label = line[axis.x.datakey]
                     return {
                         x: xScale(index),
                         y: yScale(item[this.datakey]),

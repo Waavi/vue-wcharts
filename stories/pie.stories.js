@@ -1,5 +1,5 @@
 import {
-    boolean, number, color, select, text,
+    color,
 } from '@storybook/addon-knobs'
 import { storiesOf } from '@storybook/vue'
 
@@ -82,7 +82,7 @@ storiesOf('Pie', module)
                     <WPie
                         datakey="one"
                         :radius="[120, 150]"
-                        :stroke="stroke"
+                        :styles="{ stroke }"
                     >
                         <template>
                             <div class="WPieContent" :style="styles">

@@ -67,9 +67,9 @@ export default {
     axis: 'y',
     mixins: [axisMixin],
     props: {
-        labelTextAnchor: VueTypes.string.def('start'),
+        labelAlign: VueTypes.string.def('start'),
         space: VueTypes.arrayOf(VueTypes.number).def([10, 0, 0, 40]),
-        textOffsetY: VueTypes.number.def(10),
+        textOffset: VueTypes.number.def(10),
     },
 }
 </script>

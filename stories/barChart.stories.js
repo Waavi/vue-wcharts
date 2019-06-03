@@ -39,7 +39,7 @@ const dataTwo = [
         name: 'Page B', one: 2000, two: 2398, three: 1210,
     },
     {
-        name: 'Page C', one: 2500, two: 8800, three: 1290,
+        name: 'Page C', one: 10, two: 8800, three: 1290,
     },
     {
         name: 'Page D', one: 1780, two: 1908, three: 2000,
@@ -126,7 +126,7 @@ storiesOf('Charts/Bar', module)
                     inside: 'inside',
                     outside: 'outside',
                 }, 'outside'),
-                labelTextAnchor: select('Label text-anchor', {
+                labelAlign: select('Label align', {
                     start: 'start',
                     middle: 'middle',
                     end: 'end',
@@ -146,7 +146,7 @@ storiesOf('Charts/Bar', module)
                         datakey="one"
                         :showLabel="showLabel"
                         :labelPosition="labelPosition"
-                        :labelTextAnchor="labelTextAnchor"
+                        :labelAlign="labelAlign"
                         :width="width"
                     />
                     <WBar
@@ -154,7 +154,7 @@ storiesOf('Charts/Bar', module)
                         legend="Two Bar"
                         :showLabel="showLabel"
                         :labelPosition="labelPosition"
-                        :labelTextAnchor="labelTextAnchor"
+                        :labelAlign="labelAlign"
                         :width="width"
                     />
                     <WBar
@@ -162,7 +162,7 @@ storiesOf('Charts/Bar', module)
                         legend="Three Bar"
                         :showLabel="showLabel"
                         :labelPosition="labelPosition"
-                        :labelTextAnchor="labelTextAnchor"
+                        :labelAlign="labelAlign"
                         :width="width"
                     />
                     <WLine
@@ -204,7 +204,7 @@ storiesOf('Charts/Bar', module)
                     inside: 'inside',
                     outside: 'outside',
                 }, 'outside'),
-                labelTextAnchor: select('Label text-anchor', {
+                labelAlign: select('Label align', {
                     start: 'start',
                     middle: 'middle',
                     end: 'end',
@@ -230,7 +230,7 @@ storiesOf('Charts/Bar', module)
                         datakey="one"
                         :showLabel="showLabel"
                         :labelPosition="labelPosition"
-                        :labelTextAnchor="labelTextAnchor"
+                        :labelAlign="labelAlign"
                         :width="width"
                     >
                         <template #label="label">
@@ -259,7 +259,7 @@ storiesOf('Charts/Bar', module)
                         legend="Three Bar"
                         :showLabel="showLabel"
                         :labelPosition="labelPosition"
-                        :labelTextAnchor="labelTextAnchor"
+                        :labelAlign="labelAlign"
                         :width="width"
                     >
                         <template #label="label">
@@ -305,11 +305,7 @@ storiesOf('Charts/Bar', module)
                     three: 'three',
                 }, 'one'),
                 showLabel: boolean('Show label', true),
-                labelPosition: select('Label position', {
-                    inside: 'inside',
-                    outside: 'outside',
-                }, 'outside'),
-                labelTextAnchor: select('Label text-anchor', {
+                labelAlign: select('Label align', {
                     start: 'start',
                     middle: 'middle',
                     end: 'end',
@@ -324,29 +320,153 @@ storiesOf('Charts/Bar', module)
                     :dataset="data"
                     responsive
                     stacked
+                    :bound="[0]"
                 >
                     <WBar
                         legend="One Bar"
                         datakey="one"
                         :showLabel="showLabel"
-                        :labelPosition="labelPosition"
-                        :labelTextAnchor="labelTextAnchor"
+                        :labelAlign="labelAlign"
                         :width="width"
                     />
                     <WBar
                         datakey="two"
                         legend="Two Bar"
                         :showLabel="showLabel"
-                        :labelPosition="labelPosition"
-                        :labelTextAnchor="labelTextAnchor"
+                        :labelAlign="labelAlign"
                         :width="width"
                     />
                     <WBar
                         datakey="three"
                         legend="Three Bar"
                         :showLabel="showLabel"
-                        :labelPosition="labelPosition"
-                        :labelTextAnchor="labelTextAnchor"
+                        :labelAlign="labelAlign"
+                        :width="width"
+                    />
+                    <WXAxis
+                        datakey="name"
+                        :space="[0, 50, 80, 50]"
+                    />
+                    <WYAxis :space="[25, 0, 0, 50]" />
+                    <WLegends
+                        selectable
+                    />
+                    <WTooltip />
+                </WCartesian>
+            </div>
+        `,
+    }))
+    .add('Stacked with stacked label', () => ({
+        components: {
+            WCartesian,
+            WBar,
+            WLine,
+            WXAxis,
+            WYAxis,
+            WLegends,
+            WTooltip,
+        },
+        data () {
+            return {
+                key: select('Data Key', {
+                    one: 'one',
+                    two: 'two',
+                    three: 'three',
+                }, 'one'),
+                showStackedLabel: boolean('Show stacked label', true),
+                width: 25,
+                data: object('Data', dataTwo),
+            }
+        },
+        template: `
+            <div class="Container">
+                <WCartesian
+                    :dataset="data"
+                    :bound="[0]"
+                    responsive
+                    stacked
+                >
+                    <WBar
+                        legend="One Bar"
+                        datakey="one"
+                        :width="width"
+                    />
+                    <WBar
+                        datakey="two"
+                        legend="Two Bar"
+                        :width="width"
+                    />
+                    <WBar
+                        datakey="three"
+                        legend="Three Bar"
+                        :showStackedLabel="showStackedLabel"
+                        :width="width"
+                    />
+                    <WXAxis
+                        datakey="name"
+                        :space="[0, 50, 80, 50]"
+                    />
+                    <WYAxis :space="[25, 0, 0, 50]" />
+                    <WLegends
+                        selectable
+                    />
+                    <WTooltip />
+                </WCartesian>
+            </div>
+        `,
+    }))
+    .add('Stacked with custom stacked label', () => ({
+        components: {
+            WCartesian,
+            WBar,
+            WLine,
+            WXAxis,
+            WYAxis,
+            WLegends,
+            WTooltip,
+        },
+        data () {
+            return {
+                showStackedLabel: boolean('Show stacked label', true),
+                stackedLabelSize: select('Stacked Label Size', {
+                    8: '8',
+                    12: '12',
+                    16: '16',
+                }, '16'),
+                stackedLabelAlign: select('Stacked Label Align', {
+                    start: 'start',
+                    middle: 'middle',
+                    end: 'end',
+                }, 'middle'),
+                width: 25,
+                data: object('Data', dataTwo),
+            }
+        },
+        template: `
+            <div class="Container">
+                <WCartesian
+                    :dataset="data"
+                    :bound="[0]"
+                    responsive
+                    stacked
+                >
+                    <WBar
+                        legend="One Bar"
+                        datakey="one"
+                        :width="width"
+                    />
+                    <WBar
+                        datakey="two"
+                        legend="Two Bar"
+                        :width="width"
+                    />
+                    <WBar
+                        datakey="three"
+                        legend="Three Bar"
+                        :showStackedLabel="showStackedLabel"
+                        :stackedLabelSize="stackedLabelSize"
+                        :stackedLabelAlign="stackedLabelAlign"
+                        :stackedLabelStyles="{ fill: 'black' }"
                         :width="width"
                     />
                     <WXAxis
@@ -384,7 +504,7 @@ storiesOf('Charts/Bar', module)
                     inside: 'inside',
                     outside: 'outside',
                 }, 'outside'),
-                labelTextAnchor: select('Label text-anchor', {
+                labelAlign: select('Label align', {
                     start: 'start',
                     middle: 'middle',
                     end: 'end',
@@ -397,6 +517,7 @@ storiesOf('Charts/Bar', module)
             <div class="Container">
                 <WCartesian
                     :dataset="data"
+                    :bound="[0]"
                     responsive
                     stacked
                 >
@@ -405,7 +526,7 @@ storiesOf('Charts/Bar', module)
                         datakey="one"
                         :showLabel="showLabel"
                         :labelPosition="labelPosition"
-                        :labelTextAnchor="labelTextAnchor"
+                        :labelAlign="labelAlign"
                         :width="width"
                     />
                     <WBar
@@ -413,7 +534,7 @@ storiesOf('Charts/Bar', module)
                         legend="Two Bar"
                         :showLabel="showLabel"
                         :labelPosition="labelPosition"
-                        :labelTextAnchor="labelTextAnchor"
+                        :labelAlign="labelAlign"
                         :width="width"
                     />
                     <WBar
@@ -421,7 +542,7 @@ storiesOf('Charts/Bar', module)
                         legend="Three Bar"
                         :showLabel="showLabel"
                         :labelPosition="labelPosition"
-                        :labelTextAnchor="labelTextAnchor"
+                        :labelAlign="labelAlign"
                         :width="width"
                     />
                     <WLine datakey="one" />
