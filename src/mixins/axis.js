@@ -45,10 +45,10 @@ export default {
         // Negative axis
         hideNegativeAxis: VueTypes.bool.def(false),
         // Style
-        axisStyles: VueTypes.object,
-        markStyles: VueTypes.object,
-        labelStyles: VueTypes.object,
-        tickStyles: VueTypes.object,
+        axisStyles: VueTypes.object.def(() => ({ ...axisStylesDefaultProp })),
+        markStyles: VueTypes.object.def(() => ({ ...markStylesDefaultProp })),
+        labelStyles: VueTypes.object.def(() => ({ ...labelStylesDefaultProp })),
+        tickStyles: VueTypes.object.def(() => ({ ...tickStylesDefaultProp })),
     },
     preload ({ parent, props, index }) {
         const {

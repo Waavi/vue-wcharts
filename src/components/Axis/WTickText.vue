@@ -4,9 +4,9 @@
         :x="x"
         :y="y"
         :dy="dy"
-        :stroke="stylesCmp.stroke"
-        :fill="stylesCmp.fill"
-        :font-size="stylesCmp.fontSize"
+        :stroke="stroke"
+        :fill="fill"
+        :font-size="fontSize"
         :style="stylesCmp"
     >
         {{ value }}
@@ -43,6 +43,15 @@ export default {
                 ...omit(stylesDefaultProp, ['stroke', 'fill', 'fontSize']),
                 ...omit(this.styles, ['stroke', 'fill', 'fontSize']),
             }
+        },
+        stroke () {
+            return this.styles.stroke || stylesDefaultProp.stroke
+        },
+        fill () {
+            return this.styles.fill || stylesDefaultProp.fill
+        },
+        fontSize () {
+            return this.styles.fontSize || stylesDefaultProp.fontSize
         },
     },
 }
