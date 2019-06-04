@@ -5,7 +5,7 @@ sidebarDepth: 3
 
 ## WCartesian
 
-*Cartesian chart component.*
+*Cartesian chart.*
 
 ### Child components
 **[\<WLine />](/docs/api/components.html#wline)**
@@ -36,7 +36,22 @@ sidebarDepth: 3
 
 ## WPieChart
 
-TODO:
+*Pie chart.*
+
+### Child components
+**[\<WPie />](/docs/api/components.html#wpie)**
+**[\<WTooltip />](/docs/api/widgets.html#wtooltip)**
+**[\<WLegends />](/docs/api/widgets.html#wlegends)**
+**Validate SVG elements**
+
+### Properties
+| Property | Type | Default value | Description |
+|----------|------|---------------|-------------|
+| dataset | array | [] | Chart data, example:  ```[{name: 'Page A', one: 3000, two: 1400, three: 400}, ...]``` |
+| responsive | bool | false | If true set, the container is responsive |
+| height | number | 400 | The height of the chart container in pixels |
+| width | number | 600 | The width of the chart container in pixels |
+| colors | array | ```['#3fb1e3',  '#6be6c1',  '#626c91',  '#a0a7e6',  '#c4ebad',  '#96dee8',  '#013566',  '##ff4f81'  ]``` | Colors palette |
 
 ## WStackBar
 
