@@ -9,11 +9,40 @@ TODO:
 
 ## WLegends
 
-TODO:
+*Legends component*
+
+### Parent components
+**[\<WCartesian />](/docs/api/charts.html#wcartesian)**
+**[\<WPieChart />](/docs/api/charts.html#wcartesian)**
+
+### Properties
+| Property | Type | Default value | Description |
+|----------|------|---------------|-------------|
+| position | oneOf(['top', 'bottom', 'left', 'right']) | bottom | Legends position |
+| align | oneOf(['start', 'center', 'end']) | center | Legends alignment |
+| space | array | [16, 16, 16, 16] | Space around the legends |
+| size | number |  | Width or height, with different position prop top-bottom/left-right |
+| selectable | bool |  | If true set, it can be selectable |
+| componentsStyles | object |  | Container styles |
+| wrapperStyles | object |  | Wrapper styles |
+| legendStyles | object |  | Legend Styles |
+
+### Slots
+
+-   #### bullet
+
+    *Slot to customize the bullet legend*
+
+    | Property | Description |
+    |----------|-------------|
+    | index | Legend index |
+    | text | Legend text |
+    | color | Legend color |
+
 
 ## WLegend
 
-*TODO: Component description here*
+*Legend component*
 
 ### Parent components
 **[\<WLegends />](#wlegends)**
@@ -34,50 +63,29 @@ TODO:
 
 -   #### bullet
 
-    *TODO: Slot description here*
+    *Slot to customize the bullet legend*
 
     | Property | Description |
     |----------|-------------|
-    | index | |
-    | text | |
-    | color | |
+    | index | Legend index |
+    | text | Legend text |
+    | color | Legend color |
 
 -   #### text
 
-    *TODO: Slot description here*
+    *Slot to customize the text legend*
 
     | Property | Description |
     |----------|-------------|
-    | text | |
+    | text | Text value|
 
 ### Events
 
--   #### @onClick
-
-    *TODO: Event description here*
-
-    | Property | Description |
-    |----------|-------------|
-    | text | |
-    | index | |
-
--   #### @onMouseenter
-
-    *TODO: Event description here*
-
-    | Property | Description |
-    |----------|-------------|
-    | text | |
-    | index | |
-
--   #### @onMouseleave
-
-    *TODO: Event description here*
-
-    | Property | Description |
-    |----------|-------------|
-    | text | |
-    | index | |
+| Name | Attributes | Listen to | Description |
+|------|------------|-----------|-------------|
+| onClick | ```{ text, index}``` | @onHover | Emitted after clicking the legend |
+| onMouseenter | ```{ text, index}``` | @onClick | Emitted after mouse enter in the legend |
+| onMouseleave | ```{ text, index}``` | @onEvent | Emitted after moues leave the legend |
 
 ## WBullet
 
