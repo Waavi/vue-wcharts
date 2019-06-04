@@ -18,7 +18,7 @@
                     :key="index"
                     :index="index"
                     :text="legend"
-                    :selected="Chart.activeElements.includes(index)"
+                    :active="Chart.activeElements.includes(index)"
                     :style="legendStyles"
                     @onClick="handleClick"
                 >

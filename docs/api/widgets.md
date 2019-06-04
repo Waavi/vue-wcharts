@@ -16,19 +16,21 @@ TODO:
 *TODO: Component description here*
 
 ### Parent components
+<ListParents :parents="['wlegends', 'wcartesian', 'wpiechart']" />
+
 **[\<WLegends />](#wlegends)**
 **[\<WCartesian />](/docs/api/charts.html#wcartesian)**
+**[\<WPieChart />](/docs/api/charts.html#wcartesian)**
 
 ### Properties
 | Property | Type | Default value | Description |
 |----------|------|---------------|-------------|
-| index |  number, string | | |
-| text |  string | | |
-| active |  bool | false | |
-| selected |  bool | false | |
-| styles |  object | | |
-| textStyles |  object | | |
-| color |  string | | |
+| index |  number, string | | The index of the legend |
+| text |  string | | The text of the legend |
+| active |  bool | false | If is set to true the legend has opacity 1. If is set to false the legend has opacity .5 |
+| styles |  object | | The style of the legend |
+| textStyles |  object | | The style of the legend text |
+| color |  string | | The color of the legend |
 
 ### Slots
 
