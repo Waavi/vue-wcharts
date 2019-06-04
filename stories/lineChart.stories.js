@@ -299,7 +299,7 @@ storiesOf('Charts/Line', module)
                                     :y="Chart.active.el && Chart.active.el.id === dot.cartesianIndex && Chart.active.el.point === dot.index ? dot.y - 10 : dot.y - 7"
                                     :width="Chart.active.el && Chart.active.el.id === dot.cartesianIndex && Chart.active.el.point === dot.index ? 20 : 14"
                                     :height="Chart.active.el && Chart.active.el.id === dot.cartesianIndex && Chart.active.el.point === dot.index ? 20 : 14"
-                                    @mouseenter="Chart.setActive({ id: dot.cartesianIndex, point: dot.index }, $event, Chart.active.types.point)"
+                                    @mouseenter="Chart.setActive(dot.info, $event)"
                                     @mouseleave="Chart.cleanActive"
                                     :style="{ transition }"
                                 />

@@ -58,20 +58,15 @@
             </div>
 
             <WTooltip>
-                <template #default="tooltip">
+                <template #default="{ value: [first] }">
                     <div class="Wrapper">
-                        <div class="flex row-center">
-                            <div class="Bullet">
-                                <div
-                                    class="Bullet"
-                                    :style="{ background: tooltip.value[0].color }"
-                                />
-                            </div>
+                        <div class="TooltipItem">
+                            <WBullet :color="first.color" />
                             <slot
                                 name="tooltip"
-                                v-bind="tooltip.value[0]"
+                                v-bind="first"
                             >
-                                {{ tooltip.value[0].value }}
+                                {{ first.value }}
                             </slot>
                         </div>
                     </div>
@@ -116,7 +111,7 @@
 import VueTypes from 'vue-types'
 
 import activeMixin from '../mixins/active'
-import { WTooltip } from '../components/Widgets'
+import { WTooltip, WBullet } from '../components/Widgets'
 import animationMixin from '../mixins/animation'
 import themeMixin from '../mixins/theme'
 
@@ -126,6 +121,7 @@ export default {
     name: 'WStackBar',
     components: {
         WTooltip,
+        WBullet,
     },
     provide () {
         return {
@@ -301,7 +297,8 @@ export default {
     outline: 1px solid;
 }
 
-.Bullet {
-    line-height: 0.9;
+.TooltipItem {
+    display: flex;
+    align-items: center;
 }
 </style>

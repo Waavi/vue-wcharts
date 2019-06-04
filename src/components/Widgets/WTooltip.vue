@@ -25,12 +25,9 @@
                 >
                     <slot
                         name="bullet"
-                        v-bind="selected"
+                        v-bind="value"
                     >
-                        <div
-                            class="Bullet"
-                            :style="{ background: value.color }"
-                        />
+                        <WBullet :color="value.color" />
                     </slot>
 
                     <slot
@@ -47,12 +44,16 @@
 
 <script>
 import VueTypes from 'vue-types'
+import WBullet from './WBullet.vue'
 import { toPx } from './utils'
 
 export default {
     name: 'WTooltip',
     type: 'plugins',
     inject: ['Chart'],
+    components: {
+        WBullet,
+    },
     props: {
         id: VueTypes.string,
         gap: VueTypes.number.def(10),
@@ -157,13 +158,5 @@ export default {
 
 .Title {
     margin-bottom: 5px;
-}
-
-.Bullet {
-    display: inline-block;
-    height: 10px;
-    width: 10px;
-    border-radius: 50%;
-    margin-right: .5rem;
 }
 </style>

@@ -29,12 +29,7 @@
                             :text="text"
                             :color="color"
                         >
-                            <div class="Bullet">
-                                <span
-                                    class="Circle"
-                                    :style="{ backgroundColor: color }"
-                                />
-                            </div>
+                            <WBullet :color="color" />
                         </slot>
                     </template>
                 </WLegend>
@@ -48,6 +43,7 @@ import VueTypes from 'vue-types'
 import { sortBy } from 'lodash'
 import { toPx, getIsHorizontal, getSpacesByPos } from './utils'
 import WLegend from './WLegend.vue'
+import WBullet from './WBullet.vue'
 
 export default {
     name: 'WLegends',
@@ -55,6 +51,7 @@ export default {
     inject: ['Chart'],
     components: {
         WLegend,
+        WBullet,
     },
     props: {
         text: VueTypes.string,
@@ -166,18 +163,6 @@ export default {
 
     &.top + &.top, &.bottom + &.bottom {
         margin: 0 0 0 .75rem;
-    }
-}
-
-.Bullet {
-    display: inline-block;
-
-    .Circle {
-        display: inline-block;
-        height: 10px;
-        width: 10px;
-        border-radius: 50%;
-        margin-right: .5rem;
     }
 }
 </style>
