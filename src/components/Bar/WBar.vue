@@ -233,6 +233,10 @@ export default {
                 }
             })
         },
+        // Check if label position it is inside
+        isLabelInside () {
+            return this.labelPosition === 'inside'
+        },
         // Label styles
         labelStylesCmp () {
             return {
@@ -254,15 +258,15 @@ export default {
             x, y, value, height,
         }) {
             if (!this.showLabel) return undefined
-
-            // Not render inside label if doesnt enter correctly
-            if (height < this.labelSize * 2) return undefined
-
-            // Warn user if set inside position on stacked bar chart: forbidden position
-            if (this.Chart.stacked && this.labelPosition === 'inside') console.warn("labelPosition cannot be set to 'outside' position on stacked bar chart")
+            if (this.isLabelInside) {
+                // Not render inside label if doesnt enter correctly
+                if (height < this.labelSize * 2) return undefined
+                // Warn user if set inside position on stacked bar chart: forbidden position
+                if (this.Chart.stacked) console.warn("labelPosition cannot be set to 'outside' position on stacked bar chart")
+            }
 
             // Calc position of label [x, y]
-            const top = (this.Chart.stacked || this.labelPosition === 'inside' ? -(this.labelSize) : this.labelSize)
+            const top = (this.Chart.stacked || this.isLabelInside ? -(this.labelSize) : this.labelSize)
             const x0 = x + this.width / 2
             const y1 = y - top + this.labelSize / 2
 
@@ -284,7 +288,7 @@ export default {
             if (this.id !== this.getLastBarActive()) return undefined
 
             // If label is printed outside, not render staked label
-            if (this.showLabel && this.labelPosition === 'outside') return undefined
+            if (this.showLabel && !this.isLabelInside) return undefined
 
             // Calc position of label [x, y]
             const top = this.stackedLabelSize
