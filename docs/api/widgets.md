@@ -8,12 +8,12 @@ sidebarDepth: 3
 *Tooltip component, it can be used wherever you want it needs access to Chart api.*
 
 ### Parent components
-**[\<WCartesian />](/docs/api/charts.html#wcartesian)**
-**[\<WPieChart />](/docs/api/charts.html#wcartesian)**
-**[\<WStackBar />](/docs/api/charts.html#wcartesian)**
+**[\<WCartesian />](/api/charts.html#wcartesian)**
+**[\<WPieChart />](/api/charts.html#wcartesian)**
+**[\<WStackBar />](/api/charts.html#wcartesian)**
 
 ### Child components
-**[\<WBullet />](/docs/api/components.html#wbullet)**
+**[\<WBullet />](/api/components.html#wbullet)**
 
 ### Properties
 | Property | Type | Default value | Description |
@@ -66,11 +66,11 @@ sidebarDepth: 3
 *Legends component*
 
 ### Parent components
-**[\<WCartesian />](/docs/api/charts.html#wcartesian)**
-**[\<WPieChart />](/docs/api/charts.html#wcartesian)**
+**[\<WCartesian />](/api/charts.html#wcartesian)**
+**[\<WPieChart />](/api/charts.html#wcartesian)**
 
 ### Child components
-**[\<WBullet />](/docs/api/components.html#wbullet)**
+**[\<WBullet />](/api/components.html#wbullet)**
 
 ### Properties
 | Property | Type | Default value | Description |
@@ -103,11 +103,11 @@ sidebarDepth: 3
 
 ### Parent components
 **[\<WLegends />](#wlegends)**
-**[\<WCartesian />](/docs/api/charts.html#wcartesian)**
-**[\<WPieChart />](/docs/api/charts.html#wcartesian)**
+**[\<WCartesian />](/api/charts.html#wcartesian)**
+**[\<WPieChart />](/api/charts.html#wcartesian)**
 
 ### Child components
-**[\<WBullet />](/docs/api/components.html#wbullet)**
+**[\<WBullet />](/api/components.html#wbullet)**
 
 ### Properties
 | Property | Type | Default value | Description |
@@ -155,7 +155,7 @@ sidebarDepth: 3
 **[\<WTooltip />](#wtooltip)**
 **[\<WLegends />](#wlegends)**
 **[\<WLegend />](#wlegend)**
-**[\<WStackBar />](/docs/api/charts.html/#wstackbar)**
+**[\<WStackBar />](/api/charts.html/#wstackbar)**
 **Validate SVG elements**
 
 ### Properties

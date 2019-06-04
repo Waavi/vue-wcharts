@@ -8,7 +8,7 @@ sidebarDepth: 3
 *X axis component.*
 
 ### Parent components
-**[\<WCartesian />](/docs/api/charts.html#wcartesian)**
+**[\<WCartesian />](/api/charts.html#wcartesian)**
 
 ### Child components
 **[\<WTickText />](#wticktext)**
@@ -64,7 +64,7 @@ sidebarDepth: 3
 *Y axis component.*
 
 ### Parent components
-**[\<WCartesian />](/docs/api/charts.html#wcartesian)**
+**[\<WCartesian />](/api/charts.html#wcartesian)**
 
 ### Child components
 **[\<WTickText />](#wticktext)**
@@ -118,7 +118,7 @@ sidebarDepth: 3
 *Z axis component.*
 
 ### Parent components
-**[\<WCartesian />](/docs/api/charts.html#wcartesian)**
+**[\<WCartesian />](/api/charts.html#wcartesian)**
 
 ### Properties
 | Property | Type | Default value | Description |
@@ -144,11 +144,11 @@ sidebarDepth: 3
 *Line component.*
 
 ### Parent components
-**[\<WCartesian />](/docs/api/charts.html#wcartesian)**
+**[\<WCartesian />](/api/charts.html#wcartesian)**
 
 ### Child components
 **[\<WDot />](#wdot)**
-**[\<WSpread />](/docs/api/transitions.html#wspread)**
+**[\<WSpread />](/api/transitions.html#wspread)**
 
 ### Properties
 | Property | Type | Default value | Description |
@@ -185,7 +185,7 @@ sidebarDepth: 3
 *Pie component.*
 
 ### Parent components
-**[\<WPieChart />](/docs/api/charts.html#wpiechart)**
+**[\<WPieChart />](/api/charts.html#wpiechart)**
 
 ### Properties
 | Property | Type | Default value | Description |
@@ -222,7 +222,7 @@ sidebarDepth: 3
 *Grid component.*
 
 ### Parent components
-**[\<WCartesian />](/docs/api/charts.html#wcartesian)**
+**[\<WCartesian />](/api/charts.html#wcartesian)**
 
 ### Properties
 | Property | Type | Default value | Description |
@@ -238,11 +238,11 @@ sidebarDepth: 3
 *Scatter chart.*
 
 ### Parent components
-**[\<WCartesian />](/docs/api/charts.html#wcartesian)**
+**[\<WCartesian />](/api/charts.html#wcartesian)**
 
 ### Child components
 **[\<WDot />](#wdot)**
-**[\<WSpread />](/docs/api/transitions.html#wtrans)**
+**[\<WSpread />](/api/transitions.html#wtrans)**
 
 ### Properties
 | Property | Type | Default value | Description |
@@ -274,7 +274,7 @@ sidebarDepth: 3
 *Component to show a reference line in the chart.*
 
 ### Parent components
-**[\<WCartesian />](/docs/api/charts.html#wcartesian)**
+**[\<WCartesian />](/api/charts.html#wcartesian)**
 
 ### Properties
 | Property | Type | Default value | Description |
@@ -307,10 +307,10 @@ sidebarDepth: 3
 ### Parent components
 **[\<WLine />](#wline)**
 **[\<WScatter />](#wscatter)**
-**[\<WCartesian />](/docs/api/charts.html#wcartesian)**
+**[\<WCartesian />](/api/charts.html#wcartesian)**
 
 ### Child components
-**[\<WTrans />](/docs/api/transitions.html#wtrans)**
+**[\<WTrans />](/api/transitions.html#wtrans)**
 
 ### Properties
 | Property | Type | Default value | Example | Description |

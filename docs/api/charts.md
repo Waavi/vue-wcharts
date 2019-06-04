@@ -8,16 +8,16 @@ sidebarDepth: 3
 *Cartesian chart.*
 
 ### Child components
-**[\<WLine />](/docs/api/components.html#wline)**
-**[\<WBar />](/docs/api/components.html#wbar)**
-**[\<WCartesianGrid />](/docs/api/components.html#wcartesiangrid)**
-**[\<WScatter />](/docs/api/components.html#wscatter)**
-**[\<WXAxis />](/docs/api/components.html#wxaxis)**
-**[\<WYAxis />](/docs/api/components.html#wyaxis)**
-**[\<WZAxis />](/docs/api/components.html#wzaxis)**
-**[\<WMarker />](/docs/api/components.html#wmarker)**
-**[\<WTooltip />](/docs/api/widgets.html#wtooltip)**
-**[\<WLegends />](/docs/api/widgets.html#wlegends)**
+**[\<WLine />](/api/components.html#wline)**
+**[\<WBar />](/api/components.html#wbar)**
+**[\<WCartesianGrid />](/api/components.html#wcartesiangrid)**
+**[\<WScatter />](/api/components.html#wscatter)**
+**[\<WXAxis />](/api/components.html#wxaxis)**
+**[\<WYAxis />](/api/components.html#wyaxis)**
+**[\<WZAxis />](/api/components.html#wzaxis)**
+**[\<WMarker />](/api/components.html#wmarker)**
+**[\<WTooltip />](/api/widgets.html#wtooltip)**
+**[\<WLegends />](/api/widgets.html#wlegends)**
 **Validate SVG elements**
 
 ### Properties
@@ -39,9 +39,9 @@ sidebarDepth: 3
 *Pie chart.*
 
 ### Child components
-**[\<WPie />](/docs/api/components.html#wpie)**
-**[\<WTooltip />](/docs/api/widgets.html#wtooltip)**
-**[\<WLegends />](/docs/api/widgets.html#wlegends)**
+**[\<WPie />](/api/components.html#wpie)**
+**[\<WTooltip />](/api/widgets.html#wtooltip)**
+**[\<WLegends />](/api/widgets.html#wlegends)**
 **Validate SVG elements**
 
 ### Properties
@@ -58,7 +58,7 @@ sidebarDepth: 3
 *Simple horizontal stack bar in html.*
 
 ### Child components
-**[\<WTooltip />](/docs/api/widgets.html#wtooltip)**
+**[\<WTooltip />](/api/widgets.html#wtooltip)**
 
 ### Properties
 | Property | Type | Default value | Description |
