@@ -14,6 +14,7 @@ import {
     WTooltip,
     WDot,
     WBullet,
+    WShowIfFit,
 } from './components'
 import {
     WTrans,
@@ -45,6 +46,7 @@ const install = (Vue, opts = {}) => {
         WTooltip,
         WDot,
         WBullet,
+        WShowIfFit,
     ]
 
     const common = [
@@ -90,6 +92,7 @@ export {
     WPie,
     WTooltip,
     WBullet,
+    WShowIfFit,
     // Common
     WTrans,
     WSpread,

@@ -1,7 +1,14 @@
 <template functional>
     <span
         class="WBullet"
-        :style="{ background: props.color }"
+        :style="{
+            display: props.display,
+            width: `${props.width}px`,
+            height: `${props.height}px`,
+            background: props.color,
+            borderRadius: `${props.borderRadius}%`,
+            margin: Array.isArray(props.margin) ? props.margin.map(m => `${m}px`).join(' ') : `${props.margin}px`,
+        }"
     />
 </template>
 
@@ -12,16 +19,11 @@ export default {
     name: 'WBullet',
     props: {
         color: VueTypes.string.isRequired,
+        display: VueTypes.string.def('inline-block'),
+        width: VueTypes.oneOfType([String, Number]).def(10),
+        height: VueTypes.oneOfType([String, Number]).def(10),
+        borderRadius: VueTypes.oneOfType([String, Number]).def(50),
+        margin: VueTypes.oneOfType([VueTypes.number, VueTypes.arrayOf(VueTypes.number).def([0, 0, 0, 0])]).def(8),
     },
 }
 </script>
-
-<style scoped lang="scss">
-.WBullet {
-    display: inline-block;
-    height: 10px;
-    width: 10px;
-    border-radius: 50%;
-    margin-right: .5rem;
-}
-</style>

@@ -39,20 +39,22 @@
                         class="Value"
                         :style="labelStyles"
                     >
-                        <slot
-                            v-if="!stack.hide && showLabel"
-                            name="value"
-                            :index="stack.id"
-                            :value="stack.value"
-                            :percentage="stack.width|percentage"
-                            :color="stack.color"
-                        >
-                            <span
-                                :style="{
-                                    color: stack.color
-                                }"
-                            >{{ stack.value }}</span>
-                        </slot>
+                        <WShowIfFit>
+                            <slot
+                                v-if="!stack.hide && showLabel"
+                                name="value"
+                                :index="stack.id"
+                                :value="stack.value"
+                                :percentage="stack.width|percentage"
+                                :color="stack.color"
+                            >
+                                <span
+                                    :style="{
+                                        color: stack.color
+                                    }"
+                                >{{ stack.value }}</span>
+                            </slot>
+                        </WShowIfFit>
                     </div>
                 </div>
             </div>
@@ -81,7 +83,8 @@
                 data-type="marker"
                 class="Marker"
                 :style="{
-                    left: `${marker.left}%`
+                    left: `${marker.left}%`,
+                    ...markerStyles,
                 }"
                 @mouseenter="handleMouseEnter"
                 @mouseleave="handleMouseLeave"
@@ -111,7 +114,7 @@
 import VueTypes from 'vue-types'
 
 import activeMixin from '../mixins/active'
-import { WTooltip, WBullet } from '../components/Widgets'
+import { WTooltip, WBullet, WShowIfFit } from '../components/Widgets'
 import animationMixin from '../mixins/animation'
 import themeMixin from '../mixins/theme'
 
@@ -122,6 +125,7 @@ export default {
     components: {
         WTooltip,
         WBullet,
+        WShowIfFit,
     },
     provide () {
         return {
@@ -147,6 +151,7 @@ export default {
         showLabel: VueTypes.bool.def(false),
         withoutTooltip: VueTypes.bool.def(false),
         styles: VueTypes.object.def({}),
+        markerStyles: VueTypes.object.def({}),
         delay: VueTypes.number.def(300),
         minWidth: VueTypes.number,
     },
