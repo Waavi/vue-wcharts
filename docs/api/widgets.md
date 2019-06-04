@@ -16,8 +16,6 @@ TODO:
 *TODO: Component description here*
 
 ### Parent components
-<ListParents :parents="['wlegends', 'wcartesian', 'wpiechart']" />
-
 **[\<WLegends />](#wlegends)**
 **[\<WCartesian />](/docs/api/charts.html#wcartesian)**
 **[\<WPieChart />](/docs/api/charts.html#wcartesian)**
