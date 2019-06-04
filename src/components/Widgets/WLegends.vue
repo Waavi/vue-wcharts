@@ -54,7 +54,6 @@ export default {
         WBullet,
     },
     props: {
-        text: VueTypes.string,
         position: VueTypes.oneOf(['top', 'bottom', 'left', 'right']).def('bottom'),
         align: VueTypes.oneOf(['start', 'center', 'end']).def('center'),
         space: VueTypes.arrayOf(VueTypes.number).def([16, 16, 16, 16]),
