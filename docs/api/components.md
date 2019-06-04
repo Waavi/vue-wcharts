@@ -182,7 +182,40 @@ sidebarDepth: 3
 
 ## WPie
 
-TODO:
+*Pie component.*
+
+### Parent components
+**[\<WPieChart />](/docs/api/charts.html#wpiechart)**
+
+### Properties
+| Property | Type | Default value | Description |
+|----------|------|---------------|-------------|
+| datakey | string | Required property | The key of dataset |
+| angles | number, array | [0, Math.PI * 2] | Start and end pie angle |
+| radius | number, array | [0, 100] | Start and end radius number |
+| styles | object | ```{position: 'relative',transform: 'translate(50%, 50%)'}``` | Container styles |
+| pathStyles | object | Required property | The key of dataset |
+| opacityDisabled | string | Required property | The key of dataset |
+| active | string | Required property | The key of dataset |
+
+### Slots
+
+-   #### default
+
+    *Slot to include external elements like html*
+
+    | Property | Description |
+    |----------|-------------|
+    | values | Items value (Dataset item value, value, percentage and color) |
+
+### Events
+
+| Name | Attributes | Listen to | Description |
+|------|------------|-----------|-------------|
+| onHover | ```{ id, [{ id, value}]}``` | @onHover | Emitted after hovering a pie section |
+| onClick | ```{ id, [{ id, value}]}``` | @onClick | Emitted after clicking a pie section |
+| onEvent | ```{ id, [{ id, value}]}``` | @onEvent | Emitted after activating a pie section with empty event name |
+
 
 ## WCartesianGrid
 
@@ -292,7 +325,7 @@ TODO:
 
 ## WTickText
 
-*Component to show circle in the axis but it can be used wherever you want.*
+*Component to show text in the axis but it can be used wherever you want.*
 
 ### Parent components
 **[\<WXAxis />](#wxaxis)**
