@@ -258,12 +258,11 @@ export default {
             x, y, value, height,
         }) {
             if (!this.showLabel) return undefined
-            if (this.isLabelInside) {
-                // Not render inside label if doesnt enter correctly
-                if (height < this.labelSize * 2) return undefined
-                // Warn user if set inside position on stacked bar chart: forbidden position
-                if (this.Chart.stacked) console.warn("labelPosition cannot be set to 'outside' position on stacked bar chart")
-            }
+            // Not render inside label if doesnt enter correctly
+            if (this.isLabelInside && height < this.labelSize * 2) return undefined
+
+            // Warn user if set inside position on stacked bar chart: forbidden position
+            if (this.Chart.stacked) console.warn("labelPosition cannot be set to 'outside' position on stacked bar chart")
 
             // Calc position of label [x, y]
             const top = (this.Chart.stacked || this.isLabelInside ? -(this.labelSize) : this.labelSize)
@@ -279,16 +278,13 @@ export default {
         getStackedLabel ({
             x, y, stackedValue, height,
         }) {
-            if (!this.showStackedLabel) return undefined
-
-            // Only render if is stacked
-            if (!this.Chart.stacked) return undefined
-
-            // Only last bar shown the stacked label
-            if (this.id !== this.getLastBarActive()) return undefined
-
-            // If label is printed outside, not render staked label
-            if (this.showLabel && !this.isLabelInside) return undefined
+            if (
+                !this.showStackedLabel ||
+                !this.Chart.stacked ||
+                stackedValue === 0 || // Hide labels if value it's zero
+                this.id !== this.getLastBarActive() || // Only last bar shown the stacked label
+                (this.showLabel && !this.isLabelInside) // If label is printed outside, not render staked label
+            ) return undefined
 
             // Calc position of label [x, y]
             const top = this.stackedLabelSize
