@@ -298,7 +298,7 @@ TODO:
 **[\<WXAxis />](#wxaxis)**
 **[\<WYAxis />](#wyaxis)**
 **[\<WZAxis />](#wzaxis)**
-**Validate SVG elements...**
+**Validate SVG elements**
 
 ### Properties
 | Property | Type | Default value | Description |
