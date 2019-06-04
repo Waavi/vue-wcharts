@@ -19,12 +19,13 @@ module.exports = {
         logo: '/logo.png',
         repo: 'waavi/vue-wcharts',
         nav: [
-            { text: 'Guide', link: '/guide/getting-started' },
-            { text: 'Api', link: '/api/charts' },
+            { text: 'Guide', link: '/guide/' },
+            { text: 'Api', link: '/api/' },
             { text: 'Examples', link: 'https://vue-wcharts.waavi.com/examples' },
         ],
         sidebar: {
             '/guide/': [
+                ['', 'Introduction'],
                 ['getting-started', 'Getting Started'],
                 ['feedback', 'Feedback'],
                 ['license', 'License'],

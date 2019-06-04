@@ -1,19 +1,16 @@
-<br /><br />
-<p align="center"><img width="250" src="/mountains.png" alt="Waavi Studio"></p>
-<h1 align="center"><strong>vue-wcharts</strong></h1>
-<p align="center">Build your charts components</p>
-<br /><br />
-
-# Introduction
-
-**Vue-wcharts** is a library makes it easy to create your own charts. You can easily create reuseable chart components. Used a basic chart or customize the chart using props and slots of charts.
-
-### Features & characteristics:
-* Linear Charts
-* Bar Charts
-* Stack Charts
-* Pie Charts
-* Animation components
-* Additional components
-
-*MIT Licensed | Copyright © 2019-present Waavi Studio S.L.*
+---
+home: true
+heroImage: /mountains.png
+heroText: WCharts
+description: A customizable and composable charts for VueJS
+actionText: Getting Started
+actionLink: /guide/getting-started
+features:
+- title: Customizable
+  details: Customize yout charts by passing props, using slots or custom components.
+- title: Composable
+  details: Build your charts with reusable components.
+- title: Lightweight
+  details: It depends on several small submodules in D3, so it's very reliable and lightweight.
+footer: MIT Licensed | Copyright © 2019-present Waavi Studio S.L.
+---
