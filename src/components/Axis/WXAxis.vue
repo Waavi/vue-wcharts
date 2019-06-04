@@ -26,6 +26,7 @@
                 <slot
                     name="tickText"
                     v-bind="tick.text"
+                    :styles="tickStylesCmp"
                 >
                     <WTickText
                         v-bind="tick.text"
@@ -38,6 +39,7 @@
         <slot
             name="label"
             v-bind="label"
+            :styles="labelStylesCmp"
         >
             <svg
                 v-if="labelText"
@@ -79,7 +81,7 @@ export default {
     axis: 'x',
     mixins: [axisMixin],
     props: {
-        labelAlign: VueTypes.string.def('end'),
+        labelAlign: VueTypes.oneOf(['start', 'middle', 'end']).def('end'),
         space: VueTypes.arrayOf(VueTypes.number).def([0, 20, 24, 20]),
         textOffset: VueTypes.number.def(20),
         negativeAxisStyles: VueTypes.object.def({}),

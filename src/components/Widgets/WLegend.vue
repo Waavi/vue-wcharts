@@ -14,12 +14,7 @@
             :text="text"
             :color="colorCmp"
         >
-            <div class="Bullet">
-                <span
-                    class="Circle"
-                    :style="{ backgroundColor: colorCmp }"
-                />
-            </div>
+            <WBullet :color="colorCmp" />
         </slot>
         <slot :text="text">
             <span class="Text">{{ text }}</span>
@@ -30,9 +25,13 @@
 <script>
 import VueTypes from 'vue-types'
 import themeMixin from '../../mixins/theme'
+import WBullet from './WBullet.vue'
 
 export default {
     name: 'WLegend',
+    components: {
+        WBullet,
+    },
     mixins: [themeMixin],
     props: {
         index: VueTypes.oneOfType([Number, String]),
@@ -56,6 +55,7 @@ export default {
 <style scoped lang="scss">
 .WLegend {
     display: flex;
+    align-items: center;
     font-size: 12px;
     opacity: .5;
     transition: opacity .3s ease;
@@ -63,18 +63,6 @@ export default {
 
     &.active {
         opacity: 1;
-    }
-}
-
-.Bullet {
-    display: inline-block;
-
-    .Circle {
-        display: inline-block;
-        height: 10px;
-        width: 10px;
-        border-radius: 50%;
-        margin-right: .5rem;
     }
 }
 </style>

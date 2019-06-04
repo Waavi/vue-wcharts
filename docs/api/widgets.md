@@ -80,3 +80,20 @@ TODO:
     |----------|-------------|
     | text | |
     | index | |
+
+## WBullet
+
+*Component to show circle in the legend or tooltip for example but it can be used wherever you want.*
+
+### Parent components
+**[\<WTooltip />](#wtooltip)**
+**[\<WLegends />](#wlegends)**
+**[\<WLegend />](#wlegend)**
+**[\<WStackBar />](/docs/api/charts.html/#wstackbar)**
+**Validate SVG elements**
+
+### Properties
+| Property | Type | Default value | Description |
+|----------|------|---------------|-------------|
+| color |  string | Required property | Color of the bullet |
+

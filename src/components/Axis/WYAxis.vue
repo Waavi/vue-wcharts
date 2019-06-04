@@ -67,7 +67,7 @@ export default {
     axis: 'y',
     mixins: [axisMixin],
     props: {
-        labelAlign: VueTypes.string.def('start'),
+        labelAlign: VueTypes.oneOf(['start', 'middle', 'end']).def('start'),
         space: VueTypes.arrayOf(VueTypes.number).def([10, 0, 0, 40]),
         textOffset: VueTypes.number.def(10),
     },
