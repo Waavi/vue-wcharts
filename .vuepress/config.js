@@ -1,6 +1,6 @@
 module.exports = {
     title: 'vue-wcharts | Waavi',
-    description: 'Doc to used vue-wcharts.',
+    description: 'Vue-wcharts is a library makes it easy to create your own charts. You can easily create reuseable chart components. Used a basic chart or customize the chart using props and slots of charts.',
     dest: 'dist',
     head: [
         ['link', { rel: 'icon', href: '/icons/favicon-32x32.png' }],
@@ -21,7 +21,7 @@ module.exports = {
         nav: [
             { text: 'Guide', link: '/docs/guide/getting-started' },
             { text: 'Api', link: '/docs/api/charts' },
-            { text: 'Examples', link: '/docs/examples/' },
+            { text: 'Examples', link: 'https://vue-wcharts.waavi.com/examples' },
         ],
         sidebar: {
             '/docs/guide/': [
