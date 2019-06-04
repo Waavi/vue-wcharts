@@ -5,7 +5,61 @@ sidebarDepth: 3
 
 ## WTooltip
 
-TODO:
+*Tooltip component, it can be used wherever you want it needs access to Chart api.*
+
+### Parent components
+**[\<WCartesian />](/docs/api/charts.html#wcartesian)**
+**[\<WPieChart />](/docs/api/charts.html#wcartesian)**
+**[\<WStackBar />](/docs/api/charts.html#wcartesian)**
+
+### Child components
+**[\<WBullet />](/docs/api/components.html#wbullet)**
+
+### Properties
+| Property | Type | Default value | Description |
+|----------|------|---------------|-------------|
+| id | string |  | Tooltip identifier |
+| gap | number | 10 | X and Y offset |
+
+### Slots
+
+-   #### default
+
+    *Slot to customize the tooltip*
+
+    | Property | Description |
+    |----------|-------------|
+    | label | Tooltip text |
+    | value | Array of tooltip elements (color, value) |
+
+-   #### label
+
+    *Slot to customize the label of the tooltip*
+
+    | Property | Description |
+    |----------|-------------|
+    | label | Tooltip text |
+
+-   #### bullet
+
+    *Slot to customize the bullet of the tooltip element*
+
+    | Property | Description |
+    |----------|-------------|
+    | index | Element index |
+    | text | Element text |
+    | color | Element color |
+
+-   #### value
+
+    *Slot to customize the value of the tooltip element*
+
+    | Property | Description |
+    |----------|-------------|
+    | index | Element index |
+    | text | Element text |
+    | color | Element color |
+
 
 ## WLegends
 
@@ -14,6 +68,9 @@ TODO:
 ### Parent components
 **[\<WCartesian />](/docs/api/charts.html#wcartesian)**
 **[\<WPieChart />](/docs/api/charts.html#wcartesian)**
+
+### Child components
+**[\<WBullet />](/docs/api/components.html#wbullet)**
 
 ### Properties
 | Property | Type | Default value | Description |
@@ -48,6 +105,9 @@ TODO:
 **[\<WLegends />](#wlegends)**
 **[\<WCartesian />](/docs/api/charts.html#wcartesian)**
 **[\<WPieChart />](/docs/api/charts.html#wcartesian)**
+
+### Child components
+**[\<WBullet />](/docs/api/components.html#wbullet)**
 
 ### Properties
 | Property | Type | Default value | Description |
