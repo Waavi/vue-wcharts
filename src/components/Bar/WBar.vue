@@ -260,9 +260,8 @@ export default {
             if (!this.showLabel) return undefined
             // Not render inside label if doesnt enter correctly
             if (this.isLabelInside && height < this.labelSize * 2) return undefined
-
             // Warn user if set inside position on stacked bar chart: forbidden position
-            if (this.Chart.stacked) console.warn("labelPosition cannot be set to 'outside' position on stacked bar chart")
+            if (!this.isLabelInside && this.Chart.stacked) console.warn("labelPosition cannot be set to 'outside' position on stacked bar chart")
 
             // Calc position of label [x, y]
             const top = (this.Chart.stacked || this.isLabelInside ? -(this.labelSize) : this.labelSize)
