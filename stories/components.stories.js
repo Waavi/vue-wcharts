@@ -46,7 +46,7 @@ storiesOf('Components', module)
                     dataset: [37.3, 10.3, 23.6],
                 },
                 showLabel: boolean('Show label', true),
-                labelSstyles: object('Label Styles', {
+                labelStyles: object('Label Styles', {
                     top: '4px',
                     left: '6px',
                     color: 'white',
@@ -59,7 +59,87 @@ storiesOf('Components', module)
                     :total="data.total"
                     :dataset="data.dataset"
                     :showLabel="showLabel"
-                    :labelStyles="labelSstyles"
+                    :labelStyles="labelStyles"
+                >
+                    <template #value="{ value, percentage, color }">
+                        <span>{{ value }}€ ({{ percentage }})</span>
+                    </template>
+                </WStackBar>
+            </div>
+            `,
+    }))
+    .add('WStackBar with markers', () => ({
+        components: {
+            WStackBar,
+        },
+        data () {
+            return {
+                data: {
+                    total: 71.6,
+                    legends: ['M&R ToEx', 'Unavailability costs'],
+                    dataset: [37.3, 10.3, 23.6],
+                    markers: [13.3, 18],
+                },
+                showLabel: boolean('Show label', true),
+                labelStyles: object('Label Styles', {
+                    top: '4px',
+                    left: '6px',
+                    color: 'white',
+                }),
+            }
+        },
+        template: `
+            <div class="Container">
+                <WStackBar
+                    :total="data.total"
+                    :dataset="data.dataset"
+                    :markers="data.markers"
+                    :showLabel="showLabel"
+                    :labelStyles="labelStyles"
+                >
+                    <template #value="{ value, percentage, color }">
+                        <span>{{ value }}€ ({{ percentage }})</span>
+                    </template>
+                </WStackBar>
+            </div>
+            `,
+    }))
+    .add('WStackBar with custom markers', () => ({
+        components: {
+            WStackBar,
+        },
+        data () {
+            return {
+                data: {
+                    total: 71.6,
+                    legends: ['M&R ToEx', 'Unavailability costs'],
+                    dataset: [37.3, 10.3, 23.6],
+                    markers: [13.3, 18],
+                },
+                showLabel: boolean('Show label', true),
+                labelStyles: object('Label Styles', {
+                    top: '4px',
+                    left: '6px',
+                    color: 'white',
+                }),
+                markerStyles: object('Label Styles', {
+                    transform: 'rotate(0)',
+                    height: '100%',
+                    border: '0',
+                    outline: 'none',
+                    background: 'tomato',
+                }),
+            }
+        },
+        template: `
+            <div class="Container">
+                <WStackBar
+                    :total="data.total"
+                    :dataset="data.dataset"
+                    :markers="data.markers"
+                    :showLabel="showLabel"
+                    :labelStyles="labelStyles"
+                    :markerStyles="markerStyles"
                 >
                     <template #value="{ value, percentage, color }">
                         <span>{{ value }}€ ({{ percentage }})</span>

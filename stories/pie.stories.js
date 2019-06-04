@@ -6,6 +6,7 @@ import { storiesOf } from '@storybook/vue'
 import {
     WPieChart,
     WPie,
+    WTooltip,
 } from '../src'
 
 const data = [
@@ -37,6 +38,7 @@ storiesOf('Pie', module)
         components: {
             WPieChart,
             WPie,
+            WTooltip,
         },
         data () {
             return {
@@ -59,6 +61,7 @@ storiesOf('Pie', module)
         components: {
             WPieChart,
             WPie,
+            WTooltip,
         },
         data () {
             return {
