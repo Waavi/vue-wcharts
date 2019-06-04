@@ -110,8 +110,8 @@
 <script>
 import VueTypes from 'vue-types'
 
-import activeMixin from '../mixins/active'
 import { WTooltip, WBullet } from '../components/Widgets'
+import activeMixin from '../mixins/active'
 import animationMixin from '../mixins/animation'
 import themeMixin from '../mixins/theme'
 
