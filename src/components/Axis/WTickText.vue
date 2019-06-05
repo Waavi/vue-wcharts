@@ -4,9 +4,9 @@
         :x="x"
         :y="y"
         :dy="dy"
-        :stroke="stylesCmp.stroke"
-        :fill="stylesCmp.fill"
-        :font-size="stylesCmp.fontSize"
+        :stroke="stroke"
+        :fill="fill"
+        :font-size="fontSize"
         :style="stylesCmp"
     >
         {{ value }}
@@ -15,6 +15,7 @@
 
 <script>
 import VueTypes from 'vue-types'
+import { omit } from 'lodash'
 
 const stylesDefaultProp = {
     fill: 'none',
@@ -30,14 +31,27 @@ export default {
         dy: VueTypes.string,
         index: VueTypes.number,
         value: VueTypes.oneOfType([String, Number]),
-        styles: VueTypes.object,
+        styles: VueTypes.shape({
+            fill: VueTypes.string,
+            stroke: VueTypes.string,
+            fontSize: VueTypes.number,
+        }).loose.def(() => ({ ...stylesDefaultProp })),
     },
     computed: {
         stylesCmp () {
             return {
-                ...stylesDefaultProp,
-                ...this.styles,
+                ...omit(stylesDefaultProp, ['stroke', 'fill', 'fontSize']),
+                ...omit(this.styles, ['stroke', 'fill', 'fontSize']),
             }
+        },
+        stroke () {
+            return this.styles.stroke || stylesDefaultProp.stroke
+        },
+        fill () {
+            return this.styles.fill || stylesDefaultProp.fill
+        },
+        fontSize () {
+            return this.styles.fontSize || stylesDefaultProp.fontSize
         },
     },
 }

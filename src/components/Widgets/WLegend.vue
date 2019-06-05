@@ -2,7 +2,7 @@
     <a
         class="WLegend"
         :title="text"
-        :class="{ selected, active }"
+        :class="{ active }"
         :style="styles"
         @click.prevent="$emit('onClick', { text, index })"
         @mouseenter="$emit('onMouseenter', { text, index })"
@@ -37,7 +37,6 @@ export default {
         index: VueTypes.oneOfType([Number, String]),
         text: VueTypes.string,
         active: VueTypes.bool.def(false),
-        selected: VueTypes.bool.def(false),
         styles: VueTypes.object,
         textStyles: VueTypes.object,
         color: VueTypes.string,
@@ -62,7 +61,7 @@ export default {
     transition: opacity .3s ease;
     cursor: pointer;
 
-    &.selected, &.active {
+    &.active {
         opacity: 1;
     }
 }
