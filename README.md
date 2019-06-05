@@ -1,5 +1,5 @@
 <br /><br />
-<p align="center"><img width="250" src="/mountains.png" alt="Waavi Studio"></p>
+<p align="center"><img width="250" src="docs/.vuepress/public/mountains.png" alt="Waavi Studio"></p>
 <h1 align="center"><strong>vue-wcharts</strong></h1>
 <p align="center">Build your charts components</p>
 <br /><br />

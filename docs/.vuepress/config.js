@@ -19,8 +19,9 @@ module.exports = {
         logo: '/logo.png',
         repo: 'waavi/vue-wcharts',
         nav: [
+            { text: 'Home', link: '/' },
             { text: 'Guide', link: '/guide/' },
-            { text: 'Api', link: '/api/' },
+            { text: 'Api', link: '/api/charts' },
             { text: 'Examples', link: 'https://vue-wcharts.waavi.com/examples' },
         ],
         sidebar: {
