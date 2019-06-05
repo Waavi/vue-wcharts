@@ -1,3 +1,4 @@
+
 <template>
     <WCartesian
         :dataset="data"
@@ -9,14 +10,14 @@
         />
         <WXAxis
             datakey="name"
-            :axisStyles="{stroke: colors.primary}"
-            :markStyles="{stroke: colors.primary}"
+            :axisStyles="{stroke: '#ddd'}"
+            :markStyles="{stroke: '#ddd'}"
             :tickStyles="{fill: colors.primary}"
         />
         <WYAxis
             :axisStyles="{stroke: '#ddd'}"
             :markStyles="{stroke: '#ddd'}"
-            :tickStyles="{fill: '#ddd'}"
+            :tickStyles="{fill: colors.primary}"
         />
     </WCartesian>
 </template>
@@ -26,7 +27,7 @@ import { chart as data } from './data'
 import colors from '../colors'
 
 export default {
-    name: 'XAxis',
+    name: 'Texts',
     data () {
         return {
             data,

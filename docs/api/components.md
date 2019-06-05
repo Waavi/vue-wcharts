@@ -432,6 +432,9 @@ sidebarDepth: 3
 
 *Component to show text in the axis but it can be used wherever you want.*
 
+<br>
+<Texts />
+
 ### Parent components
 **[\<WXAxis />](#wxaxis)**
 **[\<WYAxis />](#wyaxis)**

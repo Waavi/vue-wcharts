@@ -6,15 +6,15 @@
         <WMarker
             type="x"
             value="Page C"
-            :styles="{stroke: '#3fb1e3', strokeWidth: 2}"
-            :labelStyles="{fill: '#3fb1e3'}"
+            :styles="{stroke: colors.primary, strokeWidth: 2}"
+            :labelStyles="{fill: colors.primary}"
             label="Marker x"
         />
         <WMarker
             type="y"
             :value="2000"
-            :styles="{stroke: '#3fb1e3', strokeWidth: 2}"
-            :labelStyles="{fill: '#3fb1e3'}"
+            :styles="{stroke: colors.primary, strokeWidth: 2}"
+            :labelStyles="{fill: colors.primary}"
             label="Marker y"
         />
         <WLine
@@ -37,12 +37,14 @@
 
 <script>
 import { chart as data } from './data'
+import colors from '../colors'
 
 export default {
     name: 'Markers',
     data () {
         return {
-            data
+            data,
+            colors
         }
     }
 }

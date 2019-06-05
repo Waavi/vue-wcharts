@@ -9,8 +9,8 @@
             :x="45"
             :y="45"
             :styles="{
-                stroke: '#6be6c1',
-                fill: '#3fb1e3',
+                stroke: colors.secondary,
+                fill: colors.primary,
                 strokeWidth: 5,
                 radius: 40
             }"
@@ -21,12 +21,14 @@
 
 <script>
 import { chart as data } from './data'
+import colors from '../colors'
 
 export default {
     name: 'Dots',
     data () {
         return {
-            data
+            data,
+            colors
         }
     }
 }

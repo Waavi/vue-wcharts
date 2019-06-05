@@ -4,7 +4,7 @@
         :gap="10"
     >
         <WCartesianGrid
-            :styles="{stroke: '#3fb1e3', strokeWidth: 2}"
+            :styles="{stroke: colors.primary, strokeWidth: 2}"
         />
         <WLine
             datakey="one"
@@ -26,12 +26,14 @@
 
 <script>
 import { chart as data } from './data'
+import colors from '../colors'
 
 export default {
     name: 'Grid',
     data () {
         return {
-            data
+            data,
+            colors
         }
     }
 }

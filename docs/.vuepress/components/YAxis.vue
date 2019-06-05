@@ -15,21 +15,23 @@
             :tickStyles="{fill: '#ddd'}"
         />
         <WYAxis
-            :axisStyles="{stroke: '#3fb1e3'}"
-            :markStyles="{stroke: '#3fb1e3'}"
-            :tickStyles="{fill: '#3fb1e3'}"
+            :axisStyles="{stroke: colors.primary}"
+            :markStyles="{stroke: colors.primary}"
+            :tickStyles="{fill: colors.primary}"
         />
     </WCartesian>
 </template>
 
 <script>
 import { chart as data } from './data'
+import colors from '../colors'
 
 export default {
     name: 'YAxis',
     data () {
         return {
-            data
+            data,
+            colors
         }
     }
 }
