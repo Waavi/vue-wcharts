@@ -1,13 +1,22 @@
 // eslint-disable-next-line
 export let colors = [
-    '#3fb1e3',
-    '#6be6c1',
-    '#626c91',
-    '#a0a7e6',
-    '#c4ebad',
-    '#96dee8',
-    '#013566',
-    '##ff4f81',
+    '#48c0b6',
+    '#5400e8',
+    '#414141',
+    '#dfbd46',
+    '#cccccc',
+    '#54ddd9',
+    '#9d6af5',
+    '#ffde69',
+    '#e8e8e8',
+    '#348c85',
+    '#a712b5',
+    '#b58d12',
+    '#000000',
+    '#87cac4',
+    '#6e19ff',
+    '#ebd13b',
+    '#f9f9f9',
 ]
 
 export const setColors = (newColors) => {
