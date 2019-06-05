@@ -38,7 +38,7 @@ sidebarDepth: 3
 ## WPieChart
 
 <br>
-<Pie />
+<PieChart />
 
 ### Child components
 **[\<WPie />](/api/components.html#wpie)**

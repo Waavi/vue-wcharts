@@ -4,6 +4,7 @@
             :dataset="data"
         >
             <WPie datakey="one" :radius="[120, 150]" />
+            <WTooltip />
         </WPieChart>
     </div>
 </template>
@@ -12,7 +13,7 @@
 import { chart as data } from './data'
 
 export default {
-    name: 'Pie',
+    name: 'PieChart',
     data () {
         return {
             data,
