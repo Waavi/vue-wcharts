@@ -179,6 +179,81 @@ sidebarDepth: 3
     | Chart | Chart api (WCartesian reference) |
     | transition | CSS transition value |
 
+## WBar
+
+*Bar component.*
+
+### Parent components
+**[\<WCartesian />](/api/charts.html#wcartesian)**
+
+### Properties
+| Property | Type | Default value | Description |
+|----------|------|---------------|-------------|
+| datakey | string | Required property | The key of dataset |
+| legend | string |  | The text of the legend |
+| width | number | 20 | The width of the bar |
+| color | string |  | The color of the bar |
+| styles | object |  | The styles of the bar |
+| showLabel | bool | false | If is set to true, the label will be drawn |
+| labelSize | number | 12 | The font size of the label |
+| labelAlign | oneOf(['start', 'middle', 'end']) | middle | The horizontal position of the label |
+| labelPosition | oneOf(['inside', 'outside']) | outside | The vertical position of the label. If the chart is stacked the label position will be `inside` |
+| labelStyles | object | ```{ fill: '#333', cursor: 'default' }``` | The styles of the label |
+| showStackedLabel | bool | false | If the chart is stacked, the bar is the last one and `showStackedLabel` is set to true, the label of the whole bar will be drawn |
+| stackedLabelSize | number | 12 | The font size of the stacked label |
+| stackedLabelAlign | oneOf(['start', 'middle', 'end']) | middle | The horizontal position of the stacked label |
+| stackedLabelStyles | object |  ```{ fill: '#333', cursor: 'default' }``` | The styles of the stacked label |
+| animated | bool | true | If true set, animation will be executed |
+| transDuration | number | 1 | Transition duration in seconds |
+| transEffect | string | ease | Transition effect |
+
+### Slots
+
+-   #### label
+
+    *Slot to customize the label*
+
+    | Property | Description |
+    |----------|-------------|
+    | value | Value of the bar |
+    | x | The x position of the label |
+    | y | The y position of the label |
+    | styles | Bar styles |
+    | align | The horizontal position of the label |
+    | size | The font size of the label |
+
+-   #### labelValue
+
+    *Slot to customize the label value*
+
+    | Property | Description |
+    |----------|-------------|
+    | value | Value of the bar |
+    | x | The x position of the label |
+    | y | The y position of the label |
+
+-   #### stackedLabel
+
+    *Slot to customize the stacked label*
+
+    | Property | Description |
+    |----------|-------------|
+    | stackedValue | Total value of the stacked bar |
+    | x | The x position of the label |
+    | y | The y position of the label |
+    | styles | Bar styles |
+    | align | The horizontal position of the label |
+    | size | The font size of the label |
+
+-   #### stackedLabelValue
+
+    *Slot to customize the stacked label value*
+
+    | Property | Description |
+    |----------|-------------|
+    | stackedValue | Total value of the stacked bar |
+    | x | The x position of the label |
+    | y | The y position of the label |
 
 ## WPie
 
