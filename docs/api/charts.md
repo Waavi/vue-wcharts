@@ -5,7 +5,8 @@ sidebarDepth: 3
 
 ## WCartesian
 
-*Cartesian chart.*
+<br>
+<Cartesian />
 
 ### Child components
 **[\<WLine />](/api/components.html#wline)**
@@ -18,7 +19,7 @@ sidebarDepth: 3
 **[\<WMarker />](/api/components.html#wmarker)**
 **[\<WTooltip />](/api/widgets.html#wtooltip)**
 **[\<WLegends />](/api/widgets.html#wlegends)**
-**Validate SVG elements**
+**Valid SVG elements**
 
 ### Properties
 | Property | Type | Default value | Description |
@@ -36,13 +37,14 @@ sidebarDepth: 3
 
 ## WPieChart
 
-*Pie chart.*
+<br>
+<Pie />
 
 ### Child components
 **[\<WPie />](/api/components.html#wpie)**
 **[\<WTooltip />](/api/widgets.html#wtooltip)**
 **[\<WLegends />](/api/widgets.html#wlegends)**
-**Validate SVG elements**
+**Valid SVG elements**
 
 ### Properties
 | Property | Type | Default value | Description |
@@ -55,7 +57,8 @@ sidebarDepth: 3
 
 ## WStackBar
 
-*Simple horizontal stack bar in html.*
+<br>
+<StackBar />
 
 ### Child components
 **[\<WTooltip />](/api/widgets.html#wtooltip)**

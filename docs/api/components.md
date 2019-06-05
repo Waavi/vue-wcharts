@@ -406,7 +406,7 @@ sidebarDepth: 3
 **[\<WXAxis />](#wxaxis)**
 **[\<WYAxis />](#wyaxis)**
 **[\<WZAxis />](#wzaxis)**
-**Validate SVG elements**
+**Valid SVG elements**
 
 ### Properties
 | Property | Type | Default value | Description |
