@@ -2,6 +2,7 @@
     <WCartesian
         :dataset="data"
         :gap="10"
+        responsive
     >
         <WCartesianGrid
             :styles="{stroke: colors.primary, strokeWidth: 2}"

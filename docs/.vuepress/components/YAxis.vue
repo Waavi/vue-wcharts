@@ -3,6 +3,7 @@
         :dataset="data"
         :gap="10"
         :height="200"
+        responsive
     >
         <WLine
             datakey="one"

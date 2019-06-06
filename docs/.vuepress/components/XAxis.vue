@@ -2,6 +2,7 @@
     <WCartesian
         :dataset="data"
         :height="200"
+        responsive
     >
         <WLine
             datakey="one"
