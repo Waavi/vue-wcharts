@@ -3,7 +3,11 @@
   "version": "0.0.17-beta",
   "author": "WAAVI",
   "license": "MIT",
+  "homepage": "https://vue-wcharts.waavi.com",
   "repository": "waavi/vue-wcharts",
+  "bugs": {
+    "url": "https://github.com/Waavi/vue-wcharts/issues"
+  },
   "scripts": {
     "serve": "vue-cli-service serve --open demo/main.js",
     "build": "vue-cli-service build --target lib --name vue-wcharts src/index.js",
