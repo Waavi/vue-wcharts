@@ -43,7 +43,7 @@
 
 <script>
 import VueTypes from 'vue-types'
-import { sortBy } from 'lodash'
+import sortBy from 'lodash.sortby'
 import { toPx, getIsHorizontal, getSpacesByPos } from './utils'
 import WLegend from './WLegend.vue'
 import WBullet from './WBullet.vue'

@@ -57,7 +57,7 @@
 
 <script>
 import VueTypes from 'vue-types'
-import { sortBy } from 'lodash'
+import sortBy from 'lodash.sortby'
 import d3Line from 'd3-shape/src/line'
 import { monotoneX as curveMonotoneX } from 'd3-shape/src/curve/monotone'
 import { WDot } from '../Common'

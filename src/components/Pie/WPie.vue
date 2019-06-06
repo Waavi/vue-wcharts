@@ -27,7 +27,8 @@
 
 <script>
 import VueTypes from 'vue-types'
-import { noop, omit } from 'lodash'
+import omit from 'lodash.omit'
+import noop from 'lodash.noop'
 import pie from 'd3-shape/src/pie'
 import arc from 'd3-shape/src/arc'
 
