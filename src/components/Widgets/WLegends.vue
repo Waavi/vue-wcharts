@@ -29,7 +29,10 @@
                             :text="text"
                             :color="color"
                         >
-                            <WBullet :borderColor="color" />
+                            <WBullet
+                                :borderColor="color"
+                                color="white"
+                            />
                         </slot>
                     </template>
                 </WLegend>
