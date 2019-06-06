@@ -88,7 +88,7 @@ import VueTypes from 'vue-types'
 import animationMixin from '../../mixins/animation'
 import { WTrans } from '../../transitions'
 
-const DEFAULT_WIDTH = 20
+const DEFAULT_WIDTH = 45
 
 const labelStylesDefaultProp = {
     fill: '#333',
@@ -114,7 +114,7 @@ export default {
         showLabel: VueTypes.bool.def(false),
         labelSize: VueTypes.number.def(12),
         labelAlign: VueTypes.oneOf(['start', 'middle', 'end']).def('middle'),
-        labelPosition: VueTypes.oneOf(['inside', 'outside']).def('outside'),
+        labelPosition: VueTypes.oneOf(['inside', 'outside']).def('inside'),
         labelStyles: VueTypes.object,
         showStackedLabel: VueTypes.bool.def(false),
         stackedLabelSize: VueTypes.number.def(12),
@@ -261,7 +261,10 @@ export default {
             // Not render inside label if doesnt enter correctly
             if (this.isLabelInside && height < this.labelSize * 2) return undefined
             // Warn user if set inside position on stacked bar chart: forbidden position
-            if (!this.isLabelInside && this.Chart.stacked) console.warn("labelPosition cannot be set to 'outside' position on stacked bar chart")
+            if (!this.isLabelInside && this.Chart.stacked) {
+                console.warn("labelPosition cannot be set to 'outside' position on stacked bar chart")
+                return undefined
+            }
 
             // Calc position of label [x, y]
             const top = (this.Chart.stacked || this.isLabelInside ? -(this.labelSize) : this.labelSize)

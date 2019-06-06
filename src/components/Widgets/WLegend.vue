@@ -14,7 +14,7 @@
             :text="text"
             :color="colorCmp"
         >
-            <WBullet :color="colorCmp" />
+            <WBullet :borderColor="colorCmp" />
         </slot>
         <slot :text="text">
             <span class="Text">{{ text }}</span>

@@ -78,7 +78,7 @@ storiesOf('Charts/Bar', module)
                     inside: 'inside',
                     outside: 'outside',
                 }, 'outside'),
-                width: number('Bar width', 30),
+                width: number('Bar width', 45),
                 data: object('Data', data),
             }
         },
@@ -131,7 +131,6 @@ storiesOf('Charts/Bar', module)
                     middle: 'middle',
                     end: 'end',
                 }, 'middle'),
-                width: 25,
                 data: object('Data', data),
             }
         },
@@ -147,7 +146,6 @@ storiesOf('Charts/Bar', module)
                         :showLabel="showLabel"
                         :labelPosition="labelPosition"
                         :labelAlign="labelAlign"
-                        :width="width"
                     />
                     <WBar
                         datakey="two"
@@ -155,7 +153,6 @@ storiesOf('Charts/Bar', module)
                         :showLabel="showLabel"
                         :labelPosition="labelPosition"
                         :labelAlign="labelAlign"
-                        :width="width"
                     />
                     <WBar
                         datakey="three"
@@ -163,7 +160,6 @@ storiesOf('Charts/Bar', module)
                         :showLabel="showLabel"
                         :labelPosition="labelPosition"
                         :labelAlign="labelAlign"
-                        :width="width"
                     />
                     <WLine
                         datakey="two"
@@ -209,7 +205,6 @@ storiesOf('Charts/Bar', module)
                     middle: 'middle',
                     end: 'end',
                 }, 'middle'),
-                width: 25,
                 data: object('Data', data),
             }
         },
@@ -231,7 +226,6 @@ storiesOf('Charts/Bar', module)
                         :showLabel="showLabel"
                         :labelPosition="labelPosition"
                         :labelAlign="labelAlign"
-                        :width="width"
                     >
                         <template #label="label">
                             <text
@@ -252,7 +246,6 @@ storiesOf('Charts/Bar', module)
                         :showLabel="showLabel"
                         labelPosition="inside"
                         :labelStyles="{ fill: '#eee' }"
-                        :width="width"
                     />
                     <WBar
                         datakey="three"
@@ -260,7 +253,6 @@ storiesOf('Charts/Bar', module)
                         :showLabel="showLabel"
                         :labelPosition="labelPosition"
                         :labelAlign="labelAlign"
-                        :width="width"
                     >
                         <template #label="label">
                             <text
@@ -310,7 +302,6 @@ storiesOf('Charts/Bar', module)
                     middle: 'middle',
                     end: 'end',
                 }, 'middle'),
-                width: 25,
                 data: object('Data', dataTwo),
             }
         },
@@ -327,21 +318,18 @@ storiesOf('Charts/Bar', module)
                         datakey="one"
                         :showLabel="showLabel"
                         :labelAlign="labelAlign"
-                        :width="width"
                     />
                     <WBar
                         datakey="two"
                         legend="Two Bar"
                         :showLabel="showLabel"
                         :labelAlign="labelAlign"
-                        :width="width"
                     />
                     <WBar
                         datakey="three"
                         legend="Three Bar"
                         :showLabel="showLabel"
                         :labelAlign="labelAlign"
-                        :width="width"
                     />
                     <WXAxis
                         datakey="name"
@@ -374,7 +362,6 @@ storiesOf('Charts/Bar', module)
                     three: 'three',
                 }, 'one'),
                 showStackedLabel: boolean('Show stacked label', true),
-                width: 25,
                 data: object('Data', dataTwo),
             }
         },
@@ -438,7 +425,6 @@ storiesOf('Charts/Bar', module)
                     middle: 'middle',
                     end: 'end',
                 }, 'middle'),
-                width: 25,
                 data: object('Data', dataTwo),
             }
         },
@@ -453,12 +439,10 @@ storiesOf('Charts/Bar', module)
                     <WBar
                         legend="One Bar"
                         datakey="one"
-                        :width="width"
                     />
                     <WBar
                         datakey="two"
                         legend="Two Bar"
-                        :width="width"
                     />
                     <WBar
                         datakey="three"
@@ -467,7 +451,6 @@ storiesOf('Charts/Bar', module)
                         :stackedLabelSize="stackedLabelSize"
                         :stackedLabelAlign="stackedLabelAlign"
                         :stackedLabelStyles="{ fill: 'black' }"
-                        :width="width"
                     />
                     <WXAxis
                         datakey="name"
@@ -509,7 +492,6 @@ storiesOf('Charts/Bar', module)
                     middle: 'middle',
                     end: 'end',
                 }, 'middle'),
-                width: 25,
                 data: object('Data', dataTwo),
             }
         },
@@ -527,7 +509,6 @@ storiesOf('Charts/Bar', module)
                         :showLabel="showLabel"
                         :labelPosition="labelPosition"
                         :labelAlign="labelAlign"
-                        :width="width"
                     />
                     <WBar
                         datakey="two"
@@ -535,7 +516,6 @@ storiesOf('Charts/Bar', module)
                         :showLabel="showLabel"
                         :labelPosition="labelPosition"
                         :labelAlign="labelAlign"
-                        :width="width"
                     />
                     <WBar
                         datakey="three"
@@ -543,7 +523,6 @@ storiesOf('Charts/Bar', module)
                         :showLabel="showLabel"
                         :labelPosition="labelPosition"
                         :labelAlign="labelAlign"
-                        :width="width"
                     />
                     <WLine datakey="one" />
                     <WXAxis
