@@ -16,13 +16,13 @@ or
 npm install vue-wcharts
 ```
 
-<!-- ### UMD
+### UMD
 
 The UMD build is also available on unpkg.com (unpkg):
 
 ```html
 <script src="//unpkg.com/vue-wcharts"></script>
-``` -->
+```
 
 ### Dev
 
