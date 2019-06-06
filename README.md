@@ -1,9 +1,3 @@
-<br /><br />
-<p align="center"><img width="250" src="docs/.vuepress/public/mountains.png" alt="Waavi Studio"></p>
-<h1 align="center"><strong>vue-wcharts</strong></h1>
-<p align="center">Build your charts components</p>
-<br /><br />
-
 [![npm version](https://img.shields.io/npm/v/vue-wcharts.svg?style=flat-square)](http://badge.fury.io/js/vue-wcharts)
 [![npm downloads](https://img.shields.io/npm/dm/vue-wcharts.svg?style=flat-square)](https://www.npmjs.com/package/vue-wcharts)
 [![MIT License](https://img.shields.io/badge/license-MIT-blue.svg?style=flat)](https://github.com/waavi/vue-wcharts/raw/master/license.txt)

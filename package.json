@@ -1,13 +1,21 @@
 {
+  "author": "WAAVI",
   "name": "vue-wcharts",
   "version": "0.0.17-beta",
-  "author": "WAAVI",
+  "description": "Vuejs charts",
   "license": "MIT",
   "homepage": "https://vue-wcharts.waavi.com",
   "repository": "waavi/vue-wcharts",
   "bugs": {
     "url": "https://github.com/Waavi/vue-wcharts/issues"
   },
+  "keywords": [
+    "vue",
+    "vuejs",
+    "vuechart",
+    "vue-chart",
+    "chart"
+  ],
   "scripts": {
     "serve": "vue-cli-service serve --open demo/main.js",
     "build": "vue-cli-service build --target lib --name vue-wcharts src/index.js",
