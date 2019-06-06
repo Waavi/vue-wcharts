@@ -125,9 +125,10 @@ export default {
         styles: VueTypes.object,
     },
     // It's called by parent components to necessary calcs before be rendering
+    // Componen is not mounted and cannot access to default props
     preload ({ parent, props, index }) {
         const { snap, colors, stacked } = parent
-        const { datakey, width, color } = props
+        const { datakey, width = DEFAULT_WIDTH, color } = props
 
         // Added id of bars
         snap.barIds = [].concat(snap.barIds || [], index)
@@ -138,7 +139,7 @@ export default {
         // Calc dimension
         snap.barAllWidth = snap.barAllWidth || 0
         snap.barOffset = [].concat(snap.barOffset || [], snap.barAllWidth)
-        snap.barAllWidth = (stacked ? width : snap.barAllWidth + width) || DEFAULT_WIDTH
+        snap.barAllWidth = stacked ? width : snap.barAllWidth + width
     },
     computed: {
         // Id cartesian elem
