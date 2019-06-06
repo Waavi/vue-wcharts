@@ -3,7 +3,7 @@ import VueTypes from 'vue-types'
 import scaleLinear from 'd3-scale/src/linear'
 import stack from 'd3-shape/src/stack'
 import stackOffsetDiverging from 'd3-shape/src/offset/diverging'
-import { noop } from 'lodash'
+import noop from 'lodash.noop'
 import { bound } from '../utils/maths'
 
 import chartMixin from '../mixins/chart'
