@@ -1,8 +1,8 @@
 const colors = require('./colors.js')
 
 module.exports = {
-    title: 'vue-wcharts | Waavi',
-    description: 'Vue-wcharts is a library makes it easy to create your own charts. You can easily create reuseable chart components. Used a basic chart or customize the chart using props and slots of charts.',
+    title: 'WCharts | Waavi',
+    description: 'WCharts is a library makes it easy to create your own charts with Vuejs. You can easily create reuseable chart components. Used a basic chart or customize your charts by passing props, using slots or custom components.',
     dest: 'dist',
     head: [
         ['link', { rel: 'icon', href: '/icons/favicon-32x32.png' }],
@@ -15,7 +15,7 @@ module.exports = {
             'meta',
             { name: 'msapplication-TileImage', content: '/icons/msapplication-icon-144x144.png' }
         ],
-        ['meta', { name: 'msapplication-TileColor', content: '#000000' }]
+        ['meta', { name: 'msapplication-TileColor', content: '#48c0b6' }]
     ],
     themeConfig: {
         logo: '/logo.png',

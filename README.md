@@ -7,10 +7,12 @@
 [![NPM](https://nodei.co/npm/vue-wcharts.png?downloads=true)](https://nodei.co/npm/vue-wcharts/)
 
 # WCharts
+Customizable & composable charts for VueJS
 
 ## Introduction
 
-**Vue-wcharts** is a library makes it easy to create your own charts. You can easily create reuseable chart components. Used a basic chart or customize the chart using props and slots of charts.
+**WCharts** is a library makes it easy to create your own charts with Vuejs. You can easily create reuseable chart components. Used a basic chart or customize your charts by passing props, using slots or custom components.
+
 
 ## Documentation
 [https://vue-wcharts.waavi.com/](https://vue-wcharts.waavi.com/)
@@ -19,12 +21,13 @@
 [https://vue-wcharts.waavi.com/examples](https://vue-wcharts.waavi.com/examples)
 
 ## Features & characteristics:
-* Linear Charts
-* Bar Charts
-* Stack Charts
-* Pie Charts
-* Animation components
-* Additional components
+* [Linear Charts](https://vue-wcharts.waavi.com/examples/?path=/story/charts-line--simple)
+* [Scatter Charts](https://vue-wcharts.waavi.com/examples/?path=/story/charts-scatter--simple)
+* [Bar Charts](https://vue-wcharts.waavi.com/examples/?path=/story/charts-bar--simple)
+* [StackBar Charts](https://vue-wcharts.waavi.com/examples/?path=/story/charts-bar--stacked-with-stacked-label)
+* [Pie Charts](https://vue-wcharts.waavi.com/examples/?path=/story/pie--default)
+* [Animation components](https://vue-wcharts.waavi.com/examples)
+* [Additional components](https://vue-wcharts.waavi.com/examples)
 
 
 ## Inspired
