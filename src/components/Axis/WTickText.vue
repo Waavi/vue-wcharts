@@ -15,7 +15,7 @@
 
 <script>
 import VueTypes from 'vue-types'
-import { omit } from 'lodash'
+import omit from 'lodash.omit'
 
 const stylesDefaultProp = {
     fill: 'none',

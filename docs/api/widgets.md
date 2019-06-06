@@ -155,7 +155,7 @@ sidebarDepth: 3
 **[\<WTooltip />](#wtooltip)**
 **[\<WLegends />](#wlegends)**
 **[\<WLegend />](#wlegend)**
-**[\<WStackBar />](/api/charts.html/#wstackbar)**
+**[\<WStackBar />](/api/charts.html#wstackbar)**
 **Valid SVG elements**
 
 ### Properties

@@ -20,5 +20,6 @@ notifications:
       - jaime@waavi.com
       - alejandro@waavi.com
       - adrian@waavi.com
+      - carlos@waavi.com
     on_success: change
     on_failure: always

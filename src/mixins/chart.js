@@ -1,5 +1,5 @@
 import VueTypes from 'vue-types'
-import { debounce } from 'lodash'
+import debounce from 'lodash.debounce'
 
 import activeMixin from './active'
 import themeMixin from './theme'
