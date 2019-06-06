@@ -1,6 +1,7 @@
 <template>
     <WCartesian
         :dataset="data"
+        responsive
     >
         <WLine
             datakey="one"
