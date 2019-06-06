@@ -10,8 +10,13 @@
 
 ## Introduction
 
-
 **Vue-wcharts** is a library makes it easy to create your own charts. You can easily create reuseable chart components. Used a basic chart or customize the chart using props and slots of charts.
+
+## Documentation
+[https://vue-wcharts.waavi.com/](https://vue-wcharts.waavi.com/)
+
+## Examples
+[https://vue-wcharts.waavi.com/examples](https://vue-wcharts.waavi.com/examples)
 
 ## Features & characteristics:
 * Linear Charts
