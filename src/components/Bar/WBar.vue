@@ -88,7 +88,7 @@ import VueTypes from 'vue-types'
 import animationMixin from '../../mixins/animation'
 import { WTrans } from '../../transitions'
 
-const DEFAULT_WIDTH = 20
+const DEFAULT_WIDTH = 45
 
 const labelStylesDefaultProp = {
     fill: '#333',
@@ -103,6 +103,7 @@ const stackedLabelStylesDefaultProp = {
 export default {
     name: 'WBar',
     type: 'cartesian',
+    subtype: 'bar',
     components: {
         WTrans,
     },
@@ -126,9 +127,11 @@ export default {
     },
     // It's called by parent components to necessary calcs before be rendering
     // Componen is not mounted and cannot access to default props
-    preload ({ parent, props, index }) {
-        const { snap, colors, stacked } = parent
-        const { datakey, width = DEFAULT_WIDTH, color } = props
+    preload ({
+        parent, props, index,
+    }) {
+        const { snap, colors } = parent
+        const { datakey, color } = props
 
         // Added id of bars
         snap.barIds = [].concat(snap.barIds || [], index)
@@ -136,10 +139,6 @@ export default {
         snap.barsByDatakeys = { ...snap.barsByDatakeys, [index]: datakey }
         // Set colors
         snap.barsDatakeysColors = { ...snap.barsDatakeysColors, [datakey]: color || colors[index] }
-        // Calc dimension
-        snap.barAllWidth = snap.barAllWidth || 0
-        snap.barOffset = [].concat(snap.barOffset || [], snap.barAllWidth)
-        snap.barAllWidth = stacked ? width : snap.barAllWidth + width
     },
     computed: {
         // Id cartesian elem
@@ -162,13 +161,26 @@ export default {
         },
         // Margin
         margin () {
-            const { id, width } = this
+            const { adjustedWidth, offset } = this
+            const { stacked, numberOfBars } = this.Chart
+
+            return stacked
+                ? -adjustedWidth / 2
+                : offset - (numberOfBars * adjustedWidth / 2)
+        },
+        // Offset
+        offset () {
+            const { id, adjustedWidth } = this
             const { snap, stacked } = this.Chart
             const index = snap.barIds.indexOf(id)
 
             return stacked
-                ? -width / 2
-                : snap.barOffset[index] - (snap.barAllWidth / 2)
+                ? adjustedWidth
+                : adjustedWidth * index
+        },
+        // Adjusted width
+        adjustedWidth () {
+            return Math.min(this.width, this.Chart.maxBarWidth)
         },
         // Points
         points () {
@@ -227,7 +239,7 @@ export default {
                 return {
                     x,
                     y,
-                    width: this.width,
+                    width: this.adjustedWidth,
                     height: Math.abs(height),
                     label,
                     stackedLabel,
