@@ -108,7 +108,7 @@ export default {
     props: {
         datakey: VueTypes.string.isRequired,
         legend: VueTypes.string,
-        curve: VueTypes.oneOfType([VueTypes.bool, VueTypes.func]).def(true),
+        curve: VueTypes.oneOfType([VueTypes.bool, VueTypes.func]).def(false),
         area: VueTypes.bool.def(false),
         styles: VueTypes.shape({
             fill: VueTypes.string,

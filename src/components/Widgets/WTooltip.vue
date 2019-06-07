@@ -27,7 +27,10 @@
                         name="bullet"
                         v-bind="value"
                     >
-                        <WBullet :color="value.color" />
+                        <WBullet
+                            color="white"
+                            :borderColor="value.color"
+                        />
                     </slot>
 
                     <slot
