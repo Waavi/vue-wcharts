@@ -22,7 +22,7 @@
                     :y="bar.y"
                     :width="bar.width"
                     :height="bar.height"
-                    :fill="fill"
+                    :fill="bar.color"
                     :style="{ styles, transition }"
                 />
                 <g
@@ -121,21 +121,34 @@ export default {
         stackedLabelAlign: VueTypes.oneOf(['start', 'middle', 'end']).def('middle'),
         stackedLabelStyles: VueTypes.object,
         width: VueTypes.number.def(DEFAULT_WIDTH),
-        color: VueTypes.string,
+        color: VueTypes.oneOfType([
+            VueTypes.string,
+            VueTypes.arrayOf(VueTypes.string),
+        ]),
         styles: VueTypes.object,
     },
     // It's called by parent components to necessary calcs before be rendering
     // Componen is not mounted and cannot access to default props
     preload ({ parent, props, index }) {
-        const { snap, colors, stacked } = parent
+        const {
+            snap, colors, stacked, dataset,
+        } = parent
         const { datakey, width = DEFAULT_WIDTH, color } = props
 
         // Added id of bars
         snap.barIds = [].concat(snap.barIds || [], index)
         // Set datakeys by id
         snap.barsByDatakeys = { ...snap.barsByDatakeys, [index]: datakey }
+
         // Set colors
-        snap.barsDatakeysColors = { ...snap.barsDatakeysColors, [datakey]: color || colors[index] }
+        if (!snap.barsDatakeysColors) snap.barsDatakeysColors = []
+        // Default color
+        if (!color) snap.barsDatakeysColors = { ...snap.barsDatakeysColors, [datakey]: Array(dataset.length).fill(colors[index]) }
+        // Same color for every bar: string
+        else if (typeof color === 'string') snap.barsDatakeysColors = { ...snap.barsDatakeysColors, [datakey]: Array(dataset.length).fill(color) }
+        // Different color for every bar: array
+        else if (!!color && color.length > 0) snap.barsDatakeysColors = { ...snap.barsDatakeysColors, [datakey]: color }
+
         // Calc dimension
         snap.barAllWidth = snap.barAllWidth || 0
         snap.barOffset = [].concat(snap.barOffset || [], snap.barAllWidth)
@@ -149,10 +162,6 @@ export default {
         // Active elem
         active () {
             return this.Chart.activeElements.includes(this.id)
-        },
-        // Check color custom or default
-        fill () {
-            return this.Chart.snap.barsDatakeysColors[this.datakey]
         },
         // Get yAxis origin by bounds.min or zero
         y () {
@@ -224,6 +233,9 @@ export default {
                     x, y, stackedValue, height,
                 })
 
+                // Set color
+                const color = this.Chart.snap.barsDatakeysColors[this.datakey][index]
+
                 return {
                     x,
                     y,
@@ -231,6 +243,7 @@ export default {
                     height: Math.abs(height),
                     label,
                     stackedLabel,
+                    color,
                 }
             })
         },
@@ -306,10 +319,12 @@ export default {
             const line = this.Chart.dataset[id]
             const label = line[axis.x.datakey]
 
+            console.log(event.target)
+
             // Generate tooltip config
             const values = curData.map((item) => {
                 const { key } = item
-                const color = snap.barsDatakeysColors[key]
+                const color = snap.barsDatakeysColors[key][id]
                 const value = item[id].data[key]
                 return {
                     key,
