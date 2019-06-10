@@ -153,7 +153,7 @@ storiesOf('Axis', module)
                     start: 'start',
                     middle: 'middle',
                     end: 'end',
-                }, 'end'),
+                }, 'middle'),
                 labelTextY: text('Label Y', 'Values'),
                 labelTextYAnchor: select('Label Y - Text anchor', {
                     start: 'start',

@@ -86,14 +86,14 @@ import { isFunc } from '../../utils/checks'
 const stylesDefaultProp = {
     fill: '',
     stroke: '',
-    strokeWidth: 1,
+    strokeWidth: 2,
     strokeDasharray: '0',
 }
 
 const dotStylesDefaultProp = {
-    fill: '',
+    fill: 'white',
     stroke: '',
-    strokeWidth: 0,
+    strokeWidth: 2,
     radius: 4,
     hoverRadius: 8,
 }

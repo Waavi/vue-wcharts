@@ -2,22 +2,24 @@
 import VueTypes from 'vue-types'
 import { genTicks, genExactNbTicks } from '../utils/maths'
 import WTickText from '../components/Axis/WTickText.vue'
+import colors from '../utils/colors'
 
 const axisStylesDefaultProp = {
-    stroke: '#999',
+    stroke: colors.grayMedium,
 }
 
 const markStylesDefaultProp = {
-    stroke: '#999',
+    stroke: colors.grayMedium,
 }
 
 const labelStylesDefaultProp = {
-    fill: '#999',
+    fill: colors.grayDark,
+    fontWeight: 800,
 }
 
 const tickStylesDefaultProp = {
     stroke: 'none',
-    fill: '#999',
+    fill: colors.grayDark,
     fontSize: 12,
 }
 

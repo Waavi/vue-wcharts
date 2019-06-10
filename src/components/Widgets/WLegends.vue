@@ -20,6 +20,7 @@
                     :text="legend"
                     :active="Chart.activeElements.includes(index)"
                     :style="legendStyles"
+                    :colors="colors"
                     @onClick="handleClick"
                 >
                     <template #bullet="{ index, text, color }">
@@ -29,7 +30,10 @@
                             :text="text"
                             :color="color"
                         >
-                            <WBullet :color="color" />
+                            <WBullet
+                                :borderColor="color"
+                                color="white"
+                            />
                         </slot>
                     </template>
                 </WLegend>
@@ -62,6 +66,7 @@ export default {
         componentsStyles: VueTypes.object,
         wrapperStyles: VueTypes.object,
         legendStyles: VueTypes.object,
+        colors: VueTypes.arrayOf(VueTypes.string),
     },
     preload ({ parent, props, index }) {
         const { position, size, space } = props

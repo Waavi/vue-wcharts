@@ -207,7 +207,7 @@ sidebarDepth: 3
 | datakey | string | Required property | The key of dataset |
 | legend | string |  | The text of the legend |
 | width | number | 20 | The width of the bar |
-| color | string |  | The color of the bar |
+| color | string    arrayOf(string) |  | Accept a color for all bars or one color for every bar |
 | styles | object |  | The styles of the bar |
 | showLabel | bool | false | If is set to true, the label will be drawn |
 | labelSize | number | 12 | The font size of the label |
@@ -363,7 +363,7 @@ sidebarDepth: 3
 
     | Property | Description |
     |----------|-------------|
-    | dot | Dot item value (x, y, z, info, value, index and cartesianIndex) |
+    | dot | Dot item value ```{ x, y, z, info: [{ name, data, color, value }], value, index, cartesianIndex }``` |
     | styles | Dot styles |
     | Chart | Chart api (WCartesian reference) |
     | transition | CSS transition value |

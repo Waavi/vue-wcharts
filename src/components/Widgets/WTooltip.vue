@@ -27,7 +27,10 @@
                         name="bullet"
                         v-bind="value"
                     >
-                        <WBullet :color="value.color" />
+                        <WBullet
+                            color="white"
+                            :borderColor="value.color"
+                        />
                     </slot>
 
                     <slot
@@ -139,8 +142,9 @@ export default {
     display: flex;
     padding: .5rem;
     border-radius: 4px;
-    color: #FFF;
-    background: #333;
+    color: #000;
+    background: white;
+    box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.15);
     font-size: 14px;
     opacity: 0;
     z-index: 1;
