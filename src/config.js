@@ -3,22 +3,12 @@ import c from './utils/colors'
 // eslint-disable-next-line
 export let colors = [
     c.primary,
-    c.secondary,
-    c.grayDark,
-    c.macaroniAndCheese,
-    c.grayMedium,
-    c.brightCyan,
     c.lightUrple,
     c.paleGold,
     c.veryLightPink,
-    c.sea,
-    c.barney,
-    c.darkGold,
-    c.black,
-    c.paleTeal,
+    c.brightCyan,
     c.purplishBlue,
-    c.macaroniAndCheeseTwo,
-    c.grayLight,
+    c.macaroniAndCheese,
 ]
 
 export const setColors = (newColors) => {
