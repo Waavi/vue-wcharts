@@ -278,7 +278,7 @@ export default {
 
             // Calc position of label [x, y]
             const top = (this.Chart.stacked || this.isLabelInside ? -(this.labelSize) : this.labelSize)
-            const x0 = x + this.width / 2
+            const x0 = x + this.adjustedWidth / 2
             const y1 = y - top + this.labelSize / 2
 
             return {
@@ -300,7 +300,7 @@ export default {
 
             // Calc position of label [x, y]
             const top = this.stackedLabelSize
-            const x0 = x + this.width / 2
+            const x0 = x + this.adjustedWidth / 2
             const y1 = y - top + this.stackedLabelSize / 2
 
             return {

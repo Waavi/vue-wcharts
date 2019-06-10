@@ -132,14 +132,11 @@ export default {
                 .keys(datakeys)
                 .offset(stacked)(this.dataset)
         },
-        // Return number of bars per group of them. Is is stacked, number of bars is one.
+        // Return number of bars per group. If is stacked, 'numberOfBars' is one.
         numberOfBars () {
             const slots = this.$slots.default || []
             return this.stacked ? 1 : slots.filter(
-                slot => slot.componentOptions &&
-                    slot.componentOptions.Ctor.sealedOptions &&
-                    slot.componentOptions.Ctor.sealedOptions.subtype ===
-                        'bar'
+                slot => (((slot.componentOptions || {}).Ctor || {}).sealedOptions || {}).subtype === 'bar'
             ).length
         },
         // Return max possible bar width saving space between group of bars
