@@ -146,32 +146,21 @@ export default {
             } = this.Chart
             const color = colors[this.index]
             return dataset.map((item, index) => ({
+                index,
+                cartesianIndex: this.index,
                 x: xScale(item[axis.x.datakey]),
                 y: yScale(item[axis.y.datakey]),
                 z: axis.z.datakey ? zScale(item[axis.z.datakey]) : this.stylesCmp.radius,
+                value: item[axis.y.datakey],
                 info: {
                     id: this.index,
                     label: '',
                     value: [
-                        ...[
-                            {
-                                value: `${axis.x.name}: ${item[axis.x.datakey]}`,
-                                color,
-                            },
-                            {
-                                value: `${axis.y.name}: ${item[axis.y.datakey]}`,
-                                color,
-                            },
-                        ],
-                        ...(axis.z.datakey ? [{
-                            value: `${axis.z.name}: ${item[axis.z.datakey]}`,
-                            color,
-                        }] : []),
+                        this.generateAxisValue(axis.x, item[axis.x.datakey], color),
+                        this.generateAxisValue(axis.y, item[axis.y.datakey], color),
+                        ...(axis.z.datakey ? [this.generateAxisValue(axis.z, item[axis.z.datakey], color)] : []),
                     ],
                 },
-                value: item[axis.y.datakey],
-                index,
-                cartesianIndex: this.index,
             }))
         },
         genLine () {
@@ -183,6 +172,13 @@ export default {
             if (this.curve === false) return this.genLine(this.lineData)
             const curveFn = isFunc(this.curve) ? this.curve : curveMonotoneX
             return this.line ? this.genLine.curve(curveFn)(this.lineData) : null
+        },
+    },
+    methods: {
+        generateAxisValue ({ name, datakey }, data, color) {
+            return ({
+                name, data, color, value: `${name}: ${data}`,
+            })
         },
     },
 }
