@@ -341,6 +341,10 @@ storiesOf('Charts/Bar', module)
                         :space="[0, 50, 80, 50]"
                     />
                     <WYAxis :space="[25, 0, 0, 50]" />
+                    <WLegends
+                        selectable
+                        :colors="['#111', '#222', '#333', '#444', '#555', '#666', '#777']"
+                    />
                     <WTooltip />
                 </WCartesian>
             </div>

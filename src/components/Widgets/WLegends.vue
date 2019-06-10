@@ -20,6 +20,7 @@
                     :text="legend"
                     :active="Chart.activeElements.includes(index)"
                     :style="legendStyles"
+                    :colors="colors"
                     @onClick="handleClick"
                 >
                     <template #bullet="{ index, text, color }">
@@ -62,6 +63,7 @@ export default {
         componentsStyles: VueTypes.object,
         wrapperStyles: VueTypes.object,
         legendStyles: VueTypes.object,
+        colors: VueTypes.arrayOf(VueTypes.string),
     },
     preload ({ parent, props, index }) {
         const { position, size, space } = props
