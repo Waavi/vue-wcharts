@@ -111,15 +111,12 @@ export default {
         // Offset of bars
         // return [10, 10, 10, 10]
         offset () {
-            const { barAllWidth, barIds = [] } = this.snap
+            const barAllWidth = this.numberOfBars * Math.min(this.viewWidth, this.maxBarWidth)
             const gap = Array(4).fill(0)
 
-            if (barIds.length) {
-                // Checked if width of bars it is higher than canvas width
-                const margin = this.width <= barAllWidth * (this.dataset || []).length ? this.width % barAllWidth : barAllWidth
-
-                gap[1] = margin
-                gap[3] = margin
+            if (this.numberOfBars) {
+                gap[1] = barAllWidth
+                gap[3] = barAllWidth
                 return gap
             }
 
@@ -134,6 +131,17 @@ export default {
             return stack()
                 .keys(datakeys)
                 .offset(stacked)(this.dataset)
+        },
+        // Return number of bars per group. If is stacked, 'numberOfBars' is one.
+        numberOfBars () {
+            const slots = this.$slots.default || []
+            return this.stacked ? 1 : slots.filter(
+                slot => (((slot.componentOptions || {}).Ctor || {}).sealedOptions || {}).subtype === 'bar'
+            ).length
+        },
+        // Return max possible bar width saving space between group of bars
+        maxBarWidth () {
+            return this.viewWidth / ((this.numberOfBars + 1) * ((this.dataset || []).length + 2))
         },
     },
     methods: {

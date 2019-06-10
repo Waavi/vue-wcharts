@@ -103,6 +103,7 @@ const stackedLabelStylesDefaultProp = {
 export default {
     name: 'WBar',
     type: 'cartesian',
+    subtype: 'bar',
     components: {
         WTrans,
     },
@@ -131,9 +132,9 @@ export default {
     // Componen is not mounted and cannot access to default props
     preload ({ parent, props, index }) {
         const {
-            snap, colors, stacked, dataset,
+            snap, colors, dataset,
         } = parent
-        const { datakey, width = DEFAULT_WIDTH, color } = props
+        const { datakey, color } = props
 
         // Added id of bars
         snap.barIds = [].concat(snap.barIds || [], index)
@@ -148,11 +149,6 @@ export default {
         else if (typeof color === 'string') snap.barsDatakeysColors = { ...snap.barsDatakeysColors, [datakey]: Array(dataset.length).fill(color) }
         // Different color for every bar: array
         else if (!!color && color.length > 0) snap.barsDatakeysColors = { ...snap.barsDatakeysColors, [datakey]: color }
-
-        // Calc dimension
-        snap.barAllWidth = snap.barAllWidth || 0
-        snap.barOffset = [].concat(snap.barOffset || [], snap.barAllWidth)
-        snap.barAllWidth = stacked ? width : snap.barAllWidth + width
     },
     computed: {
         // Id cartesian elem
@@ -171,13 +167,26 @@ export default {
         },
         // Margin
         margin () {
-            const { id, width } = this
+            const { adjustedWidth, offset } = this
+            const { stacked, numberOfBars } = this.Chart
+
+            return stacked
+                ? -adjustedWidth / 2
+                : offset - (numberOfBars * adjustedWidth / 2)
+        },
+        // Offset
+        offset () {
+            const { id, adjustedWidth } = this
             const { snap, stacked } = this.Chart
             const index = snap.barIds.indexOf(id)
 
             return stacked
-                ? -width / 2
-                : snap.barOffset[index] - (snap.barAllWidth / 2)
+                ? adjustedWidth
+                : adjustedWidth * index
+        },
+        // Adjusted width
+        adjustedWidth () {
+            return Math.min(this.width, this.Chart.maxBarWidth)
         },
         // Points
         points () {
@@ -239,7 +248,7 @@ export default {
                 return {
                     x,
                     y,
-                    width: this.width,
+                    width: this.adjustedWidth,
                     height: Math.abs(height),
                     label,
                     stackedLabel,
@@ -282,7 +291,7 @@ export default {
 
             // Calc position of label [x, y]
             const top = (this.Chart.stacked || this.isLabelInside ? -(this.labelSize) : this.labelSize)
-            const x0 = x + this.width / 2
+            const x0 = x + this.adjustedWidth / 2
             const y1 = y - top + this.labelSize / 2
 
             return {
@@ -304,7 +313,7 @@ export default {
 
             // Calc position of label [x, y]
             const top = this.stackedLabelSize
-            const x0 = x + this.width / 2
+            const x0 = x + this.adjustedWidth / 2
             const y1 = y - top + this.stackedLabelSize / 2
 
             return {
