@@ -86,14 +86,14 @@ import { isFunc } from '../../utils/checks'
 const stylesDefaultProp = {
     fill: '',
     stroke: '',
-    strokeWidth: 1,
+    strokeWidth: 2,
     strokeDasharray: '0',
 }
 
 const dotStylesDefaultProp = {
-    fill: '',
+    fill: 'white',
     stroke: '',
-    strokeWidth: 0,
+    strokeWidth: 2,
     radius: 4,
     hoverRadius: 8,
 }
@@ -110,7 +110,7 @@ export default {
     props: {
         datakey: VueTypes.string.isRequired,
         legend: VueTypes.string,
-        curve: VueTypes.oneOfType([VueTypes.bool, VueTypes.func]).def(false),
+        curve: VueTypes.oneOfType([VueTypes.bool, VueTypes.func]).def(true),
         area: VueTypes.bool.def(false),
         styles: VueTypes.shape({
             fill: VueTypes.string,

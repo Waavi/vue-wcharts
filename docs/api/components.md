@@ -363,7 +363,7 @@ sidebarDepth: 3
 
     | Property | Description |
     |----------|-------------|
-    | dot | Dot item value (x, y, z, info, value, index and cartesianIndex) |
+    | dot | Dot item value ```{ x, y, z, info: [{ name, data, color, value }], value, index, cartesianIndex }``` |
     | styles | Dot styles |
     | Chart | Chart api (WCartesian reference) |
     | transition | CSS transition value |
