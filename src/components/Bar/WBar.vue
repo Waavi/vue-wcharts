@@ -319,8 +319,6 @@ export default {
             const line = this.Chart.dataset[id]
             const label = line[axis.x.datakey]
 
-            console.log(event.target)
-
             // Generate tooltip config
             const values = curData.map((item) => {
                 const { key } = item
