@@ -1,6 +1,10 @@
 const StyleLintPlugin = require('stylelint-webpack-plugin')
 
 module.exports = {
+    lintOnSave: false,
+    css: {
+        extract: false,
+    },
     configureWebpack: {
         plugins: [
             // DOC: https://github.com/webpack-contrib/stylelint-webpack-plugin

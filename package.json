@@ -1,7 +1,7 @@
 {
   "author": "WAAVI",
   "name": "vue-wcharts",
-  "version": "0.0.23-beta",
+  "version": "0.0.27-beta",
   "description": "Vuejs charts",
   "license": "MIT",
   "homepage": "https://vue-wcharts.waavi.com",
@@ -26,10 +26,10 @@
     "test": "vue-cli-service test:unit",
     "lint": "vue-cli-service lint",
     "stylelint": "node_modules/stylelint/bin/stylelint.js ./src --formatter verbose",
-    "validate": "yarn test && yarn lint && yarn stylelint"
+    "validate": "yarn test && yarn lint && yarn stylelint",
+    "prepublishOnly": "yarn run lint && yarn run test && yarn run build && rm dist/demo.html"
   },
   "main": "src/index.js",
-  "browser": "dist/vue-wcharts.common.js",
   "unpkg": "dist/vue-wcharts.umd.min.js",
   "jsDelivr": "dist/vue-wcharts.umd.min.js",
   "files": [
