@@ -163,3 +163,16 @@ sidebarDepth: 3
 |----------|------|---------------|-------------|
 | color |  string | Required property | Color of the bullet |
 
+## WShowIfFit
+
+*Component to show the content slot default, if the content slot fits in the parent component.*
+
+### Parent components
+**[\<WStackBar />](/api/charts.html#wstackbar)**
+**Valid HTML elements**
+
+### Slots
+
+-   #### default
+
+    *Slot default to calc children components sizes*
