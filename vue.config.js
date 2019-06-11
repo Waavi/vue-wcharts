@@ -1,6 +1,7 @@
 const StyleLintPlugin = require('stylelint-webpack-plugin')
 
 module.exports = {
+    // css bundled in JS
     lintOnSave: false,
     css: {
         extract: false,
