@@ -293,6 +293,16 @@ storiesOf('Charts/Bar', module)
             return {
                 width: 25,
                 data: object('Data', data),
+                showLabel: boolean('Show label', true),
+                labelPosition: select('Label position', {
+                    inside: 'inside',
+                    outside: 'outside',
+                }, 'outside'),
+                labelAlign: select('Label align', {
+                    start: 'start',
+                    middle: 'middle',
+                    end: 'end',
+                }, 'middle'),
             }
         },
         template: `

@@ -111,12 +111,12 @@ export default {
         // Offset of bars
         // return [10, 10, 10, 10]
         offset () {
-            const barAllWidth = this.numberOfBars * Math.min(this.viewWidth, this.maxBarWidth)
+            const offset = this.maxBarWidth * (this.numberOfBars / 2)
             const gap = Array(4).fill(0)
 
             if (this.numberOfBars) {
-                gap[1] = barAllWidth
-                gap[3] = barAllWidth
+                gap[1] = offset
+                gap[3] = offset
                 return gap
             }
 
@@ -141,7 +141,7 @@ export default {
         },
         // Return max possible bar width saving space between group of bars
         maxBarWidth () {
-            return this.viewWidth / ((this.numberOfBars + 1) * ((this.dataset || []).length + 2))
+            return (this.viewWidth / (this.numberOfBars * this.dataset.length) / 2)
         },
     },
     methods: {

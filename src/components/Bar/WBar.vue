@@ -3,83 +3,100 @@
         v-if="active"
         id="Bars"
     >
-        <WTrans
+        <g
             v-for="(bar, key) in bars"
             :key="key"
-            :initialProps="{
-                height: 0,
-                y: Chart.canvas.y1
-            }"
-            :transition="transition"
         >
             <g
                 :id="key"
                 @mouseenter="handleMouseEnter"
                 @mouseleave="Chart.cleanActive"
             >
-                <rect
-                    :x="bar.x"
-                    :y="bar.y"
-                    :width="bar.width"
-                    :height="bar.height"
-                    :fill="bar.color"
-                    :style="{ styles, transition }"
-                />
+                <WTrans
+                    :initialProps="{
+                        height: 0,
+                        y: Chart.canvas.y1
+                    }"
+                    :transition="transition"
+                >
+                    <rect
+                        :x="bar.x"
+                        :y="bar.y"
+                        :width="bar.width"
+                        :height="bar.height"
+                        :fill="bar.color"
+                        :style="{ styles, transition }"
+                    />
+                </WTrans>
                 <g
                     v-if="bar.label"
                 >
-                    <slot
-                        name="label"
-                        v-bind="bar.label"
-                        :styles="{ ...labelStylesCmp, transition, transform: `translateY(${bar.label.y}px)` }"
-                        :align="labelAlign"
-                        :size="labelSize"
+                    <WTrans
+                        :initialProps="{
+                            opacity: 0,
+                        }"
+                        :transition="transition"
                     >
-                        <text
-                            :x="bar.label.x"
-                            :y="0"
-                            :text-anchor="labelAlign"
-                            :font-size="labelSize"
-                            :style="{ ...labelStylesCmp, transition, transform: `translateY(${bar.label.y}px)` }"
+                        <slot
+                            name="label"
+                            v-bind="bar.label"
+                            :styles="{ ...labelStylesCmp, transition, transform: `translateY(${bar.label.y}px)` }"
+                            :align="labelAlign"
+                            :size="labelSize"
                         >
-                            <slot
-                                name="labelValue"
-                                v-bind="bar.label"
+                            <text
+                                :x="bar.label.x"
+                                :y="0"
+                                :text-anchor="labelAlign"
+                                :font-size="labelSize"
+                                :style="{ ...labelStylesCmp, transition, transform: `translateY(${bar.label.y}px)` }"
                             >
-                                {{ bar.label.value }}
-                            </slot>
-                        </text>
-                    </slot>
+                                <slot
+                                    name="labelValue"
+                                    v-bind="bar.label"
+                                >
+                                    {{ bar.label.value }}
+                                </slot>
+                            </text>
+                        </slot>
+                    </WTrans>
                 </g>
                 <g
                     v-if="bar.stackedLabel"
                 >
-                    <slot
-                        name="stackedLabel"
-                        v-bind="bar.stackedLabel"
-                        :styles="{ ...stackedLabelStylesCmp, transition, transform: `translateY(${bar.stackedLabel.y}px)` }"
-                        :align="stackedLabelAlign"
-                        :size="stackedLabelSize"
+                    <WTrans
+                        :initialProps="{
+                            opacity: 0,
+                        }"
+                        :transition="transition"
                     >
-                        <text
-                            v-if="bar.stackedLabel"
-                            :x="bar.stackedLabel.x"
-                            :y="0"
-                            :text-anchor="stackedLabelAlign"
-                            :font-size="stackedLabelSize"
-                            :style="{ ...stackedLabelStylesCmp, transition, transform: `translateY(${bar.stackedLabel.y}px)` }"
+                        <slot
+                            name="stackedLabel"
+                            v-bind="bar.stackedLabel"
+                            :styles="{ ...stackedLabelStylesCmp, transition, transform: `translateY(${bar.stackedLabel.y}px)` }"
+                            :align="stackedLabelAlign"
+                            :size="stackedLabelSize"
                         >
-                            <slot
-                                name="stackedLabelValue"
-                                v-bind="bar.stackedLabel"
+                            <text
+                                v-if="bar.stackedLabel"
+                                :x="bar.stackedLabel.x"
+                                :y="0"
+                                :text-anchor="stackedLabelAlign"
+                                :font-size="stackedLabelSize"
+                                :style="{ ...stackedLabelStylesCmp, transition, transform: `translateY(${bar.stackedLabel.y}px)` }"
                             >
-                                {{ bar.stackedLabel.stackedValue }}
-                            </slot>
-                        </text>
-                    </slot>
+                                <slot
+                                    name="stackedLabelValue"
+                                    v-bind="bar.stackedLabel"
+                                >
+                                    {{ bar.stackedLabel.stackedValue }}
+                                </slot>
+                            </text>
+                        </slot>
+                    </WTrans>
                 </g>
             </g>
-        </WTrans>
+        </g>
     </g>
 </template>
 
@@ -93,11 +110,7 @@ const DEFAULT_WIDTH = 45
 const labelStylesDefaultProp = {
     fill: '#333',
     cursor: 'default',
-}
-
-const stackedLabelStylesDefaultProp = {
-    fill: '#333',
-    cursor: 'default',
+    // opacity: 1,
 }
 
 export default {
@@ -270,7 +283,7 @@ export default {
         // Stacked label styles
         stackedLabelStylesCmp () {
             return {
-                ...stackedLabelStylesDefaultProp,
+                ...labelStylesDefaultProp,
                 ...this.stackedLabelStyles,
             }
         },
