@@ -98,7 +98,7 @@ export default {
     data () {
         return {
             data: dataTwo,
-            activeComponent: 'Scatter',
+            activeComponent: 'Cartesian',
         }
     },
     methods: {

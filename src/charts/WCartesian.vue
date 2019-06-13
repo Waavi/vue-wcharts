@@ -124,13 +124,25 @@ export default {
         },
         // Return stacked data or data dataset without transform, of datakeys and dataset props
         // ref: https://github.com/d3/d3-shape#stacks
-        curData () {
-            const datakeys = this.stacked ? Object.values((this.snap || {}).barsByDatakeys || []) : this.datakeys
-            const stacked = this.stacked ? stackOffsetDiverging : noop
+        stackedCurData () {
+            if (!this.stacked) return []
+            const stackDatakeys = Object.values((this.snap || {}).barsByDatakeys || [])
 
             return stack()
-                .keys(datakeys)
-                .offset(stacked)(this.dataset)
+                .keys(stackDatakeys)
+                .offset(stackOffsetDiverging)(this.dataset)
+        },
+        otherCurData () {
+            const stackDatakeys = Object.values((this.snap || {}).barsByDatakeys || [])
+            const otherDatakeys = this.stacked ? this.datakeys.filter(key => !stackDatakeys.includes(key)) : this.datakeys
+
+            return stack()
+                .keys(otherDatakeys)
+                .offset(noop)(this.dataset)
+        },
+
+        curData () {
+            return [...this.stackedCurData, ...this.otherCurData]
         },
         // Return number of bars per group. If is stacked, 'numberOfBars' is one.
         numberOfBars () {

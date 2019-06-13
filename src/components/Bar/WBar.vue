@@ -211,6 +211,7 @@ export default {
 
             // Filter data by datakey
             const data = curData.filter(arr => arr.key === this.datakey)[0] || []
+
             // Calc space between bars
             const space = (canvas.width - (padding[1] + padding[3])) / (data.length - 1)
 
@@ -321,8 +322,7 @@ export default {
                 !this.showStackedLabel ||
                 !this.Chart.stacked ||
                 stackedValue === 0 || // Hide labels if value it's zero
-                // this.id !== this.getLastBarActive() || // Only last bar shown the stacked label
-                this.id !== this.getLastPositiveBarActive() || // Only last bar shown the stacked label
+                this.id !== this.getLastBarActive() || // Only last bar shown the stacked label
                 (this.showLabel && !this.isLabelInside) // If label is printed outside, not render staked label
             ) return undefined
 
@@ -340,14 +340,14 @@ export default {
         // Set active element
         handleMouseEnter (event) {
             const {
-                stacked, curData, setActive, snap, axis,
+                stacked, stackedCurData, otherCurData, setActive, snap, axis,
             } = this.Chart
             const { id } = event.target
             const line = this.Chart.dataset[id]
             const label = line[axis.x.datakey]
 
             // Generate tooltip config
-            const values = curData.map((item) => {
+            const values = (stacked ? stackedCurData : otherCurData).map((item) => {
                 const { key } = item
                 const color = snap.barsDatakeysColors[key][id]
                 const value = item[id].data[key]
@@ -364,20 +364,6 @@ export default {
         },
         // Return id of last bar active
         getLastBarActive () {
-            const { snap, activeElements } = this.Chart
-            const bars = [...snap.barIds].reverse()
-            const cartesians = [...activeElements].reverse()
-            return cartesians.find(el => bars.includes(el))
-        },
-        // Return id of last positive bar active
-        getLastPositiveBarActive () {
-            const { snap, activeElements } = this.Chart
-            const bars = [...snap.barIds].reverse()
-            const cartesians = [...activeElements].reverse()
-            return cartesians.find(el => bars.includes(el))
-        },
-        // Return id of last negative bar active
-        getLastNegativeBarActive () {
             const { snap, activeElements } = this.Chart
             const bars = [...snap.barIds].reverse()
             const cartesians = [...activeElements].reverse()
