@@ -27,7 +27,7 @@
     "lint": "vue-cli-service lint",
     "stylelint": "node_modules/stylelint/bin/stylelint.js ./src --formatter verbose",
     "validate": "yarn lint && yarn stylelint",
-    "prepublishOnly": "yarn run lint && yarn run test && yarn run build && rm dist/demo.html"
+    "prepublishOnly": "yarn run validate && yarn run build && rm dist/demo.html"
   },
   "main": "src/index.js",
   "unpkg": "dist/vue-wcharts.umd.min.js",
