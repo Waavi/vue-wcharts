@@ -6,8 +6,8 @@ import {
     WXAxis,
     WYAxis,
     WZAxis,
+    WLegendItem,
     WLegend,
-    WLegends,
     WCartesianGrid,
     WMarker,
     WPie,
@@ -29,7 +29,7 @@ export default (Vue, opts = {}) => {
         WCartesian,
         WPieChart,
         WStackBar,
-        WLegend,
+        WLegendItem,
     ]
 
     const components = [
@@ -39,7 +39,7 @@ export default (Vue, opts = {}) => {
         WXAxis,
         WYAxis,
         WZAxis,
-        WLegends,
+        WLegend,
         WCartesianGrid,
         WMarker,
         WPie,

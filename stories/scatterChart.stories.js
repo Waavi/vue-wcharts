@@ -1,7 +1,7 @@
 import { storiesOf } from '@storybook/vue'
 
 import {
-    WCartesian, WScatter, WXAxis, WYAxis, WZAxis, WCartesianGrid, WTooltip, WLegends,
+    WCartesian, WScatter, WXAxis, WYAxis, WZAxis, WCartesianGrid, WTooltip, WLegend,
 } from '../src'
 
 const data = [
@@ -38,7 +38,7 @@ storiesOf('Charts/Scatter', module)
             WXAxis,
             WYAxis,
             WZAxis,
-            WLegends,
+            WLegend,
         },
         data () {
             return {
@@ -66,7 +66,7 @@ storiesOf('Charts/Scatter', module)
                     :space="[25, 0, 0, 50]"
                 />
                 <WTooltip />
-                <WLegends
+                <WLegend
                     position="top"
                     align="end"
                 />

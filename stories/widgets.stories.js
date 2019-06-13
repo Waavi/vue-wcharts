@@ -4,7 +4,7 @@ import {
 import { storiesOf } from '@storybook/vue'
 
 import {
-    WCartesian, WLine, WXAxis, WYAxis, WLegends, WLegend,
+    WCartesian, WLine, WXAxis, WYAxis, WLegend, WLegendItem,
 } from '../src'
 
 const data = [
@@ -34,7 +34,7 @@ const data = [
 storiesOf('Widgets', module)
     .add('Legend', () => ({
         components: {
-            WLegend,
+            WLegendItem,
         },
         data () {
             return {
@@ -47,7 +47,7 @@ storiesOf('Widgets', module)
         },
         template: `
             <div class="Container">
-                <WLegend
+                <WLegendItem
                     v-for="(legend, index) in legends"
                     :key="index"
                     :index="index"
@@ -64,7 +64,7 @@ storiesOf('Widgets', module)
             WLine,
             WXAxis,
             WYAxis,
-            WLegends,
+            WLegend,
         },
         data () {
             return {
@@ -103,7 +103,7 @@ storiesOf('Widgets', module)
                         :space="[0, 50, 25, 50]"
                     />
                     <WYAxis :space="[25, 0, 0, 50]" />
-                    <WLegends
+                    <WLegend
                         :selectable="legendSelectable"
                         :position="legendPos"
                         :align="legendAlign"
@@ -118,7 +118,7 @@ storiesOf('Widgets', module)
             WLine,
             WXAxis,
             WYAxis,
-            WLegends,
+            WLegend,
         },
         data () {
             return {
@@ -162,7 +162,7 @@ storiesOf('Widgets', module)
                         :space="[0, 50, 25, 50]"
                     />
                     <WYAxis :space="[25, 0, 0, 50]" />
-                    <WLegends
+                    <WLegend
                         :selectable="legendSelectable"
                         :position="legendPos"
                         :align="legendAlign"
@@ -170,7 +170,7 @@ storiesOf('Widgets', module)
                         <template #bullet="{ color }">
                             <span :style="{ fontSize: '18', marginRight: '10px', color }">{{ legendBullet }}</span>
                         </template>
-                    </WLegends>
+                    </WLegend>
                 </WCartesian>
             </div>
             `,

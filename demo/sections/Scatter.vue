@@ -25,7 +25,7 @@
         />
         <WTooltip />
 
-        <WLegends
+        <WLegend
             position="bottom"
             align="end"
         />

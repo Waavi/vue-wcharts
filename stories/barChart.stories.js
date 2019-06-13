@@ -4,7 +4,7 @@ import {
 import { storiesOf } from '@storybook/vue'
 
 import {
-    WCartesian, WLine, WBar, WXAxis, WYAxis, WTooltip, WLegends,
+    WCartesian, WLine, WBar, WXAxis, WYAxis, WTooltip, WLegend,
 } from '../src'
 
 const data = [
@@ -63,7 +63,7 @@ storiesOf('Charts/Bar', module)
             WLine,
             WXAxis,
             WYAxis,
-            WLegends,
+            WLegend,
             WTooltip,
         },
         data () {
@@ -111,7 +111,7 @@ storiesOf('Charts/Bar', module)
             WLine,
             WXAxis,
             WYAxis,
-            WLegends,
+            WLegend,
             WTooltip,
         },
         data () {
@@ -166,7 +166,7 @@ storiesOf('Charts/Bar', module)
                         :space="[0, 50, 80, 50]"
                     />
                     <WYAxis :space="[25, 0, 0, 50]" />
-                    <WLegends
+                    <WLegend
                         selectable
                     />
                     <WTooltip />
@@ -181,7 +181,7 @@ storiesOf('Charts/Bar', module)
             WLine,
             WXAxis,
             WYAxis,
-            WLegends,
+            WLegend,
             WTooltip,
         },
         data () {
@@ -240,7 +240,7 @@ storiesOf('Charts/Bar', module)
                         :space="[0, 50, 80, 50]"
                     />
                     <WYAxis :space="[25, 0, 0, 50]" />
-                    <WLegends
+                    <WLegend
                         selectable
                     />
                     <WTooltip />
@@ -255,7 +255,7 @@ storiesOf('Charts/Bar', module)
             WLine,
             WXAxis,
             WYAxis,
-            WLegends,
+            WLegend,
             WTooltip,
         },
         data () {
@@ -341,7 +341,7 @@ storiesOf('Charts/Bar', module)
                         :space="[0, 50, 80, 50]"
                     />
                     <WYAxis :space="[25, 0, 0, 50]" />
-                    <WLegends
+                    <WLegend
                         selectable
                     />
                     <WTooltip />
@@ -356,7 +356,7 @@ storiesOf('Charts/Bar', module)
             WLine,
             WXAxis,
             WYAxis,
-            WLegends,
+            WLegend,
             WTooltip,
         },
         data () {
@@ -413,7 +413,7 @@ storiesOf('Charts/Bar', module)
                         :space="[0, 50, 80, 50]"
                     />
                     <WYAxis :space="[25, 0, 0, 50]" />
-                    <WLegends
+                    <WLegend
                         selectable
                         :colors="['#111', '#222', '#333', '#444', '#555', '#666', '#777']"
                     />
@@ -429,7 +429,7 @@ storiesOf('Charts/Bar', module)
             WLine,
             WXAxis,
             WYAxis,
-            WLegends,
+            WLegend,
             WTooltip,
         },
         data () {
@@ -479,7 +479,7 @@ storiesOf('Charts/Bar', module)
                         :space="[0, 50, 80, 50]"
                     />
                     <WYAxis :space="[25, 0, 0, 50]" />
-                    <WLegends
+                    <WLegend
                         selectable
                     />
                     <WTooltip />
@@ -494,7 +494,7 @@ storiesOf('Charts/Bar', module)
             WLine,
             WXAxis,
             WYAxis,
-            WLegends,
+            WLegend,
             WTooltip,
         },
         data () {
@@ -534,7 +534,7 @@ storiesOf('Charts/Bar', module)
                         :space="[0, 50, 80, 50]"
                     />
                     <WYAxis :space="[25, 0, 0, 50]" />
-                    <WLegends
+                    <WLegend
                         selectable
                     />
                     <WTooltip />
@@ -549,7 +549,7 @@ storiesOf('Charts/Bar', module)
             WLine,
             WXAxis,
             WYAxis,
-            WLegends,
+            WLegend,
             WTooltip,
         },
         data () {
@@ -597,7 +597,7 @@ storiesOf('Charts/Bar', module)
                         :space="[0, 50, 80, 50]"
                     />
                     <WYAxis :space="[25, 0, 0, 50]" />
-                    <WLegends
+                    <WLegend
                         selectable
                     />
                     <WTooltip />
@@ -612,7 +612,7 @@ storiesOf('Charts/Bar', module)
             WLine,
             WXAxis,
             WYAxis,
-            WLegends,
+            WLegend,
             WTooltip,
         },
         data () {
@@ -670,7 +670,7 @@ storiesOf('Charts/Bar', module)
                         :space="[0, 50, 80, 50]"
                     />
                     <WYAxis :space="[25, 0, 0, 50]" />
-                    <WLegends
+                    <WLegend
                         selectable
                     />
                     <WTooltip />

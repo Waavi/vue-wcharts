@@ -61,7 +61,7 @@ sidebarDepth: 3
     | color | Element color |
 
 
-## WLegends
+## WLegend
 
 *Legends component*
 
@@ -97,12 +97,12 @@ sidebarDepth: 3
     | color | Legend color |
 
 
-## WLegend
+## WLegendItem
 
 *Legend component*
 
 ### Parent components
-**[\<WLegends />](#wlegends)**
+**[\<WLegend />](#wlegends)**
 **[\<WCartesian />](/api/charts.html#wcartesian)**
 **[\<WPieChart />](/api/charts.html#wcartesian)**
 
@@ -153,8 +153,8 @@ sidebarDepth: 3
 
 ### Parent components
 **[\<WTooltip />](#wtooltip)**
-**[\<WLegends />](#wlegends)**
-**[\<WLegend />](#wlegend)**
+**[\<WLegend />](#wlegends)**
+**[\<WLegendItem />](#wlegend)**
 **[\<WStackBar />](/api/charts.html#wstackbar)**
 **Valid SVG elements**
 
