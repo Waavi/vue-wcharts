@@ -33,7 +33,7 @@
             :space="[0, 50, 80, 50]"
         />
         <WYAxis :space="[25, 0, 0, 50]" />
-        <WLegends
+        <WLegend
             position="top"
             align="end"
             selectable

@@ -18,7 +18,7 @@ sidebarDepth: 3
 **[\<WZAxis />](/api/components.html#wzaxis)**
 **[\<WMarker />](/api/components.html#wmarker)**
 **[\<WTooltip />](/api/widgets.html#wtooltip)**
-**[\<WLegends />](/api/widgets.html#wlegends)**
+**[\<WLegend />](/api/widgets.html#wlegends)**
 **Valid SVG elements**
 
 ### Properties
@@ -43,7 +43,7 @@ sidebarDepth: 3
 ### Child components
 **[\<WPie />](/api/components.html#wpie)**
 **[\<WTooltip />](/api/widgets.html#wtooltip)**
-**[\<WLegends />](/api/widgets.html#wlegends)**
+**[\<WLegend />](/api/widgets.html#wlegends)**
 **Valid SVG elements**
 
 ### Properties

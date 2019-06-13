@@ -207,7 +207,7 @@ For example update styles, use slots and more interactions components
         <WYAxis />
 
         <WTooltip />
-        <WLegends
+        <WLegend
             selectable />
     </WCartesian>
 </template>
