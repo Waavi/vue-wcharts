@@ -15,7 +15,7 @@
                 <WTrans
                     :initialProps="{
                         height: 0,
-                        y: Chart.canvas.y1
+                        y
                     }"
                     :transition="transition"
                 >
@@ -35,7 +35,7 @@
                         :initialProps="{
                             opacity: 0,
                         }"
-                        :transition="transition"
+                        :transition="`all ${transDuration / 2}s ${transDuration}s ${transEffect}`"
                     >
                         <slot
                             name="label"
@@ -68,7 +68,7 @@
                         :initialProps="{
                             opacity: 0,
                         }"
-                        :transition="transition"
+                        :transition="`all ${transDuration / 2}s ${transDuration}s ${transEffect}`"
                     >
                         <slot
                             name="stackedLabel"
@@ -228,13 +228,13 @@ export default {
                 // Calc max value
                 start = Math.max(low, start)
                 // Calc yAxis, if value is negative the yAxis it's bound.min
-                const y = yScale(end)
+                const y0 = yScale(end)
                 // Calc yAxis separation between points, if has stacked bars
-                const y0 = yScale(start)
+                const y1 = yScale(start)
                 // Calc xAxis pos
                 const x = (x0 + (space * i) + padding[3])
 
-                return [x, y, y0, label, stackedValue]
+                return [x, y0, y1, label, stackedValue]
             })
         },
         // Bars
@@ -260,6 +260,8 @@ export default {
                 return {
                     x,
                     y,
+                    y0,
+                    y1,
                     width: this.adjustedWidth,
                     height: Math.abs(height),
                     label,
