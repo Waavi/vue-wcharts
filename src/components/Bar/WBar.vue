@@ -15,7 +15,7 @@
                 <WTrans
                     :initialProps="{
                         height: 0,
-                        y: Chart.canvas.y1
+                        y
                     }"
                     :transition="transition"
                 >
@@ -35,7 +35,7 @@
                         :initialProps="{
                             opacity: 0,
                         }"
-                        :transition="transition"
+                        :transition="`all ${transDuration / 2}s ${transDuration}s ${transEffect}`"
                     >
                         <slot
                             name="label"
@@ -68,7 +68,7 @@
                         :initialProps="{
                             opacity: 0,
                         }"
-                        :transition="transition"
+                        :transition="`all ${transDuration / 2}s ${transDuration}s ${transEffect}`"
                     >
                         <slot
                             name="stackedLabel"
@@ -204,14 +204,14 @@ export default {
         // Points
         points () {
             const {
-                padding, bounds, canvas, curData,
+                padding, bounds, canvas, curData, yScale,
             } = this.Chart
             const low = bounds.min
-            const { x0, y1, height } = canvas
-            const yRatio = height / (bounds.max - bounds.min)
+            const { x0 } = canvas
 
             // Filter data by datakey
             const data = curData.filter(arr => arr.key === this.datakey)[0] || []
+
             // Calc space between bars
             const space = (canvas.width - (padding[1] + padding[3])) / (data.length - 1)
 
@@ -219,7 +219,7 @@ export default {
             return data.map((value, i) => {
                 let [start, end] = value
                 const label = end - start
-                const stackedValue = end
+                const stackedValue = end < 0 ? start : end
 
                 // If start value is negative, reverse values
                 if (start < 0) {
@@ -228,15 +228,14 @@ export default {
 
                 // Calc max value
                 start = Math.max(low, start)
-
                 // Calc yAxis, if value is negative the yAxis it's bound.min
-                const y = !end ? this.y : y1 - (end - low) * yRatio
+                const y0 = yScale(end)
                 // Calc yAxis separation between points, if has stacked bars
-                const y0 = !start ? this.y : y1 - (start - low) * yRatio
+                const y1 = yScale(start)
                 // Calc xAxis pos
                 const x = (x0 + (space * i) + padding[3])
 
-                return [x, y, y0, label, stackedValue]
+                return [x, y0, y1, label, stackedValue]
             })
         },
         // Bars
@@ -248,11 +247,12 @@ export default {
                 const height = y1 - y0
                 const x = x0 + this.margin
                 const y = height < 0 ? y1 : y0
+                const yLabel = height > 0 ? y : y0
                 const label = this.getLabel({
-                    x, y, value, height,
+                    x, y: yLabel, value, height,
                 })
                 const stackedLabel = this.getStackedLabel({
-                    x, y, stackedValue, height,
+                    x, y: yLabel, stackedValue,
                 })
 
                 // Set color
@@ -261,6 +261,8 @@ export default {
                 return {
                     x,
                     y,
+                    y0,
+                    y1,
                     width: this.adjustedWidth,
                     height: Math.abs(height),
                     label,
@@ -295,7 +297,7 @@ export default {
         }) {
             if (!this.showLabel) return undefined
             // Not render inside label if doesnt enter correctly
-            if (this.isLabelInside && height < this.labelSize * 2) return undefined
+            if (this.isLabelInside && Math.abs(height) < this.labelSize * 2) return undefined
             // Warn user if set inside position on stacked bar chart: forbidden position
             if (!this.isLabelInside && this.Chart.stacked) {
                 console.warn("labelPosition cannot be set to 'outside' position on stacked bar chart")
@@ -305,7 +307,7 @@ export default {
             // Calc position of label [x, y]
             const top = (this.Chart.stacked || this.isLabelInside ? -(this.labelSize) : this.labelSize)
             const x0 = x + this.adjustedWidth / 2
-            const y1 = y - top + this.labelSize / 2
+            const y1 = y + this.labelSize / 2 + (height > 0 ? -top : top)
 
             return {
                 x: x0,
@@ -314,7 +316,7 @@ export default {
             }
         },
         getStackedLabel ({
-            x, y, stackedValue, height,
+            x, y, stackedValue,
         }) {
             if (
                 !this.showStackedLabel ||
@@ -327,7 +329,7 @@ export default {
             // Calc position of label [x, y]
             const top = this.stackedLabelSize
             const x0 = x + this.adjustedWidth / 2
-            const y1 = y - top + this.stackedLabelSize / 2
+            const y1 = y + this.stackedLabelSize / 2 + (stackedValue > 0 ? -top : top)
 
             return {
                 x: x0,
@@ -338,14 +340,14 @@ export default {
         // Set active element
         handleMouseEnter (event) {
             const {
-                stacked, curData, setActive, snap, axis,
+                stacked, stackedCurData, otherCurData, setActive, snap, axis,
             } = this.Chart
             const { id } = event.target
             const line = this.Chart.dataset[id]
             const label = line[axis.x.datakey]
 
             // Generate tooltip config
-            const values = curData.map((item) => {
+            const values = (stacked ? stackedCurData : otherCurData).map((item) => {
                 const { key } = item
                 const color = snap.barsDatakeysColors[key][id]
                 const value = item[id].data[key]

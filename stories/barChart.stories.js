@@ -33,25 +33,25 @@ const data = [
 
 const dataTwo = [
     {
-        name: 'Page A', one: 3000, two: 1400, three: 400,
+        name: 'Page A', one: 3000, two: 1400, three: 400, four: 1400,
     },
     {
-        name: 'Page B', one: 2000, two: 2398, three: 1210,
+        name: 'Page B', one: 2000, two: 2398, three: 1210, four: 110,
     },
     {
-        name: 'Page C', one: 10, two: 8800, three: 1290,
+        name: 'Page C', one: 10, two: 8800, three: 1290, four: 22290,
     },
     {
-        name: 'Page D', one: 1780, two: 1908, three: 2000,
+        name: 'Page D', one: 1780, two: 1908, three: 2000, four: 24000,
     },
     {
-        name: 'Page E', one: 4890, two: 8800, three: 5700,
+        name: 'Page E', one: 4890, two: 8800, three: 5700, four: 21700,
     },
     {
-        name: 'Page F', one: 5390, two: 6800, three: 7500,
+        name: 'Page F', one: 5390, two: 6800, three: 7500, four: 16500,
     },
     {
-        name: 'Page G', one: 8490, two: 6300, three: 6100,
+        name: 'Page G', one: 8490, two: 6300, three: 6100, four: 18000,
     },
 ]
 
@@ -104,7 +104,77 @@ storiesOf('Charts/Bar', module)
             </div>
         `,
     }))
-    .add('Simple', () => ({
+    .add('Three bars', () => ({
+        components: {
+            WCartesian,
+            WBar,
+            WLine,
+            WXAxis,
+            WYAxis,
+            WLegends,
+            WTooltip,
+        },
+        data () {
+            return {
+                key: select('Data Key', {
+                    one: 'one',
+                    two: 'two',
+                    three: 'three',
+                }, 'one'),
+                showLabel: boolean('Show label', true),
+                labelPosition: select('Label position', {
+                    inside: 'inside',
+                    outside: 'outside',
+                }, 'outside'),
+                labelAlign: select('Label align', {
+                    start: 'start',
+                    middle: 'middle',
+                    end: 'end',
+                }, 'middle'),
+                data: object('Data', data),
+            }
+        },
+        template: `
+            <div class="Container">
+                <WCartesian
+                    :dataset="data"
+                    responsive
+                >
+                    <WBar
+                        legend="One Bar"
+                        datakey="one"
+                        :showLabel="showLabel"
+                        :labelPosition="labelPosition"
+                        :labelAlign="labelAlign"
+                    />
+                    <WBar
+                        datakey="two"
+                        legend="Two Bar"
+                        :showLabel="showLabel"
+                        :labelPosition="labelPosition"
+                        :labelAlign="labelAlign"
+                    />
+                    <WBar
+                        datakey="three"
+                        legend="Three Bar"
+                        :showLabel="showLabel"
+                        :labelPosition="labelPosition"
+                        :labelAlign="labelAlign"
+                    />
+                    <WXAxis
+                        datakey="name"
+                        :space="[0, 50, 80, 50]"
+                    />
+                    <WYAxis :space="[25, 0, 0, 50]" />
+                    <WLegends
+                        selectable
+                    />
+                    <WTooltip />
+                </WCartesian>
+            </div>
+        `,
+    }))
+    .add('With line', () => ({
         components: {
             WCartesian,
             WBar,
@@ -449,18 +519,15 @@ storiesOf('Charts/Bar', module)
                     <WBar
                         legend="One Bar"
                         datakey="one"
-                        :width="width"
                     />
                     <WBar
                         datakey="two"
                         legend="Two Bar"
-                        :width="width"
                     />
                     <WBar
                         datakey="three"
                         legend="Three Bar"
                         :showStackedLabel="showStackedLabel"
-                        :width="width"
                     />
                     <WXAxis
                         datakey="name"
@@ -597,7 +664,7 @@ storiesOf('Charts/Bar', module)
                         :labelPosition="labelPosition"
                         :labelAlign="labelAlign"
                     />
-                    <WLine datakey="one" />
+                    <WLine datakey="four" dot />
                     <WXAxis
                         datakey="name"
                         :space="[0, 50, 80, 50]"
