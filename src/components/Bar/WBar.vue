@@ -204,11 +204,10 @@ export default {
         // Points
         points () {
             const {
-                padding, bounds, canvas, curData,
+                padding, bounds, canvas, curData, yScale,
             } = this.Chart
             const low = bounds.min
-            const { x0, y1, height } = canvas
-            const yRatio = height / (bounds.max - bounds.min)
+            const { x0 } = canvas
 
             // Filter data by datakey
             const data = curData.filter(arr => arr.key === this.datakey)[0] || []
@@ -219,7 +218,7 @@ export default {
             return data.map((value, i) => {
                 let [start, end] = value
                 const label = end - start
-                const stackedValue = end
+                const stackedValue = end < 0 ? start : end
 
                 // If start value is negative, reverse values
                 if (start < 0) {
@@ -228,11 +227,10 @@ export default {
 
                 // Calc max value
                 start = Math.max(low, start)
-
                 // Calc yAxis, if value is negative the yAxis it's bound.min
-                const y = !end ? this.y : y1 - (end - low) * yRatio
+                const y = yScale(end)
                 // Calc yAxis separation between points, if has stacked bars
-                const y0 = !start ? this.y : y1 - (start - low) * yRatio
+                const y0 = yScale(start)
                 // Calc xAxis pos
                 const x = (x0 + (space * i) + padding[3])
 
@@ -248,11 +246,12 @@ export default {
                 const height = y1 - y0
                 const x = x0 + this.margin
                 const y = height < 0 ? y1 : y0
+                const yLabel = height > 0 ? y : y0
                 const label = this.getLabel({
-                    x, y, value, height,
+                    x, y: yLabel, value, height,
                 })
                 const stackedLabel = this.getStackedLabel({
-                    x, y, stackedValue, height,
+                    x, y: yLabel, stackedValue,
                 })
 
                 // Set color
@@ -295,7 +294,7 @@ export default {
         }) {
             if (!this.showLabel) return undefined
             // Not render inside label if doesnt enter correctly
-            if (this.isLabelInside && height < this.labelSize * 2) return undefined
+            if (this.isLabelInside && Math.abs(height) < this.labelSize * 2) return undefined
             // Warn user if set inside position on stacked bar chart: forbidden position
             if (!this.isLabelInside && this.Chart.stacked) {
                 console.warn("labelPosition cannot be set to 'outside' position on stacked bar chart")
@@ -305,7 +304,7 @@ export default {
             // Calc position of label [x, y]
             const top = (this.Chart.stacked || this.isLabelInside ? -(this.labelSize) : this.labelSize)
             const x0 = x + this.adjustedWidth / 2
-            const y1 = y - top + this.labelSize / 2
+            const y1 = y + this.labelSize / 2 + (height > 0 ? -top : top)
 
             return {
                 x: x0,
@@ -314,20 +313,21 @@ export default {
             }
         },
         getStackedLabel ({
-            x, y, stackedValue, height,
+            x, y, stackedValue,
         }) {
             if (
                 !this.showStackedLabel ||
                 !this.Chart.stacked ||
                 stackedValue === 0 || // Hide labels if value it's zero
-                this.id !== this.getLastBarActive() || // Only last bar shown the stacked label
+                // this.id !== this.getLastBarActive() || // Only last bar shown the stacked label
+                this.id !== this.getLastPositiveBarActive() || // Only last bar shown the stacked label
                 (this.showLabel && !this.isLabelInside) // If label is printed outside, not render staked label
             ) return undefined
 
             // Calc position of label [x, y]
             const top = this.stackedLabelSize
             const x0 = x + this.adjustedWidth / 2
-            const y1 = y - top + this.stackedLabelSize / 2
+            const y1 = y + this.stackedLabelSize / 2 + (stackedValue > 0 ? -top : top)
 
             return {
                 x: x0,
@@ -362,6 +362,20 @@ export default {
         },
         // Return id of last bar active
         getLastBarActive () {
+            const { snap, activeElements } = this.Chart
+            const bars = [...snap.barIds].reverse()
+            const cartesians = [...activeElements].reverse()
+            return cartesians.find(el => bars.includes(el))
+        },
+        // Return id of last positive bar active
+        getLastPositiveBarActive () {
+            const { snap, activeElements } = this.Chart
+            const bars = [...snap.barIds].reverse()
+            const cartesians = [...activeElements].reverse()
+            return cartesians.find(el => bars.includes(el))
+        },
+        // Return id of last negative bar active
+        getLastNegativeBarActive () {
             const { snap, activeElements } = this.Chart
             const bars = [...snap.barIds].reverse()
             const cartesians = [...activeElements].reverse()
