@@ -456,7 +456,7 @@ storiesOf('Charts/Bar', module)
                     :bound="[0]"
                 >
                     <WBar
-                        :stacked="true"
+                        stacked
                         legend="One Bar"
                         datakey="one"
                         :showLabel="showLabel"
@@ -516,17 +516,19 @@ storiesOf('Charts/Bar', module)
                     :dataset="data"
                     :bound="[0]"
                     responsive
-                    stacked
                 >
                     <WBar
+                        stacked
                         legend="One Bar"
                         datakey="one"
                     />
                     <WBar
+                        stacked
                         datakey="two"
                         legend="Two Bar"
                     />
                     <WBar
+                        stacked
                         datakey="three"
                         legend="Three Bar"
                         :showStackedLabel="showStackedLabel"
@@ -579,14 +581,17 @@ storiesOf('Charts/Bar', module)
                     stacked
                 >
                     <WBar
+                        stacked
                         legend="One Bar"
                         datakey="one"
                     />
                     <WBar
+                        stacked
                         datakey="two"
                         legend="Two Bar"
                     />
                     <WBar
+                        stacked
                         datakey="three"
                         legend="Three Bar"
                         :showStackedLabel="showStackedLabel"
@@ -643,9 +648,9 @@ storiesOf('Charts/Bar', module)
                     :dataset="data"
                     :bound="[0]"
                     responsive
-                    stacked
                 >
                     <WBar
+                        stacked
                         legend="One Bar"
                         datakey="one"
                         :showLabel="showLabel"
@@ -653,6 +658,7 @@ storiesOf('Charts/Bar', module)
                         :labelAlign="labelAlign"
                     />
                     <WBar
+                        stacked
                         datakey="two"
                         legend="Two Bar"
                         :showLabel="showLabel"
@@ -660,6 +666,7 @@ storiesOf('Charts/Bar', module)
                         :labelAlign="labelAlign"
                     />
                     <WBar
+                        stacked
                         datakey="three"
                         legend="Three Bar"
                         :showLabel="showLabel"
@@ -667,6 +674,72 @@ storiesOf('Charts/Bar', module)
                         :labelAlign="labelAlign"
                     />
                     <WLine datakey="four" dot />
+                    <WXAxis
+                        datakey="name"
+                        :space="[0, 50, 80, 50]"
+                    />
+                    <WYAxis :space="[25, 0, 0, 50]" />
+                    <WLegend
+                        selectable
+                    />
+                    <WTooltip />
+                </WCartesian>
+            </div>
+        `,
+    }))
+    .add('Mix', () => ({
+        components: {
+            WCartesian,
+            WBar,
+            WLine,
+            WXAxis,
+            WYAxis,
+            WLegend,
+            WTooltip,
+        },
+        data () {
+            return {
+                key: select('Data Key', {
+                    one: 'one',
+                    two: 'two',
+                    three: 'three',
+                }, 'one'),
+                showLabel: boolean('Show label', true),
+                labelAlign: select('Label align', {
+                    start: 'start',
+                    middle: 'middle',
+                    end: 'end',
+                }, 'middle'),
+                data: object('Data', dataTwo),
+            }
+        },
+        template: `
+            <div class="Container">
+                <WCartesian
+                    :dataset="data"
+                    responsive
+                    :bound="[0]"
+                >
+                    <WBar
+                        stacked
+                        legend="One Bar"
+                        datakey="one"
+                        :showLabel="showLabel"
+                        :labelAlign="labelAlign"
+                    />
+                    <WBar
+                        datakey="two"
+                        legend="Two Bar"
+                        :showLabel="showLabel"
+                        :labelAlign="labelAlign"
+                    />
+                    <WBar
+                        stacked
+                        datakey="three"
+                        legend="Three Bar"
+                        :showLabel="showLabel"
+                        :labelAlign="labelAlign"
+                    />
                     <WXAxis
                         datakey="name"
                         :space="[0, 50, 80, 50]"
