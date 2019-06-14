@@ -453,22 +453,24 @@ storiesOf('Charts/Bar', module)
                 <WCartesian
                     :dataset="data"
                     responsive
-                    stacked
                     :bound="[0]"
                 >
                     <WBar
+                        :stacked="true"
                         legend="One Bar"
                         datakey="one"
                         :showLabel="showLabel"
                         :labelAlign="labelAlign"
                     />
                     <WBar
+                        stacked
                         datakey="two"
                         legend="Two Bar"
                         :showLabel="showLabel"
                         :labelAlign="labelAlign"
                     />
                     <WBar
+                        stacked
                         datakey="three"
                         legend="Three Bar"
                         :showLabel="showLabel"

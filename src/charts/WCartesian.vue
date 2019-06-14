@@ -12,7 +12,6 @@ export default {
     name: 'WCartesian',
     mixins: [chartMixin],
     props: {
-        stacked: VueTypes.bool.def(false),
         scatter: VueTypes.bool.def(false),
         bound: VueTypes.array.def([]),
         xBound: VueTypes.array.def([]),
@@ -111,10 +110,10 @@ export default {
         // Offset of bars
         // return [10, 10, 10, 10]
         offset () {
-            const offset = this.maxBarWidth * (this.numberOfBars / 2)
+            const offset = this.maxBarWidth * (this.numberOfBarsPerGroup / 2)
             const gap = Array(4).fill(0)
 
-            if (this.numberOfBars) {
+            if (this.numberOfBarsPerGroup) {
                 gap[1] = offset
                 gap[3] = offset
                 return gap
@@ -125,16 +124,15 @@ export default {
         // Return stacked data or data dataset without transform, of datakeys and dataset props
         // ref: https://github.com/d3/d3-shape#stacks
         stackedCurData () {
-            if (!this.stacked) return []
-            const stackDatakeys = Object.values((this.snap || {}).barsByDatakeys || [])
+            const stackDatakeys = Object.values((this.snap || {}).stackedBarsByIndex || []).map(b => b.datakey)
 
             return stack()
                 .keys(stackDatakeys)
                 .offset(stackOffsetDiverging)(this.dataset)
         },
         otherCurData () {
-            const stackDatakeys = Object.values((this.snap || {}).barsByDatakeys || [])
-            const otherDatakeys = this.stacked ? this.datakeys.filter(key => !stackDatakeys.includes(key)) : this.datakeys
+            const stackDatakeys = Object.values((this.snap || {}).stackedBarsByIndex || []).map(b => b.datakey)
+            const otherDatakeys = this.datakeys.filter(key => !stackDatakeys.includes(key))
 
             return stack()
                 .keys(otherDatakeys)
@@ -145,15 +143,14 @@ export default {
             return [...this.stackedCurData, ...this.otherCurData]
         },
         // Return number of bars per group. If is stacked, 'numberOfBars' is one.
-        numberOfBars () {
-            const slots = this.$slots.default || []
-            return this.stacked ? 1 : slots.filter(
-                slot => (((slot.componentOptions || {}).Ctor || {}).sealedOptions || {}).subtype === 'bar'
-            ).length
+        numberOfBarsPerGroup () {
+            const bars = Object.values((this.snap || {}).barIds || []).length
+            const stackedBars = Object.values((this.snap || {}).stackedBarIds || []).length
+            return bars - stackedBars + (stackedBars ? 1 : 0)
         },
         // Return max possible bar width saving space between group of bars
         maxBarWidth () {
-            return (this.viewWidth / (this.numberOfBars * this.dataset.length) / 2)
+            return this.viewWidth / (this.numberOfBarsPerGroup * this.dataset.length) / 2
         },
     },
     methods: {
