@@ -28,7 +28,6 @@ sidebarDepth: 3
 | responsive | bool | false | If true set, the container is responsive |
 | height | number | 400 | The height of the chart container in pixels |
 | width | number | 600 | The width of the chart container in pixels |
-| stacked | bool | false | If true set, the bars are stacked |
 | scatter | bool | false | If true set, the chart is scatter  |
 | bound | array | [] | Y axis bounds, can be function or number |
 | xBound | array | [] | X axis bounds, can be function or number |
