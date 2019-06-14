@@ -15,33 +15,33 @@
             datakey="one"
             legend="One Bar"
             showLabel
-            :width="80"
+            :width="20"
         />
         <WBar
             datakey="two"
             legend="Two Bar"
             showLabel
-            :width="80"
+            :width="20"
         />
         <WBar
             stacked
             datakey="three"
             legend="Three Bar"
             showLabel
-            :width="80"
+            :width="20"
         />
         <WBar
             datakey="four"
             legend="Four Bar"
             showLabel
-            :width="80"
+            :width="20"
         />
         <WBar
             stacked
             datakey="five"
             legend="Five Bar"
             showLabel
-            :width="80"
+            :width="20"
         />
         <WXAxis
             datakey="name"

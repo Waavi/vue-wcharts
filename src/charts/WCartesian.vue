@@ -150,7 +150,7 @@ export default {
         },
         // Return max possible bar width saving space between group of bars
         maxBarWidth () {
-            return this.viewWidth / (this.numberOfBarsPerGroup * this.dataset.length) / 2
+            return this.canvas.width / (this.numberOfBarsPerGroup * (this.dataset.length + 1))
         },
     },
     methods: {
