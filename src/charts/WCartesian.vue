@@ -132,7 +132,7 @@ export default {
         },
         otherCurData () {
             const stackDatakeys = Object.values((this.snap || {}).stackedBarsByIndex || []).map(b => b.datakey)
-            const otherDatakeys = this.datakeys.filter(key => !stackDatakeys.includes(key))
+            const otherDatakeys = stackDatakeys.length ? this.datakeys.filter(key => !stackDatakeys.includes(key)) : this.datakeys
 
             return stack()
                 .keys(otherDatakeys)
