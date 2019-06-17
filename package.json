@@ -59,6 +59,7 @@
     "@storybook/addon-options": "^5.0.8",
     "@storybook/addon-storysource": "^5.0.8",
     "@storybook/addon-viewport": "^5.0.8",
+    "@vue/babel-preset-app": "^4.0.0-alpha.1",
     "@vue/cli-plugin-babel": "^3.5.0",
     "@vue/cli-plugin-eslint": "^3.5.0",
     "@vue/cli-plugin-unit-jest": "^3.5.0",
