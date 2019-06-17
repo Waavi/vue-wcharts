@@ -86,7 +86,7 @@
     "vue": "^2.6.6",
     "vue-cli-plugin-storybook": "^0.6.1",
     "vue-template-compiler": "^2.5.21",
-    "vuepress": "^0.14.11"
+    "vuepress": "^1.0.0-rc.1"
   },
   "gitHooks": {
     "pre-push": "yarn validate"
