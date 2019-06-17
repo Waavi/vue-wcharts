@@ -42,49 +42,49 @@ import { Cartesian, Pie, Scatter } from './sections'
 
 const dataOne = [
     {
-        name: 'Page A', one: 4000, two: -2400, three: 2300,
+        name: 'Page A', one: 4000, two: -2400, three: 2300, four: 1200, five: 2300,
     },
     {
-        name: 'Page B', one: 3000, two: 2210, three: 1398,
+        name: 'Page B', one: 3000, two: 2210, three: 1398, four: 1200, five: 1398,
     },
     {
-        name: 'Page C', one: 9800, two: 2200, three: 0,
+        name: 'Page C', one: 9800, two: 2200, three: 0, four: 1200, five: 0,
     },
     {
-        name: 'Page D', one: 2780, two: 3908, three: 2000,
+        name: 'Page D', one: 2780, two: 3908, three: 2000, four: 1200, five: 2000,
     },
     {
-        name: 'Page E', one: 1890, two: 4800, three: 1700,
+        name: 'Page E', one: 1890, two: 4800, three: 1700, four: 1200, five: 1700,
     },
     {
-        name: 'Page F', one: -2390, two: 3800, three: -2500,
+        name: 'Page F', one: -2390, two: 3800, three: -2500, four: 1200, five: 2500,
     },
     {
-        name: 'Page G', one: 3490, two: 4300, three: 2100,
+        name: 'Page G', one: 3490, two: 4300, three: 2100, four: 1200, five: 2100,
     },
 ]
 
 const dataTwo = [
     {
-        name: 'Page A', one: 3000, two: 1400, three: 400,
+        name: 'Page A', one: 3000, two: 1400, three: 400, four: 1200, five: 2300,
     },
     {
-        name: 'Page B', one: 2000, two: 2398, three: 1210,
+        name: 'Page B', one: 2000, two: 2398, three: 1210, four: 1200, five: 1398,
     },
     {
-        name: 'Page C', one: 2500, two: 8800, three: 1290,
+        name: 'Page C', one: 2500, two: 8800, three: 1290, four: 1200, five: 0,
     },
     {
-        name: 'Page D', one: 1780, two: 1908, three: 2000,
+        name: 'Page D', one: 1780, two: 1908, three: 2000, four: 1200, five: 2000,
     },
     {
-        name: 'Page E', one: 4890, two: 8800, three: 5700,
+        name: 'Page E', one: 4890, two: 8800, three: 5700, four: 1200, five: 1700,
     },
     {
-        name: 'Page F', one: 5390, two: 6800, three: 7500,
+        name: 'Page F', one: 5390, two: 6800, three: 7500, four: 1200, five: 2500,
     },
     {
-        name: 'Page G', one: 8490, two: 6300, three: 6100,
+        name: 'Page G', one: 8490, two: 6300, three: 6100, four: 1200, five: 2100,
     },
 ]
 

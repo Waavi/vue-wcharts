@@ -214,6 +214,7 @@ sidebarDepth: 3
 | labelAlign | oneOf(['start', 'middle', 'end']) | middle | The horizontal position of the label |
 | labelPosition | oneOf(['inside', 'outside']) | outside | The vertical position of the label. If the chart is stacked the label position will be `inside` |
 | labelStyles | object | ```{ fill: '#333', cursor: 'default' }``` | The styles of the label |
+| stacked | bool | false | If true set, the bar is stacked |
 | showStackedLabel | bool | false | If the chart is stacked, the bar is the last one and `showStackedLabel` is set to true, the label of the whole bar will be drawn |
 | stackedLabelSize | number | 12 | The font size of the stacked label |
 | stackedLabelAlign | oneOf(['start', 'middle', 'end']) | middle | The horizontal position of the stacked label |

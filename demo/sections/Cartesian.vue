@@ -2,31 +2,46 @@
     <WCartesian
         :dataset="data"
         responsive
-        stacked
+        :bound="[0]"
     >
-        <WLine
+        <!-- <WLine
             datakey="two"
             area
             dot
             legend="One Line"
-        />
+        /> -->
         <WBar
-            legend="One Bar"
+            stacked
             datakey="one"
+            legend="One Bar"
             showLabel
-            :width="30"
+            :width="40"
         />
         <WBar
             datakey="two"
             legend="Two Bar"
             showLabel
-            :width="30"
+            :width="40"
         />
         <WBar
+            stacked
             datakey="three"
             legend="Three Bar"
             showLabel
-            :width="30"
+            :width="40"
+        />
+        <WBar
+            datakey="four"
+            legend="Four Bar"
+            showLabel
+            :width="40"
+        />
+        <WBar
+            stacked
+            datakey="five"
+            legend="Five Bar"
+            showLabel
+            :width="40"
         />
         <WXAxis
             datakey="name"

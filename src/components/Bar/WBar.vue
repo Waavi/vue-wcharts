@@ -125,6 +125,7 @@ export default {
     props: {
         datakey: VueTypes.string.isRequired,
         legend: VueTypes.string, // Prop to apply filters
+        stacked: VueTypes.bool.def(false),
         showLabel: VueTypes.bool.def(false),
         labelSize: VueTypes.number.def(12),
         labelAlign: VueTypes.oneOf(['start', 'middle', 'end']).def('middle'),
@@ -147,12 +148,27 @@ export default {
         const {
             snap, colors, dataset,
         } = parent
-        const { datakey, color } = props
+        const { datakey, color, stacked } = props
+
+        const isStacked = stacked !== undefined && stacked !== false
 
         // Added id of bars
         snap.barIds = [].concat(snap.barIds || [], index)
-        // Set datakeys by id
-        snap.barsByDatakeys = { ...snap.barsByDatakeys, [index]: datakey }
+        if (isStacked) snap.stackedBarIds = [].concat(snap.stackedBarIds || [], index)
+
+        // Position of the bar
+        // If bar isn`t stacked or is the first stacked bar, search for the next position available
+        // If bar is stacked and is not the first one, serch for the position of the stacked bar
+        let position = 0
+        if (snap.barIds.length > 1) {
+            position = (!isStacked || (isStacked && snap.stackedBarIds.length === 1))
+                ? Math.max(...Object.values(snap.barsByIndex).map(bar => bar.position)) + 1
+                : snap.barsByIndex[snap.stackedBarIds[0]].position
+        }
+
+        // Set datakeys and position by index
+        snap.barsByIndex = { ...snap.barsByIndex, [index]: { datakey, position } }
+        if (isStacked) snap.stackedBarsByIndex = { ...snap.stackedBarsByIndex, [index]: { datakey, position } }
 
         // Set colors
         if (!snap.barsDatakeysColors) snap.barsDatakeysColors = []
@@ -181,21 +197,16 @@ export default {
         // Margin
         margin () {
             const { adjustedWidth, offset } = this
-            const { stacked, numberOfBars } = this.Chart
+            const { numberOfBarsPerGroup } = this.Chart
 
-            return stacked
-                ? -adjustedWidth / 2
-                : offset - (numberOfBars * adjustedWidth / 2)
+            return offset - (numberOfBarsPerGroup * adjustedWidth / 2)
         },
         // Offset
         offset () {
             const { id, adjustedWidth } = this
-            const { snap, stacked } = this.Chart
-            const index = snap.barIds.indexOf(id)
+            const { snap } = this.Chart
 
-            return stacked
-                ? adjustedWidth
-                : adjustedWidth * index
+            return adjustedWidth * snap.barsByIndex[id].position
         },
         // Adjusted width
         adjustedWidth () {
@@ -299,13 +310,13 @@ export default {
             // Not render inside label if doesnt enter correctly
             if (this.isLabelInside && Math.abs(height) < this.labelSize * 2) return undefined
             // Warn user if set inside position on stacked bar chart: forbidden position
-            if (!this.isLabelInside && this.Chart.stacked) {
+            if (!this.isLabelInside && this.stacked) {
                 console.warn("labelPosition cannot be set to 'outside' position on stacked bar chart")
                 return undefined
             }
 
             // Calc position of label [x, y]
-            const top = (this.Chart.stacked || this.isLabelInside ? -(this.labelSize) : this.labelSize)
+            const top = (this.stacked || this.isLabelInside ? -(this.labelSize) : this.labelSize)
             const x0 = x + this.adjustedWidth / 2
             const y1 = y + this.labelSize / 2 + (height > 0 ? -top : top)
 
@@ -320,7 +331,7 @@ export default {
         }) {
             if (
                 !this.showStackedLabel ||
-                !this.Chart.stacked ||
+                !this.stacked ||
                 stackedValue === 0 || // Hide labels if value it's zero
                 this.id !== this.getLastBarActive() || // Only last bar shown the stacked label
                 (this.showLabel && !this.isLabelInside) // If label is printed outside, not render staked label
@@ -340,14 +351,14 @@ export default {
         // Set active element
         handleMouseEnter (event) {
             const {
-                stacked, stackedCurData, otherCurData, setActive, snap, axis,
+                stackedCurData, otherCurData, setActive, snap, axis,
             } = this.Chart
             const { id } = event.target
             const line = this.Chart.dataset[id]
             const label = line[axis.x.datakey]
 
             // Generate tooltip config
-            const values = (stacked ? stackedCurData : otherCurData).map((item) => {
+            const values = (this.stacked ? stackedCurData : otherCurData).map((item) => {
                 const { key } = item
                 const color = snap.barsDatakeysColors[key][id]
                 const value = item[id].data[key]
@@ -358,7 +369,7 @@ export default {
                 }
             })
             // Set multiple values if has stacked bars, or set only one value
-            const value = stacked ? values : [values.find(v => v.key === this.datakey)]
+            const value = this.stacked ? values : [values.find(v => v.key === this.datakey)]
             // Set active bar to show tooltip
             setActive({ id: this.id, label, value }, event)
         },
