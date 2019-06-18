@@ -100,3 +100,29 @@ storiesOf('Pie', module)
             </div>
             `,
     }))
+    .add('Angle', () => ({
+        components: {
+            WPieChart,
+            WPie,
+            WTooltip,
+        },
+        data () {
+            return {
+                data,
+            }
+        },
+        template: `
+            <div class="Container">
+                <WPieChart
+                    :dataset="data"
+                >
+                    <WPie
+                        datakey="one"
+                        :radius="[120, 150]"
+                        :angles="[-Math.PI / 2, Math.PI / 2]"
+                    />
+                    <WTooltip />
+                </WPieChart>
+            </div>
+            `,
+    }))
