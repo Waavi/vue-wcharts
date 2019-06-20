@@ -131,6 +131,15 @@ export default {
             ...dotStylesDefaultProp,
         })),
     },
+    // It's called by parent components to necessary calcs before be rendering
+    // Componen is not mounted and cannot access to default props
+    preload ({ parent, props, index }) {
+        const { snap } = parent
+        const { datakey } = props
+
+        // Set datakeys by index
+        snap.linesByIndex = { ...snap.linesByIndex, [index]: { datakey } }
+    },
     computed: {
         index () {
             return this.$vnode.index
