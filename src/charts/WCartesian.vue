@@ -174,7 +174,7 @@ export default {
         positionsPerGroupOfBars () {
             const stackedBars = Object.values((this.snap || {}).stackedBarIds || []).filter(b => this.activeElements.includes(b))
             const positions = Object.values((this.snap || {}).barIds || []).filter(b => this.activeElements.includes(b) && !stackedBars.includes(b))
-            positions.splice(positions.filter(b => b < stackedBars[0]).length, 0, stackedBars)
+            if (stackedBars.length) positions.splice(positions.filter(b => b < stackedBars[0]).length, 0, stackedBars)
             return positions
         },
     },

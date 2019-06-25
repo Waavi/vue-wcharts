@@ -190,9 +190,7 @@ export default {
         xPosition () {
             const { id, stacked } = this
             const { positionsPerGroupOfBars } = this.Chart
-            return stacked
-                ? positionsPerGroupOfBars.indexOf(positionsPerGroupOfBars.find(item => Array.isArray(item)))
-                : positionsPerGroupOfBars.indexOf(positionsPerGroupOfBars.find(item => (item === id))) - 1
+            return positionsPerGroupOfBars.indexOf(positionsPerGroupOfBars.find(item => (!stacked ? item === id : Array.isArray(item))))
         },
         // Margin
         margin () {
