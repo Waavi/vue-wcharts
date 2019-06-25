@@ -17,7 +17,7 @@
                         height: 0,
                         width: 0,
                         y: y,
-                        x: bar.x + adjustedWidth / (Chart.numberOfBarsPerGroup - xPosition),
+                        x: bar.x + (adjustedWidth / 2) / (Chart.numberOfBarsPerGroup - xPosition),
                     }"
                     :transition="transition"
                 >
@@ -190,7 +190,9 @@ export default {
         xPosition () {
             const { id, stacked } = this
             const { positionsPerGroupOfBars } = this.Chart
-            return positionsPerGroupOfBars.indexOf(positionsPerGroupOfBars.find(item => (!stacked ? item === id : Array.isArray(item))))
+            return stacked
+                ? positionsPerGroupOfBars.indexOf(positionsPerGroupOfBars.find(item => Array.isArray(item)))
+                : positionsPerGroupOfBars.indexOf(positionsPerGroupOfBars.find(item => (item === id))) - 1
         },
         // Margin
         margin () {
