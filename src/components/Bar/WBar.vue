@@ -345,14 +345,14 @@ export default {
         // Set active element
         handleMouseEnter (event) {
             const {
-                stackedCurData, otherCurData, setActive, snap, axis,
+                stackedCurData, barsCurData, setActive, snap, axis,
             } = this.Chart
             const { id } = event.target
             const line = this.Chart.dataset[id]
             const label = line[axis.x.datakey]
 
             // Generate tooltip config
-            const values = (this.stacked ? stackedCurData : otherCurData).map((item) => {
+            const values = (this.stacked ? stackedCurData : barsCurData).map((item) => {
                 const { key } = item
                 const color = snap.barsDatakeysColors[key][id]
                 const value = item[id].data[key]

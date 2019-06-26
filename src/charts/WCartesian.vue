@@ -121,49 +121,27 @@ export default {
 
             return gap
         },
-        // Return stacked data without transform of datakeys and dataset props
-        // ref: https://github.com/d3/d3-shape#stacks
         stackedCurData () {
-            const stackDatakeys = Object.entries((this.snap || {}).stackedBarsByIndex || [])
-                .filter(([index, value]) => this.activeElements.includes(parseInt(index, 10)))
-                .map(([index, value]) => value.datakey)
-
-            return stack()
-                .keys(stackDatakeys)
-                .offset(stackOffsetDiverging)(this.dataset)
+            const stackDatakeys = this.getActiveElementsDatakeys(this.snap.stackedBarsByIndex)
+            return this.getDataStacked(stackDatakeys, stackOffsetDiverging)
         },
-        // Return bars data without stacked bars and without transform of datakeys and dataset props
-        // ref: https://github.com/d3/d3-shape#stacks
         barsCurData () {
-            const stackDatakeys = Object.values((this.snap || {}).stackedBarsByIndex || []).map(b => b.datakey)
-            const barsDatakeys = Object.entries((this.snap || {}).barsByIndex || [])
+            const stackDatakeys = Object.values(this.snap.stackedBarsByIndex || []).map(b => b.datakey)
+            const barsDatakeys = this.getActiveElementsDatakeys(this.snap.barsByIndex)
                 .filter(([index, value]) => !stackDatakeys.includes(value.datakey))
-                .filter(([index, value]) => this.activeElements.includes(parseInt(index, 10)))
-                .map(([index, value]) => value.datakey)
-
-            return stack()
-                .keys(barsDatakeys)
-                .offset(noop)(this.dataset)
+            return this.getDataStacked(barsDatakeys)
         },
-        // Return lines data without transform of datakeys and dataset props
-        // ref: https://github.com/d3/d3-shape#stacks
         linesCurData () {
-            const linesDatakeys = Object.entries((this.snap || {}).linesByIndex || [])
-                .filter(([index, value]) => this.activeElements.includes(parseInt(index, 10)))
-                .map(([index, value]) => value.datakey)
-
-            return stack()
-                .keys(linesDatakeys)
-                .offset(noop)(this.dataset)
+            const linesDatakeys = this.getActiveElementsDatakeys(this.snap.linesByIndex || [])
+            return this.getDataStacked(linesDatakeys)
         },
-
         curData () {
             return [...this.stackedCurData, ...this.barsCurData, ...this.linesCurData]
         },
         // Return number of bars per group. If is stacked, 'numberOfBars' is one.
         numberOfBarsPerGroup () {
-            const bars = Object.values((this.snap || {}).barIds || []).filter(b => this.activeElements.includes(b)).length
-            const stackedBars = Object.values((this.snap || {}).stackedBarIds || []).filter(b => this.activeElements.includes(b)).length
+            const bars = this.getActiveElements(this.snap.barIds).length
+            const stackedBars = this.getActiveElements(this.snap.stackedBarIds).length
             return bars - stackedBars + (stackedBars ? 1 : 0)
         },
         // Return max possible bar width saving space between group of bars
@@ -172,8 +150,8 @@ export default {
         },
         // Return position of bars per group
         positionsPerGroupOfBars () {
-            const stackedBars = Object.values((this.snap || {}).stackedBarIds || []).filter(b => this.activeElements.includes(b))
-            const positions = Object.values((this.snap || {}).barIds || []).filter(b => this.activeElements.includes(b) && !stackedBars.includes(b))
+            const stackedBars = this.getActiveElements(this.snap.stackedBarIds)
+            const positions = this.getActiveElements(this.snap.barIds).filter(b => !stackedBars.includes(b))
             if (stackedBars.length) positions.splice(positions.filter(b => b < stackedBars[0]).length, 0, stackedBars)
             return positions
         },
@@ -198,6 +176,20 @@ export default {
             if (typeof val === 'function') return val(result)
 
             return result
+        },
+        // Return list of datakeys of an array of active elements (bar, stacked bars or lines)
+        getActiveElementsDatakeys (elements) {
+            return Object.entries(elements || [])
+                .filter(([index, value]) => this.activeElements.includes(parseInt(index, 10)))
+                .map(([index, value]) => value.datakey)
+        },
+        getActiveElements (ids) {
+            return ids ? Object.values(ids).filter(b => this.activeElements.includes(b)) : []
+        },
+        // Return data without transform of datakeys and dataset props
+        // ref: https://github.com/d3/d3-shape#stacks
+        getDataStacked (datakeys, offset = noop) {
+            return stack().keys(datakeys).offset(offset)(this.dataset)
         },
     },
     render (h) {
