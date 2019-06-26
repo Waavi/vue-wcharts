@@ -15,7 +15,9 @@
                 <WTrans
                     :initialProps="{
                         height: 0,
-                        y
+                        width: 0,
+                        y: y,
+                        x: bar.x + (adjustedWidth / 2) / (Chart.numberOfBarsPerGroup - xPosition),
                     }"
                     :transition="transition"
                 >
@@ -156,19 +158,9 @@ export default {
         snap.barIds = [].concat(snap.barIds || [], index)
         if (isStacked) snap.stackedBarIds = [].concat(snap.stackedBarIds || [], index)
 
-        // Position of the bar
-        // If bar isn`t stacked or is the first stacked bar, search for the next position available
-        // If bar is stacked and is not the first one, serch for the position of the stacked bar
-        let position = 0
-        if (snap.barIds.length > 1) {
-            position = (!isStacked || (isStacked && snap.stackedBarIds.length === 1))
-                ? Math.max(...Object.values(snap.barsByIndex).map(bar => bar.position)) + 1
-                : snap.barsByIndex[snap.stackedBarIds[0]].position
-        }
-
-        // Set datakeys and position by index
-        snap.barsByIndex = { ...snap.barsByIndex, [index]: { datakey, position } }
-        if (isStacked) snap.stackedBarsByIndex = { ...snap.stackedBarsByIndex, [index]: { datakey, position } }
+        // Set datakeys by index
+        snap.barsByIndex = { ...snap.barsByIndex, [index]: { datakey } }
+        if (isStacked) snap.stackedBarsByIndex = { ...snap.stackedBarsByIndex, [index]: { datakey } }
 
         // Set colors
         if (!snap.barsDatakeysColors) snap.barsDatakeysColors = []
@@ -194,19 +186,21 @@ export default {
             const min = Math.max(bounds.min, 0)
             return yScale(min)
         },
+        // Get postition of the bar in every group of bars
+        xPosition () {
+            const { id, stacked } = this
+            const { positionsPerGroupOfBars } = this.Chart
+            return positionsPerGroupOfBars.indexOf(positionsPerGroupOfBars.find(item => (!stacked ? item === id : Array.isArray(item))))
+        },
         // Margin
         margin () {
             const { adjustedWidth, offset } = this
             const { numberOfBarsPerGroup } = this.Chart
-
             return offset - (numberOfBarsPerGroup * adjustedWidth / 2)
         },
         // Offset
         offset () {
-            const { id, adjustedWidth } = this
-            const { snap } = this.Chart
-
-            return adjustedWidth * snap.barsByIndex[id].position
+            return this.adjustedWidth * this.xPosition
         },
         // Adjusted width
         adjustedWidth () {
@@ -351,14 +345,14 @@ export default {
         // Set active element
         handleMouseEnter (event) {
             const {
-                stackedCurData, otherCurData, setActive, snap, axis,
+                stackedCurData, barsCurData, setActive, snap, axis,
             } = this.Chart
             const { id } = event.target
             const line = this.Chart.dataset[id]
             const label = line[axis.x.datakey]
 
             // Generate tooltip config
-            const values = (this.stacked ? stackedCurData : otherCurData).map((item) => {
+            const values = (this.stacked ? stackedCurData : barsCurData).map((item) => {
                 const { key } = item
                 const color = snap.barsDatakeysColors[key][id]
                 const value = item[id].data[key]
