@@ -191,6 +191,11 @@ sidebarDepth: 3
     | Chart | Chart api (WCartesian reference) |
     | transition | CSS transition value |
 
+### Events
+| Property | Arguments | Description |
+|----------|------------|------------|
+| onClickDot | Dot info prop | Event emitted on click WDot |
+
 ## WBar
 
 *Bar component.*
@@ -428,6 +433,11 @@ sidebarDepth: 3
 | styles | object | Required property | ```{fill: '',stroke: '',strokeWidth: 0,radius: 4,hoverRadius: 8}``` | X coordinate |
 | transition | string | Required property | *all 200ms ease*| CSS transition value |
 | info | object | | ```{ id: 1, label: 'Page A', value: 5400}```| Info for active element, normally for the Tooltip. |
+
+### Events
+| Property | Arguments | Description |
+|----------|------------|------------|
+| onClickDot | Dot info prop | Event emitted on click dot |
 
 ## WTickText
 

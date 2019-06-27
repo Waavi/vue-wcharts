@@ -63,8 +63,10 @@
                             strokeWidth: dotStylesCmp.strokeWidth,
                             radius: dotStylesCmp.radius,
                             hoverRadius: dotStylesCmp.hoverRadius,
+                            cursor: dotStylesCmp.cursor,
                         }"
                         :transition="`all 250ms ${transEffect}`"
+                        @onClick="$emit('onClickDot', $event)"
                     />
                 </slot>
             </template>
@@ -96,6 +98,7 @@ const dotStylesDefaultProp = {
     strokeWidth: 2,
     radius: 4,
     hoverRadius: 8,
+    cursor: 'default',
 }
 
 export default {
@@ -127,6 +130,7 @@ export default {
             strokeWidth: VueTypes.number,
             radius: VueTypes.number,
             hoverRadius: VueTypes.number,
+            cursor: VueTypes.string,
         }).def(() => ({
             ...dotStylesDefaultProp,
         })),
