@@ -154,8 +154,8 @@ export default {
                 z: axis.z.datakey ? zScale(item[axis.z.datakey]) : this.stylesCmp.radius,
                 value: item[axis.y.datakey],
                 info: {
-                    id: this.index,
-                    label: '',
+                    id: index,
+                    label: item.name || '',
                     value: [
                         this.generateAxisValue(axis.x, item[axis.x.datakey], color),
                         this.generateAxisValue(axis.y, item[axis.y.datakey], color),
