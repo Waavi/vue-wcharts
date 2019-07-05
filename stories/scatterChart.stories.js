@@ -73,6 +73,50 @@ storiesOf('Charts/Scatter', module)
             </WCartesian>
         `,
     }))
+    .add('With line', () => ({
+        components: {
+            WCartesianGrid,
+            WTooltip,
+            WCartesian,
+            WScatter,
+            WXAxis,
+            WYAxis,
+            WZAxis,
+            WLegend,
+        },
+        data () {
+            return {
+                data,
+            }
+        },
+        template: `
+           <WCartesian
+                :dataset="data"
+                responsive
+                scatter
+                :bound="[n => n - 1000,n => n + 1000]"
+                :xBound="[n => n - 1000,n => n + 1000]"
+            >
+                <WCartesianGrid />
+                <WScatter line legend="One Scatter" />
+                <WXAxis
+                    name="one"
+                    datakey="one"
+                    :space="[0, 50, 80, 50]"
+                />
+                <WYAxis
+                    name="two"
+                    datakey="two"
+                    :space="[25, 0, 0, 50]"
+                />
+                <WTooltip />
+                <WLegend
+                    position="top"
+                    align="end"
+                />
+            </WCartesian>
+        `,
+    }))
     .add('Three Dimensions', () => ({
         components: {
             WCartesianGrid,
