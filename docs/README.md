@@ -1,7 +1,7 @@
 ---
 home: true
-heroImage: /mountains.png
-heroText: WCharts
+heroImage: /square-logo.png
+heroText: by WAAVI
 description: Customizable & composable charts for VueJS
 actionText: Get Started
 actionLink: /guide/getting-started
