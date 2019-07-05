@@ -374,6 +374,11 @@ sidebarDepth: 3
     | Chart | Chart api (WCartesian reference) |
     | transition | CSS transition value |
 
+### Events
+| Property | Arguments | Description |
+|----------|------------|------------|
+| onClickDot | Dot info prop | Event emitted on click WDot |
+
 ## WMarker
 
 *Component to show a reference line in the chart.*

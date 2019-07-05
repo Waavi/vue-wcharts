@@ -48,6 +48,7 @@
                             hoverRadius: dotItem.z,
                         }"
                         :transition="`all 250ms ${transEffect}`"
+                        @onClick="$emit('onClickDot', $event)"
                     />
                 </slot>
             </template>
