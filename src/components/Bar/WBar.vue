@@ -312,7 +312,7 @@ export default {
             // Calc position of label [x, y]
             const top = (this.stacked || this.isLabelInside ? -(this.labelSize) : this.labelSize)
             const x0 = x + this.adjustedWidth / 2
-            const y1 = y + this.labelSize / 2 + (height > 0 ? -top : top)
+            const y1 = y + this.labelSize / 2 + (height >= 0 ? -top : top)
 
             return {
                 x: x0,
