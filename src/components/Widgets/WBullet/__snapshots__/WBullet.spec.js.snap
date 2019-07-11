@@ -1,3 +1,3 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Widgets/WBullet Should be render correctly 1`] = `<span class="WBullet" style="display: inline-block; width: 8px; height: 8px; background: black; border-radius: 50%; border-width: 2px; border-color: white; border-style: solid; margin: 0px 8px 0px 0px;"></span>`;
+exports[`Widgets/WBullet Should be render correctly 1`] = `<span class="WBullet" style="background: black;"></span>`;

@@ -2,19 +2,19 @@
     <a
         class="WLegendItem"
         :title="text"
-        :class="{ active }"
-        :style="styles"
+        :style="legendItemStylesCmp"
         @click.prevent="$emit('onClick', { text, index })"
         @mouseenter="$emit('onMouseenter', { text, index })"
         @mouseleave="$emit('onMouseleave', { text, index })"
+        v-on="$listeners"
     >
         <slot
             name="bullet"
             :index="index"
             :text="text"
-            :color="colorCmp"
+            :color="bulletColor"
         >
-            <WBullet :styles="{ borderColor: colorCmp }" />
+            <WBullet :styles="{ borderColor: bulletColor, ...bulletStylesCmp }" />
         </slot>
         <slot :text="text">
             <span class="Text">{{ text }}</span>
@@ -24,8 +24,8 @@
 
 <script>
 import VueTypes from 'vue-types'
-import themeMixin from '../../mixins/theme'
-import WBullet from './WBullet/WBullet.vue'
+import themeMixin from '../../../mixins/theme'
+import WBullet from '../WBullet/WBullet.vue'
 
 export default {
     name: 'WLegendItem',
@@ -37,13 +37,26 @@ export default {
         index: VueTypes.oneOfType([Number, String]),
         text: VueTypes.string,
         active: VueTypes.bool.def(false),
-        styles: VueTypes.object,
-        textStyles: VueTypes.object,
         color: VueTypes.string,
+        styles: VueTypes.object.def({}),
+        bulletStyles: VueTypes.object.def({}),
     },
     computed: {
+        legendItemStylesCmp () {
+            return {
+                ...this.themeStyles.styles,
+                ...this.styles,
+                ...(this.active ? { opacity: '1' } : { }),
+            }
+        },
+        bulletStylesCmp () {
+            return {
+                ...this.themeStyles.bulletStyles,
+                ...this.bulletStyles,
+            }
+        },
         // Get color value. Color prop, Color theme by index or color by defualt
-        colorCmp () {
+        bulletColor () {
             if (this.color) return this.color
             if (this.index) return this.colors[this.index]
             return this.colors[0]
@@ -51,18 +64,3 @@ export default {
     },
 }
 </script>
-
-<style scoped lang="scss">
-.WLegendItem {
-    display: flex;
-    align-items: center;
-    font-size: 12px;
-    opacity: .5;
-    transition: opacity .3s ease;
-    cursor: pointer;
-
-    &.active {
-        opacity: 1;
-    }
-}
-</style>

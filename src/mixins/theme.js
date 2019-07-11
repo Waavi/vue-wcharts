@@ -4,6 +4,12 @@ import { colors, theme } from '../config'
 export default {
     props: {
         colors: VueTypes.array.def(() => colors),
-        themeStyles: VueTypes.object.def(() => theme),
+    },
+    data () {
+        // eslint-disable-next-line no-underscore-dangle
+        const name = this.$options._componentTag
+        return {
+            themeStyles: theme[name] || {},
+        }
     },
 }

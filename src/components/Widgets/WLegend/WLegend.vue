@@ -2,24 +2,24 @@
     <div
         v-if="!!Chart.legends.length"
         class="WLegend"
-        :style="styles.component"
+        :style="stylesCmp.component"
     >
         <ul
             class="Wrapper"
-            :style="styles.wrapper"
+            :style="stylesCmp.wrapper"
         >
             <li
                 v-for="(legend, index) in Chart.legends"
                 :key="legend"
                 class="Legend"
-                :class="[position]"
+                :style="stylesCmp.legend"
             >
                 <WLegendItem
                     :key="index"
                     :index="index"
                     :text="legend"
                     :active="Chart.activeElements.includes(index)"
-                    :style="legendStyles"
+                    :style="legendStylesCmp"
                     :colors="colors"
                     @onClick="handleClick"
                 >
@@ -30,7 +30,7 @@
                             :text="text"
                             :color="color"
                         >
-                            <WBullet :styles="{ borderColor: color }" />
+                            <WBullet :styles="{ ...bulletStylesCmp, borderColor: color }" />
                         </slot>
                     </template>
                 </WLegendItem>
@@ -42,9 +42,10 @@
 <script>
 import VueTypes from 'vue-types'
 import sortBy from 'lodash.sortby'
-import { toPx, getIsHorizontal, getSpacesByPos } from './utils'
-import WLegendItem from './WLegendItem.vue'
-import WBullet from './WBullet/WBullet.vue'
+import { toPx, getIsHorizontal, getSpacesByPos } from '../utils'
+import WLegendItem from '../WLegendItem/WLegendItem.vue'
+import WBullet from '../WBullet/WBullet.vue'
+import themeMixin from '../../../mixins/theme'
 
 export default {
     name: 'WLegend',
@@ -54,16 +55,19 @@ export default {
         WLegendItem,
         WBullet,
     },
+    mixins: [themeMixin],
     props: {
         position: VueTypes.oneOf(['top', 'bottom', 'left', 'right']).def('bottom'),
         align: VueTypes.oneOf(['start', 'center', 'end']).def('center'),
         space: VueTypes.arrayOf(VueTypes.number).def([16, 16, 16, 16]),
         size: VueTypes.number, // Width or height, with different positiion prop top-bottom/left-right
         selectable: VueTypes.bool.def(false),
-        componentsStyles: VueTypes.object,
-        wrapperStyles: VueTypes.object,
-        legendStyles: VueTypes.object,
         colors: VueTypes.arrayOf(VueTypes.string),
+        // Styles
+        styles: VueTypes.object.def({}),
+        wrapperStyles: VueTypes.object.def({}),
+        legendStyles: VueTypes.object.def({}),
+        bulletStyles: VueTypes.object.def({}),
     },
     preload ({ parent, props, index }) {
         const { position, size, space } = props
@@ -79,19 +83,8 @@ export default {
         const spaces = getSpacesByPos(position, { width, height }, parent.spaceObjects)
         parent.addSpace(spaces)
     },
-    data () {
-        return {
-            styles: {},
-        }
-    },
-    mounted () {
-        this.fetchStyles()
-    },
-    methods: {
-        /*
-        *  Fetch and calc styles
-        */
-        fetchStyles () {
+    computed: {
+        stylesCmp () {
             const { position, align, size } = this
             const isHorizontal = getIsHorizontal(position)
             // Positions
@@ -110,21 +103,40 @@ export default {
                 horizontal: { flexDirection: 'row', padding: [0, toPx(rightParent), 0, toPx(leftParent)].join(' ') },
             }
 
-            this.styles = {
+            return {
                 component: {
                     top: !isHorizontal ? 0 : null,
                     [position]: toPx(spaces[position]),
                     width,
                     height,
-                    ...this.componentsStyles,
+                    ...this.themeStyles.styles,
+                    ...this.styles,
                 },
                 wrapper: {
                     ...aligns[isHorizontal ? 'horizontal' : 'vertical'],
                     justifyContent,
+                    ...this.themeStyles.wrapperStyles,
                     ...this.wrapperStyles,
+                },
+                legend: {
+                    margin: !isHorizontal ? '.5rem 0 0 0' : '0 0 0 .75rem',
                 },
             }
         },
+        legendStylesCmp () {
+            return {
+                ...this.themeStyles.legendStyles,
+                ...this.legendStyles,
+            }
+        },
+        bulletStylesCmp () {
+            return {
+                ...this.themeStyles.bulletStyles,
+                ...this.bulletStyles,
+            }
+        },
+    },
+    methods: {
         /*
         *  Handle on click legend, if has selectable prop true
         */
@@ -140,30 +152,3 @@ export default {
     },
 }
 </script>
-
-<style scoped lang="scss">
-.WLegend {
-    position: absolute;
-    display: flex;
-}
-
-.Wrapper {
-    display: flex;
-    flex: 1;
-    padding: 0;
-    margin: 0;
-    list-style: none;
-}
-
-.Legend {
-    line-height: 1.2;
-
-    &.left + &.left, &.right + &.right {
-        margin: .5rem 0 0 0;
-    }
-
-    &.top + &.top, &.bottom + &.bottom {
-        margin: 0 0 0 .75rem;
-    }
-}
-</style>

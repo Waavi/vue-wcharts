@@ -1,7 +1,7 @@
 <template>
     <span
         class="WBullet"
-        :style="bulletStyles"
+        :style="bulletStylesCmp"
     />
 </template>
 
@@ -18,9 +18,9 @@ export default {
         styles: VueTypes.object.def({}),
     },
     computed: {
-        bulletStyles () {
+        bulletStylesCmp () {
             return {
-                ...this.themeStyles.bullet,
+                ...this.themeStyles.styles,
                 ...this.styles,
             }
         },
