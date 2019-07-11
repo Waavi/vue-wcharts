@@ -30,10 +30,7 @@
                             :text="text"
                             :color="color"
                         >
-                            <WBullet
-                                :borderColor="color"
-                                color="white"
-                            />
+                            <WBullet :styles="{ borderColor: color }" />
                         </slot>
                     </template>
                 </WLegendItem>
@@ -47,7 +44,7 @@ import VueTypes from 'vue-types'
 import sortBy from 'lodash.sortby'
 import { toPx, getIsHorizontal, getSpacesByPos } from './utils'
 import WLegendItem from './WLegendItem.vue'
-import WBullet from './WBullet.vue'
+import WBullet from './WBullet/WBullet.vue'
 
 export default {
     name: 'WLegend',

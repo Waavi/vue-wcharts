@@ -63,7 +63,7 @@
                 <template #default="{ value: [first] }">
                     <div class="Wrapper">
                         <div class="TooltipItem">
-                            <WBullet :color="first.color" />
+                            <WBullet :styles="{ background: first.color }" />
                             <slot
                                 name="tooltip"
                                 v-bind="first"

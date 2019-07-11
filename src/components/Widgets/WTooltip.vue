@@ -27,10 +27,7 @@
                         name="bullet"
                         v-bind="value"
                     >
-                        <WBullet
-                            color="white"
-                            :borderColor="value.color"
-                        />
+                        <WBullet :styles="{ borderColor: value.color }" />
                     </slot>
 
                     <slot
@@ -47,7 +44,7 @@
 
 <script>
 import VueTypes from 'vue-types'
-import WBullet from './WBullet.vue'
+import WBullet from './WBullet/WBullet.vue'
 import { toPx } from './utils'
 
 export default {

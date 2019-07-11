@@ -14,10 +14,7 @@
             :text="text"
             :color="colorCmp"
         >
-            <WBullet
-                :borderColor="colorCmp"
-                color="white"
-            />
+            <WBullet :styles="{ borderColor: colorCmp }" />
         </slot>
         <slot :text="text">
             <span class="Text">{{ text }}</span>
@@ -28,7 +25,7 @@
 <script>
 import VueTypes from 'vue-types'
 import themeMixin from '../../mixins/theme'
-import WBullet from './WBullet.vue'
+import WBullet from './WBullet/WBullet.vue'
 
 export default {
     name: 'WLegendItem',
