@@ -44,8 +44,8 @@
 
 <script>
 import VueTypes from 'vue-types'
-import WBullet from './WBullet/WBullet.vue'
-import { toPx } from './utils'
+import WBullet from '../WBullet/WBullet.vue'
+import { toPx } from '../utils'
 
 export default {
     name: 'WTooltip',

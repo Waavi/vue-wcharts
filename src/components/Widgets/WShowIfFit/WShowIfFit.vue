@@ -24,7 +24,7 @@ export default {
 
             if (children.length) {
                 const childrenWidth = Object.keys(children).reduce((a, b) => a + children[b].offsetWidth, 0)
-                const parentWidth = parentNode.clientWidth
+                const parentWidth = (parentNode || {}).clientWidth || 0
                 this.hide = parentWidth < childrenWidth
             }
         },
