@@ -42,5 +42,6 @@ describe('Widgets/WShowIfFit', () => {
 
         wrapper.vm.handleSize()
         expect(wrapper.vm.hide).toBeTruthy()
+        expect(wrapper.html()).toMatchSnapshot()
     })
 })
