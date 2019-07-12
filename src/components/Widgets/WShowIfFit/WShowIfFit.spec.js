@@ -1,20 +1,11 @@
-import { mount, shallowMount } from '@vue/test-utils'
+import { shallowMount } from '@vue/test-utils'
 import WShowIfFit from './WShowIfFit.vue'
 
 describe('Widgets/WShowIfFit', () => {
     const propsData = {}
-    const Wrapper = {
-        name: 'Wrapper',
-        template: `
-            <div id="test" style="width: 200px; height: 50px;">
-                <slot></slot>
-            </div>
-        `,
-    }
     const Parent = {
         name: 'parent',
         components: {
-            Wrapper,
             WShowIfFit,
         },
         template: `
@@ -34,7 +25,7 @@ describe('Widgets/WShowIfFit', () => {
     }
 
     it(`Should be render correctly`, () => {
-        const wrapper = shallowMount(WShowIfFit, defaultConfig)
+        const wrapper = shallowMount(Parent, defaultConfig)
         expect(wrapper.html()).toMatchSnapshot()
     })
 })
