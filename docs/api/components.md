@@ -194,6 +194,8 @@ sidebarDepth: 3
 ### Events
 | Property | Arguments | Description |
 |----------|------------|------------|
+| onMouseEnter | $event | Event emitted on mouse enter in line or area line |
+| onMouseLeave | $event | Event emitted on mouse leave in line or area line |
 | onClickDot | Dot info prop | Event emitted on click WDot |
 
 ## WBar

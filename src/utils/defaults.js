@@ -12,6 +12,36 @@ const bulletStyles = {
 
 export default {
     themeStyles: {
+        WLine: {
+            styles: {
+                fill: '',
+                stroke: '',
+                strokeWidth: 2,
+                strokeDasharray: '0',
+            },
+            dot: {
+                fill: 'white',
+                stroke: '',
+                strokeWidth: 2,
+                radius: 4,
+                hoverRadius: 8,
+            },
+        },
+        WScatter: {
+            line: {
+                fill: '',
+                stroke: '',
+                strokeWidth: 1,
+                strokeDasharray: '0',
+            },
+            dot: {
+                fill: '',
+                stroke: '',
+                strokeWidth: 0,
+                radius: 8,
+                opacity: 0.8,
+            },
+        },
         WLegend: {
             styles: {
                 position: 'absolute',
@@ -38,6 +68,11 @@ export default {
         },
         WBullet: {
             styles: { ...bulletStyles },
+        },
+        WDot: {
+            styles: {
+                cursor: 'default',
+            },
         },
     },
 }
