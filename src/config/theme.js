@@ -16,7 +16,6 @@ const legendStyles = {
     display: 'flex',
     alignItems: 'center',
     fontSize: '12px',
-    opacity: '.5',
     cursor: 'pointer',
 }
 
@@ -57,7 +56,7 @@ export default {
     WBar: {
         styles: {},
         label: {
-            fill: '#333',
+            fill: colors.grayDarker,
             cursor: 'default',
         },
     },
@@ -81,19 +80,19 @@ export default {
     WZAxis: { ...axisStyles },
     WCartesianGrid: {
         styles: {
-            stroke: '#ccc',
+            stroke: colors.grayMedium,
             strokeWidth: 1,
             strokeDasharray: '3',
         },
     },
     WMarker: {
         styles: {
-            stroke: '#333',
+            stroke: colors.grayDarker,
             strokeWidth: 1,
             strokeDasharray: '0',
         },
         label: {
-            fill: '#333',
+            fill: colors.grayDarker,
             fontSize: 14,
         },
     },
@@ -103,7 +102,7 @@ export default {
             transform: 'translate(50%, 50%)',
         },
         path: {
-            stroke: '#FFF',
+            stroke: colors.white,
         },
     },
     WLegend: {
@@ -122,6 +121,7 @@ export default {
     },
     WLegendItem: {
         styles: { ...legendStyles },
+        noActive: { opacity: '0.5' },
         bulletStyles,
     },
     WTooltip: {
@@ -130,7 +130,7 @@ export default {
             display: 'flex',
             padding: '.5rem',
             borderRadius: '4px',
-            color: '#000',
+            color: colors.black,
             background: 'white',
             boxShadow: '0 2px 10px 0 rgba(0, 0, 0, 0.15)',
             fontSize: '14px',

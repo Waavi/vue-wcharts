@@ -1,8 +1,7 @@
 <template>
     <a
-        class="WLegendItem"
         :title="text"
-        :style="legendItemStylesCmp"
+        :style="stylesCmp"
         @click.prevent="$emit('onClick', { text, index })"
         @mouseenter="$emit('onMouseenter', { text, index })"
         @mouseleave="$emit('onMouseleave', { text, index })"
@@ -17,7 +16,7 @@
             <WBullet :styles="{ borderColor: bulletColor, ...bulletStylesCmp }" />
         </slot>
         <slot :text="text">
-            <span class="Text">{{ text }}</span>
+            <span>{{ text }}</span>
         </slot>
     </a>
 </template>
@@ -39,16 +38,17 @@ export default {
         text: VueTypes.string,
         active: VueTypes.bool.def(false),
         color: VueTypes.string,
-        styles: VueTypes.object.def({}),
-        bulletStyles: VueTypes.object.def({}),
+        styles: VueTypes.object,
+        noActiveStyles: VueTypes.object,
+        bulletStyles: VueTypes.object,
     },
     computed: {
-        legendItemStylesCmp () {
+        stylesCmp () {
             return {
                 transition: this.transition,
                 ...this.themeStyles.styles,
                 ...this.styles,
-                ...(this.active ? { opacity: '1' } : { }),
+                ...(this.active ? {} : { ...this.noActiveStyles, ...this.themeStyles.noActive }),
             }
         },
         bulletStylesCmp () {
