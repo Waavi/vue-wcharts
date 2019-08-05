@@ -81,6 +81,8 @@ export default {
     ],
     inject: ['Chart'],
     props: {
+        // internal props set by the parent (WCartesian)
+        index: VueTypes.number,
         datakey: VueTypes.string.isRequired,
         legend: VueTypes.string,
         curve: VueTypes.oneOfType([VueTypes.bool, VueTypes.func]).def(false),
@@ -125,9 +127,6 @@ export default {
         },
         fillColor () {
             return this.Chart.colors[this.index]
-        },
-        index () {
-            return this.$vnode.index
         },
         active () {
             return this.Chart.activeElements.includes(this.index)

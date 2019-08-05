@@ -8,9 +8,9 @@
         </foreignObject>
 
         <path
-            v-for="(path, index) in paths"
-            :id="index"
-            :key="index"
+            v-for="(path, i) in paths"
+            :id="i"
+            :key="i"
             :d="path.d"
             :fill="path.fill"
             :stroke="path.stroke"
@@ -39,6 +39,8 @@ export default {
     inject: ['Chart'],
     mixins: [themeMixin],
     props: {
+        // internal props set by the parent (WPieChart)
+        index: VueTypes.number,
         datakey: VueTypes.string.isRequired,
         angles: VueTypes.oneOfType([
             VueTypes.number,
@@ -73,13 +75,9 @@ export default {
                 ...omit(this.pathStyles, ['stroke']),
             }
         },
-        // Id cartesian elem
-        id () {
-            return this.$vnode.index
-        },
         // Active elem
         visible () {
-            return this.Chart.activeElements.includes(this.id)
+            return this.Chart.activeElements.includes(this.index)
         },
         curRadius () {
             const innerRadius = Array.isArray(this.radius) ? this.radius[0] : 0
