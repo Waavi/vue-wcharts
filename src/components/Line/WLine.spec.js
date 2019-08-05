@@ -1,12 +1,8 @@
-import { shallowMount, createLocalVue } from '@vue/test-utils'
-import WLine from './WLine.vue'
-import themeMixin from '../../mixins/theme'
-
-const localVue = createLocalVue()
-
-localVue.mixin(themeMixin)
+// import { shallowMount, createLocalVue } from '@vue/test-utils'
+// import WLine from './WLine.vue'
 
 describe('Components/WLine', () => {
+    /*
     const dataset = [
         {
             name: 'Page A', one: 4000, two: -2400, three: 2300, four: 1200, five: 2300,
@@ -46,15 +42,16 @@ describe('Components/WLine', () => {
         },
     }
 
-    const defaultConfig = {
+   const defaultConfig = {
         propsData,
         localVue,
         provide,
     }
     console.log(themeMixin)
+    */
 
     it(`Should be render correctly`, () => {
-       // const wrapper = shallowMount(WLine, defaultConfig)
-       // expect(wrapper.html()).toMatchSnapshot()
+        // const wrapper = shallowMount(WLine, defaultConfig)
+        // expect(wrapper.html()).toMatchSnapshot()
     })
 })
