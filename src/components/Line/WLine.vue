@@ -116,7 +116,7 @@ export default {
             return this.Chart.activeElements.includes(this.index)
         },
         stylesCmp () {
-        return {
+            return {
                 ...this.themeStyles.styles,
                 ...this.styles,
                 stroke: this.themeStyles.styles.stroke || this.styles.stroke || this.fillColor,
