@@ -2,26 +2,28 @@
     <div
         v-if="selected"
         ref="tooltip"
-        class="WTooltip"
-        :class="{ visible }"
-        :style="{ top: y, left: x }"
+        :style="{
+            ...stylesCmp,
+            ...(visible ? visibleStylesCmp : {}),
+            top: y,
+            left: x
+        }"
     >
         <slot v-bind="selected">
-            <div class="Wrapper">
+            <div :style="wrapperStylesCmp">
                 <slot
                     name="label"
                     :label="selected.label"
                 >
                     <span
                         v-if="selected.label"
-                        class="Title"
+                        :style="titleStylesCmp"
                     >{{ selected.label }}</span>
                 </slot>
 
                 <div
                     v-for="(value, index) in selected.value"
                     :key="index"
-                    class="Value"
                 >
                     <slot
                         name="bullet"
@@ -46,6 +48,7 @@
 import VueTypes from 'vue-types'
 import WBullet from '../WBullet/WBullet.vue'
 import { toPx } from '../utils'
+import themeMixin from '../../../mixins/theme'
 
 export default {
     name: 'WTooltip',
@@ -54,9 +57,14 @@ export default {
     components: {
         WBullet,
     },
+    mixins: [themeMixin],
     props: {
         id: VueTypes.string,
         gap: VueTypes.number.def(10),
+        styles: VueTypes.object,
+        visibleStyles: VueTypes.object,
+        titleStyles: VueTypes.object,
+        wrapperStyles: VueTypes.object,
     },
     data () {
         return {
@@ -67,6 +75,34 @@ export default {
         }
     },
     computed: {
+        // Styles
+        stylesCmp () {
+            return {
+                ...this.themeStyles.styles,
+                ...this.styles,
+            }
+        },
+        // Visible Styles
+        visibleStylesCmp () {
+            return {
+                ...this.themeStyles.visible,
+                ...this.visibleStyles,
+            }
+        },
+        // Wrapper Styles
+        wrapperStylesCmp () {
+            return {
+                ...this.themeStyles.wrapper,
+                ...this.wrapperStyles,
+            }
+        },
+        // Title Styles
+        titleStylesCmp () {
+            return {
+                ...this.themeStyles.title,
+                ...this.titleStyles,
+            }
+        },
         // Bullet style
         bulletStyle () {
             if (!this.selected) return {}
@@ -132,32 +168,3 @@ export default {
     },
 }
 </script>
-
-<style scoped lang="scss">
-.WTooltip {
-    position: absolute;
-    display: flex;
-    padding: .5rem;
-    border-radius: 4px;
-    color: #000;
-    background: white;
-    box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.15);
-    font-size: 14px;
-    opacity: 0;
-    z-index: 1;
-    transition: opacity .15s ease;
-
-    &.visible {
-        opacity: 1;
-    }
-}
-
-.Wrapper {
-    display: flex;
-    flex-direction: column;
-}
-
-.Title {
-    margin-bottom: 5px;
-}
-</style>

@@ -124,6 +124,31 @@ export default {
         styles: { ...legendStyles },
         bulletStyles,
     },
+    WTooltip: {
+        styles: {
+            position: 'absolute',
+            display: 'flex',
+            padding: '.5rem',
+            borderRadius: '4px',
+            color: '#000',
+            background: 'white',
+            boxShadow: '0 2px 10px 0 rgba(0, 0, 0, 0.15)',
+            fontSize: '14px',
+            opacity: 0,
+            zIndex: 1,
+            transition: 'opacity .25s ease',
+        },
+        visible: {
+            opacity: 1,
+        },
+        wrapper: {
+            display: 'flex',
+            flexDirection: 'column',
+        },
+        title: {
+            marginBottom: '5px',
+        },
+    },
     WBullet: {
         styles: { ...bulletStyles },
     },
