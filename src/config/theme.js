@@ -97,6 +97,15 @@ export default {
             fontSize: 14,
         },
     },
+    WPie: {
+        styles: {
+            position: 'relative',
+            transform: 'translate(50%, 50%)',
+        },
+        path: {
+            stroke: '#FFF',
+        },
+    },
     WLegend: {
         styles: {
             position: 'absolute',
