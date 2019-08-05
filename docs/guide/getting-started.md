@@ -24,6 +24,24 @@ The UMD build is also available on unpkg.com (unpkg):
 <script src="//unpkg.com/vue-wcharts"></script>
 ```
 
+### Basic Configuration
+
+Add in your vue.config.js
+```
+transpileDependencies: [
+    /\/node_modules\/vue-wcharts\//,
+],
+```
+
+### Jest Configuration
+
+Add in your jest.config.js
+```
+transformIgnorePatterns: [
+    '/node_modules/(?!vue-wcharts|d3-array|d3-scale|d3-shape)',
+],
+```
+
 ## Register
 
 Import the library as a Vue plugin to enable the functionality globally on all components.

@@ -38,6 +38,7 @@ module.exports = {
                 ['components', 'Components'],
                 ['widgets', 'Widgets'],
                 ['transitions', 'Transitions'],
+                ['extraCharts', 'Extra Charts'],
             ],
         },
     }
