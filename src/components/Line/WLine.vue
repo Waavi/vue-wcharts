@@ -128,9 +128,6 @@ export default {
         fillColor () {
             return this.Chart.colors[this.index]
         },
-        index () {
-            return this.$vnode.index
-        },
         active () {
             return this.Chart.activeElements.includes(this.index)
         },

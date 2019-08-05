@@ -8,9 +8,9 @@
         </foreignObject>
 
         <path
-            v-for="(path, index) in paths"
-            :id="index"
-            :key="index"
+            v-for="(path, i) in paths"
+            :id="i"
+            :key="i"
             :d="path.d"
             :fill="path.fill"
             :stroke="path.stroke"
