@@ -1,3 +1,5 @@
+import colors from '../utils/colors'
+
 const bulletStyles = {
     display: 'inline-block',
     width: '8px',
@@ -16,6 +18,24 @@ const legendStyles = {
     fontSize: '12px',
     opacity: '.5',
     cursor: 'pointer',
+}
+
+const axisStyles = {
+    styles: {
+        stroke: colors.grayMedium,
+    },
+    mark: {
+        stroke: colors.grayMedium,
+    },
+    label: {
+        fill: colors.grayDark,
+        fontWeight: 800,
+    },
+    tick: {
+        stroke: 'none',
+        fill: colors.grayDark,
+        fontSize: 12,
+    },
 }
 
 export default {
@@ -54,6 +74,16 @@ export default {
             strokeWidth: 0,
             radius: 8,
             opacity: 0.8,
+        },
+    },
+    WXAxis: { ...axisStyles },
+    WYAxis: { ...axisStyles },
+    WZAxis: { ...axisStyles },
+    WCartesianGrid: {
+        styles: {
+            stroke: '#ccc',
+            strokeWidth: 1,
+            strokeDasharray: '3',
         },
     },
     WLegend: {
