@@ -1,5 +1,10 @@
-import { shallowMount } from '@vue/test-utils'
+import { shallowMount,  mount, createLocalVue } from '@vue/test-utils'
 import WLine from './WLine.vue'
+import themeMixin from '../../mixins/theme'
+
+const localVue = createLocalVue()
+
+localVue.mixin(themeMixin)
 
 describe('Components/WLine', () => {
     const dataset = [
@@ -28,8 +33,6 @@ describe('Components/WLine', () => {
 
     const propsData = {
         datakey: 'one',
-        area: true,
-        dot: true,
     }
 
     const provide = {
@@ -38,16 +41,21 @@ describe('Components/WLine', () => {
             space: [20, 20, 20, 20],
             activeElements: [0, 1],
             dataset,
+            xScale: a => a,
+            yScale: a => a,
         },
     }
 
     const defaultConfig = {
         propsData,
+        localVue,
         provide,
     }
+    console.log(themeMixin)
 
     it(`Should be render correctly`, () => {
         const wrapper = shallowMount(WLine, defaultConfig)
+        console.log(wrapper.vm.$options)
         expect(wrapper.html()).toMatchSnapshot()
     })
 })

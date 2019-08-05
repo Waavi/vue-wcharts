@@ -41,7 +41,7 @@ export default {
                     // Add to legends elements
                     if (legend) legends.push(legend)
                     // Add slot
-                    slot.index = piesLength
+                    slot.componentOptions.propsData.index = piesLength
                     pies.push(slot)
                     break
                 case 'plugins':

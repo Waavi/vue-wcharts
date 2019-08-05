@@ -5,10 +5,22 @@
         :bound="[0]"
     >
         <WLine
-            datakey="two"
+            datakey="one"
             area
             dot
             legend="One Line"
+        />
+        <WLine
+            datakey="two"
+            area
+            dot
+            legend="Two Line"
+        />
+        <WLine
+            datakey="three"
+            area
+            dot
+            legend="Three Line"
         />
         <!-- <WBar
             stacked
