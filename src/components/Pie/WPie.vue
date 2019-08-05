@@ -31,20 +31,13 @@ import omit from 'lodash.omit'
 import noop from 'lodash.noop'
 import pie from 'd3-shape/src/pie'
 import arc from 'd3-shape/src/arc'
-
-const stylesDefaultProp = {
-    position: 'relative',
-    transform: 'translate(50%, 50%)',
-}
-
-const pathStylesDefaultProp = {
-    stroke: '#FFF',
-}
+import themeMixin from '../../mixins/theme'
 
 export default {
     name: 'WPie',
     type: 'pie',
     inject: ['Chart'],
+    mixins: [themeMixin],
     props: {
         // internal props set by the parent (WPieChart)
         index: VueTypes.number,
@@ -57,14 +50,10 @@ export default {
             VueTypes.number,
             VueTypes.arrayOf(VueTypes.number).def([0, 100]),
         ]).def([0, 100]),
-        styles: VueTypes.object.def({
-            ...stylesDefaultProp,
-        }),
+        styles: VueTypes.object,
         pathStyles: VueTypes.shape({
             stroke: VueTypes.string,
-        }).loose.def(() => ({
-            ...pathStylesDefaultProp,
-        })),
+        }).loose,
         opacityDisabled: VueTypes.number.def(0.5),
         active: VueTypes.oneOfType([Number, null]),
     },
@@ -76,13 +65,13 @@ export default {
     computed: {
         stylesCmp () {
             return {
-                ...stylesDefaultProp,
+                ...this.themeStyles.styles,
                 ...this.styles,
             }
         },
         pathStylesCmp () {
             return {
-                ...omit(pathStylesDefaultProp, ['stroke']),
+                ...omit(this.themeStyles.path, ['stroke']),
                 ...omit(this.pathStyles, ['stroke']),
             }
         },
@@ -132,7 +121,7 @@ export default {
             return this.arcs.map(this.draw).map((d, index) => ({
                 d,
                 fill: this.Chart.colors[index],
-                stroke: this.pathStyles.stroke,
+                stroke: this.pathStylesCmp.stroke,
             }))
         },
         // Slot styles

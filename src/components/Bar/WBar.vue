@@ -27,7 +27,7 @@
                         :width="bar.width"
                         :height="bar.height"
                         :fill="bar.color"
-                        :style="{ styles, transition }"
+                        :style="{ ...stylesCmp, transition }"
                     />
                 </WTrans>
                 <g
@@ -105,15 +105,10 @@
 <script>
 import VueTypes from 'vue-types'
 import animationMixin from '../../mixins/animation'
+import themeMixin from '../../mixins/theme'
 import { WTrans } from '../../transitions'
 
 const DEFAULT_WIDTH = 45
-
-const labelStylesDefaultProp = {
-    fill: '#333',
-    cursor: 'default',
-    // opacity: 1,
-}
 
 export default {
     name: 'WBar',
@@ -122,7 +117,7 @@ export default {
     components: {
         WTrans,
     },
-    mixins: [animationMixin],
+    mixins: [animationMixin, themeMixin],
     inject: ['Chart'],
     props: {
         datakey: VueTypes.string.isRequired,
@@ -280,17 +275,24 @@ export default {
         isLabelInside () {
             return this.labelPosition === 'inside'
         },
+        // Styles
+        stylesCmp () {
+            return {
+                ...this.themeStyles.styles,
+                ...this.styles,
+            }
+        },
         // Label styles
         labelStylesCmp () {
             return {
-                ...labelStylesDefaultProp,
+                ...this.themeStyles.label,
                 ...this.labelStyles,
             }
         },
         // Stacked label styles
         stackedLabelStylesCmp () {
             return {
-                ...labelStylesDefaultProp,
+                ...this.themeStyles.label,
                 ...this.stackedLabelStyles,
             }
         },

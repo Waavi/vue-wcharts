@@ -1,9 +1,9 @@
 /* eslint-disable import/no-mutable-exports */
-import c from './utils/colors'
-import { Defaults } from './utils'
+import c from '../utils/colors'
+import Theme from './theme'
 
 /*
-*   Props
+*   Colors Palette
 */
 export let colors = [
     c.primary,
@@ -16,7 +16,7 @@ export let colors = [
 ]
 
 export let theme = {
-    ...Defaults.themeStyles,
+    ...Theme,
 }
 
 /*

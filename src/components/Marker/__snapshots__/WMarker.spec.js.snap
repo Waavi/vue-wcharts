@@ -2,7 +2,7 @@
 
 exports[`Components/WMarker Should be render correctly 1`] = `
 <g>
-  <line stroke="#333" stroke-width="1" stroke-dasharray="0" fill="none" x1="40" y1="[object Object]" x2="580" y2="[object Object]"></line> <text text-anchor="end" x="575" y="[object Object]" dy="-10" style="fill: #333; font-size: 14;">
+  <line fill="none" x1="40" y1="[object Object]" x2="580" y2="[object Object]"></line> <text text-anchor="end" x="575" y="[object Object]" dy="-10">
 
   </text>
 </g>
