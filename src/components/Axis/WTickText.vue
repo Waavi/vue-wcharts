@@ -16,15 +16,11 @@
 <script>
 import VueTypes from 'vue-types'
 import omit from 'lodash.omit'
-
-const stylesDefaultProp = {
-    fill: 'none',
-    stroke: 'none',
-    fontSize: 14,
-}
+import themeMixin from '../../mixins/theme'
 
 export default {
     name: 'WTickText',
+    mixins: [themeMixin],
     props: {
         x: VueTypes.number,
         y: VueTypes.number,
@@ -35,23 +31,23 @@ export default {
             fill: VueTypes.string,
             stroke: VueTypes.string,
             fontSize: VueTypes.number,
-        }).loose.def(() => ({ ...stylesDefaultProp })),
+        }).loose,
     },
     computed: {
         stylesCmp () {
             return {
-                ...omit(stylesDefaultProp, ['stroke', 'fill', 'fontSize']),
+                ...omit(this.themeStyles.styles, ['stroke', 'fill', 'fontSize']),
                 ...omit(this.styles, ['stroke', 'fill', 'fontSize']),
             }
         },
         stroke () {
-            return this.styles.stroke || stylesDefaultProp.stroke
+            return this.styles.stroke || this.themeStyles.styles.stroke
         },
         fill () {
-            return this.styles.fill || stylesDefaultProp.fill
+            return this.styles.fill || this.themeStyles.styles.fill
         },
         fontSize () {
-            return this.styles.fontSize || stylesDefaultProp.fontSize
+            return this.styles.fontSize || this.themeStyles.styles.fontSize
         },
     },
 }

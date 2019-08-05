@@ -34,6 +34,13 @@ export default {
             hoverRadius: 8,
         },
     },
+    WBar: {
+        styles: {},
+        label: {
+            fill: '#333',
+            cursor: 'default',
+        },
+    },
     WScatter: {
         line: {
             fill: '',
@@ -76,6 +83,13 @@ export default {
         hoverRadius: 8,
         styles: {
             cursor: 'default',
+        },
+    },
+    WTickText: {
+        styles: {
+            fill: 'none',
+            stroke: 'none',
+            fontSize: 14,
         },
     },
 }

@@ -63,14 +63,14 @@ export default {
             stroke: VueTypes.string,
             strokeWidth: VueTypes.number,
             strokeDasharray: VueTypes.string,
-        }).def({}),
+        }).loose.def({}),
         dotStyles: VueTypes.shape({
             fill: VueTypes.string,
             stroke: VueTypes.string,
             strokeWidth: VueTypes.number,
             radius: VueTypes.number,
             opacity: VueTypes.number,
-        }).def({}),
+        }).loose.def({}),
     },
     computed: {
         lineStylesCmp () {
