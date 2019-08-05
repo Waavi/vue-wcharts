@@ -110,12 +110,6 @@ export default {
         snap.linesByIndex = { ...snap.linesByIndex, [index]: { datakey } }
     },
     computed: {
-        index () {
-            return this.$vnode.index
-        },
-        active () {
-            return this.Chart.activeElements.includes(this.index)
-        },
         stylesCmp () {
             return {
                 ...this.themeStyles.styles,
@@ -131,6 +125,12 @@ export default {
         },
         fillColor () {
             return this.Chart.colors[this.index]
+        },
+        index () {
+            return this.$vnode.index
+        },
+        active () {
+            return this.Chart.activeElements.includes(this.index)
         },
         lineData () {
             return this.Chart.dataset.map((item, index) => ({

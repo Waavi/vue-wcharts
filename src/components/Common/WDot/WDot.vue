@@ -9,7 +9,7 @@
             :cx="x"
             :cy="y"
             :stroke="stroke"
-            :stroke-width="strokeWidth"
+            :stroke-width="strokeWidth || themeStyles.strokeWidth"
             :fill="fill"
             :r="rStyle"
             :style="dotStyles"
@@ -63,7 +63,7 @@ export default {
         rStyle () {
             if (!this.Chart.active.el) return this.radius
             const { el } = this.Chart.active
-            return el.id === this.cartesianIndex && el.point === this.index ? this.hoverRadius : this.radius
+            return el.id === this.cartesianIndex && el.point === this.index ? (this.hoverRadius || this.themeStyles.hoverRadius) : (this.radius || this.themeStyles.radius)
         },
     },
     methods: {

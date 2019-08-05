@@ -25,6 +25,7 @@
 <script>
 import VueTypes from 'vue-types'
 import themeMixin from '../../../mixins/theme'
+import animationMixin from '../../../mixins/animation'
 import WBullet from '../WBullet/WBullet.vue'
 
 export default {
@@ -32,7 +33,7 @@ export default {
     components: {
         WBullet,
     },
-    mixins: [themeMixin],
+    mixins: [themeMixin, animationMixin],
     props: {
         index: VueTypes.oneOfType([Number, String]),
         text: VueTypes.string,
@@ -44,6 +45,7 @@ export default {
     computed: {
         legendItemStylesCmp () {
             return {
+                transition: this.transition,
                 ...this.themeStyles.styles,
                 ...this.styles,
                 ...(this.active ? { opacity: '1' } : { }),
@@ -55,7 +57,7 @@ export default {
                 ...this.bulletStyles,
             }
         },
-        // Get color value. Color prop, Color theme by index or color by defualt
+        // Get color value. Color prop, Color theme by index or color by default
         bulletColor () {
             if (this.color) return this.color
             if (this.index) return this.colors[this.index]

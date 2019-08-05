@@ -73,16 +73,11 @@ export default {
         }).def({}),
     },
     computed: {
-        index () {
-            return this.$vnode.index
-        },
-        active () {
-            return this.Chart.activeElements.includes(this.index)
-        },
         lineStylesCmp () {
             return {
                 ...this.themeStyles.line,
                 ...this.lineStyles,
+                stroke: this.themeStyles.styles.stroke || this.styles.stroke || this.fillColor,
                 fill: 'none',
             }
         },
@@ -94,6 +89,12 @@ export default {
         },
         fillColor () {
             return this.Chart.colors[this.index]
+        },
+        index () {
+            return this.$vnode.index
+        },
+        active () {
+            return this.Chart.activeElements.includes(this.index)
         },
         lineData () {
             // We sort values becouse we want a left to right line
