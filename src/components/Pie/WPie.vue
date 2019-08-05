@@ -123,7 +123,7 @@ export default {
             return this.arcs.map(this.draw).map((d, index) => ({
                 d,
                 fill: this.Chart.colors[index],
-                stroke: this.pathStyles.stroke,
+                stroke: this.pathStylesCmp.stroke,
             }))
         },
         // Slot styles
