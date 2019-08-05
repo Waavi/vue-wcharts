@@ -86,6 +86,17 @@ export default {
             strokeDasharray: '3',
         },
     },
+    WMarker: {
+        styles: {
+            stroke: '#333',
+            strokeWidth: 1,
+            strokeDasharray: '0',
+        },
+        label: {
+            fill: '#333',
+            fontSize: 14,
+        },
+    },
     WLegend: {
         styles: {
             position: 'absolute',
