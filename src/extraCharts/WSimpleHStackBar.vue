@@ -1,6 +1,6 @@
 
 <template>
-    <div class="WStackBar">
+    <div class="WSimpleHStackBar">
         <div
             v-if="stacks"
             class="Container"
@@ -120,7 +120,7 @@ import themeMixin from '../mixins/theme'
 const MIN_WIDTH = 4
 
 export default {
-    name: 'WStackBar',
+    name: 'WSimpleHStackBar',
     components: {
         WTooltip,
         WBullet,
@@ -238,7 +238,7 @@ export default {
 }
 </script>
 <style scoped lang="scss">
-.WStackBar {
+.WSimpleHStackBar {
     display: flex;
     justify-content: space-between;
     align-items: center;

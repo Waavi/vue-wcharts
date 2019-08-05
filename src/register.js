@@ -1,4 +1,5 @@
-import { WCartesian, WPieChart, WStackBar } from './charts'
+import { WCartesian, WPieChart } from './charts'
+import { WSimpleHStackBar } from './extraCharts'
 import {
     WLine,
     WBar,
@@ -28,7 +29,7 @@ export default (Vue, opts = {}) => {
     const core = [
         WCartesian,
         WPieChart,
-        WStackBar,
+        WSimpleHStackBar,
         WLegendItem,
     ]
 
