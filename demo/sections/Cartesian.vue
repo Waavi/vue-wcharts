@@ -47,14 +47,14 @@
             legend="Four Bar"
             showLabel
             :width="40"
-        />
+        /> -->
         <WBar
             stacked
             datakey="five"
             legend="Five Bar"
             showLabel
             :width="40"
-        /> -->
+        />
         <WXAxis
             datakey="name"
             :space="[0, 50, 80, 50]"
