@@ -59,6 +59,10 @@ export default {
             fill: colors.grayDarker,
             cursor: 'default',
         },
+        stackedLabel: {
+            fill: colors.grayDarker,
+            cursor: 'default',
+        },
     },
     WScatter: {
         line: {

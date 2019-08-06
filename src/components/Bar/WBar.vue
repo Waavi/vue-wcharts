@@ -292,7 +292,7 @@ export default {
         // Stacked label styles
         stackedLabelStylesCmp () {
             return {
-                ...this.themeStyles.label,
+                ...this.themeStyles.stackedLabel,
                 ...this.stackedLabelStyles,
             }
         },

@@ -359,6 +359,7 @@ sidebarDepth: 3
 | line | bool | false | Draw a line joining the dots |
 | lineStyles | object | ```{fill: '',stroke: '',strokeWidth: 1,strokeDasharray: '0'}``` | Line styles |
 | styles | object | ```{fill: '',stroke: '',strokeWidth: 0,radius: 8,opacity: 0.8}``` | Dot styles |
+| dotStyles | object | ```{fill: '',stroke: '',strokeWidth: 0,radius: 4,hoverRadius: 8, opacity: 1 }``` | Dot styles |
 | animated | bool | true | If true set, animation will be executed |
 | transDuration | number | 1 | Transition duration in seconds |
 | transEffect | string | ease | Transition effect |

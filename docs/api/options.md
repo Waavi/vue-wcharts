@@ -70,6 +70,10 @@ Vue.use(WCharts, {
         fill: '#333333',
         cursor: 'default',
     },
+    stackedLabel: {
+        fill: '#333333',
+        cursor: 'default',
+    },
 }
 ```
 
