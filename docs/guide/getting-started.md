@@ -320,3 +320,11 @@ $ yarn build
 
 <br/>
 <br/>
+
+
+## Browser compatibility
+
+Doesn't support IE11.
+
+<br/>
+<br/>
