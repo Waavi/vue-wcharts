@@ -116,7 +116,9 @@ export default {
             return {
                 ...this.themeStyles.styles,
                 ...this.styles,
-                stroke: this.themeStyles.styles.stroke || this.styles.stroke || this.fillColor,
+                stroke: (this.themeStyles && this.themeStyles.styles && this.themeStyles.styles.stroke)
+                 || this.styles.stroke
+                 || this.fillColor,
             }
         },
         dotStylesCmp () {

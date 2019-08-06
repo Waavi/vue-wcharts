@@ -1,8 +1,8 @@
-// import { shallowMount, createLocalVue } from '@vue/test-utils'
-// import WLine from './WLine.vue'
+import { shallowMount, mount } from '@vue/test-utils'
+import WLine from './WLine.vue'
+import WDot from '../Common/WDot/WDot'
 
 describe('Components/WLine', () => {
-    /*
     const dataset = [
         {
             name: 'Page A', one: 4000, two: -2400, three: 2300, four: 1200, five: 2300,
@@ -13,45 +13,89 @@ describe('Components/WLine', () => {
         {
             name: 'Page C', one: 9800, two: 2200, three: 0, four: 1200, five: 0,
         },
-        {
-            name: 'Page D', one: 2780, two: 3908, three: 2000, four: 1200, five: 2000,
-        },
-        {
-            name: 'Page E', one: 1890, two: 4800, three: 1700, four: 1200, five: 1700,
-        },
-        {
-            name: 'Page F', one: -2390, two: 3800, three: -2500, four: 1200, five: 2500,
-        },
-        {
-            name: 'Page G', one: 3490, two: 4300, three: 2100, four: 1200, five: 2100,
-        },
     ]
 
     const propsData = {
         datakey: 'one',
+        styles: {
+            stroke: 'FFF',
+        },
     }
 
     const provide = {
         Chart: {
             legends: ['One Bar', 'Two Bar'],
             space: [20, 20, 20, 20],
-            activeElements: [0, 1],
+            activeElements: [0],
             dataset,
             xScale: a => a,
             yScale: a => a,
         },
     }
 
-   const defaultConfig = {
+    const dotConfig = {
+        propsData: { ...propsData, dot: true },
+        provide: {
+            ...provide,
+            Chart: {
+                ...provide.Chart,
+                datakeys: ['one', 'two', 'three'],
+                colors: ['red', 'red', 'red'],
+                axis: {
+                    x: {
+                        datakey: 'name',
+                        name: '',
+                    },
+                },
+                active: {
+                    el: null,
+                },
+            },
+        },
+    }
+
+    const defaultConfig = {
         propsData,
-        localVue,
         provide,
     }
-    console.log(themeMixin)
-    */
 
     it(`Should be render correctly`, () => {
-        // const wrapper = shallowMount(WLine, defaultConfig)
-        // expect(wrapper.html()).toMatchSnapshot()
+        const wrapper = shallowMount(WLine, defaultConfig)
+        expect(wrapper.html()).toMatchSnapshot()
     })
+
+    it(`Should be render correctly with dots`, () => {
+        const wrapper = shallowMount(WLine, dotConfig)
+        expect(wrapper.html()).toMatchSnapshot()
+    })
+
+    it(`Shouldn't be render`, () => {
+        const wrapper = shallowMount(WLine, { ...defaultConfig, propsData: { ...propsData, index: 2 } })
+        expect(wrapper.html()).toMatchSnapshot()
+    })
+
+    it(`Should be render correctly with 3 dots`, () => {
+        const wrapper = shallowMount(WLine, dotConfig)
+        expect(wrapper.findAll(WDot)).toHaveLength(3)
+    })
+
+    it('It emits the handleMouseEnter  event', () => {
+        const wrapper = mount(WLine, defaultConfig)
+        wrapper.find('path').trigger('mouseenter')
+        expect(wrapper.emitted('onMouseEnter')).toHaveLength(1)
+    })
+
+    it('It emits the mouseleave  event', () => {
+        const wrapper = mount(WLine, defaultConfig)
+        wrapper.find('path').trigger('mouseleave')
+        expect(wrapper.emitted('onMouseLeave')).toHaveLength(1)
+    })
+    // TODO:
+    // for some reason that  throw an error
+    // [Vue warn]: Invalid handler for event "mouseleave": got undefined
+    /* it('It emits the onClick event', () => {
+        const wrapper = mount(WLine, dotConfig)
+        wrapper.find(WDot).trigger('onClick')
+        expect(wrapper.emitted('onClickDot')).toHaveLength(1)
+    }) */
 })

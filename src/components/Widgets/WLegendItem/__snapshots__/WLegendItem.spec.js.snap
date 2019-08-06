@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Widgets/WLegendItem Should be render correctly 1`] = `
-<a title="" class="WLegendItem" style="transition: all 1s ease; color: rgb(0, 0, 0);">
-  <wbullet-stub colors="#48c0b6,#9d6af5,#ffde69,#e8e8e8,#54ddd9,#6e19ff,#dfbd46" styles="[object Object]"></wbullet-stub> <span class="Text"></span>
+<a title="" style="transition: all 1s ease; color: rgb(0, 0, 0);">
+  <wbullet-stub colors="#48c0b6,#9d6af5,#ffde69,#e8e8e8,#54ddd9,#6e19ff,#dfbd46" styles="[object Object]"></wbullet-stub> <span></span>
 </a>
 `;

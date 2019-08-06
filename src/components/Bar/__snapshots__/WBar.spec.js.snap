@@ -1,0 +1,33 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Common/WDot Should be render correctly 1`] = `
+<g id="Bars">
+  <g>
+    <g id="0">
+      <WTrans-stub initialProps="[object Object]" transition="all 1s ease">
+        <rect x="NaN" y="0" width="45" height="4000" fill="#e8e8e8" style="transition: all 1s ease;"></rect>
+      </WTrans-stub>
+      <!---->
+      <!---->
+    </g>
+  </g>
+  <g>
+    <g id="1">
+      <WTrans-stub initialProps="[object Object]" transition="all 1s ease">
+        <rect x="NaN" y="0" width="45" height="3000" fill="#e8e8e8" style="transition: all 1s ease;"></rect>
+      </WTrans-stub>
+      <!---->
+      <!---->
+    </g>
+  </g>
+  <g>
+    <g id="2">
+      <WTrans-stub initialProps="[object Object]" transition="all 1s ease">
+        <rect x="NaN" y="0" width="45" height="9800" fill="#e8e8e8" style="transition: all 1s ease;"></rect>
+      </WTrans-stub>
+      <!---->
+      <!---->
+    </g>
+  </g>
+</g>
+`;

@@ -120,6 +120,8 @@ export default {
     mixins: [animationMixin, themeMixin],
     inject: ['Chart'],
     props: {
+         // internal props set by the parent (WPieChart)
+        index: VueTypes.number,
         datakey: VueTypes.string.isRequired,
         legend: VueTypes.string, // Prop to apply filters
         stacked: VueTypes.bool.def(false),
@@ -167,13 +169,9 @@ export default {
         else if (!!color && color.length > 0) snap.barsDatakeysColors = { ...snap.barsDatakeysColors, [datakey]: color }
     },
     computed: {
-        // Id cartesian elem
-        id () {
-            return this.$vnode.index
-        },
         // Active elem
         active () {
-            return this.Chart.activeElements.includes(this.id)
+            return this.Chart.activeElements.includes(this.index)
         },
         // Get yAxis origin by bounds.min or zero
         y () {
@@ -214,7 +212,6 @@ export default {
 
             // Calc space between bars
             const space = (canvas.width - (padding[1] + padding[3])) / (data.length - 1)
-
             // Generate points array
             return data.map((value, i) => {
                 let [start, end] = value
@@ -234,7 +231,6 @@ export default {
                 const y1 = yScale(start)
                 // Calc xAxis pos
                 const x = (x0 + (space * i) + padding[3])
-
                 return [x, y0, y1, label, stackedValue]
             })
         },
@@ -254,7 +250,6 @@ export default {
                 const stackedLabel = this.getStackedLabel({
                     x, y: yLabel, stackedValue,
                 })
-
                 // Set color
                 const color = this.Chart.snap.barsDatakeysColors[this.datakey][index]
 
