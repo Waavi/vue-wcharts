@@ -1,6 +1,6 @@
 import { shallowMount, mount } from '@vue/test-utils'
 import WLine from './WLine.vue'
-import WDot from '../Common/WDot/WDot'
+import WDot from '../Common/WDot/WDot.vue'
 
 describe('Components/WLine', () => {
     const dataset = [
@@ -16,6 +16,7 @@ describe('Components/WLine', () => {
     ]
 
     const propsData = {
+        index: 0,
         datakey: 'one',
         styles: {
             stroke: 'FFF',
@@ -24,6 +25,7 @@ describe('Components/WLine', () => {
 
     const provide = {
         Chart: {
+            colors: ['red', 'red', 'red', 'red', 'red', 'red', 'red'],
             legends: ['One Bar', 'Two Bar'],
             space: [20, 20, 20, 20],
             activeElements: [0],

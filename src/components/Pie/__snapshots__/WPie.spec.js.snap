@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Components/WPie Should be render correctly 1`] = `
-<g>
+<g style="position: relative; transform: translate(50%, 50%);">
   <foreignObject style="width: 200px; height: 200px; transform: translate(-100px, -100px);"></foreignObject>
   <path id="0" d="M6.123233995736766e-15,-100A100,100,0,0,1,37.05941686056085,-92.87948978087239L0,0Z" fill="red" style="opacity: 1;"></path>
   <path id="1" d="M37.05941686056085,-92.87948978087239A100,100,0,0,1,99.86378011249683,-5.217798543723552L0,0Z" fill="red" style="opacity: 1;"></path>

@@ -3,7 +3,7 @@
 exports[`Components/WLine Should be render correctly 1`] = `
 <g>
   <WSpread-stub axis="x" transition="all 1s ease">
-    <path d="M0,4000L1,3000L2,9800" fill="none" stroke="FFF" style="transition: all 1s ease;"></path>
+    <path d="M0,4000L1,3000L2,9800" fill="none" stroke="FFF" strokeWidth="2" strokeDasharray="0" style="transition: all 1s ease;"></path>
     <!---->
     <!---->
   </WSpread-stub>
@@ -14,14 +14,14 @@ exports[`Components/WLine Should be render correctly 1`] = `
 exports[`Components/WLine Should be render correctly with dots 1`] = `
 <g>
   <WSpread-stub axis="x" transition="all 1s ease">
-    <path d="M0,4000L1,3000L2,9800" fill="none" stroke="FFF" style="transition: all 1s ease;"></path>
+    <path d="M0,4000L1,3000L2,9800" fill="none" stroke="FFF" strokeWidth="2" strokeDasharray="0" style="transition: all 1s ease;"></path>
     <!---->
     <!---->
   </WSpread-stub>
   <g>
-    <WDot-stub colors="#48c0b6,#9d6af5,#ffde69,#e8e8e8,#54ddd9,#6e19ff,#dfbd46" index="0" cartesianIndex="0" x="0" y="4000" fill="red" stroke="red" strokeWidth="0" radius="0" hoverRadius="0" info="[object Object]" styles="[object Object]" transition="all 250ms ease" value="4000"></WDot-stub>
-    <WDot-stub colors="#48c0b6,#9d6af5,#ffde69,#e8e8e8,#54ddd9,#6e19ff,#dfbd46" index="1" cartesianIndex="0" x="1" y="3000" fill="red" stroke="red" strokeWidth="0" radius="0" hoverRadius="0" info="[object Object]" styles="[object Object]" transition="all 250ms ease" value="3000"></WDot-stub>
-    <WDot-stub colors="#48c0b6,#9d6af5,#ffde69,#e8e8e8,#54ddd9,#6e19ff,#dfbd46" index="2" cartesianIndex="0" x="2" y="9800" fill="red" stroke="red" strokeWidth="0" radius="0" hoverRadius="0" info="[object Object]" styles="[object Object]" transition="all 250ms ease" value="9800"></WDot-stub>
+    <WDot-stub colors="#48c0b6,#9d6af5,#ffde69,#e8e8e8,#54ddd9,#6e19ff,#dfbd46" index="0" cartesianIndex="0" x="0" y="4000" fill="white" stroke="red" strokeWidth="2" radius="4" hoverRadius="8" info="[object Object]" styles="[object Object]" transition="all 250ms ease" value="4000"></WDot-stub>
+    <WDot-stub colors="#48c0b6,#9d6af5,#ffde69,#e8e8e8,#54ddd9,#6e19ff,#dfbd46" index="1" cartesianIndex="0" x="1" y="3000" fill="white" stroke="red" strokeWidth="2" radius="4" hoverRadius="8" info="[object Object]" styles="[object Object]" transition="all 250ms ease" value="3000"></WDot-stub>
+    <WDot-stub colors="#48c0b6,#9d6af5,#ffde69,#e8e8e8,#54ddd9,#6e19ff,#dfbd46" index="2" cartesianIndex="0" x="2" y="9800" fill="white" stroke="red" strokeWidth="2" radius="4" hoverRadius="8" info="[object Object]" styles="[object Object]" transition="all 250ms ease" value="9800"></WDot-stub>
   </g>
 </g>
 `;

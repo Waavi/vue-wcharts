@@ -120,7 +120,7 @@ export default {
     mixins: [animationMixin, themeMixin],
     inject: ['Chart'],
     props: {
-         // internal props set by the parent (WPieChart)
+        // internal props set by the parent (WPieChart)
         index: VueTypes.number,
         datakey: VueTypes.string.isRequired,
         legend: VueTypes.string, // Prop to apply filters
@@ -287,7 +287,7 @@ export default {
         // Stacked label styles
         stackedLabelStylesCmp () {
             return {
-                ...this.themeStyles.label,
+                ...this.themeStyles.stackedLabel,
                 ...this.stackedLabelStyles,
             }
         },
