@@ -6,8 +6,7 @@ export default {
         colors: VueTypes.array.def(() => colors),
     },
     data () {
-        // eslint-disable-next-line no-underscore-dangle
-        const name = this.$options._componentTag
+        const { name } = this.$options
         return {
             themeStyles: theme[name] || {},
         }

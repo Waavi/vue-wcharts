@@ -4,13 +4,13 @@ import {
 import { storiesOf } from '@storybook/vue'
 
 import {
-    WStackBar,
+    WSimpleHStackBar,
 } from '../src'
 
-storiesOf('Components', module)
-    .add('WStackBar', () => ({
+storiesOf('Extra Charts', module)
+    .add('WSimpleHStackBar', () => ({
         components: {
-            WStackBar,
+            WSimpleHStackBar,
         },
         data () {
             return {
@@ -23,20 +23,20 @@ storiesOf('Components', module)
         },
         template: `
             <div class="Container">
-                <WStackBar
+                <WSimpleHStackBar
                     :dataset="data.dataset"
                     :showLabel="showLabel"
                 >
                     <template #value="{ value, percentage, color }">
                         <span>{{ value }}</span>
                     </template>
-                </WStackBar>
+                </WSimpleHStackBar>
             </div>
             `,
     }))
-    .add('WStackBar custom', () => ({
+    .add('WSimpleHStackBar custom', () => ({
         components: {
-            WStackBar,
+            WSimpleHStackBar,
         },
         data () {
             return {
@@ -55,7 +55,7 @@ storiesOf('Components', module)
         },
         template: `
             <div class="Container">
-                <WStackBar
+                <WSimpleHStackBar
                     :total="data.total"
                     :dataset="data.dataset"
                     :showLabel="showLabel"
@@ -64,13 +64,13 @@ storiesOf('Components', module)
                     <template #value="{ value, percentage, color }">
                         <span>{{ value }}€ ({{ percentage }})</span>
                     </template>
-                </WStackBar>
+                </WSimpleHStackBar>
             </div>
             `,
     }))
-    .add('WStackBar with markers', () => ({
+    .add('WSimpleHStackBar with markers', () => ({
         components: {
-            WStackBar,
+            WSimpleHStackBar,
         },
         data () {
             return {
@@ -90,7 +90,7 @@ storiesOf('Components', module)
         },
         template: `
             <div class="Container">
-                <WStackBar
+                <WSimpleHStackBar
                     :total="data.total"
                     :dataset="data.dataset"
                     :markers="data.markers"
@@ -100,13 +100,13 @@ storiesOf('Components', module)
                     <template #value="{ value, percentage, color }">
                         <span>{{ value }}€ ({{ percentage }})</span>
                     </template>
-                </WStackBar>
+                </WSimpleHStackBar>
             </div>
             `,
     }))
-    .add('WStackBar with custom markers', () => ({
+    .add('WSimpleHStackBar with custom markers', () => ({
         components: {
-            WStackBar,
+            WSimpleHStackBar,
         },
         data () {
             return {
@@ -133,7 +133,7 @@ storiesOf('Components', module)
         },
         template: `
             <div class="Container">
-                <WStackBar
+                <WSimpleHStackBar
                     :total="data.total"
                     :dataset="data.dataset"
                     :markers="data.markers"
@@ -144,7 +144,7 @@ storiesOf('Components', module)
                     <template #value="{ value, percentage, color }">
                         <span>{{ value }}€ ({{ percentage }})</span>
                     </template>
-                </WStackBar>
+                </WSimpleHStackBar>
             </div>
             `,
     }))
