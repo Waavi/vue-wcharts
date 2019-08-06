@@ -27,11 +27,13 @@ describe('Components/WLine', () => {
     ]
 
     const propsData = {
+        index: 0,
         datakey: 'one',
     }
 
     const provide = {
         Chart: {
+            colors: ['red', 'red', 'red', 'red', 'red', 'red', 'red'],
             legends: ['One Bar', 'Two Bar'],
             space: [20, 20, 20, 20],
             activeElements: [0, 1],
@@ -43,32 +45,11 @@ describe('Components/WLine', () => {
 
     const defaultConfig = {
         propsData,
-    }
-    const testComponent = {
-        name: 'WLineTestComponent',
-        provide: {
-            Chart: {
-                legends: ['One Bar', 'Two Bar'],
-                space: [20, 20, 20, 20],
-                activeElements: [0, 1],
-                dataset,
-                xScale: a => a,
-                yScale: a => a,
-            },
-        },
-        components: {
-            WLine,
-        },
-        template: `
-            <div>
-                <WLine :index="0" :datakey="one" />
-            </div>
-        `,
+        provide,
     }
 
     it(`Should be render correctly`, () => {
-        const wrapper = mount(testComponent, defaultConfig)
-        console.log(wrapper.html())
-        // expect(wrapper.html()).toMatchSnapshot()
+        const wrapper = mount(WLine, defaultConfig)
+        expect(wrapper.html()).toMatchSnapshot()
     })
 })
