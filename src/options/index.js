@@ -1,4 +1,5 @@
 /* eslint-disable import/no-mutable-exports */
+import merge from 'lodash.merge'
 import c from '../utils/colors'
 import Theme from './theme'
 
@@ -23,14 +24,11 @@ export let theme = {
 *   Setters
 */
 export const setColors = (newColors) => {
-    colors = newColors
+    colors = [...newColors]
 }
 
 export const setTheme = (newTheme = {}) => {
-    theme = {
-        ...theme,
-        ...newTheme,
-    }
+    theme = merge({}, theme, newTheme)
 }
 
 /*
