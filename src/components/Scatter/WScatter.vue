@@ -56,6 +56,8 @@ export default {
     ],
     inject: ['Chart'],
     props: {
+        // internal props set by the parent (WPieChart)
+        index: VueTypes.number,
         legend: VueTypes.string,
         curve: VueTypes.oneOfType([VueTypes.bool, VueTypes.func]).def(false),
         line: VueTypes.bool.def(false),
@@ -77,7 +79,7 @@ export default {
             return {
                 ...this.themeStyles.line,
                 ...this.lineStyles,
-                stroke: this.themeStyles.styles.stroke || this.styles.stroke || this.fillColor,
+                stroke: this.themeStyles.line.stroke || this.lineStyles.stroke || this.fillColor,
                 fill: 'none',
             }
         },
@@ -89,9 +91,6 @@ export default {
         },
         fillColor () {
             return this.Chart.colors[this.index]
-        },
-        index () {
-            return this.$vnode.index
         },
         active () {
             return this.Chart.activeElements.includes(this.index)

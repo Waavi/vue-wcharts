@@ -1,1 +1,1 @@
-export { default as WSimpleHStackBar } from './WSimpleHStackBar.vue'
+export { default as WSimpleHStackBar } from './SimpleHStackBar/WSimpleHStackBar.vue'

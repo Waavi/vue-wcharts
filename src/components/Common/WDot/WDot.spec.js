@@ -1,4 +1,4 @@
-import { shallowMount } from '@vue/test-utils'
+import { shallowMount, mount } from '@vue/test-utils'
 import WDot from './WDot.vue'
 
 describe('Common/WDot', () => {
@@ -32,9 +32,9 @@ describe('Common/WDot', () => {
         expect(wrapper.html()).toMatchSnapshot()
     })
 
-    // xit(`Should be handle activeElements in Chart after moouse enter WDotItem`, () => {
-    //     const wrapper = shallowMount(WDot, defaultConfig)
-    //     wrapper.vm.handleMouseEnter({ legend: undefined, index: 0 })
-    //     expect(wrapper.vm.Chart.activeElements).toEqual([1])
-    // })
+    it(`It emits the handleClick event`, () => {
+        const wrapper = mount(WDot, defaultConfig)
+        wrapper.trigger('click')
+        expect(wrapper.emitted('onClick')).toHaveLength(1)
+    })
 })

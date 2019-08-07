@@ -68,7 +68,7 @@
 
 <script>
 import VueTypes from 'vue-types'
-import axisMixin from '../../mixins/axis'
+import axisMixin from '../../../mixins/axis'
 
 const negativeAxisStylesDefaultProp = {
     stroke: '#999',

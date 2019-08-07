@@ -29,6 +29,9 @@ describe('Components/WLine', () => {
             legends: ['One Bar', 'Two Bar'],
             space: [20, 20, 20, 20],
             activeElements: [0],
+            canvas: {
+                x0: 50, y0: 25, x1: 500, y1: 250,
+            },
             dataset,
             xScale: a => a,
             yScale: a => a,
@@ -81,13 +84,25 @@ describe('Components/WLine', () => {
         expect(wrapper.findAll(WDot)).toHaveLength(3)
     })
 
-    it('It emits the handleMouseEnter  event', () => {
+    it(`Should be render correctly with area`, () => {
+        const customConfig = { ...defaultConfig, propsData: { ...defaultConfig.propsData, area: true } }
+        const wrapper = shallowMount(WLine, customConfig)
+        expect(wrapper.html()).toMatchSnapshot()
+    })
+
+    it(`Should be render correctly with custom color area `, () => {
+        const customConfig = { ...defaultConfig, propsData: { ...defaultConfig.propsData, area: true, styles: { fill: 'red' } } }
+        const wrapper = shallowMount(WLine, customConfig)
+        expect(wrapper.html()).toMatchSnapshot()
+    })
+
+    it('It emits the handleMouseEnter event', () => {
         const wrapper = mount(WLine, defaultConfig)
         wrapper.find('path').trigger('mouseenter')
         expect(wrapper.emitted('onMouseEnter')).toHaveLength(1)
     })
 
-    it('It emits the mouseleave  event', () => {
+    it('It emits the mouseleave event', () => {
         const wrapper = mount(WLine, defaultConfig)
         wrapper.find('path').trigger('mouseleave')
         expect(wrapper.emitted('onMouseLeave')).toHaveLength(1)

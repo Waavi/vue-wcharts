@@ -31,7 +31,7 @@ describe('Common/WDot', () => {
             numberOfBarsPerGroup: 1,
             maxBarWidth: 80,
             canvas: {
-                x0: 50, y0: 25, x1: 500, y1: 250,
+                x0: 50, y0: 25, x1: 500, y1: 250, height: 243, width: 702,
             },
             padding: [0, 0, 0, 0],
             curData: [
@@ -42,24 +42,17 @@ describe('Common/WDot', () => {
                     0: {
                         datakey: 'one',
                     },
-                    1: {
-                        datakey: 'two',
-                    },
-                    2: {
-                        datakey: 'three',
-                    },
                 },
                 barsDatakeysColors: {
                     one: [
                         '#e8e8e8',
                         '#e8e8e8',
                         '#e8e8e8',
-                        '#e8e8e8',
-                        '#e8e8e8',
-                        '#e8e8e8',
-                        '#e8e8e8',
                     ],
                 },
+                barIds: [
+                    0,
+                ],
             },
             yScale: a => a,
             cleanActive: a => a,
@@ -74,6 +67,24 @@ describe('Common/WDot', () => {
 
     it(`Should be render correctly`, () => {
         const wrapper = shallowMount(WBar, defaultConfig)
+        expect(wrapper.html()).toMatchSnapshot()
+    })
+
+    it(`Shouldn't be render`, () => {
+        const customConfig = { ...defaultConfig, provide: { ...defaultConfig.provide, Chart: { ...defaultConfig.provide.Chart, activeElements: [] } } }
+        const wrapper = shallowMount(WBar, customConfig)
+        expect(wrapper.html()).toMatchSnapshot()
+    })
+
+    it(`Should be render with label correctly`, () => {
+        const customConfig = { ...defaultConfig, propsData: { ...defaultConfig.propsData, showLabel: true } }
+        const wrapper = shallowMount(WBar, customConfig)
+        expect(wrapper.html()).toMatchSnapshot()
+    })
+
+    it(`Should be render with stackedlabel correctly`, () => {
+        const customConfig = { ...defaultConfig, propsData: { ...defaultConfig.propsData, stacked: true, showStackedLabel: true } }
+        const wrapper = shallowMount(WBar, customConfig)
         expect(wrapper.html()).toMatchSnapshot()
     })
 })

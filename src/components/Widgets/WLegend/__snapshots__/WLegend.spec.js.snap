@@ -12,3 +12,5 @@ exports[`Widgets/WLegend Should be render correctly 1`] = `
   </ul>
 </div>
 `;
+
+exports[`Widgets/WLegend Shouldn't be render 1`] = `undefined`;

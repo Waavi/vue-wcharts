@@ -24,6 +24,14 @@ describe('Widgets/WLegend', () => {
         },
     }
 
+    const provideWithoutLegends = {
+        Chart: {
+            legends: [],
+            space: [20, 20, 20, 20],
+            activeElements: [],
+        },
+    }
+
     const defaultConfig = {
         propsData,
         provide,
@@ -31,6 +39,11 @@ describe('Widgets/WLegend', () => {
 
     it(`Should be render correctly`, () => {
         const wrapper = shallowMount(WLegend, defaultConfig)
+        expect(wrapper.html()).toMatchSnapshot()
+    })
+
+    it(`Shouldn't be render`, () => {
+        const wrapper = shallowMount(WLegend, { ...defaultConfig, provide: provideWithoutLegends })
         expect(wrapper.html()).toMatchSnapshot()
     })
 

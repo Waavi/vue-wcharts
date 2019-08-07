@@ -15,10 +15,7 @@
                 />
             </div>
 
-            <div
-                v-if="stacks"
-                class="Stacks"
-            >
+            <div class="Stacks">
                 <div
                     v-for="(stack, index) in stacks"
                     v-show="!(stack.value <= 0)"
@@ -112,10 +109,10 @@
 
 <script>
 import VueTypes from 'vue-types'
-import { WTooltip, WBullet, WShowIfFit } from '../components/Widgets'
-import activeMixin from '../mixins/active'
-import animationMixin from '../mixins/animation'
-import themeMixin from '../mixins/theme'
+import { WTooltip, WBullet, WShowIfFit } from '../../components/Widgets'
+import activeMixin from '../../mixins/active'
+import animationMixin from '../../mixins/animation'
+import themeMixin from '../../mixins/theme'
 
 const MIN_WIDTH = 4
 
@@ -182,7 +179,6 @@ export default {
                     width,
                     hide: width < this.offset,
                 })
-
                 return acc
             }, [])
         },
