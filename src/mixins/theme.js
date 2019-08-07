@@ -1,5 +1,5 @@
 import VueTypes from 'vue-types'
-import { colors, theme } from '../config'
+import { colors, theme } from '../options'
 
 export default {
     props: {

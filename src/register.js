@@ -21,7 +21,7 @@ import {
     WTrans,
     WSpread,
 } from './transitions'
-import { setOptions } from './config'
+import { setOptions } from './options'
 
 export default (Vue, opts = {}) => {
     setOptions(opts)
