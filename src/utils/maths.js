@@ -34,6 +34,10 @@ export function genTicks (min, max, count) {
 }
 
 export function genExactNbTicks (min, max, count) {
+    if (max < min) {
+        [min, max] = [max, min]
+    }
+
     const diff = max - min
     const step = diff / (count - 1)
     const ticks = [min]
