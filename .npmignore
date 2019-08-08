@@ -4,6 +4,7 @@ demo/
 docs/
 public/
 stories/
+coverage/
 .storybook/
 .browserslistrc
 .eslintrc.js
