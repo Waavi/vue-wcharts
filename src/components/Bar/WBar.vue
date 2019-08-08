@@ -115,8 +115,7 @@ export default {
     mixins: [animationMixin, themeMixin],
     inject: ['Chart'],
     props: {
-    // internal props set by the parent (WPieChart)
-        index: VueTypes.number,
+        index: VueTypes.number, // internal props set by the parent (WPieChart)
         datakey: VueTypes.string.isRequired,
         legend: VueTypes.string, // Prop to apply filters
         stacked: VueTypes.bool.def(false),
@@ -192,10 +191,10 @@ export default {
         },
         // Get postition of the bar in every group of bars
         xPosition () {
-            const { id, stacked } = this
+            const { index, stacked } = this
             const { positionsPerGroupOfBars } = this.Chart
             return positionsPerGroupOfBars.indexOf(
-                positionsPerGroupOfBars.find(item => (!stacked ? item === id : Array.isArray(item)))
+                positionsPerGroupOfBars.find(item => (!stacked ? item === index : Array.isArray(item)))
             )
         },
         // Margin

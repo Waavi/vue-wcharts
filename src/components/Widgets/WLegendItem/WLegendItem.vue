@@ -13,7 +13,7 @@
             :text="text"
             :color="bulletColor"
         >
-            <WBullet :styles="{ borderColor: bulletColor, ...bulletStylesCmp }" />
+            <WBullet :styles="{ ...bulletStylesCmp, borderColor: bulletColor }" />
         </slot>
         <slot :text="text">
             <span>{{ text }}</span>

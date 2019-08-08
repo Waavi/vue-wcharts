@@ -232,8 +232,6 @@ export default {
                     if (legend) legends.push(legend)
                     // Add slot
                     slot.componentOptions.propsData.index = cartesiansLength
-                    // TODO: Delete when refactor is finished.
-                    slot.index = cartesiansLength
                     cartesians.push(slot)
                     break
                 case 'grid':

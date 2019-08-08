@@ -292,7 +292,7 @@ storiesOf('Charts/Line', module)
                             #dot="{ dot, styles, Chart, transition }"
                         >
                             <g
-                                :fill="styles.stroke"
+                                :fill="dot.stroke"
                             >
                                 <rect
                                     :x="Chart.active.el && Chart.active.el.id === dot.cartesianIndex && Chart.active.el.point === dot.index ? dot.x - 10 : dot.x - 7"
