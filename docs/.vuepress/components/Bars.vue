@@ -2,6 +2,7 @@
     <WCartesian
         :dataset="data"
         :height="200"
+        responsive
     >
         <WBar
             datakey="two"

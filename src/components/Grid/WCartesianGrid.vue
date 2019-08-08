@@ -17,18 +17,14 @@
 
 <script>
 import VueTypes from 'vue-types'
+import themeMixin from '../../mixins/theme'
 import { genTicks, genExactNbTicks } from '../../utils/maths'
-
-const stylesDefaultProp = {
-    stroke: '#ccc',
-    strokeWidth: 1,
-    strokeDasharray: '3',
-}
 
 export default {
     name: 'WCartesianGrid',
     type: 'grid',
     inject: ['Chart'],
+    mixins: [themeMixin],
     props: {
         hideH: VueTypes.bool.def(false),
         hideV: VueTypes.bool.def(false),
@@ -38,14 +34,12 @@ export default {
             stroke: VueTypes.string,
             strokeWidth: VueTypes.number,
             strokeDasharray: VueTypes.oneOfType([String, Number]),
-        }).def(() => ({
-            ...stylesDefaultProp,
-        })),
+        }),
     },
     computed: {
         stylesCmp () {
             return {
-                ...stylesDefaultProp,
+                ...this.themeStyles.styles,
                 ...this.styles,
             }
         },

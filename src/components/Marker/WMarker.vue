@@ -29,21 +29,13 @@
 
 <script>
 import VueTypes from 'vue-types'
-
-const stylesDefaultProp = {
-    stroke: '#333',
-    strokeWidth: 1,
-    strokeDasharray: '0',
-}
-const labelStylesDefaultProp = {
-    fill: '#333',
-    fontSize: 14,
-}
+import themeMixin from '../../mixins/theme'
 
 export default {
     name: 'WMarker',
     type: 'cartesian',
     inject: ['Chart'],
+    mixins: [themeMixin],
     props: {
         type: VueTypes.oneOf(['y', 'x']).def('y'),
         value: VueTypes.any.isRequired,
@@ -53,25 +45,21 @@ export default {
             stroke: VueTypes.string,
             strokeWidth: VueTypes.number,
             strokeDasharray: VueTypes.oneOfType([VueTypes.string, VueTypes.number]),
-        }).def(() => ({
-            ...stylesDefaultProp,
-        })),
-        labelStyles: VueTypes.object.def(() => ({
-            ...labelStylesDefaultProp,
-        })),
+        }),
+        labelStyles: VueTypes.object,
     },
     computed: {
         // Generate styles of line
         stylesCmp () {
             return {
-                ...stylesDefaultProp,
+                ...this.themeStyles.styles,
                 ...this.styles,
             }
         },
         // Generate styles of label
         labelStylesCmp () {
             return {
-                ...labelStylesDefaultProp,
+                ...this.themeStyles.label,
                 ...this.labelStyles,
             }
         },

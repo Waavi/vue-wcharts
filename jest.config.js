@@ -11,7 +11,7 @@ module.exports = {
         '^.+\\.jsx?$': 'babel-jest',
     },
     transformIgnorePatterns: [
-        '/node_modules/',
+        '/node_modules/(?!d3-array|d3-scale|d3-shape)',
     ],
     moduleNameMapper: {
         '^@/(.*)$': '<rootDir>/src/$1',
@@ -23,4 +23,7 @@ module.exports = {
         '**/tests/unit/**/*.spec.(js|jsx|ts|tsx)|**/__tests__/*.(js|jsx|ts|tsx)|**/src/**/*.spec.(js|jsx|ts|tsx)',
     ],
     testURL: 'http://localhost/',
+    collectCoverage: true,
+    collectCoverageFrom: ['<rootDir>/src/**/*.{vue}'],
+    coverageReporters: ['lcov', 'text-summary'],
 }

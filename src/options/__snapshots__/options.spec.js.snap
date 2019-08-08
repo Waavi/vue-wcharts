@@ -1,0 +1,457 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Options/theme Set theme theme via setOptions correctly 1`] = `
+Object {
+  "WBar": Object {
+    "label": Object {
+      "cursor": "default",
+      "fill": "#333333",
+    },
+    "stackedLabel": Object {
+      "cursor": "default",
+      "fill": "#333333",
+    },
+    "styles": Object {},
+  },
+  "WBullet": Object {
+    "styles": Object {
+      "background": "white",
+      "borderColor": "white",
+      "borderRadius": "50%",
+      "borderStyle": "solid",
+      "borderWidth": "2px",
+      "display": "inline-block",
+      "height": "8px",
+      "margin": "0px 8px 0px 0px",
+      "width": "8px",
+    },
+  },
+  "WCartesianGrid": Object {
+    "styles": Object {
+      "stroke": "#cccccc",
+      "strokeDasharray": "3",
+      "strokeWidth": 1,
+    },
+  },
+  "WDot": Object {
+    "hoverRadius": 8,
+    "radius": 4,
+    "strokeWidth": 2,
+    "styles": Object {
+      "cursor": "default",
+    },
+  },
+  "WLegend": Object {
+    "bulletStyles": Object {
+      "background": "white",
+      "borderColor": "white",
+      "borderRadius": "50%",
+      "borderStyle": "solid",
+      "borderWidth": "2px",
+      "display": "inline-block",
+      "height": "8px",
+      "margin": "0px 8px 0px 0px",
+      "width": "8px",
+    },
+    "legendStyles": Object {
+      "alignItems": "center",
+      "cursor": "pointer",
+      "display": "flex",
+      "fontSize": "12px",
+    },
+    "styles": Object {
+      "display": "flex",
+      "position": "absolute",
+    },
+    "wrapperStyles": Object {
+      "display": "flex",
+      "flex": "1",
+      "listStyle": "none",
+      "margin": "0",
+    },
+  },
+  "WLegendItem": Object {
+    "bulletStyles": Object {
+      "background": "white",
+      "borderColor": "white",
+      "borderRadius": "50%",
+      "borderStyle": "solid",
+      "borderWidth": "2px",
+      "display": "inline-block",
+      "height": "8px",
+      "margin": "0px 8px 0px 0px",
+      "width": "8px",
+    },
+    "noActive": Object {
+      "opacity": "0.5",
+    },
+    "styles": Object {
+      "alignItems": "center",
+      "cursor": "pointer",
+      "display": "flex",
+      "fontSize": "12px",
+    },
+  },
+  "WLine": Object {
+    "dot": Object {
+      "fill": "white",
+      "hoverRadius": 8,
+      "radius": 4,
+      "stroke": "",
+      "strokeWidth": 2,
+    },
+    "styles": Object {
+      "fill": "#fff",
+      "stroke": "#000",
+      "strokeDasharray": 1,
+      "strokeWidth": 4,
+    },
+  },
+  "WMarker": Object {
+    "label": Object {
+      "fill": "#333333",
+      "fontSize": 14,
+    },
+    "styles": Object {
+      "stroke": "#333333",
+      "strokeDasharray": "0",
+      "strokeWidth": 1,
+    },
+  },
+  "WPie": Object {
+    "path": Object {
+      "stroke": "#ffffff",
+    },
+    "styles": Object {
+      "position": "relative",
+      "transform": "translate(50%, 50%)",
+    },
+  },
+  "WScatter": Object {
+    "dot": Object {
+      "fill": "",
+      "opacity": 0.8,
+      "radius": 8,
+      "stroke": "",
+      "strokeWidth": 0,
+    },
+    "line": Object {
+      "fill": "",
+      "stroke": "",
+      "strokeDasharray": "0",
+      "strokeWidth": 1,
+    },
+  },
+  "WTickText": Object {
+    "styles": Object {
+      "fill": "none",
+      "fontSize": 14,
+      "stroke": "none",
+    },
+  },
+  "WTooltip": Object {
+    "styles": Object {
+      "background": "white",
+      "borderRadius": "4px",
+      "boxShadow": "0 2px 10px 0 rgba(0, 0, 0, 0.15)",
+      "color": "#000000",
+      "display": "flex",
+      "fontSize": "14px",
+      "opacity": 0,
+      "padding": ".5rem",
+      "position": "absolute",
+      "transition": "opacity .25s ease",
+      "zIndex": 1,
+    },
+    "title": Object {
+      "marginBottom": "5px",
+    },
+    "visible": Object {
+      "opacity": 1,
+    },
+    "wrapper": Object {
+      "display": "flex",
+      "flexDirection": "column",
+    },
+  },
+  "WXAxis": Object {
+    "label": Object {
+      "fill": "#414141",
+      "fontWeight": 800,
+    },
+    "mark": Object {
+      "stroke": "#cccccc",
+    },
+    "styles": Object {
+      "stroke": "#cccccc",
+    },
+    "tick": Object {
+      "fill": "#414141",
+      "fontSize": 12,
+      "stroke": "none",
+    },
+  },
+  "WYAxis": Object {
+    "label": Object {
+      "fill": "#414141",
+      "fontWeight": 800,
+    },
+    "mark": Object {
+      "stroke": "#cccccc",
+    },
+    "styles": Object {
+      "stroke": "#cccccc",
+    },
+    "tick": Object {
+      "fill": "#414141",
+      "fontSize": 12,
+      "stroke": "none",
+    },
+  },
+  "WZAxis": Object {
+    "label": Object {
+      "fill": "#414141",
+      "fontWeight": 800,
+    },
+    "mark": Object {
+      "stroke": "#cccccc",
+    },
+    "styles": Object {
+      "stroke": "#cccccc",
+    },
+    "tick": Object {
+      "fill": "#414141",
+      "fontSize": 12,
+      "stroke": "none",
+    },
+  },
+}
+`;
+
+exports[`Options/theme Set theme via setTheme correctly 1`] = `
+Object {
+  "WBar": Object {
+    "label": Object {
+      "cursor": "default",
+      "fill": "#333333",
+    },
+    "stackedLabel": Object {
+      "cursor": "default",
+      "fill": "#333333",
+    },
+    "styles": Object {},
+  },
+  "WBullet": Object {
+    "styles": Object {
+      "background": "white",
+      "borderColor": "white",
+      "borderRadius": "50%",
+      "borderStyle": "solid",
+      "borderWidth": "2px",
+      "display": "inline-block",
+      "height": "8px",
+      "margin": "0px 8px 0px 0px",
+      "width": "8px",
+    },
+  },
+  "WCartesianGrid": Object {
+    "styles": Object {
+      "stroke": "#cccccc",
+      "strokeDasharray": "3",
+      "strokeWidth": 1,
+    },
+  },
+  "WDot": Object {
+    "hoverRadius": 8,
+    "radius": 4,
+    "strokeWidth": 2,
+    "styles": Object {
+      "cursor": "default",
+    },
+  },
+  "WLegend": Object {
+    "bulletStyles": Object {
+      "background": "white",
+      "borderColor": "white",
+      "borderRadius": "50%",
+      "borderStyle": "solid",
+      "borderWidth": "2px",
+      "display": "inline-block",
+      "height": "8px",
+      "margin": "0px 8px 0px 0px",
+      "width": "8px",
+    },
+    "legendStyles": Object {
+      "alignItems": "center",
+      "cursor": "pointer",
+      "display": "flex",
+      "fontSize": "12px",
+    },
+    "styles": Object {
+      "display": "flex",
+      "position": "absolute",
+    },
+    "wrapperStyles": Object {
+      "display": "flex",
+      "flex": "1",
+      "listStyle": "none",
+      "margin": "0",
+    },
+  },
+  "WLegendItem": Object {
+    "bulletStyles": Object {
+      "background": "white",
+      "borderColor": "white",
+      "borderRadius": "50%",
+      "borderStyle": "solid",
+      "borderWidth": "2px",
+      "display": "inline-block",
+      "height": "8px",
+      "margin": "0px 8px 0px 0px",
+      "width": "8px",
+    },
+    "noActive": Object {
+      "opacity": "0.5",
+    },
+    "styles": Object {
+      "alignItems": "center",
+      "cursor": "pointer",
+      "display": "flex",
+      "fontSize": "12px",
+    },
+  },
+  "WLine": Object {
+    "dot": Object {
+      "fill": "white",
+      "hoverRadius": 8,
+      "radius": 4,
+      "stroke": "",
+      "strokeWidth": 2,
+    },
+    "styles": Object {
+      "fill": "#fff",
+      "stroke": "#000",
+      "strokeDasharray": 1,
+      "strokeWidth": 4,
+    },
+  },
+  "WMarker": Object {
+    "label": Object {
+      "fill": "#333333",
+      "fontSize": 14,
+    },
+    "styles": Object {
+      "stroke": "#333333",
+      "strokeDasharray": "0",
+      "strokeWidth": 1,
+    },
+  },
+  "WPie": Object {
+    "path": Object {
+      "stroke": "#ffffff",
+    },
+    "styles": Object {
+      "position": "relative",
+      "transform": "translate(50%, 50%)",
+    },
+  },
+  "WScatter": Object {
+    "dot": Object {
+      "fill": "",
+      "opacity": 0.8,
+      "radius": 8,
+      "stroke": "",
+      "strokeWidth": 0,
+    },
+    "line": Object {
+      "fill": "",
+      "stroke": "",
+      "strokeDasharray": "0",
+      "strokeWidth": 1,
+    },
+  },
+  "WTickText": Object {
+    "styles": Object {
+      "fill": "none",
+      "fontSize": 14,
+      "stroke": "none",
+    },
+  },
+  "WTooltip": Object {
+    "styles": Object {
+      "background": "white",
+      "borderRadius": "4px",
+      "boxShadow": "0 2px 10px 0 rgba(0, 0, 0, 0.15)",
+      "color": "#000000",
+      "display": "flex",
+      "fontSize": "14px",
+      "opacity": 0,
+      "padding": ".5rem",
+      "position": "absolute",
+      "transition": "opacity .25s ease",
+      "zIndex": 1,
+    },
+    "title": Object {
+      "marginBottom": "5px",
+    },
+    "visible": Object {
+      "opacity": 1,
+    },
+    "wrapper": Object {
+      "display": "flex",
+      "flexDirection": "column",
+    },
+  },
+  "WXAxis": Object {
+    "label": Object {
+      "fill": "#414141",
+      "fontWeight": 800,
+    },
+    "mark": Object {
+      "stroke": "#cccccc",
+    },
+    "styles": Object {
+      "stroke": "#cccccc",
+    },
+    "tick": Object {
+      "fill": "#414141",
+      "fontSize": 12,
+      "stroke": "none",
+    },
+  },
+  "WYAxis": Object {
+    "label": Object {
+      "fill": "#414141",
+      "fontWeight": 800,
+    },
+    "mark": Object {
+      "stroke": "#cccccc",
+    },
+    "styles": Object {
+      "stroke": "#cccccc",
+    },
+    "tick": Object {
+      "fill": "#414141",
+      "fontSize": 12,
+      "stroke": "none",
+    },
+  },
+  "WZAxis": Object {
+    "label": Object {
+      "fill": "#414141",
+      "fontWeight": 800,
+    },
+    "mark": Object {
+      "stroke": "#cccccc",
+    },
+    "styles": Object {
+      "stroke": "#cccccc",
+    },
+    "tick": Object {
+      "fill": "#414141",
+      "fontSize": 12,
+      "stroke": "none",
+    },
+  },
+}
+`;

@@ -1,6 +1,7 @@
 <template>
     <WCartesian
         :height="100"
+        responsive
     >
         <WDot
             key="dot"

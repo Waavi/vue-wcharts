@@ -1,7 +1,7 @@
 import { storiesOf } from '@storybook/vue'
 
 import {
-    WCartesian, WScatter, WXAxis, WYAxis, WZAxis, WCartesianGrid, WTooltip, WLegends,
+    WCartesian, WScatter, WXAxis, WYAxis, WZAxis, WCartesianGrid, WTooltip, WLegend,
 } from '../src'
 
 const data = [
@@ -38,7 +38,7 @@ storiesOf('Charts/Scatter', module)
             WXAxis,
             WYAxis,
             WZAxis,
-            WLegends,
+            WLegend,
         },
         data () {
             return {
@@ -66,7 +66,51 @@ storiesOf('Charts/Scatter', module)
                     :space="[25, 0, 0, 50]"
                 />
                 <WTooltip />
-                <WLegends
+                <WLegend
+                    position="top"
+                    align="end"
+                />
+            </WCartesian>
+        `,
+    }))
+    .add('With line', () => ({
+        components: {
+            WCartesianGrid,
+            WTooltip,
+            WCartesian,
+            WScatter,
+            WXAxis,
+            WYAxis,
+            WZAxis,
+            WLegend,
+        },
+        data () {
+            return {
+                data,
+            }
+        },
+        template: `
+           <WCartesian
+                :dataset="data"
+                responsive
+                scatter
+                :bound="[n => n - 1000,n => n + 1000]"
+                :xBound="[n => n - 1000,n => n + 1000]"
+            >
+                <WCartesianGrid />
+                <WScatter line legend="One Scatter" />
+                <WXAxis
+                    name="one"
+                    datakey="one"
+                    :space="[0, 50, 80, 50]"
+                />
+                <WYAxis
+                    name="two"
+                    datakey="two"
+                    :space="[25, 0, 0, 50]"
+                />
+                <WTooltip />
+                <WLegend
                     position="top"
                     align="end"
                 />

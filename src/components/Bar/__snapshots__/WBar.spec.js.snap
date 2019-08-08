@@ -1,0 +1,123 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Components/WBar Should be render correctly 1`] = `
+<g id="Bars">
+  <g>
+    <g id="0">
+      <WTrans-stub initialProps="[object Object]" transition="all 1s ease">
+        <rect x="-17.5" y="0" width="45" height="4000" fill="#e8e8e8" style="transition: all 1s ease;"></rect>
+      </WTrans-stub>
+      <!---->
+      <!---->
+    </g>
+  </g>
+  <g>
+    <g id="1">
+      <WTrans-stub initialProps="[object Object]" transition="all 1s ease">
+        <rect x="333.5" y="0" width="45" height="3000" fill="#e8e8e8" style="transition: all 1s ease;"></rect>
+      </WTrans-stub>
+      <!---->
+      <!---->
+    </g>
+  </g>
+  <g>
+    <g id="2">
+      <WTrans-stub initialProps="[object Object]" transition="all 1s ease">
+        <rect x="684.5" y="0" width="45" height="9800" fill="#e8e8e8" style="transition: all 1s ease;"></rect>
+      </WTrans-stub>
+      <!---->
+      <!---->
+    </g>
+  </g>
+</g>
+`;
+
+exports[`Components/WBar Should be render with label correctly 1`] = `
+<g id="Bars">
+  <g>
+    <g id="0">
+      <WTrans-stub initialProps="[object Object]" transition="all 1s ease">
+        <rect x="-17.5" y="0" width="45" height="4000" fill="#e8e8e8" style="transition: all 1s ease;"></rect>
+      </WTrans-stub>
+      <g>
+        <WTrans-stub initialProps="[object Object]" transition="all 0.5s 1s ease"><text x="5" y="0" text-anchor="middle" font-size="12" style="fill: #333333; cursor: default; transition: all 1s ease; transform: translateY(3994px);">
+            4000
+          </text></WTrans-stub>
+      </g>
+      <!---->
+    </g>
+  </g>
+  <g>
+    <g id="1">
+      <WTrans-stub initialProps="[object Object]" transition="all 1s ease">
+        <rect x="333.5" y="0" width="45" height="3000" fill="#e8e8e8" style="transition: all 1s ease;"></rect>
+      </WTrans-stub>
+      <g>
+        <WTrans-stub initialProps="[object Object]" transition="all 0.5s 1s ease"><text x="356" y="0" text-anchor="middle" font-size="12" style="fill: #333333; cursor: default; transition: all 1s ease; transform: translateY(2994px);">
+            3000
+          </text></WTrans-stub>
+      </g>
+      <!---->
+    </g>
+  </g>
+  <g>
+    <g id="2">
+      <WTrans-stub initialProps="[object Object]" transition="all 1s ease">
+        <rect x="684.5" y="0" width="45" height="9800" fill="#e8e8e8" style="transition: all 1s ease;"></rect>
+      </WTrans-stub>
+      <g>
+        <WTrans-stub initialProps="[object Object]" transition="all 0.5s 1s ease"><text x="707" y="0" text-anchor="middle" font-size="12" style="fill: #333333; cursor: default; transition: all 1s ease; transform: translateY(9794px);">
+            9800
+          </text></WTrans-stub>
+      </g>
+      <!---->
+    </g>
+  </g>
+</g>
+`;
+
+exports[`Components/WBar Should be render with stackedlabel correctly 1`] = `
+<g id="Bars">
+  <g>
+    <g id="0">
+      <WTrans-stub initialProps="[object Object]" transition="all 1s ease">
+        <rect x="27.5" y="0" width="45" height="4000" fill="#e8e8e8" style="transition: all 1s ease;"></rect>
+      </WTrans-stub>
+      <!---->
+      <g>
+        <WTrans-stub initialProps="[object Object]" transition="all 0.5s 1s ease"><text x="50" y="0" text-anchor="middle" font-size="12" style="fill: #333333; cursor: default; transition: all 1s ease; transform: translateY(3994px);">
+            4000
+          </text></WTrans-stub>
+      </g>
+    </g>
+  </g>
+  <g>
+    <g id="1">
+      <WTrans-stub initialProps="[object Object]" transition="all 1s ease">
+        <rect x="378.5" y="0" width="45" height="3000" fill="#e8e8e8" style="transition: all 1s ease;"></rect>
+      </WTrans-stub>
+      <!---->
+      <g>
+        <WTrans-stub initialProps="[object Object]" transition="all 0.5s 1s ease"><text x="401" y="0" text-anchor="middle" font-size="12" style="fill: #333333; cursor: default; transition: all 1s ease; transform: translateY(2994px);">
+            3000
+          </text></WTrans-stub>
+      </g>
+    </g>
+  </g>
+  <g>
+    <g id="2">
+      <WTrans-stub initialProps="[object Object]" transition="all 1s ease">
+        <rect x="729.5" y="0" width="45" height="9800" fill="#e8e8e8" style="transition: all 1s ease;"></rect>
+      </WTrans-stub>
+      <!---->
+      <g>
+        <WTrans-stub initialProps="[object Object]" transition="all 0.5s 1s ease"><text x="752" y="0" text-anchor="middle" font-size="12" style="fill: #333333; cursor: default; transition: all 1s ease; transform: translateY(9794px);">
+            9800
+          </text></WTrans-stub>
+      </g>
+    </g>
+  </g>
+</g>
+`;
+
+exports[`Components/WBar Shouldn't be render 1`] = `undefined`;

@@ -1,10 +1,10 @@
 .DS_Store
 node_modules
-/demo
-/docs
-/public
-/stories
-.storybook
+demo/
+docs/
+public/
+stories/
+.storybook/
 .browserslistrc
 .eslintrc.js
 .gitignore

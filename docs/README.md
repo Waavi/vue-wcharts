@@ -1,16 +1,16 @@
 ---
 home: true
-heroImage: /mountains.png
-heroText: WCharts
-description: A customizable and composable charts for VueJS
-actionText: Getting Started
+heroImage: /square-logo.png
+heroText: by WAAVI
+description: Customizable & composable charts for VueJS
+actionText: Get Started
 actionLink: /guide/getting-started
 features:
 - title: Customizable
-  details: Customize yout charts by passing props, using slots or custom components.
+  details: Customize your charts by passing props, using slots or custom components.
 - title: Composable
   details: Build your charts with reusable components.
 - title: Lightweight
-  details: It depends on several small submodules in D3, so it's very reliable and lightweight.
-footer: MIT Licensed | Copyright © 2019-present Waavi Studio S.L.
+  details: We rely only on small D3 submodules, keeping us reliable and lightweight.
+footer: MIT Licensed | Copyright © 2019-by Waavi Studio S.L.
 ---

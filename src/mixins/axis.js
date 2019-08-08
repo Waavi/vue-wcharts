@@ -2,24 +2,7 @@
 import VueTypes from 'vue-types'
 import { genTicks, genExactNbTicks } from '../utils/maths'
 import WTickText from '../components/Axis/WTickText.vue'
-
-const axisStylesDefaultProp = {
-    stroke: '#999',
-}
-
-const markStylesDefaultProp = {
-    stroke: '#999',
-}
-
-const labelStylesDefaultProp = {
-    fill: '#999',
-}
-
-const tickStylesDefaultProp = {
-    stroke: 'none',
-    fill: '#999',
-    fontSize: 12,
-}
+import themeMixin from './theme'
 
 const spaceLabelX = [0, 50, 65, 50]
 const spaceLabelY = [50, 0, 0, 80]
@@ -27,6 +10,7 @@ const spaceLabelY = [50, 0, 0, 80]
 export default {
     type: 'axis',
     inject: ['Chart'],
+    mixins: [themeMixin],
     components: {
         WTickText,
     },
@@ -45,10 +29,10 @@ export default {
         // Negative axis
         hideNegativeAxis: VueTypes.bool.def(false),
         // Style
-        axisStyles: VueTypes.object.def(() => ({ ...axisStylesDefaultProp })),
-        markStyles: VueTypes.object.def(() => ({ ...markStylesDefaultProp })),
-        labelStyles: VueTypes.object.def(() => ({ ...labelStylesDefaultProp })),
-        tickStyles: VueTypes.object.def(() => ({ ...tickStylesDefaultProp })),
+        axisStyles: VueTypes.object,
+        markStyles: VueTypes.object,
+        labelStyles: VueTypes.object,
+        tickStyles: VueTypes.object,
     },
     preload ({ parent, props, index }) {
         const {
@@ -216,21 +200,21 @@ export default {
         // Generate styles of axis
         axisStylesCmp () {
             return {
-                ...axisStylesDefaultProp,
+                ...this.themeStyles.styles,
                 ...this.axisStyles,
             }
         },
         // Generate styles of tick
         markStylesCmp () {
             return {
-                ...markStylesDefaultProp,
+                ...this.themeStyles.mark,
                 ...this.markStyles,
             }
         },
         // Generate styles of text
         tickStylesCmp () {
             return {
-                ...tickStylesDefaultProp,
+                ...this.themeStyles.tick,
                 ...this.tickStyles,
             }
         },
@@ -238,7 +222,7 @@ export default {
         labelStylesCmp () {
             return {
                 fontSize: this.labelSize,
-                ...labelStylesDefaultProp,
+                ...this.themeStyles.label,
                 ...this.labelStyles,
             }
         },

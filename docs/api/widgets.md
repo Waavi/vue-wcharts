@@ -20,6 +20,10 @@ sidebarDepth: 3
 |----------|------|---------------|-------------|
 | id | string |  | Tooltip identifier |
 | gap | number | 10 | X and Y offset |
+| styles | object | { position: 'absolute', display: 'flex', padding: '.5rem', borderRadius: '4px', color: '#000000', background: 'white', boxShadow: '0 2px 10px 0 rgba(0, 0, 0, 0.15)', fontSize: '14px', opacity: 0, zIndex: 1, transition: 'opacity .25s ease' } | Styles |
+| visibleStyles | object | { opacity: 1 } | Visible Styles |
+| titleStyles | object | { display: 'flex', flexDirection: 'column' } | Title Styles |
+| wrapperStyles | object | { marginBottom: '5px' } | Wrapper Styles |
 
 ### Slots
 
@@ -61,7 +65,7 @@ sidebarDepth: 3
     | color | Element color |
 
 
-## WLegends
+## WLegend
 
 *Legends component*
 
@@ -80,9 +84,10 @@ sidebarDepth: 3
 | space | array | [16, 16, 16, 16] | Space around the legends |
 | size | number |  | Width or height, with different position prop top-bottom/left-right |
 | selectable | bool |  | If true set, it can be selectable |
-| componentsStyles | object |  | Container styles |
-| wrapperStyles | object |  | Wrapper styles |
-| legendStyles | object |  | Legend Styles |
+| styles | object | { position: 'absolute', display: 'flex' } | Container styles |
+| wrapperStyles | object | { display: 'flex', flex: '1', margin: '0', listStyle: 'none' } | Wrapper styles |
+| legendStyles | object | { display: 'flex', alignItems: 'center', fontSize: '12px', cursor: 'pointer' } | Legend Styles |
+| bulletStyles | object | { display: 'inline-block', width: '8px', height: '8px', background: 'white',borderRadius: '50%', borderWidth: '2px', borderColor: 'white', borderStyle: 'solid', margin: '0px 8px 0px 0px', } | Bullet Styles |
 
 ### Slots
 
@@ -97,12 +102,12 @@ sidebarDepth: 3
     | color | Legend color |
 
 
-## WLegend
+## WLegendItem
 
 *Legend component*
 
 ### Parent components
-**[\<WLegends />](#wlegends)**
+**[\<WLegend />](#wlegends)**
 **[\<WCartesian />](/api/charts.html#wcartesian)**
 **[\<WPieChart />](/api/charts.html#wcartesian)**
 
@@ -115,8 +120,9 @@ sidebarDepth: 3
 | index |  number, string | | The index of the legend |
 | text |  string | | The text of the legend |
 | active |  bool | false | If is set to true the legend has opacity 1. If is set to false the legend has opacity .5 |
-| styles |  object | | The style of the legend |
-| textStyles |  object | | The style of the legend text |
+| styles |  object | { display: 'flex', alignItems: 'center', fontSize: '12px', cursor: 'pointer' } | The style of the legend |
+| noActiveStyles |  object | { opacity: '0.5' } | The style of the legend in no active state |
+| bulletStyles |  object | { display: 'inline-block', width: '8px', height: '8px', background: 'white',borderRadius: '50%', borderWidth: '2px', borderColor: 'white', borderStyle: 'solid', margin: '0px 8px 0px 0px', } | The style of the legend text |
 | color |  string | | The color of the legend |
 
 ### Slots
@@ -153,13 +159,27 @@ sidebarDepth: 3
 
 ### Parent components
 **[\<WTooltip />](#wtooltip)**
-**[\<WLegends />](#wlegends)**
-**[\<WLegend />](#wlegend)**
+**[\<WLegend />](#wlegends)**
+**[\<WLegendItem />](#wlegend)**
 **[\<WStackBar />](/api/charts.html#wstackbar)**
 **Valid SVG elements**
 
 ### Properties
 | Property | Type | Default value | Description |
 |----------|------|---------------|-------------|
-| color |  string | Required property | Color of the bullet |
+| color | string | Required property | Color of the bullet |
+| styles | object | { display: 'inline-block', width: '8px', height: '8px', background: 'white',borderRadius: '50%', borderWidth: '2px', borderColor: 'white', borderStyle: 'solid', margin: '0px 8px 0px 0px', } | Styles of the bullet |
 
+## WShowIfFit
+
+*Component to show the content slot default, if the content slot fits in the parent component.*
+
+### Parent components
+**[\<WStackBar />](/api/charts.html#wstackbar)**
+**Valid HTML elements**
+
+### Slots
+
+-   #### default
+
+    *Slot default to calc children components sizes*

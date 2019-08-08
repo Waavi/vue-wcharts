@@ -1,0 +1,105 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Components/WLine Should be render correctly 1`] = `
+<div class="WSimpleHStackBar">
+  <div class="Container">
+    <div class="Start"></div>
+    <div class="Stacks">
+      <div id="0" class="Stack First" style="opacity: 1; background: rgb(72, 192, 182); max-width: 52.0949720670391%;">
+        <div class="Value">
+          <wshowiffit-stub>
+            <!---->
+          </wshowiffit-stub>
+        </div>
+      </div>
+      <div id="1" class="Stack" style="opacity: 1; background: rgb(157, 106, 245); max-width: 14.385474860335197%;">
+        <div class="Value">
+          <wshowiffit-stub>
+            <!---->
+          </wshowiffit-stub>
+        </div>
+      </div>
+      <div id="2" class="Stack Last" style="opacity: 1; background: rgb(255, 222, 105); max-width: 32.960893854748605%;">
+        <div class="Value">
+          <wshowiffit-stub>
+            <!---->
+          </wshowiffit-stub>
+        </div>
+      </div>
+    </div>
+    <wtooltip-stub colors="#48c0b6,#9d6af5,#ffde69,#e8e8e8,#54ddd9,#6e19ff,#dfbd46" id="" gap="10" styles="[object Object]" visiblestyles="[object Object]" titlestyles="[object Object]" wrapperstyles="[object Object]"></wtooltip-stub>
+    <div class="End"></div>
+  </div>
+</div>
+`;
+
+exports[`Components/WLine Should be render correctly with labels 1`] = `
+<div class="WSimpleHStackBar">
+  <div class="Container">
+    <div class="Start"></div>
+    <div class="Stacks">
+      <div id="0" class="Stack First" style="opacity: 1; background: rgb(72, 192, 182); max-width: 52.0949720670391%;">
+        <div class="Value">
+          <wshowiffit-stub><span style="color: rgb(72, 192, 182);">37.3</span></wshowiffit-stub>
+        </div>
+      </div>
+      <div id="1" class="Stack" style="opacity: 1; background: rgb(157, 106, 245); max-width: 14.385474860335197%;">
+        <div class="Value">
+          <wshowiffit-stub><span style="color: rgb(157, 106, 245);">10.3</span></wshowiffit-stub>
+        </div>
+      </div>
+      <div id="2" class="Stack Last" style="opacity: 1; background: rgb(255, 222, 105); max-width: 32.960893854748605%;">
+        <div class="Value">
+          <wshowiffit-stub><span style="color: rgb(255, 222, 105);">23.6</span></wshowiffit-stub>
+        </div>
+      </div>
+    </div>
+    <wtooltip-stub colors="#48c0b6,#9d6af5,#ffde69,#e8e8e8,#54ddd9,#6e19ff,#dfbd46" id="" gap="10" styles="[object Object]" visiblestyles="[object Object]" titlestyles="[object Object]" wrapperstyles="[object Object]"></wtooltip-stub>
+    <div class="End"></div>
+  </div>
+</div>
+`;
+
+exports[`Components/WLine Should be render correctly with markers 1`] = `
+<div class="WSimpleHStackBar">
+  <div class="Container">
+    <div class="Start"></div>
+    <div class="Stacks">
+      <div id="0" class="Stack First" style="opacity: 1; background: rgb(72, 192, 182); max-width: 52.0949720670391%;">
+        <div class="Value">
+          <wshowiffit-stub><span style="color: rgb(72, 192, 182);">37.3</span></wshowiffit-stub>
+        </div>
+      </div>
+      <div id="1" class="Stack" style="opacity: 1; background: rgb(157, 106, 245); max-width: 14.385474860335197%;">
+        <div class="Value">
+          <wshowiffit-stub><span style="color: rgb(157, 106, 245);">10.3</span></wshowiffit-stub>
+        </div>
+      </div>
+      <div id="2" class="Stack Last" style="opacity: 1; background: rgb(255, 222, 105); max-width: 32.960893854748605%;">
+        <div class="Value">
+          <wshowiffit-stub><span style="color: rgb(255, 222, 105);">23.6</span></wshowiffit-stub>
+        </div>
+      </div>
+    </div>
+    <wtooltip-stub colors="#48c0b6,#9d6af5,#ffde69,#e8e8e8,#54ddd9,#6e19ff,#dfbd46" id="" gap="10" styles="[object Object]" visiblestyles="[object Object]" titlestyles="[object Object]" wrapperstyles="[object Object]"></wtooltip-stub>
+    <div id="0" data-type="marker" class="Marker" style="left: 13.966480446927376%;">
+      <div data-value="10"></div>
+    </div>
+    <div id="1" data-type="marker" class="Marker" style="left: 34.91620111731844%;">
+      <div data-value="25"></div>
+    </div>
+    <div class="End"></div>
+  </div>
+</div>
+`;
+
+exports[`Components/WLine Should be render correctly without stacks 1`] = `
+<div class="WSimpleHStackBar">
+  <div class="Container">
+    <!---->
+    <div class="Stacks"></div>
+    <wtooltip-stub colors="#48c0b6,#9d6af5,#ffde69,#e8e8e8,#54ddd9,#6e19ff,#dfbd46" id="" gap="10" styles="[object Object]" visiblestyles="[object Object]" titlestyles="[object Object]" wrapperstyles="[object Object]"></wtooltip-stub>
+    <!---->
+  </div>
+</div>
+`;

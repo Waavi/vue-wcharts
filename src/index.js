@@ -1,99 +1,13 @@
-import { WCartesian, WPieChart, WStackBar } from './charts'
-import {
-    WLine,
-    WBar,
-    WScatter,
-    WXAxis,
-    WYAxis,
-    WZAxis,
-    WLegend,
-    WLegends,
-    WCartesianGrid,
-    WMarker,
-    WPie,
-    WTooltip,
-    WDot,
-    WBullet,
-    WShowIfFit,
-} from './components'
-import {
-    WTrans,
-    WSpread,
-} from './transitions'
-import { setOptions } from './config'
+import Vue from 'vue'
+import Register from './register'
 
-const install = (Vue, opts = {}) => {
-    setOptions(opts)
+const install = Register
 
-    const core = [
-        WCartesian,
-        WPieChart,
-        WStackBar,
-        WLegend,
-    ]
-
-    const components = [
-        WLine,
-        WBar,
-        WScatter,
-        WXAxis,
-        WYAxis,
-        WZAxis,
-        WLegends,
-        WCartesianGrid,
-        WMarker,
-        WPie,
-        WTooltip,
-        WDot,
-        WBullet,
-        WShowIfFit,
-    ]
-
-    const common = [
-        WTrans,
-        WSpread,
-    ]
-
-    // Chart components
-    core.forEach((c) => {
-        Vue.component(c.name, c)
-    })
-
-    // Instance components
-    components.forEach((c) => {
-        Vue.component(c.name, c)
-    })
-
-    // Common and transtions components
-    common.forEach((c) => {
-        Vue.component(c.name, c)
-    })
+// Install  library if the user use script src
+if (typeof window !== 'undefined' && window.Vue && window.Vue === Vue) {
+    install(window.Vue)
 }
+
+export * from './loader'
 
 export default install
-
-export {
-    // Core
-    WCartesian,
-    WPieChart,
-    WStackBar,
-    // Components
-    WLine,
-    WScatter,
-    WDot,
-    WBar,
-    WXAxis,
-    WYAxis,
-    WZAxis,
-    WLegend,
-    WLegends,
-    WCartesianGrid,
-    WMarker,
-    WPie,
-    WTooltip,
-    WBullet,
-    WShowIfFit,
-    // Common
-    WTrans,
-    WSpread,
-}

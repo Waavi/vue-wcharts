@@ -191,6 +191,13 @@ sidebarDepth: 3
     | Chart | Chart api (WCartesian reference) |
     | transition | CSS transition value |
 
+### Events
+| Property | Arguments | Description |
+|----------|------------|------------|
+| onMouseEnter | $event | Event emitted on mouse enter in line or area line |
+| onMouseLeave | $event | Event emitted on mouse leave in line or area line |
+| onClickDot | Dot info prop | Event emitted on click WDot |
+
 ## WBar
 
 *Bar component.*
@@ -207,13 +214,14 @@ sidebarDepth: 3
 | datakey | string | Required property | The key of dataset |
 | legend | string |  | The text of the legend |
 | width | number | 20 | The width of the bar |
-| color | string |  | The color of the bar |
+| color | string    arrayOf(string) |  | Accept a color for all bars or one color for every bar |
 | styles | object |  | The styles of the bar |
 | showLabel | bool | false | If is set to true, the label will be drawn |
 | labelSize | number | 12 | The font size of the label |
 | labelAlign | oneOf(['start', 'middle', 'end']) | middle | The horizontal position of the label |
 | labelPosition | oneOf(['inside', 'outside']) | outside | The vertical position of the label. If the chart is stacked the label position will be `inside` |
 | labelStyles | object | ```{ fill: '#333', cursor: 'default' }``` | The styles of the label |
+| stacked | bool | false | If true set, the bar is stacked |
 | showStackedLabel | bool | false | If the chart is stacked, the bar is the last one and `showStackedLabel` is set to true, the label of the whole bar will be drawn |
 | stackedLabelSize | number | 12 | The font size of the stacked label |
 | stackedLabelAlign | oneOf(['start', 'middle', 'end']) | middle | The horizontal position of the stacked label |
@@ -351,6 +359,7 @@ sidebarDepth: 3
 | line | bool | false | Draw a line joining the dots |
 | lineStyles | object | ```{fill: '',stroke: '',strokeWidth: 1,strokeDasharray: '0'}``` | Line styles |
 | styles | object | ```{fill: '',stroke: '',strokeWidth: 0,radius: 8,opacity: 0.8}``` | Dot styles |
+| dotStyles | object | ```{fill: '',stroke: '',strokeWidth: 0,radius: 4,hoverRadius: 8, opacity: 1 }``` | Dot styles |
 | animated | bool | true | If true set, animation will be executed |
 | transDuration | number | 1 | Transition duration in seconds |
 | transEffect | string | ease | Transition effect |
@@ -363,10 +372,15 @@ sidebarDepth: 3
 
     | Property | Description |
     |----------|-------------|
-    | dot | Dot item value (x, y, z, info, value, index and cartesianIndex) |
+    | dot | Dot item value ```{ x, y, z, info: [{ name, data, color, value }], value, index, cartesianIndex }``` |
     | styles | Dot styles |
     | Chart | Chart api (WCartesian reference) |
     | transition | CSS transition value |
+
+### Events
+| Property | Arguments | Description |
+|----------|------------|------------|
+| onClickDot | Dot info prop | Event emitted on click WDot |
 
 ## WMarker
 
@@ -427,6 +441,11 @@ sidebarDepth: 3
 | styles | object | Required property | ```{fill: '',stroke: '',strokeWidth: 0,radius: 4,hoverRadius: 8}``` | X coordinate |
 | transition | string | Required property | *all 200ms ease*| CSS transition value |
 | info | object | | ```{ id: 1, label: 'Page A', value: 5400}```| Info for active element, normally for the Tooltip. |
+
+### Events
+| Property | Arguments | Description |
+|----------|------------|------------|
+| onClickDot | Dot info prop | Event emitted on click dot |
 
 ## WTickText
 
