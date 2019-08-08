@@ -24,5 +24,6 @@ notifications:
       - alejandro@waavi.com
       - adrian@waavi.com
       - carlos@waavi.com
+      - carlos.lara@waavi.com
     on_success: change
     on_failure: always
