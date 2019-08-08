@@ -3,6 +3,7 @@
 [![npm downloads](https://img.shields.io/npm/dm/vue-wcharts.svg?style=popout-square)](https://www.npmjs.com/package/vue-wcharts)
 [![GitHub stars](https://img.shields.io/github/stars/waavi/vue-wcharts.svg?style=popout-square)](https://github.com/waavi/vue-wcharts)
 ![Travis](https://img.shields.io/travis/com/Waavi/vue-wcharts/master?style=popout-square)
+[![Coverage Status](https://coveralls.io/repos/github/Waavi/vue-wcharts/badge.svg?branch=master)](https://coveralls.io/github/Waavi/vue-wcharts?branch=master)
 [![MIT License](https://img.shields.io/badge/license-MIT-blue.svg?style=popout-square)](https://github.com/waavi/vue-wcharts/raw/master/license.txt)
 <br>
 <br>
