@@ -7,17 +7,17 @@
             <path
                 :d="linePath"
                 :style="{ transition }"
-                :stroke="stylesCmp.stroke ? stylesCmp.stroke : fillColor"
-                :stroke-width="stylesCmp.strokeWidth"
-                :stroke-dasharray="stylesCmp.strokeDasharray"
+                v-bind="stylesCmp"
                 fill="none"
+                @mouseenter="$emit('onMouseEnter', $event)"
+                @mouseleave="$emit('onMouseLeave', $event)"
             />
             <defs
                 v-if="area && stylesCmp.fill === ''"
             >
                 <linearGradient :id="`areaGradient${_uid}`">
                     <stop
-                        :stop-color="stylesCmp.stroke ? stylesCmp.stroke : fillColor"
+                        :stop-color="stylesCmp.stroke"
                         stop-opacity="0.5"
                     />
                 </linearGradient>
@@ -25,8 +25,10 @@
             <path
                 v-if="area"
                 :d="areaPath"
+                :fill="stylesCmp.fill || `url(#areaGradient${_uid})`"
                 :style="{ transition }"
-                :fill="stylesCmp.fill ? stylesCmp.fill : `url(#areaGradient${_uid})`"
+                @mouseenter="$emit('onMouseEnter', $event)"
+                @mouseleave="$emit('onMouseLeave', $event)"
             />
         </WSpread>
         <g
@@ -40,31 +42,12 @@
                     :dot="dotItem"
                     :first="id === 0"
                     :last="id === dotsData.length - 1"
-                    :styles="{
-                        stroke: dotStylesCmp.stroke ? dotStylesCmp.stroke : fillColor,
-                        fill: dotStylesCmp.fill ? dotStylesCmp.fill : fillColor,
-                        strokeWidth: dotStylesCmp.strokeWidth,
-                        radius: dotStylesCmp.radius,
-                        hoverRadius: dotStylesCmp.hoverRadius,
-                    }"
                     :Chart="Chart"
                     :transition="transition"
                 >
                     <WDot
                         :key="`dot${dotItem.cartesianIndex}${dotItem.index}`"
-                        :index="dotItem.index"
-                        :cartesianIndex="dotItem.cartesianIndex"
-                        :x="dotItem.x"
-                        :y="dotItem.y"
-                        :info="dotItem.info"
-                        :styles="{
-                            stroke: dotStylesCmp.stroke ? dotStylesCmp.stroke : fillColor,
-                            fill: dotStylesCmp.fill ? dotStylesCmp.fill : fillColor,
-                            strokeWidth: dotStylesCmp.strokeWidth,
-                            radius: dotStylesCmp.radius,
-                            hoverRadius: dotStylesCmp.hoverRadius,
-                            cursor: dotStylesCmp.cursor,
-                        }"
+                        v-bind="dotItem"
                         :transition="`all 250ms ${transEffect}`"
                         @onClick="$emit('onClickDot', $event)"
                     />
@@ -81,25 +64,9 @@ import d3Area from 'd3-shape/src/area'
 import { monotoneX as curveMonotoneX } from 'd3-shape/src/curve/monotone'
 import { WDot } from '../Common'
 import animationMixin from '../../mixins/animation'
+import themeMixin from '../../mixins/theme'
 import { WSpread } from '../../transitions'
-
 import { isFunc } from '../../utils/checks'
-
-const stylesDefaultProp = {
-    fill: '',
-    stroke: '',
-    strokeWidth: 2,
-    strokeDasharray: '0',
-}
-
-const dotStylesDefaultProp = {
-    fill: 'white',
-    stroke: '',
-    strokeWidth: 2,
-    radius: 4,
-    hoverRadius: 8,
-    cursor: 'default',
-}
 
 export default {
     name: 'WLine',
@@ -108,9 +75,13 @@ export default {
         WDot,
         WSpread,
     },
-    mixins: [animationMixin],
+    mixins: [
+        themeMixin,
+        animationMixin,
+    ],
     inject: ['Chart'],
     props: {
+        index: VueTypes.number.isRequired, // internal props set by the parent (WCartesian)
         datakey: VueTypes.string.isRequired,
         legend: VueTypes.string,
         curve: VueTypes.oneOfType([VueTypes.bool, VueTypes.func]).def(false),
@@ -120,9 +91,7 @@ export default {
             stroke: VueTypes.string,
             strokeWidth: VueTypes.number,
             strokeDasharray: VueTypes.string,
-        }).def(() => ({
-            ...stylesDefaultProp,
-        })),
+        }).def({}),
         dot: VueTypes.bool.def(false),
         dotStyles: VueTypes.shape({
             fill: VueTypes.string,
@@ -130,10 +99,7 @@ export default {
             strokeWidth: VueTypes.number,
             radius: VueTypes.number,
             hoverRadius: VueTypes.number,
-            cursor: VueTypes.string,
-        }).def(() => ({
-            ...dotStylesDefaultProp,
-        })),
+        }).def({}),
     },
     // It's called by parent components to necessary calcs before be rendering
     // Componen is not mounted and cannot access to default props
@@ -145,26 +111,26 @@ export default {
         snap.linesByIndex = { ...snap.linesByIndex, [index]: { datakey } }
     },
     computed: {
-        index () {
-            return this.$vnode.index
-        },
-        active () {
-            return this.Chart.activeElements.includes(this.index)
-        },
         stylesCmp () {
             return {
-                ...stylesDefaultProp,
+                ...this.themeStyles.styles,
                 ...this.styles,
+                stroke: (this.themeStyles && this.themeStyles.styles && this.themeStyles.styles.stroke) ||
+                 this.styles.stroke ||
+                 this.fillColor,
             }
         },
         dotStylesCmp () {
             return {
-                ...dotStylesDefaultProp,
+                ...this.themeStyles.dot,
                 ...this.dotStyles,
             }
         },
         fillColor () {
             return this.Chart.colors[this.index]
+        },
+        active () {
+            return this.Chart.activeElements.includes(this.index)
         },
         lineData () {
             return this.Chart.dataset.map((item, index) => ({
@@ -183,6 +149,7 @@ export default {
                     const key = datakeys[this.index]
                     const value = line[key]
                     const label = line[axis.x.datakey]
+
                     return {
                         x: xScale(index),
                         y: yScale(item[this.datakey]),
@@ -198,6 +165,10 @@ export default {
                         value: item[this.datakey],
                         index,
                         cartesianIndex: this.index,
+                        // Style props
+                        ...this.dotStylesCmp,
+                        stroke: this.dotStylesCmp.stroke || this.fillColor,
+                        fill: this.dotStylesCmp.fill || this.fillColor,
                     }
                 })
             }

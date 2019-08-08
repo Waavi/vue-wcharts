@@ -11,7 +11,7 @@ module.exports = {
         '^.+\\.jsx?$': 'babel-jest',
     },
     transformIgnorePatterns: [
-        '/node_modules/',
+        '/node_modules/(?!d3-array|d3-scale|d3-shape)',
     ],
     moduleNameMapper: {
         '^@/(.*)$': '<rootDir>/src/$1',

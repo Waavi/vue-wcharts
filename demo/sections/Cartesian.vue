@@ -4,13 +4,25 @@
         responsive
         :bound="[0]"
     >
-        <!-- <WLine
-            datakey="two"
+        <WLine
+            datakey="one"
             area
             dot
             legend="One Line"
-        /> -->
-        <WBar
+        />
+        <WLine
+            datakey="two"
+            area
+            dot
+            legend="Two Line"
+        />
+        <WLine
+            datakey="three"
+            area
+            dot
+            legend="Three Line"
+        />
+        <!-- <WBar
             stacked
             datakey="one"
             legend="One Bar"
@@ -35,7 +47,7 @@
             legend="Four Bar"
             showLabel
             :width="40"
-        />
+        /> -->
         <WBar
             stacked
             datakey="five"

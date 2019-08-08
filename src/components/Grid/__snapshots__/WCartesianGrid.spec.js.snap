@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Components/WCartesianGrid Should be render correctly with lines 1`] = `
+<g>
+  <line x1="50" y1="9490" x2="500" y2="9490" stroke="000" stroke-width="1" stroke-dasharray="0" fill="none"></line>
+  <line x1="50" y1="780" x2="500" y2="780" stroke="000" stroke-width="1" stroke-dasharray="0" fill="none"></line>
+  <line x1="NaN" y1="25" x2="NaN" y2="250" stroke="000" stroke-width="1" stroke-dasharray="0" fill="none"></line>
+</g>
+`;
+
+exports[`Components/WCartesianGrid Should be render correctly without lines 1`] = `<g></g>`;

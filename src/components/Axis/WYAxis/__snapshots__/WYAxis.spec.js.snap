@@ -1,0 +1,73 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Axis/WYAxis Should be render correctly 1`] = `
+<g id="WYAxis">
+  <line x1="40" y1="10" x2="40" y2="376" stroke="#cccccc"></line>
+  <g text-anchor="end">
+    <line x1="35" y1="8800" x2="40" y2="8800" stroke="#cccccc"></line>
+    <WTickText-stub colors="#48c0b6,#9d6af5,#ffde69,#e8e8e8,#54ddd9,#6e19ff,#dfbd46" x="30" y="8804" dy="" index="0" value="8800" styles="[object Object]"></WTickText-stub>
+  </g>
+  <g text-anchor="end">
+    <line x1="35" y1="6000" x2="40" y2="6000" stroke="#cccccc"></line>
+    <WTickText-stub colors="#48c0b6,#9d6af5,#ffde69,#e8e8e8,#54ddd9,#6e19ff,#dfbd46" x="30" y="6004" dy="" index="1" value="6000" styles="[object Object]"></WTickText-stub>
+  </g>
+  <g text-anchor="end">
+    <line x1="35" y1="4000" x2="40" y2="4000" stroke="#cccccc"></line>
+    <WTickText-stub colors="#48c0b6,#9d6af5,#ffde69,#e8e8e8,#54ddd9,#6e19ff,#dfbd46" x="30" y="4004" dy="" index="2" value="4000" styles="[object Object]"></WTickText-stub>
+  </g>
+  <g text-anchor="end">
+    <line x1="35" y1="10" x2="40" y2="10" stroke="#cccccc"></line>
+    <WTickText-stub colors="#48c0b6,#9d6af5,#ffde69,#e8e8e8,#54ddd9,#6e19ff,#dfbd46" x="30" y="14" dy="" index="3" value="10" styles="[object Object]"></WTickText-stub>
+  </g> <svg width="100%" height="100%"><text x="25" y="376" text-anchor="start" transform="rotate(-90 25 376)" style="font-size: 12; fill: #414141; font-weight: 800;">
+      Y Axis
+    </text></svg>
+</g>
+`;
+
+exports[`Axis/WYAxis Should be render correctly without line 1`] = `
+<g id="WYAxis">
+  <!---->
+  <g text-anchor="end">
+    <line x1="35" y1="8800" x2="40" y2="8800" stroke="#cccccc"></line>
+    <WTickText-stub colors="#48c0b6,#9d6af5,#ffde69,#e8e8e8,#54ddd9,#6e19ff,#dfbd46" x="30" y="8804" dy="" index="0" value="8800" styles="[object Object]"></WTickText-stub>
+  </g>
+  <g text-anchor="end">
+    <line x1="35" y1="6000" x2="40" y2="6000" stroke="#cccccc"></line>
+    <WTickText-stub colors="#48c0b6,#9d6af5,#ffde69,#e8e8e8,#54ddd9,#6e19ff,#dfbd46" x="30" y="6004" dy="" index="1" value="6000" styles="[object Object]"></WTickText-stub>
+  </g>
+  <g text-anchor="end">
+    <line x1="35" y1="4000" x2="40" y2="4000" stroke="#cccccc"></line>
+    <WTickText-stub colors="#48c0b6,#9d6af5,#ffde69,#e8e8e8,#54ddd9,#6e19ff,#dfbd46" x="30" y="4004" dy="" index="2" value="4000" styles="[object Object]"></WTickText-stub>
+  </g>
+  <g text-anchor="end">
+    <line x1="35" y1="10" x2="40" y2="10" stroke="#cccccc"></line>
+    <WTickText-stub colors="#48c0b6,#9d6af5,#ffde69,#e8e8e8,#54ddd9,#6e19ff,#dfbd46" x="30" y="14" dy="" index="3" value="10" styles="[object Object]"></WTickText-stub>
+  </g> <svg width="100%" height="100%"><text x="25" y="376" text-anchor="start" transform="rotate(-90 25 376)" style="font-size: 12; fill: #414141; font-weight: 800;">
+      Y Axis
+    </text></svg>
+</g>
+`;
+
+exports[`Axis/WYAxis Should be render correctly without ticks lines 1`] = `
+<g id="WYAxis">
+  <line x1="40" y1="10" x2="40" y2="376" stroke="#cccccc"></line>
+  <g text-anchor="end">
+    <!---->
+    <WTickText-stub colors="#48c0b6,#9d6af5,#ffde69,#e8e8e8,#54ddd9,#6e19ff,#dfbd46" x="30" y="8804" dy="" index="0" value="8800" styles="[object Object]"></WTickText-stub>
+  </g>
+  <g text-anchor="end">
+    <!---->
+    <WTickText-stub colors="#48c0b6,#9d6af5,#ffde69,#e8e8e8,#54ddd9,#6e19ff,#dfbd46" x="30" y="6004" dy="" index="1" value="6000" styles="[object Object]"></WTickText-stub>
+  </g>
+  <g text-anchor="end">
+    <!---->
+    <WTickText-stub colors="#48c0b6,#9d6af5,#ffde69,#e8e8e8,#54ddd9,#6e19ff,#dfbd46" x="30" y="4004" dy="" index="2" value="4000" styles="[object Object]"></WTickText-stub>
+  </g>
+  <g text-anchor="end">
+    <!---->
+    <WTickText-stub colors="#48c0b6,#9d6af5,#ffde69,#e8e8e8,#54ddd9,#6e19ff,#dfbd46" x="30" y="14" dy="" index="3" value="10" styles="[object Object]"></WTickText-stub>
+  </g> <svg width="100%" height="100%"><text x="25" y="376" text-anchor="start" transform="rotate(-90 25 376)" style="font-size: 12; fill: #414141; font-weight: 800;">
+      Y Axis
+    </text></svg>
+</g>
+`;

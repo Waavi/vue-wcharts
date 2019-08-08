@@ -1,0 +1,31 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Widgets/WTooltip Should be render correctly 1`] = `
+<div style="position: absolute; display: flex; padding: .5rem; border-radius: 4px; color: rgb(0, 0, 0); background: white; box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.15); font-size: 14px; opacity: 0; z-index: 1; transition: opacity .25s ease; top: 0px; left: 0px;">
+  <div style="display: flex; flex-direction: column;">
+    <!---->
+  </div>
+</div>
+`;
+
+exports[`Widgets/WTooltip Should be render correctly with label 1`] = `
+<div style="position: absolute; display: flex; padding: .5rem; border-radius: 4px; color: rgb(0, 0, 0); background: white; box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.15); font-size: 14px; opacity: 0; z-index: 1; transition: opacity .25s ease; top: 0px; left: 0px;">
+  <div style="display: flex; flex-direction: column;"><span style="margin-bottom: 5px;">test</span> </div>
+</div>
+`;
+
+exports[`Widgets/WTooltip Should be render correctly with values 1`] = `
+<div style="position: absolute; display: flex; padding: .5rem; border-radius: 4px; color: rgb(0, 0, 0); background: white; box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.15); font-size: 14px; opacity: 0; z-index: 1; transition: opacity .25s ease; top: 0px; left: 0px;">
+  <div style="display: flex; flex-direction: column;">
+    <!---->
+    <div>
+      <wbullet-stub colors="#48c0b6,#9d6af5,#ffde69,#e8e8e8,#54ddd9,#6e19ff,#dfbd46" styles="[object Object]"></wbullet-stub> <span>1</span>
+    </div>
+    <div>
+      <wbullet-stub colors="#48c0b6,#9d6af5,#ffde69,#e8e8e8,#54ddd9,#6e19ff,#dfbd46" styles="[object Object]"></wbullet-stub> <span>2</span>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Widgets/WTooltip Shouldn't be render 1`] = `undefined`;

@@ -24,6 +24,24 @@ The UMD build is also available on unpkg.com (unpkg):
 <script src="//unpkg.com/vue-wcharts"></script>
 ```
 
+### Basic Configuration
+
+Add in your vue.config.js
+```js
+transpileDependencies: [
+    /\/node_modules\/vue-wcharts\//,
+],
+```
+
+### Jest Configuration
+
+Add in your jest.config.js
+```js
+transformIgnorePatterns: [
+    '/node_modules/(?!vue-wcharts|d3-array|d3-scale|d3-shape)',
+],
+```
+
 ## Register
 
 Import the library as a Vue plugin to enable the functionality globally on all components.
@@ -242,8 +260,46 @@ export default {
 </script>
 ```
 
+## Theme
+If you want to set a theme via options, you can add a second parameter with your theme configuration when you install the library ([Full explanation](/api/options.html#theme)):
 
-### Dev
+```js
+Vue.use(WCharts, {
+    // Colors Palette
+    colors: [
+        '#48c0b6',
+        '#5400e8',
+        '#a712b5',
+        '#dfbd46',
+    ],
+    // Theme styles
+    theme: {
+        WLine: {
+            styles: {
+                strokeWidth: 4,
+                strokeDasharray: 1,
+            },
+            dot: {
+                fill: 'black',
+                strokeWidth: 4,
+            },
+        },
+        WCartesianGrid: {
+            styles: {
+                stroke: '#48c0b6',
+                strokeWidth: 2,
+                strokeDasharray: 4,
+            },
+        },
+        ...
+    }
+})
+```
+
+<br/>
+<br/>
+
+## Dev
 
 If you wish to fork, extend or develop for WCharts, you may setup the dev environment like so.
 
@@ -256,11 +312,19 @@ $ yarn serve
 $ yarn test
 
 # Lints and fixes files
-yarn run lint
+$ yarn run lint
 
 # Build
-yarn build
+$ yarn build
 ```
+
+<br/>
+<br/>
+
+
+## Browser compatibility
+
+Doesn't support IE11.
 
 <br/>
 <br/>

@@ -8,45 +8,21 @@
             <path
                 :d="linePath"
                 :style="{ transition: `all 250ms ${transEffect}` }"
-                :stroke="lineStylesCmp.stroke ? lineStylesCmp.stroke : fillColor"
-                :stroke-width="lineStylesCmp.strokeWidth"
-                :stroke-dasharray="lineStylesCmp.strokeDasharray"
-                fill="none"
+                v-bind="lineStylesCmp"
             />
         </WSpread>
         <g>
-            <template
-                v-for="dotItem in dotsData"
-            >
+            <template v-for="dotItem in dotsData">
                 <slot
                     name="dot"
                     :dot="dotItem"
-                    :styles="{
-                        stroke: stylesCmp.stroke ? stylesCmp.stroke : fillColor,
-                        fill: stylesCmp.fill ? stylesCmp.fill : fillColor,
-                        strokeWidth: stylesCmp.strokeWidth,
-                        opacity: stylesCmp.opacity,
-                        radius: dotItem.z,
-                        hoverRadius: dotItem.z,
-                    }"
                     :Chart="Chart"
                     :transition="transition"
                 >
                     <WDot
                         :key="`dot${dotItem.cartesianIndex}${dotItem.index}`"
-                        :index="dotItem.index"
-                        :cartesianIndex="dotItem.cartesianIndex"
-                        :x="dotItem.x"
-                        :y="dotItem.y"
-                        :info="dotItem.info"
-                        :styles="{
-                            stroke: stylesCmp.stroke ? stylesCmp.stroke : fillColor,
-                            fill: stylesCmp.fill ? stylesCmp.fill : fillColor,
-                            strokeWidth: stylesCmp.strokeWidth,
-                            opacity: stylesCmp.opacity,
-                            radius: dotItem.z,
-                            hoverRadius: dotItem.z,
-                        }"
+                        v-bind="dotItem"
+                        :styles="{ opacity: dotStylesCmp.opacity }"
                         :transition="`all 250ms ${transEffect}`"
                         @onClick="$emit('onClickDot', $event)"
                     />
@@ -63,24 +39,9 @@ import d3Line from 'd3-shape/src/line'
 import { monotoneX as curveMonotoneX } from 'd3-shape/src/curve/monotone'
 import { WDot } from '../Common'
 import animationMixin from '../../mixins/animation'
+import themeMixin from '../../mixins/theme'
 import { WSpread } from '../../transitions'
-
 import { isFunc } from '../../utils/checks'
-
-const lineStylesDefaultProp = {
-    fill: '',
-    stroke: '',
-    strokeWidth: 1,
-    strokeDasharray: '0',
-}
-
-const stylesDefaultProp = {
-    fill: '',
-    stroke: '',
-    strokeWidth: 0,
-    radius: 8,
-    opacity: 0.8,
-}
 
 export default {
     name: 'WScatter',
@@ -89,51 +50,50 @@ export default {
         WDot,
         WSpread,
     },
-    mixins: [animationMixin],
+    mixins: [
+        themeMixin,
+        animationMixin,
+    ],
     inject: ['Chart'],
     props: {
+        // internal props set by the parent (WPieChart)
+        index: VueTypes.number,
         legend: VueTypes.string,
         curve: VueTypes.oneOfType([VueTypes.bool, VueTypes.func]).def(false),
         line: VueTypes.bool.def(false),
         lineStyles: VueTypes.shape({
-            fill: VueTypes.string,
             stroke: VueTypes.string,
             strokeWidth: VueTypes.number,
             strokeDasharray: VueTypes.string,
-        }).def(() => ({
-            ...lineStylesDefaultProp,
-        })),
-        styles: VueTypes.shape({
+        }).loose.def({}),
+        dotStyles: VueTypes.shape({
             fill: VueTypes.string,
             stroke: VueTypes.string,
             strokeWidth: VueTypes.number,
             radius: VueTypes.number,
             opacity: VueTypes.number,
-        }).def(() => ({
-            ...stylesDefaultProp,
-        })),
+        }).loose.def({}),
     },
     computed: {
-        index () {
-            return this.$vnode.index
-        },
-        active () {
-            return this.Chart.activeElements.includes(this.index)
-        },
         lineStylesCmp () {
             return {
-                ...lineStylesDefaultProp,
+                ...this.themeStyles.line,
                 ...this.lineStyles,
+                stroke: this.themeStyles.line.stroke || this.lineStyles.stroke || this.fillColor,
+                fill: 'none',
             }
         },
-        stylesCmp () {
+        dotStylesCmp () {
             return {
-                ...stylesDefaultProp,
-                ...this.styles,
+                ...this.themeStyles.dot,
+                ...this.dotStyles,
             }
         },
         fillColor () {
             return this.Chart.colors[this.index]
+        },
+        active () {
+            return this.Chart.activeElements.includes(this.index)
         },
         lineData () {
             // We sort values becouse we want a left to right line
@@ -147,23 +107,32 @@ export default {
                 dataset, xScale, yScale, zScale, axis, colors,
             } = this.Chart
             const color = colors[this.index]
-            return dataset.map((item, index) => ({
-                index,
-                cartesianIndex: this.index,
-                x: xScale(item[axis.x.datakey]),
-                y: yScale(item[axis.y.datakey]),
-                z: axis.z.datakey ? zScale(item[axis.z.datakey]) : this.stylesCmp.radius,
-                value: item[axis.y.datakey],
-                info: {
-                    id: index,
-                    label: item.name || '',
-                    value: [
-                        this.generateAxisValue(axis.x, item[axis.x.datakey], color),
-                        this.generateAxisValue(axis.y, item[axis.y.datakey], color),
-                        ...(axis.z.datakey ? [this.generateAxisValue(axis.z, item[axis.z.datakey], color)] : []),
-                    ],
-                },
-            }))
+
+            return dataset.map((item, index) => {
+                const z = axis.z.datakey ? zScale(item[axis.z.datakey]) : this.dotStylesCmp.radius
+                return {
+                    index,
+                    cartesianIndex: this.index,
+                    x: xScale(item[axis.x.datakey]),
+                    y: yScale(item[axis.y.datakey]),
+                    z,
+                    value: item[axis.y.datakey],
+                    info: {
+                        id: index,
+                        label: item.name || '',
+                        value: [
+                            this.generateAxisValue(axis.x, item[axis.x.datakey], color),
+                            this.generateAxisValue(axis.y, item[axis.y.datakey], color),
+                            ...(axis.z.datakey ? [this.generateAxisValue(axis.z, item[axis.z.datakey], color)] : []),
+                        ],
+                    },
+                    ...this.dotStylesCmp,
+                    stroke: this.dotStylesCmp.stroke || this.fillColor,
+                    fill: this.dotStylesCmp.fill || this.fillColor,
+                    radius: z,
+                    hoverRadius: z,
+                }
+            })
         },
         genLine () {
             return d3Line()
