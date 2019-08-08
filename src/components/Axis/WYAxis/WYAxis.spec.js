@@ -1,7 +1,7 @@
 import { shallowMount } from '@vue/test-utils'
-import WXAxis from './WXAxis.vue'
+import WYAxis from './WYAxis.vue'
 
-describe('Axis/WXAxis', () => {
+describe('Axis/WYAxis', () => {
     const dataset = [
         {
             name: 'Page A',
@@ -37,11 +37,8 @@ describe('Axis/WXAxis', () => {
         min: 10,
     }
 
-    const snap = { linesByIndex: { } }
-
     const propsData = {
-        datakey: 'name',
-        labelText: 'X Axis',
+        labelText: 'Y Axis',
     }
 
     const provide = {
@@ -49,8 +46,6 @@ describe('Axis/WXAxis', () => {
             dataset,
             canvas,
             bounds,
-            snap,
-            padding: [20, 20, 20, 20],
             spaceObjects: [10, 10, 10, 10],
             yScale: a => a,
         },
@@ -62,25 +57,19 @@ describe('Axis/WXAxis', () => {
     }
 
     it(`Should be render correctly`, () => {
-        const wrapper = shallowMount(WXAxis, defaultConfig)
+        const wrapper = shallowMount(WYAxis, defaultConfig)
         expect(wrapper.html()).toMatchSnapshot()
     })
 
     it(`Should be render correctly without line`, () => {
         const customConfig = { ...defaultConfig, propsData: { ...defaultConfig.propsData, hideLine: true } }
-        const wrapper = shallowMount(WXAxis, customConfig)
+        const wrapper = shallowMount(WYAxis, customConfig)
         expect(wrapper.html()).toMatchSnapshot()
     })
 
     it(`Should be render correctly without ticks lines`, () => {
         const customConfig = { ...defaultConfig, propsData: { ...defaultConfig.propsData, hideTickMark: true } }
-        const wrapper = shallowMount(WXAxis, customConfig)
-        expect(wrapper.html()).toMatchSnapshot()
-    })
-
-    it(`Should be render correctly with negative values`, () => {
-        const customConfig = { ...defaultConfig, provide: { ...defaultConfig.provide, Chart: { ...defaultConfig.provide.Chart, bounds: { max: 10000, min: -1000 } } } }
-        const wrapper = shallowMount(WXAxis, customConfig)
+        const wrapper = shallowMount(WYAxis, customConfig)
         expect(wrapper.html()).toMatchSnapshot()
     })
 })

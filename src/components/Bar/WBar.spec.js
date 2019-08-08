@@ -1,7 +1,7 @@
 import { shallowMount } from '@vue/test-utils'
 import WBar from './WBar.vue'
 
-describe('Common/WDot', () => {
+describe('Components/WBar', () => {
     const dataset = [
         {
             name: 'Page A', one: 4000, two: -2400, three: 2300, four: 1200, five: 2300,
