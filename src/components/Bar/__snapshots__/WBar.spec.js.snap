@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Common/WDot Should be render correctly 1`] = `
+exports[`Components/WBar Should be render correctly 1`] = `
 <g id="Bars">
   <g>
     <g id="0">
@@ -32,7 +32,7 @@ exports[`Common/WDot Should be render correctly 1`] = `
 </g>
 `;
 
-exports[`Common/WDot Should be render with label correctly 1`] = `
+exports[`Components/WBar Should be render with label correctly 1`] = `
 <g id="Bars">
   <g>
     <g id="0">
@@ -76,7 +76,7 @@ exports[`Common/WDot Should be render with label correctly 1`] = `
 </g>
 `;
 
-exports[`Common/WDot Should be render with stackedlabel correctly 1`] = `
+exports[`Components/WBar Should be render with stackedlabel correctly 1`] = `
 <g id="Bars">
   <g>
     <g id="0">
@@ -120,4 +120,4 @@ exports[`Common/WDot Should be render with stackedlabel correctly 1`] = `
 </g>
 `;
 
-exports[`Common/WDot Shouldn't be render 1`] = `undefined`;
+exports[`Components/WBar Shouldn't be render 1`] = `undefined`;

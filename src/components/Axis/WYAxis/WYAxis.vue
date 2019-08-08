@@ -60,7 +60,7 @@
 
 <script>
 import VueTypes from 'vue-types'
-import axisMixin from '../../mixins/axis'
+import axisMixin from '../../../mixins/axis'
 
 export default {
     name: 'WYAxis',

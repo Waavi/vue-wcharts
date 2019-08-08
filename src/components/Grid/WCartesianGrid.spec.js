@@ -1,7 +1,7 @@
 import { shallowMount, mount } from '@vue/test-utils'
 import WCartesianGrid from './WCartesianGrid.vue'
 
-describe('Components/WLine', () => {
+describe('Components/WCartesianGrid', () => {
     const dataset = [
         {
             name: 'Page A', one: 4000, two: -2400, three: 2300, four: 1200, five: 2300,

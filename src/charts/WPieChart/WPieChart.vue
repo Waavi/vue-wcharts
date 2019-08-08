@@ -1,5 +1,5 @@
 <script>
-import chartMixin from '../mixins/chart'
+import chartMixin from '../../mixins/chart'
 
 export default {
     name: 'WPieChart',
