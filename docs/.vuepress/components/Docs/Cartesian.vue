@@ -24,7 +24,7 @@
 </template>
 
 <script>
-import { chart as data } from './data'
+import { chart as data } from '../data'
 
 export default {
     name: 'Cartesian',

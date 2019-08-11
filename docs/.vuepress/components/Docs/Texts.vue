@@ -24,8 +24,8 @@
 </template>
 
 <script>
-import { chart as data } from './data'
-import colors from '../colors'
+import { chart as data } from '../data'
+import colors from '../../colors'
 
 export default {
     name: 'Texts',

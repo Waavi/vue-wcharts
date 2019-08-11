@@ -1,31 +1,39 @@
 <template>
     <WCartesian
-        :dataset="data"
-        :height="200"
-        responsive
-    >
-        <WBar
-            datakey="two"
-        />
+     :dataset="data"
+     :gap="40"
+     responsive
+     scatter
+>
+        <WScatter />
         <WXAxis
-            datakey="name"
+            name="one"
+            datakey="one"
             :axisStyles="{stroke: '#ddd'}"
             :markStyles="{stroke: '#ddd'}"
             :tickStyles="{fill: '#ddd'}"
         />
         <WYAxis
+            name="two"
+            datakey="two"
             :axisStyles="{stroke: '#ddd'}"
             :markStyles="{stroke: '#ddd'}"
             :tickStyles="{fill: '#ddd'}"
         />
+        <WZAxis
+            name="three"
+            datakey="three"
+            :range="[100, 1000]"
+        />
+        <WTooltip />
     </WCartesian>
 </template>
 
 <script>
-import { chart as data } from './data'
+import { chart as data } from '../data'
 
 export default {
-    name: 'Bars',
+    name: 'Scatter',
     data () {
         return {
             data

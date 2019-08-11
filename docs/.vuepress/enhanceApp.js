@@ -1,4 +1,6 @@
+import sauce from 'vue-sauce'
 import WCharts from '../../src'
+
 
 export default ({
     Vue, // the version of Vue being used in the VuePress app
@@ -7,6 +9,7 @@ export default ({
     siteData // site metadata
 }) => {
     if (typeof process === 'undefined') { // process is undefined in a browser
+        Vue.directive('sauce', sauce)
         Vue.use(WCharts)
     }
 }

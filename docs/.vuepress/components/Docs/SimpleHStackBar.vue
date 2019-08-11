@@ -1,6 +1,6 @@
 <template>
     <div class="Container">
-        <WStackBar
+        <WSimpleHStackBar
             :total="data.total"
             :dataset="data.dataset"
             :labelStyles="labelStyles"
@@ -9,12 +9,12 @@
             <template #value="{ value, percentage, color }">
                 <span>{{ value }}€ ({{ percentage }})</span>
             </template>
-        </WStackBar>
+        </WSimpleHStackBar>
     </div>
 </template>
 
 <script>
-import { stack as data } from './data'
+import { stack as data } from '../data'
 
 const labelStyles = {
     top: '3px',
@@ -23,7 +23,7 @@ const labelStyles = {
 }
 
 export default {
-    name: 'StackBar',
+    name: 'SimpleHStackBar',
     data () {
         return {
             data,

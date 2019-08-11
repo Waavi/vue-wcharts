@@ -24,7 +24,7 @@ module.exports = {
             { text: 'Home', link: '/' },
             { text: 'Guide', link: '/guide/' },
             { text: 'Api', link: '/api/charts' },
-            { text: 'Examples', link: 'https://vue-wcharts.waavi.com/examples' },
+            { text: 'Examples', link: '/examples/' },
         ],
         sidebar: {
             '/guide/': [
@@ -40,6 +40,10 @@ module.exports = {
                 ['transitions', 'Transitions'],
                 ['options', 'Options'],
                 ['extraCharts', 'Extra Charts'],
+            ],
+            '/examples/': [
+                ['', 'Introduction'],
+                ['axis', 'Axis'],
             ],
         },
     }

@@ -8,7 +8,7 @@ sidebarDepth: 3
 *X axis component.*
 
 <br>
-<XAxis />
+<Docs-XAxis />
 
 ### Parent components
 **[\<WCartesian />](/api/charts.html#wcartesian)**
@@ -67,7 +67,7 @@ sidebarDepth: 3
 *Y axis component.*
 
 <br>
-<YAxis />
+<Docs-YAxis />
 
 ### Parent components
 **[\<WCartesian />](/api/charts.html#wcartesian)**
@@ -124,7 +124,7 @@ sidebarDepth: 3
 *Z axis component.*
 
 <br>
-<ZAxis />
+<Docs-ZAxis />
 
 ### Parent components
 **[\<WCartesian />](/api/charts.html#wcartesian)**
@@ -153,7 +153,7 @@ sidebarDepth: 3
 *Line component.*
 
 <br>
-<Lines />
+<Docs-Lines />
 
 ### Parent components
 **[\<WCartesian />](/api/charts.html#wcartesian)**
@@ -203,7 +203,7 @@ sidebarDepth: 3
 *Bar component.*
 
 <br>
-<Bars />
+<Docs-Bars />
 
 ### Parent components
 **[\<WCartesian />](/api/charts.html#wcartesian)**
@@ -283,7 +283,7 @@ sidebarDepth: 3
 *Pie component.*
 
 <br>
-<Pie />
+<Docs-Pie />
 
 ### Parent components
 **[\<WPieChart />](/api/charts.html#wpiechart)**
@@ -323,7 +323,7 @@ sidebarDepth: 3
 *Grid component.*
 
 <br>
-<Grid />
+<Docs-Grid />
 
 ### Parent components
 **[\<WCartesian />](/api/charts.html#wcartesian)**
@@ -342,7 +342,7 @@ sidebarDepth: 3
 *Scatter chart.*
 
 <br>
-<Scatter />
+<Docs-Scatter />
 
 ### Parent components
 **[\<WCartesian />](/api/charts.html#wcartesian)**
@@ -387,7 +387,7 @@ sidebarDepth: 3
 *Component to show a reference line in the chart.*
 
 <br>
-<Markers />
+<Docs-Markers />
 
 ### Parent components
 **[\<WCartesian />](/api/charts.html#wcartesian)**
@@ -421,7 +421,7 @@ sidebarDepth: 3
 *Component to show circle in WLine but it can be used wherever you want it needs access to Chart api.*
 
 <br>
-<Dots />
+<Docs-Dots />
 
 ### Parent components
 **[\<WLine />](#wline)**
@@ -452,7 +452,7 @@ sidebarDepth: 3
 *Component to show text in the axis but it can be used wherever you want.*
 
 <br>
-<Texts />
+<Docs-Texts />
 
 ### Parent components
 **[\<WXAxis />](#wxaxis)**

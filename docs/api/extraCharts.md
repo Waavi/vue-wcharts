@@ -6,7 +6,7 @@ sidebarDepth: 3
 ## WSimpleHStackBar
 
 <br>
-<StackBar />
+<Docs-SimpleHStackBar />
 
 ### Child components
 **[\<WTooltip />](/api/widgets.html#wtooltip)**

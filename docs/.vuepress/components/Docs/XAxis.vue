@@ -1,34 +1,33 @@
 <template>
     <WCartesian
         :dataset="data"
-        :gap="10"
         :height="200"
         responsive
     >
         <WLine
             datakey="one"
-            :styles="{stroke: '#ddd', strokeWidth: 1}"
+            :styles="{stroke: '#ddd'}"
         />
-         <WXAxis
+        <WXAxis
             datakey="name"
-            :axisStyles="{stroke: '#ddd'}"
-            :markStyles="{stroke: '#ddd'}"
-            :tickStyles="{fill: '#ddd'}"
-        />
-        <WYAxis
             :axisStyles="{stroke: colors.primary}"
             :markStyles="{stroke: colors.primary}"
             :tickStyles="{fill: colors.primary}"
+        />
+        <WYAxis
+            :axisStyles="{stroke: '#ddd'}"
+            :markStyles="{stroke: '#ddd'}"
+            :tickStyles="{fill: '#ddd'}"
         />
     </WCartesian>
 </template>
 
 <script>
-import { chart as data } from './data'
-import colors from '../colors'
+import { chart as data } from '../data'
+import colors from '../../colors'
 
 export default {
-    name: 'YAxis',
+    name: 'XAxis',
     data () {
         return {
             data,
