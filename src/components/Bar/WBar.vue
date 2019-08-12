@@ -138,7 +138,7 @@ export default {
     // It's called by parent components to necessary calcs before be rendering
     // Componen is not mounted and cannot access to default props
     preload ({ parent, props, index }) {
-        const { snap, colors, dataset } = parent
+        const { snap, colors, data } = parent
         const { datakey, color, stacked } = props
 
         const isStacked = stacked !== undefined && stacked !== false
@@ -162,13 +162,13 @@ export default {
         if (!color) {
             snap.barsDatakeysColors = {
                 ...snap.barsDatakeysColors,
-                [datakey]: Array(dataset.length).fill(colors[index]),
+                [datakey]: Array(data.length).fill(colors[index]),
             }
             // Same color for every bar: string
         } else if (typeof color === 'string') {
             snap.barsDatakeysColors = {
                 ...snap.barsDatakeysColors,
-                [datakey]: Array(dataset.length).fill(color),
+                [datakey]: Array(data.length).fill(color),
             }
             // Different color for every bar: array
         } else if (!!color && color.length > 0) {
@@ -363,7 +363,7 @@ export default {
                 stackedCurData, barsCurData, setActive, snap, axis,
             } = this.Chart
             const { id } = event.target
-            const line = this.Chart.dataset[id]
+            const line = this.Chart.data[id]
             const label = line[axis.x.datakey]
 
             // Generate tooltip config

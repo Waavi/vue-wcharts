@@ -133,7 +133,7 @@ export default {
             return this.Chart.activeElements.includes(this.index)
         },
         lineData () {
-            return this.Chart.dataset.map((item, index) => ({
+            return this.Chart.data.map((item, index) => ({
                 x: index,
                 y: item[this.datakey],
             }))
@@ -141,11 +141,11 @@ export default {
         dotsData () {
             if (this.dot) {
                 const {
-                    dataset, xScale, yScale, datakeys, colors, axis,
+                    data, xScale, yScale, datakeys, colors, axis,
                 } = this.Chart
                 const color = colors[this.index]
-                return dataset.map((item, index) => {
-                    const line = dataset[index]
+                return data.map((item, index) => {
+                    const line = data[index]
                     const key = datakeys[this.index]
                     const value = line[key]
                     const label = line[axis.x.datakey]

@@ -92,12 +92,12 @@ export default {
         },
         // Values
         curValues () {
-            return this.Chart.dataset.map(item => item[this.datakey])
+            return this.Chart.data.map(item => item[this.datakey])
         },
         // Values
         values () {
             const total = this.curValues.reduce((acc, a) => acc + a, 0)
-            return this.Chart.dataset.map((item, index) => ({
+            return this.Chart.data.map((item, index) => ({
                 ...item,
                 percentage: item[this.datakey] * 100 / total,
                 color: this.Chart.colors[index],

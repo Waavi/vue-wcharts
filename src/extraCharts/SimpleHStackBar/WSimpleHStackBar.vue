@@ -141,7 +141,7 @@ export default {
     ],
     props: {
         total: VueTypes.number,
-        dataset: VueTypes.arrayOf(VueTypes.number).def([]),
+        data: VueTypes.arrayOf(VueTypes.number).def([]),
         markers: VueTypes.arrayOf(VueTypes.number).def([]),
         labelStyles: VueTypes.object,
         showLabel: VueTypes.bool.def(false),
@@ -164,11 +164,11 @@ export default {
         },
         // Sum values
         sumValues () {
-            return this.dataset.reduce((a, b) => a + b)
+            return this.data.reduce((a, b) => a + b)
         },
         // Generate and calc stack values
         stacks () {
-            const values = this.launchAnimation ? this.dataset : Array.from({ length: this.dataset.length })
+            const values = this.launchAnimation ? this.data : Array.from({ length: this.data.length })
             return values.reduce((acc, value, index) => {
                 if (value === 0) return acc
                 const width = (value * 100 / this.totalValues)
@@ -204,8 +204,8 @@ export default {
         // Set active bar element, to show tooltip
         handleMouseEnter (event) {
             if (this.withoutTooltip) return
-            const { id, offsetLeft, dataset } = event.target
-            const value = this[dataset.type !== 'marker' ? 'getStack' : 'getMarker'](id)
+            const { id, offsetLeft, data } = event.target
+            const value = this[data.type !== 'marker' ? 'getStack' : 'getMarker'](id)
             this.setActive({ id, value, offsetLeft }, event)
         },
         // Clean active element, to hide tooltip

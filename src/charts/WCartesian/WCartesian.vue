@@ -47,7 +47,9 @@ export default {
         // xScale with scaleLinear of d3
         // ref: https://github.com/d3/d3-scale#_continuous
         xScale () {
-            const domain = this.scatter ? [this.xBounds.min, this.xBounds.max] : [0, this.dataset.length - 1]
+            console.log(this.$slots.default.filter(s => s.componentOptions.Ctor.extendOptions.name === 'WScatter'))
+
+            const domain = this.scatter ? [this.xBounds.min, this.xBounds.max] : [0, this.data.length - 1]
             return scaleLinear()
                 .domain(domain)
                 .range([this.canvas.x0 + this.padding[3], this.canvas.x1 - this.padding[1]])
@@ -90,7 +92,7 @@ export default {
         },
         zBounds () {
             if (this.scatter && this.axis.z.datakey) {
-                const values = this.dataset.map(d => d[this.axis.z.datakey])
+                const values = this.data.map(d => d[this.axis.z.datakey])
                 return {
                     min: Math.min(...values),
                     max: Math.max(...values),
@@ -146,7 +148,7 @@ export default {
         },
         // Return max possible bar width saving space between group of bars
         maxBarWidth () {
-            return this.canvas.width / (this.numberOfBarsPerGroup * (this.dataset.length + 1))
+            return this.canvas.width / (this.numberOfBarsPerGroup * (this.data.length + 1))
         },
         // Return position of bars per group
         positionsPerGroupOfBars () {
@@ -164,7 +166,7 @@ export default {
             const isMin = type === 'min'
             let result = 0
             if (this.scatter) {
-                const values = this.dataset.map(d => d[axis === 'y' ? this.axis.y.datakey : this.axis.x.datakey])
+                const values = this.data.map(d => d[axis === 'y' ? this.axis.y.datakey : this.axis.x.datakey])
                 result = isMin ? Math.min(...values) : Math.max(...values)
             } else {
                 result = bound(this.curData, type, isMin ? 0 : 1)
@@ -189,7 +191,7 @@ export default {
         // Return data without transform of datakeys and dataset props
         // ref: https://github.com/d3/d3-shape#stacks
         getDataStacked (datakeys, offset = noop) {
-            return stack().keys(datakeys).offset(offset)(this.dataset)
+            return stack().keys(datakeys).offset(offset)(this.data)
         },
     },
     render (h) {

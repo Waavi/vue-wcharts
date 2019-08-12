@@ -47,10 +47,10 @@ export default {
             // Return a empty array if we don't want to show horizontal lines
             if (this.hideH) return []
             const {
-                dataset, canvas, bounds, yScale,
+                data, canvas, bounds, yScale,
             } = this.Chart
             // Calculate number of lines to paint
-            const numLines = this.numLinesH || dataset.length
+            const numLines = this.numLinesH || data.length
             // Select the correct function and generate the value of the lines. ex: [100, 500, 1500, 2500, 5000]
             const getLinesFn = this.numLinesH ? genExactNbTicks : genTicks
             const lines = getLinesFn(bounds.min, bounds.max, numLines).reverse()
@@ -69,10 +69,10 @@ export default {
             // Return a empty array if we don't want to show vertical lines
             if (this.hideV) return []
             const {
-                dataset, canvas, padding, xBounds, xScale, scatter,
+                data, canvas, padding, xBounds, xScale, scatter,
             } = this.Chart
             // Calculate number of lines to generate
-            const numLines = this.numLinesV || dataset.length
+            const numLines = this.numLinesV || data.length
             if (scatter) {
                 // Select the correct function and generate the value of the lines. ex: [100, 500, 1500, 2500, 5000]
                 const getLinesFn = this.numLinesH ? genExactNbTicks : genTicks

@@ -58,6 +58,7 @@ export default {
     props: {
         // internal props set by the parent (WPieChart)
         index: VueTypes.number,
+        datakey: VueTypes.string,
         legend: VueTypes.string,
         curve: VueTypes.oneOfType([VueTypes.bool, VueTypes.func]).def(false),
         line: VueTypes.bool.def(false),
@@ -97,42 +98,46 @@ export default {
         },
         lineData () {
             // We sort values becouse we want a left to right line
-            return sortBy(this.Chart.dataset, this.Chart.axis.x.datakey).map((item, index) => ({
+            return sortBy(this.Chart.data, this.Chart.axis.x.datakey).map((item, index) => ({
                 x: item[this.Chart.axis.x.datakey],
                 y: item[this.Chart.axis.y.datakey],
             }))
         },
         dotsData () {
             const {
-                dataset, xScale, yScale, zScale, axis, colors,
+                data, xScale, yScale, zScale, axis, colors,
             } = this.Chart
             const color = colors[this.index]
+            const dots = this.datakey ? data.filter(item => item.$dataset === this.datakey) : data
 
-            return dataset.map((item, index) => {
-                const z = axis.z.datakey ? zScale(item[axis.z.datakey]) : this.dotStylesCmp.radius
-                return {
-                    index,
-                    cartesianIndex: this.index,
-                    x: xScale(item[axis.x.datakey]),
-                    y: yScale(item[axis.y.datakey]),
-                    z,
-                    value: item[axis.y.datakey],
-                    info: {
-                        id: index,
-                        label: item.name || '',
-                        value: [
-                            this.generateAxisValue(axis.x, item[axis.x.datakey], color),
-                            this.generateAxisValue(axis.y, item[axis.y.datakey], color),
-                            ...(axis.z.datakey ? [this.generateAxisValue(axis.z, item[axis.z.datakey], color)] : []),
-                        ],
-                    },
-                    ...this.dotStylesCmp,
-                    stroke: this.dotStylesCmp.stroke || this.fillColor,
-                    fill: this.dotStylesCmp.fill || this.fillColor,
-                    radius: z,
-                    hoverRadius: z,
-                }
-            })
+            return dots
+                .map((item, index) => {
+                    const z = axis.z.datakey ? zScale(item[axis.z.datakey]) : this.dotStylesCmp.radius
+                    return {
+                        index,
+                        cartesianIndex: this.index,
+                        x: xScale(item[axis.x.datakey]),
+                        y: yScale(item[axis.y.datakey]),
+                        z,
+                        value: item[axis.y.datakey],
+                        info: {
+                            $dataset: item.$dataset,
+                            id: index,
+                            data: item,
+                            label: item.name || '',
+                            value: [
+                                this.generateAxisValue(axis.x, item[axis.x.datakey], color),
+                                this.generateAxisValue(axis.y, item[axis.y.datakey], color),
+                                ...(axis.z.datakey ? [this.generateAxisValue(axis.z, item[axis.z.datakey], color)] : []),
+                            ],
+                        },
+                        ...this.dotStylesCmp,
+                        stroke: this.dotStylesCmp.stroke || this.fillColor,
+                        fill: this.dotStylesCmp.fill || this.fillColor,
+                        radius: z,
+                        hoverRadius: z,
+                    }
+                })
         },
         genLine () {
             return d3Line()
@@ -148,7 +153,9 @@ export default {
     methods: {
         generateAxisValue ({ name, datakey }, data, color) {
             return ({
-                name, data, color, value: `${name}: ${data}`,
+                key: name,
+                value: data,
+                color,
             })
         },
     },
