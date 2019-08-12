@@ -1,6 +1,5 @@
 import VueTypes from 'vue-types'
 import debounce from 'lodash.debounce'
-import merge from 'lodash.merge'
 
 import activeMixin from './active'
 import themeMixin from './theme'
@@ -51,6 +50,7 @@ export default {
                 y1,
             }
         },
+        // Generate data array
         data () {
             if (Array.isArray(this.dataset)) return this.dataset
             return Object.keys(this.dataset)
