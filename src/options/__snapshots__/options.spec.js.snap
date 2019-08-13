@@ -60,6 +60,7 @@ Object {
       "fontSize": "12px",
     },
     "legendStylesDisabled": Object {
+      "cursor": "default",
       "opacity": "0.5",
     },
     "styles": Object {
@@ -86,6 +87,7 @@ Object {
       "width": "8px",
     },
     "disabledStyles": Object {
+      "cursor": "default",
       "opacity": "0.5",
     },
     "styles": Object {
@@ -291,6 +293,7 @@ Object {
       "fontSize": "12px",
     },
     "legendStylesDisabled": Object {
+      "cursor": "default",
       "opacity": "0.5",
     },
     "styles": Object {
@@ -317,6 +320,7 @@ Object {
       "width": "8px",
     },
     "disabledStyles": Object {
+      "cursor": "default",
       "opacity": "0.5",
     },
     "styles": Object {
