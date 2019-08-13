@@ -29,8 +29,7 @@
                         background: stack.color,
                         maxWidth: `${stack.width}%`,
                     }"
-                    @mouseenter="handleMouseEnter"
-                    @mouseleave="handleMouseLeave"
+                    v-on="stackListeners"
                 >
                     <div
                         class="Value"
@@ -83,8 +82,7 @@
                     left: `${marker.left}%`,
                     ...markerStyles,
                 }"
-                @mouseenter="handleMouseEnter"
-                @mouseleave="handleMouseLeave"
+                v-on="markerListeners"
             >
                 <slot
                     name="marker"
@@ -109,6 +107,7 @@
 
 <script>
 import VueTypes from 'vue-types'
+import merge from 'lodash.merge'
 import { WTooltip, WBullet, WShowIfFit } from '../../components/Widgets'
 import activeMixin from '../../mixins/active'
 import animationMixin from '../../mixins/animation'
@@ -140,12 +139,12 @@ export default {
         animationMixin,
     ],
     props: {
-        total: VueTypes.number,
-        data: VueTypes.arrayOf(VueTypes.number).def([]),
+        dataset: VueTypes.arrayOf(VueTypes.number).def([]),
+        trigger: VueTypes.oneOf(['hover', 'click', 'manual']).def('hover'),
         markers: VueTypes.arrayOf(VueTypes.number).def([]),
+        total: VueTypes.number,
         labelStyles: VueTypes.object,
         showLabel: VueTypes.bool.def(false),
-        withoutTooltip: VueTypes.bool.def(false),
         styles: VueTypes.object.def({}),
         markerStyles: VueTypes.object.def({}),
         delay: VueTypes.number.def(300),
@@ -164,11 +163,11 @@ export default {
         },
         // Sum values
         sumValues () {
-            return this.data.reduce((a, b) => a + b)
+            return this.dataset.reduce((a, b) => a + b)
         },
         // Generate and calc stack values
         stacks () {
-            const values = this.launchAnimation ? this.data : Array.from({ length: this.data.length })
+            const values = this.launchAnimation ? this.dataset : Array.from({ length: (this.dataset || []).length })
             return values.reduce((acc, value, index) => {
                 if (value === 0) return acc
                 const width = (value * 100 / this.totalValues)
@@ -191,6 +190,39 @@ export default {
                 value,
             }))
         },
+        // Event Listeners
+        stackListeners () {
+            return merge({}, this.$listeners, {
+                click: (event) => {
+                    if (this.trigger === 'click') this.handleActive(event, this.getStack)
+                    this.$emit('onClick', this.info)
+                },
+                mouseenter: (event) => {
+                    if (this.trigger === 'hover') this.handleActive(event, this.getStack)
+                    this.$emit('onMouseenter')
+                },
+                mouseleave: () => {
+                    if (['hover', 'click'].includes(this.trigger)) this.cleanActive()
+                    this.$emit('onMouseleave')
+                },
+            })
+        },
+        markerListeners () {
+            return merge({}, this.$listeners, {
+                click: (event) => {
+                    if (this.trigger === 'click') this.handleActive(event, this.getMarker)
+                    this.$emit('onClickMarker', this.info)
+                },
+                mouseenter: (event) => {
+                    if (this.trigger === 'hover') this.handleActive(event, this.getMarker)
+                    this.$emit('onMouseenterMarker')
+                },
+                mouseleave: () => {
+                    if (['hover', 'click'].includes(this.trigger)) this.cleanActive()
+                    this.$emit('onMouseleaveMarker')
+                },
+            })
+        },
     },
     mounted () {
         // Added delay to animate stack
@@ -202,15 +234,9 @@ export default {
             this.launchAnimation = true
         },
         // Set active bar element, to show tooltip
-        handleMouseEnter (event) {
-            if (this.withoutTooltip) return
-            const { id, offsetLeft, data } = event.target
-            const value = this[data.type !== 'marker' ? 'getStack' : 'getMarker'](id)
-            this.setActive({ id, value, offsetLeft }, event)
-        },
-        // Clean active element, to hide tooltip
-        handleMouseLeave () {
-            this.cleanActive()
+        handleActive (event, getValue) {
+            const { id, offsetLeft } = event.target
+            this.setActive({ id, value: getValue(id), offsetLeft }, event)
         },
         // Return stack value of id
         getStack (id) {
@@ -226,7 +252,7 @@ export default {
         getMarker (id) {
             return [{
                 key: id,
-                color: '#FFF',
+                color: '#000',
                 value: this.stackMarkers[id].value,
             }]
         },

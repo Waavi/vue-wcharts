@@ -14,17 +14,15 @@ storiesOf('Extra Charts', module)
         },
         data () {
             return {
-                data: {
-                    legends: ['M&R ToEx', 'Unavailability costs'],
-                    dataset: [67.3, 4.3],
-                },
+                legends: ['M&R ToEx', 'Unavailability costs'],
+                dataset: [67.3, 4.3],
                 showLabel: boolean('Show value', true),
             }
         },
         template: `
             <div class="Container">
                 <WSimpleHStackBar
-                    :dataset="data.dataset"
+                    :dataset="dataset"
                     :showLabel="showLabel"
                 >
                     <template #value="{ value, percentage, color }">
@@ -40,11 +38,9 @@ storiesOf('Extra Charts', module)
         },
         data () {
             return {
-                data: {
-                    total: 71.6,
-                    legends: ['M&R ToEx', 'Unavailability costs'],
-                    dataset: [37.3, 10.3, 23.6],
-                },
+                total: 71.6,
+                legends: ['M&R ToEx', 'Unavailability costs'],
+                dataset: [37.3, 10.3, 23.6],
                 showLabel: boolean('Show label', true),
                 labelStyles: object('Label Styles', {
                     top: '4px',
@@ -56,8 +52,8 @@ storiesOf('Extra Charts', module)
         template: `
             <div class="Container">
                 <WSimpleHStackBar
-                    :total="data.total"
-                    :dataset="data.dataset"
+                    :total="total"
+                    :dataset="dataset"
                     :showLabel="showLabel"
                     :labelStyles="labelStyles"
                 >
@@ -74,12 +70,10 @@ storiesOf('Extra Charts', module)
         },
         data () {
             return {
-                data: {
-                    total: 71.6,
-                    legends: ['M&R ToEx', 'Unavailability costs'],
-                    dataset: [37.3, 10.3, 23.6],
-                    markers: [13.3, 18],
-                },
+                total: 71.6,
+                legends: ['M&R ToEx', 'Unavailability costs'],
+                dataset: [37.3, 10.3, 23.6],
+                markers: [13.3, 18],
                 showLabel: boolean('Show label', true),
                 labelStyles: object('Label Styles', {
                     top: '4px',
@@ -91,9 +85,9 @@ storiesOf('Extra Charts', module)
         template: `
             <div class="Container">
                 <WSimpleHStackBar
-                    :total="data.total"
-                    :dataset="data.dataset"
-                    :markers="data.markers"
+                    :total="total"
+                    :dataset="dataset"
+                    :markers="markers"
                     :showLabel="showLabel"
                     :labelStyles="labelStyles"
                 >
@@ -110,12 +104,10 @@ storiesOf('Extra Charts', module)
         },
         data () {
             return {
-                data: {
-                    total: 71.6,
-                    legends: ['M&R ToEx', 'Unavailability costs'],
-                    dataset: [37.3, 10.3, 23.6],
-                    markers: [13.3, 18],
-                },
+                total: 71.6,
+                legends: ['M&R ToEx', 'Unavailability costs'],
+                dataset: [37.3, 10.3, 23.6],
+                markers: [13.3, 18],
                 showLabel: boolean('Show label', true),
                 labelStyles: object('Label Styles', {
                     top: '4px',
@@ -134,9 +126,9 @@ storiesOf('Extra Charts', module)
         template: `
             <div class="Container">
                 <WSimpleHStackBar
-                    :total="data.total"
-                    :dataset="data.dataset"
-                    :markers="data.markers"
+                    :total="total"
+                    :dataset="dataset"
+                    :markers="markers"
                     :showLabel="showLabel"
                     :labelStyles="labelStyles"
                     :markerStyles="markerStyles"

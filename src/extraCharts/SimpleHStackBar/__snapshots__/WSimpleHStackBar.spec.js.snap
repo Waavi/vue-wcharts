@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Components/WLine Should be render correctly 1`] = `
-<div class="WSimpleHStackBar" dataset="37.3,10.3,23.6">
+<div class="WSimpleHStackBar" data="37.3,10.3,23.6">
   <div class="Container">
     <div class="Start"></div>
     <div class="Stacks">
@@ -34,7 +34,7 @@ exports[`Components/WLine Should be render correctly 1`] = `
 `;
 
 exports[`Components/WLine Should be render correctly with labels 1`] = `
-<div class="WSimpleHStackBar" dataset="37.3,10.3,23.6">
+<div class="WSimpleHStackBar" data="37.3,10.3,23.6">
   <div class="Container">
     <div class="Start"></div>
     <div class="Stacks">
@@ -61,7 +61,7 @@ exports[`Components/WLine Should be render correctly with labels 1`] = `
 `;
 
 exports[`Components/WLine Should be render correctly with markers 1`] = `
-<div class="WSimpleHStackBar" dataset="37.3,10.3,23.6">
+<div class="WSimpleHStackBar" data="37.3,10.3,23.6">
   <div class="Container">
     <div class="Start"></div>
     <div class="Stacks">

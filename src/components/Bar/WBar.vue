@@ -9,8 +9,7 @@
         >
             <g
                 :id="key"
-                @mouseenter="handleMouseEnter"
-                @mouseleave="Chart.cleanActive"
+                v-on="barListeners"
             >
                 <WTrans
                     :initialProps="{
@@ -99,6 +98,7 @@
 
 <script>
 import VueTypes from 'vue-types'
+import merge from 'lodash.merge'
 import animationMixin from '../../mixins/animation'
 import themeMixin from '../../mixins/theme'
 import { WTrans } from '../../transitions'
@@ -117,6 +117,7 @@ export default {
     props: {
         index: VueTypes.number, // internal props set by the parent (WPieChart)
         datakey: VueTypes.string.isRequired,
+        trigger: VueTypes.oneOf(['hover', 'click', 'manual']).def('hover'),
         legend: VueTypes.string, // Prop to apply filters
         stacked: VueTypes.bool.def(false),
         showLabel: VueTypes.bool.def(false),
@@ -283,6 +284,23 @@ export default {
                 }
             })
         },
+        // Event Listeners
+        barListeners () {
+            return merge({}, this.$listeners, {
+                click: (event) => {
+                    if (this.trigger === 'click') this.handleActive(event)
+                    this.$emit('onClick')
+                },
+                mouseenter: (event) => {
+                    if (this.trigger === 'hover') this.handleActive(event)
+                    this.$emit('onMouseenter')
+                },
+                mouseleave: () => {
+                    if (['hover', 'click'].includes(this.trigger)) this.Chart.cleanActive()
+                    this.$emit('onMouseleave')
+                },
+            })
+        },
         // Check if label position it is inside
         isLabelInside () {
             return this.labelPosition === 'inside'
@@ -358,11 +376,11 @@ export default {
             }
         },
         // Set active element
-        handleMouseEnter (event) {
+        handleActive (event) {
             const {
                 stackedCurData, barsCurData, setActive, snap, axis,
             } = this.Chart
-            const { id } = event.target
+            const { id } = event.currentTarget
             const line = this.Chart.data[id]
             const label = line[axis.x.datakey]
 

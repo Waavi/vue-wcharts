@@ -60,7 +60,7 @@ describe('Components/WPie', () => {
     it('It emits the handleMouseEnter  event', () => {
         const wrapper = mount(WPie, defaultConfig)
         wrapper.findAll('path').at(0).trigger('mouseenter')
-        expect(wrapper.emitted('onHover')).toHaveLength(1)
+        expect(wrapper.emitted('onMouseenter')).toHaveLength(1)
     })
 
     it('Should be active 1', () => {
