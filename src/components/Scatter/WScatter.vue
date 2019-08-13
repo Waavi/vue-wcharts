@@ -108,7 +108,7 @@ export default {
                 data, xScale, yScale, zScale, axis, colors,
             } = this.Chart
             const color = colors[this.index]
-            const dots = this.datakey ? data.filter(item => item.$dataset === this.datakey) : data
+            const dots = this.datakey ? data.filter(item => item.$dataset === this.datakey) : (data || [])
 
             return dots
                 .map((item, index) => {

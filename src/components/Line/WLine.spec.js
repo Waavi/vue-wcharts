@@ -33,6 +33,7 @@ describe('Components/WLine', () => {
                 x0: 50, y0: 25, x1: 500, y1: 250,
             },
             dataset,
+            data: dataset,
             xScale: a => a,
             yScale: a => a,
         },
@@ -66,6 +67,7 @@ describe('Components/WLine', () => {
 
     it(`Should be render correctly`, () => {
         const wrapper = shallowMount(WLine, defaultConfig)
+        debugger
         expect(wrapper.html()).toMatchSnapshot()
     })
 

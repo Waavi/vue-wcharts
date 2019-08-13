@@ -47,8 +47,6 @@ export default {
         // xScale with scaleLinear of d3
         // ref: https://github.com/d3/d3-scale#_continuous
         xScale () {
-            console.log(this.$slots.default.filter(s => s.componentOptions.Ctor.extendOptions.name === 'WScatter'))
-
             const domain = this.scatter ? [this.xBounds.min, this.xBounds.max] : [0, this.data.length - 1]
             return scaleLinear()
                 .domain(domain)

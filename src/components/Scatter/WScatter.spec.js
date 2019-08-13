@@ -40,6 +40,7 @@ describe('Components/WScatter', () => {
             space: [20, 20, 20, 20],
             activeElements: [0, 1],
             dataset,
+            data: dataset,
             axis,
             colors,
             zScale: a => a,

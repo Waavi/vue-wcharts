@@ -24,6 +24,7 @@
     "build:docs": "vuepress build docs",
     "serve:docs": "vuepress dev docs",
     "test": "vue-cli-service test:unit",
+    "test:debug": "node --inspect-brk node_modules/.bin/vue-cli-service test:unit --no-cache --watch --runInBand",
     "lint": "vue-cli-service lint",
     "stylelint": "node_modules/stylelint/bin/stylelint.js ./src --formatter verbose",
     "validate": "yarn lint && yarn stylelint && yarn test",

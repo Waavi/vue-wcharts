@@ -53,6 +53,7 @@ export default {
         // Generate data array
         data () {
             if (Array.isArray(this.dataset)) return this.dataset
+            if (!Object.keys(this.dataset).length) return []
             return Object.keys(this.dataset)
                 .reduce((acc, key) => [...acc, ...this.dataset[key].map(d => ({ ...d, $dataset: key }))], [])
         },

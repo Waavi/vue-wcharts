@@ -25,6 +25,7 @@ describe('Components/WMarker', () => {
     const provide = {
         Chart: {
             dataset,
+            data: dataset,
             axis: { x: { datakey: 'name', name: '' } },
             legends: ['One Bar', 'Two Bar'],
             space: [20, 20, 20, 20],
