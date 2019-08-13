@@ -122,11 +122,17 @@ export default {
         },
         bulletStyles,
         legendStyles,
-        legendStylesDisabled: { opacity: '0.5' },
+        legendStylesDisabled: {
+            opacity: '0.5',
+            cursor: 'default',
+        },
     },
     WLegendItem: {
         styles: { ...legendStyles },
-        disabledStyles: { opacity: '0.5' },
+        disabledStyles: {
+            opacity: '0.5',
+            cursor: 'default',
+        },
         bulletStyles,
     },
     WTooltip: {

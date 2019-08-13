@@ -48,7 +48,7 @@ export default {
                 transition: this.transition,
                 ...this.themeStyles.styles,
                 ...this.styles,
-                ...(this.active ? {} : { ...this.disabledStyles, ...this.themeStyles.disabledStyles }),
+                ...(this.active ? {} : { ...this.themeStyles.disabledStyles, ...this.disabledStyles }),
             }
         },
         bulletStylesCmp () {

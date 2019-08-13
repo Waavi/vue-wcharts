@@ -19,7 +19,7 @@
                     :index="index"
                     :text="legend"
                     :active="!selectable ? false : Chart.activeElements.includes(index)"
-                    :style="legendStylesCmp"
+                    :styles="legendStylesCmp"
                     :disabledStyles="legendStylesDisabledCmp"
                     :colors="colors"
                     @onClick="handleClick"
