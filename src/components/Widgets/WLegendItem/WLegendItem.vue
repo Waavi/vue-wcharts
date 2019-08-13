@@ -39,7 +39,7 @@ export default {
         active: VueTypes.bool.def(false),
         color: VueTypes.string,
         styles: VueTypes.object,
-        noActiveStyles: VueTypes.object,
+        disabledStyles: VueTypes.object,
         bulletStyles: VueTypes.object,
     },
     computed: {
@@ -48,7 +48,7 @@ export default {
                 transition: this.transition,
                 ...this.themeStyles.styles,
                 ...this.styles,
-                ...(this.active ? {} : { ...this.noActiveStyles, ...this.themeStyles.noActive }),
+                ...(this.active ? {} : { ...this.disabledStyles, ...this.themeStyles.disabledStyles }),
             }
         },
         bulletStylesCmp () {

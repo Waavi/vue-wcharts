@@ -18,8 +18,9 @@
                     :key="index"
                     :index="index"
                     :text="legend"
-                    :active="Chart.activeElements.includes(index)"
+                    :active="!selectable ? false : Chart.activeElements.includes(index)"
                     :style="legendStylesCmp"
+                    :disabledStyles="legendStylesDisabledCmp"
                     :colors="colors"
                     @onClick="handleClick"
                 >
@@ -67,6 +68,7 @@ export default {
         styles: VueTypes.object.def({}),
         wrapperStyles: VueTypes.object.def({}),
         legendStyles: VueTypes.object.def({}),
+        legendStylesDisabled: VueTypes.object.def({}),
         bulletStyles: VueTypes.object.def({}),
     },
     preload ({ parent, props, index }) {
@@ -127,6 +129,12 @@ export default {
             return {
                 ...this.themeStyles.legendStyles,
                 ...this.legendStyles,
+            }
+        },
+        legendStylesDisabledCmp () {
+            return {
+                ...this.themeStyles.legendStylesDisabled,
+                ...this.legendStylesDisabled,
             }
         },
         bulletStylesCmp () {

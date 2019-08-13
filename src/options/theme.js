@@ -122,10 +122,11 @@ export default {
         },
         bulletStyles,
         legendStyles,
+        legendStylesDisabled: { opacity: '0.5' },
     },
     WLegendItem: {
         styles: { ...legendStyles },
-        noActive: { opacity: '0.5' },
+        disabledStyles: { opacity: '0.5' },
         bulletStyles,
     },
     WTooltip: {
