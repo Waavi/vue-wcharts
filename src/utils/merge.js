@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 /**
  * Lodash (Custom Build) <https://lodash.com/>
  * Build: `lodash modularize exports="npm" -o ./`
@@ -11,61 +13,61 @@
 const LARGE_ARRAY_SIZE = 200
 
 /** Used to stand-in for `undefined` hash values. */
-let HASH_UNDEFINED = '__lodash_hash_undefined__'
+const HASH_UNDEFINED = '__lodash_hash_undefined__'
 
 /** Used to detect hot functions by number of calls within a span of milliseconds. */
-let HOT_COUNT = 800
-    var HOT_SPAN = 16
+const HOT_COUNT = 800
+const HOT_SPAN = 16
 
 /** Used as references for various `Number` constants. */
-let MAX_SAFE_INTEGER = 9007199254740991
+const MAX_SAFE_INTEGER = 9007199254740991
 
 /** `Object#toString` result references. */
-let argsTag = '[object Arguments]'
-    var arrayTag = '[object Array]'
-    var asyncTag = '[object AsyncFunction]'
-    var boolTag = '[object Boolean]'
-    var dateTag = '[object Date]'
-    var errorTag = '[object Error]'
-    var funcTag = '[object Function]'
-    var genTag = '[object GeneratorFunction]'
-    var mapTag = '[object Map]'
-    var numberTag = '[object Number]'
-    var nullTag = '[object Null]'
-    var objectTag = '[object Object]'
-    var proxyTag = '[object Proxy]'
-    var regexpTag = '[object RegExp]'
-    var setTag = '[object Set]'
-    var stringTag = '[object String]'
-    var undefinedTag = '[object Undefined]'
-    var weakMapTag = '[object WeakMap]'
+const argsTag = '[object Arguments]'
+const arrayTag = '[object Array]'
+const asyncTag = '[object AsyncFunction]'
+const boolTag = '[object Boolean]'
+const dateTag = '[object Date]'
+const errorTag = '[object Error]'
+const funcTag = '[object Function]'
+const genTag = '[object GeneratorFunction]'
+const mapTag = '[object Map]'
+const numberTag = '[object Number]'
+const nullTag = '[object Null]'
+const objectTag = '[object Object]'
+const proxyTag = '[object Proxy]'
+const regexpTag = '[object RegExp]'
+const setTag = '[object Set]'
+const stringTag = '[object String]'
+const undefinedTag = '[object Undefined]'
+const weakMapTag = '[object WeakMap]'
 
-let arrayBufferTag = '[object ArrayBuffer]'
-    var dataViewTag = '[object DataView]'
-    var float32Tag = '[object Float32Array]'
-    var float64Tag = '[object Float64Array]'
-    var int8Tag = '[object Int8Array]'
-    var int16Tag = '[object Int16Array]'
-    var int32Tag = '[object Int32Array]'
-    var uint8Tag = '[object Uint8Array]'
-    var uint8ClampedTag = '[object Uint8ClampedArray]'
-    var uint16Tag = '[object Uint16Array]'
-    var uint32Tag = '[object Uint32Array]'
+const arrayBufferTag = '[object ArrayBuffer]'
+const dataViewTag = '[object DataView]'
+const float32Tag = '[object Float32Array]'
+const float64Tag = '[object Float64Array]'
+const int8Tag = '[object Int8Array]'
+const int16Tag = '[object Int16Array]'
+const int32Tag = '[object Int32Array]'
+const uint8Tag = '[object Uint8Array]'
+const uint8ClampedTag = '[object Uint8ClampedArray]'
+const uint16Tag = '[object Uint16Array]'
+const uint32Tag = '[object Uint32Array]'
 
 /**
  * Used to match `RegExp`
  * [syntax characters](http://ecma-international.org/ecma-262/7.0/#sec-patterns).
  */
-let reRegExpChar = /[\\^$.*+?()[\]{}|]/g
+const reRegExpChar = /[\\^$.*+?()[\]{}|]/g
 
 /** Used to detect host constructors (Safari). */
-let reIsHostCtor = /^\[object .+?Constructor\]$/
+const reIsHostCtor = /^\[object .+?Constructor\]$/
 
 /** Used to detect unsigned integer values. */
-let reIsUint = /^(?:0|[1-9]\d*)$/
+const reIsUint = /^(?:0|[1-9]\d*)$/
 
 /** Used to identify `toStringTag` values of typed arrays. */
-let typedArrayTags = {}
+const typedArrayTags = {}
 typedArrayTags[float32Tag] = typedArrayTags[float64Tag] =
 typedArrayTags[int8Tag] = typedArrayTags[int16Tag] =
 typedArrayTags[int32Tag] = typedArrayTags[uint8Tag] =
@@ -81,28 +83,28 @@ typedArrayTags[setTag] = typedArrayTags[stringTag] =
 typedArrayTags[weakMapTag] = false
 
 /** Detect free variable `global` from Node.js. */
-let freeGlobal = typeof global === 'object' && global && global.Object === Object && global
+const freeGlobal = typeof global === 'object' && global && global.Object === Object && global
 
 /** Detect free variable `self`. */
-let freeSelf = typeof self === 'object' && self && self.Object === Object && self
+const freeSelf = typeof self === 'object' && self && self.Object === Object && self
 
 /** Used as a reference to the global object. */
-let root = freeGlobal || freeSelf || Function('return this')()
+const root = freeGlobal || freeSelf || Function('return this')()
 
 /** Detect free variable `exports`. */
-let freeExports = typeof exports === 'object' && exports && !exports.nodeType && exports
+const freeExports = typeof exports === 'object' && exports && !exports.nodeType && exports
 
 /** Detect free variable `module`. */
-let freeModule = freeExports && typeof module === 'object' && module && !module.nodeType && module
+const freeModule = freeExports && typeof module === 'object' && module && !module.nodeType && module
 
 /** Detect the popular CommonJS extension `module.exports`. */
-let moduleExports = freeModule && freeModule.exports === freeExports
+const moduleExports = freeModule && freeModule.exports === freeExports
 
 /** Detect free variable `process` from Node.js. */
-let freeProcess = moduleExports && freeGlobal.process
+const freeProcess = moduleExports && freeGlobal.process
 
 /** Used to access faster Node.js helpers. */
-let nodeUtil = (function () {
+const nodeUtil = (function () {
     try {
     // Use `util.types` for Node.js 10+.
         const types = freeModule && freeModule.require && freeModule.require('util').types
@@ -117,7 +119,7 @@ let nodeUtil = (function () {
 }())
 
 /* Node.js helper references. */
-let nodeIsTypedArray = nodeUtil && nodeUtil.isTypedArray
+const nodeIsTypedArray = nodeUtil && nodeUtil.isTypedArray
 
 /**
  * A faster alternative to `Function#apply`, this function invokes `func`
@@ -150,7 +152,7 @@ function apply (func, thisArg, args) {
  */
 function baseTimes (n, iteratee) {
     let index = -1
-      var result = Array(n)
+    const result = Array(n)
 
     while (++index < n) {
         result[index] = iteratee(index)
@@ -199,20 +201,20 @@ function overArg (func, transform) {
 
 /** Used for built-in method references. */
 const arrayProto = Array.prototype
-    var funcProto = Function.prototype
-    var objectProto = Object.prototype
+const funcProto = Function.prototype
+const objectProto = Object.prototype
 
 /** Used to detect overreaching core-js shims. */
-let coreJsData = root['__core-js_shared__']
+const coreJsData = root['__core-js_shared__']
 
 /** Used to resolve the decompiled source of functions. */
-let funcToString = funcProto.toString
+const funcToString = funcProto.toString
 
 /** Used to check objects for own properties. */
-let { hasOwnProperty } = objectProto
+const { hasOwnProperty } = objectProto
 
 /** Used to detect methods masquerading as native. */
-let maskSrcKey = (function () {
+const maskSrcKey = (function () {
     const uid = /[^.]+$/.exec(coreJsData && coreJsData.keys && coreJsData.keys.IE_PROTO || '')
     return uid ? (`Symbol(src)_1.${uid}`) : ''
 }())
@@ -222,28 +224,28 @@ let maskSrcKey = (function () {
  * [`toStringTag`](http://ecma-international.org/ecma-262/7.0/#sec-object.prototype.tostring)
  * of values.
  */
-let nativeObjectToString = objectProto.toString
+const nativeObjectToString = objectProto.toString
 
 /** Used to infer the `Object` constructor. */
-let objectCtorString = funcToString.call(Object)
+const objectCtorString = funcToString.call(Object)
 
 /** Used to detect if a method is native. */
-let reIsNative = RegExp(`^${
+const reIsNative = RegExp(`^${
     funcToString.call(hasOwnProperty).replace(reRegExpChar, '\\$&')
-        .replace(/hasOwnProperty|(function).*?(?=\\\()| for .+?(?=\\\])/g, '$1.*?') }$`)
+        .replace(/hasOwnProperty|(function).*?(?=\\\()| for .+?(?=\\\])/g, '$1.*?')}$`)
 
 /** Built-in value references. */
-let Buffer = moduleExports ? root.Buffer : undefined
-    var {Symbol} = root;
-let {Uint8Array} = root;
-let allocUnsafe = Buffer ? Buffer.allocUnsafe : undefined
-    var getPrototype = overArg(Object.getPrototypeOf, Object)
-    var objectCreate = Object.create
-    var {propertyIsEnumerable} = objectProto;
-let {splice} = arrayProto;
-let symToStringTag = Symbol ? Symbol.toStringTag : undefined
+const Buffer = moduleExports ? root.Buffer : undefined
+const { Symbol } = root
+const { Uint8Array } = root
+const allocUnsafe = Buffer ? Buffer.allocUnsafe : undefined
+const getPrototype = overArg(Object.getPrototypeOf, Object)
+const objectCreate = Object.create
+const { propertyIsEnumerable } = objectProto
+const { splice } = arrayProto
+const symToStringTag = Symbol ? Symbol.toStringTag : undefined
 
-let defineProperty = (function () {
+const defineProperty = (function () {
     try {
         const func = getNative(Object, 'defineProperty')
         func({}, '', {})
@@ -252,13 +254,13 @@ let defineProperty = (function () {
 }())
 
 /* Built-in method references for those with the same name as other `lodash` methods. */
-let nativeIsBuffer = Buffer ? Buffer.isBuffer : undefined
-    var nativeMax = Math.max
-    var nativeNow = Date.now
+const nativeIsBuffer = Buffer ? Buffer.isBuffer : undefined
+const nativeMax = Math.max
+const nativeNow = Date.now
 
 /* Built-in method references that are verified to be native. */
-let Map = getNative(root, 'Map')
-    var nativeCreate = getNative(Object, 'create')
+const Map = getNative(root, 'Map')
+const nativeCreate = getNative(Object, 'create')
 
 /**
  * The base implementation of `_.create` without support for assigning
@@ -268,7 +270,7 @@ let Map = getNative(root, 'Map')
  * @param {Object} proto The object to inherit from.
  * @returns {Object} Returns the new object.
  */
-let baseCreate = (function () {
+const baseCreate = (function () {
     function object () {}
     return function (proto) {
         if (!isObject(proto)) {
@@ -278,7 +280,7 @@ let baseCreate = (function () {
             return objectCreate(proto)
         }
         object.prototype = proto
-        let result = new object()
+        const result = new object()
         object.prototype = undefined
         return result
     }
@@ -293,7 +295,7 @@ let baseCreate = (function () {
  */
 function Hash (entries) {
     let index = -1
-      var length = entries == null ? 0 : entries.length
+    const length = entries == null ? 0 : entries.length
 
     this.clear()
     while (++index < length) {
@@ -395,7 +397,7 @@ Hash.prototype.set = hashSet
  */
 function ListCache (entries) {
     let index = -1
-      var length = entries == null ? 0 : entries.length
+    const length = entries == null ? 0 : entries.length
 
     this.clear()
     while (++index < length) {
@@ -427,7 +429,7 @@ function listCacheClear () {
  */
 function listCacheDelete (key) {
     const data = this.__data__
-      var index = assocIndexOf(data, key)
+    const index = assocIndexOf(data, key)
 
     if (index < 0) {
         return false
@@ -453,7 +455,7 @@ function listCacheDelete (key) {
  */
 function listCacheGet (key) {
     const data = this.__data__
-      var index = assocIndexOf(data, key)
+    const index = assocIndexOf(data, key)
 
     return index < 0 ? undefined : data[index][1]
 }
@@ -483,7 +485,7 @@ function listCacheHas (key) {
  */
 function listCacheSet (key, value) {
     const data = this.__data__
-      var index = assocIndexOf(data, key)
+    const index = assocIndexOf(data, key)
 
     if (index < 0) {
         ++this.size
@@ -510,7 +512,7 @@ ListCache.prototype.set = listCacheSet
  */
 function MapCache (entries) {
     let index = -1
-      var length = entries == null ? 0 : entries.length
+    const length = entries == null ? 0 : entries.length
 
     this.clear()
     while (++index < length) {
@@ -588,7 +590,7 @@ function mapCacheHas (key) {
  */
 function mapCacheSet (key, value) {
     const data = getMapData(this, key)
-      var { size } = data
+    const { size } = data
 
     data.set(key, value)
     this.size += data.size == size ? 0 : 1
@@ -637,7 +639,7 @@ function stackClear () {
  */
 function stackDelete (key) {
     const data = this.__data__
-      var result = data.delete(key)
+    const result = data.delete(key)
 
     this.size = data.size
     return result
@@ -712,12 +714,12 @@ Stack.prototype.set = stackSet
  */
 function arrayLikeKeys (value, inherited) {
     const isArr = isArray(value)
-      var isArg = !isArr && isArguments(value)
-      var isBuff = !isArr && !isArg && isBuffer(value)
-      var isType = !isArr && !isArg && !isBuff && isTypedArray(value)
-      var skipIndexes = isArr || isArg || isBuff || isType
-      var result = skipIndexes ? baseTimes(value.length, String) : []
-      var { length } = result
+    const isArg = !isArr && isArguments(value)
+    const isBuff = !isArr && !isArg && isBuffer(value)
+    const isType = !isArr && !isArg && !isBuff && isTypedArray(value)
+    const skipIndexes = isArr || isArg || isBuff || isType
+    const result = skipIndexes ? baseTimes(value.length, String) : []
+    const { length } = result
 
     for (const key in value) {
         if ((inherited || hasOwnProperty.call(value, key)) &&
@@ -891,7 +893,7 @@ function baseKeysIn (object) {
         return nativeKeysIn(object)
     }
     const isProto = isPrototype(object)
-      var result = []
+    const result = []
 
     for (const key in object) {
         if (!(key == 'constructor' && (isProto || !hasOwnProperty.call(object, key)))) {
@@ -918,18 +920,18 @@ function baseMerge (object, source, srcIndex, customizer, stack) {
     }
     baseFor(source, (srcValue, key) => {
         stack || (stack = new Stack())
-    if (isObject(srcValue)) {
+        if (isObject(srcValue)) {
             baseMergeDeep(object, source, key, srcIndex, baseMerge, customizer, stack)
-    } else {
+        } else {
             let newValue = customizer
-                ? customizer(safeGet(object, key), srcValue, (`${key  }`), object, source, stack)
+                ? customizer(safeGet(object, key), srcValue, (`${key}`), object, source, stack)
                 : undefined
 
-      if (newValue === undefined) {
+            if (newValue === undefined) {
                 newValue = srcValue
-      }
+            }
             assignMergeValue(object, key, newValue)
-    }
+        }
     }, keysIn)
 }
 
@@ -950,23 +952,23 @@ function baseMerge (object, source, srcIndex, customizer, stack) {
  */
 function baseMergeDeep (object, source, key, srcIndex, mergeFunc, customizer, stack) {
     const objValue = safeGet(object, key)
-      var srcValue = safeGet(source, key)
-      var stacked = stack.get(srcValue)
+    const srcValue = safeGet(source, key)
+    const stacked = stack.get(srcValue)
 
     if (stacked) {
         assignMergeValue(object, key, stacked)
         return
     }
     let newValue = customizer
-        ? customizer(objValue, srcValue, (`${key }`), object, source, stack)
+        ? customizer(objValue, srcValue, (`${key}`), object, source, stack)
         : undefined
 
     let isCommon = newValue === undefined
 
     if (isCommon) {
         const isArr = isArray(srcValue)
-        var isBuff = !isArr && isBuffer(srcValue)
-        var isTyped = !isArr && !isBuff && isTypedArray(srcValue)
+        const isBuff = !isArr && isBuffer(srcValue)
+        const isTyped = !isArr && !isBuff && isTypedArray(srcValue)
 
         newValue = srcValue
         if (isArr || isBuff || isTyped) {
@@ -1045,7 +1047,7 @@ function cloneBuffer (buffer, isDeep) {
         return buffer.slice()
     }
     const { length } = buffer
-      var result = allocUnsafe ? allocUnsafe(length) : new buffer.constructor(length)
+    const result = allocUnsafe ? allocUnsafe(length) : new buffer.constructor(length)
 
     buffer.copy(result)
     return result
@@ -1087,7 +1089,7 @@ function cloneTypedArray (typedArray, isDeep) {
  */
 function copyArray (source, array) {
     let index = -1
-      var { length } = source
+    const { length } = source
 
     array || (array = Array(length))
     while (++index < length) {
@@ -1111,7 +1113,7 @@ function copyObject (source, props, object, customizer) {
     object || (object = {})
 
     let index = -1
-      var { length } = props
+    const { length } = props
 
     while (++index < length) {
         const key = props[index]
@@ -1141,28 +1143,28 @@ function copyObject (source, props, object, customizer) {
  */
 function createAssigner (assigner) {
     return baseRest((object, sources) => {
-        let index = -1;
-        var length = sources.length;
-        var customizer = length > 1 ? sources[length - 1] : undefined;
-        var guard = length > 2 ? sources[2] : undefined
+        let index = -1
+        let { length } = sources
+        let customizer = length > 1 ? sources[length - 1] : undefined
+        const guard = length > 2 ? sources[2] : undefined
 
-    customizer = (assigner.length > 3 && typeof customizer === 'function')
+        customizer = (assigner.length > 3 && typeof customizer === 'function')
             ? (length--, customizer)
             : undefined
 
-    if (guard && isIterateeCall(sources[0], sources[1], guard)) {
+        if (guard && isIterateeCall(sources[0], sources[1], guard)) {
             customizer = length < 3 ? undefined : customizer
-      length = 1
-    }
+            length = 1
+        }
         object = Object(object)
-    while (++index < length) {
-            let source = sources[index]
-      if (source) {
+        while (++index < length) {
+            const source = sources[index]
+            if (source) {
                 assigner(object, source, index, customizer)
-      }
+            }
         }
         return object
-  })
+    })
 }
 
 /**
@@ -1175,9 +1177,9 @@ function createAssigner (assigner) {
 function createBaseFor (fromRight) {
     return function (object, iteratee, keysFunc) {
         let index = -1
-        var iterable = Object(object)
-        var props = keysFunc(object)
-        var { length } = props
+        const iterable = Object(object)
+        const props = keysFunc(object)
+        let { length } = props
 
         while (length--) {
             const key = props[fromRight ? length : ++index]
@@ -1226,7 +1228,7 @@ function getNative (object, key) {
  */
 function getRawTag (value) {
     const isOwn = hasOwnProperty.call(value, symToStringTag)
-      var tag = value[symToStringTag]
+    const tag = value[symToStringTag]
 
     try {
         value[symToStringTag] = undefined
@@ -1333,7 +1335,7 @@ function isMasked (func) {
  */
 function isPrototype (value) {
     const Ctor = value && value.constructor
-      var proto = (typeof Ctor === 'function' && Ctor.prototype) || objectProto
+    const proto = (typeof Ctor === 'function' && Ctor.prototype) || objectProto
 
     return value === proto
 }
@@ -1381,15 +1383,15 @@ function overRest (func, start, transform) {
     start = nativeMax(start === undefined ? (func.length - 1) : start, 0)
     return function () {
         const args = arguments
-        var index = -1
-        var length = nativeMax(args.length - start, 0)
-        var array = Array(length)
+        let index = -1
+        const length = nativeMax(args.length - start, 0)
+        const array = Array(length)
 
         while (++index < length) {
             array[index] = args[start + index]
         }
         index = -1
-        let otherArgs = Array(start + 1)
+        const otherArgs = Array(start + 1)
         while (++index < start) {
             otherArgs[index] = args[index]
         }
@@ -1439,11 +1441,11 @@ var setToString = shortOut(baseSetToString)
  */
 function shortOut (func) {
     let count = 0
-      var lastCalled = 0
+    let lastCalled = 0
 
     return function () {
         const stamp = nativeNow()
-        var remaining = HOT_SPAN - (stamp - lastCalled)
+        const remaining = HOT_SPAN - (stamp - lastCalled)
 
         lastCalled = stamp
         if (remaining > 0) {
@@ -1470,7 +1472,7 @@ function toSource (func) {
             return funcToString.call(func)
         } catch (e) {}
         try {
-            return (`${func }`)
+            return (`${func}`)
         } catch (e) {}
     }
     return ''
