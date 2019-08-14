@@ -211,12 +211,76 @@ storiesOf('Charts/Scatter', module)
                     datakey="two"
                     :space="[25, 0, 0, 50]"
                 />
+                <WZAxis
+                    name="three"
+                    datakey="three"
+                    :range="[100, 5000]"
+                />
                 <WTooltip />
                 <WLegend
                     position="top"
                     align="end"
                     selectable
                 />
+            </WCartesian>
+        `,
+    }))
+    .add('Multiple, Three dimension', () => ({
+        components: {
+            WCartesianGrid,
+            WTooltip,
+            WCartesian,
+            WScatter,
+            WXAxis,
+            WYAxis,
+            WZAxis,
+            WLegend,
+        },
+        data () {
+            return {
+                data: {
+                    one: data,
+                    two: [
+                        {
+                            name: 'Page A', one: 4000, two: 1400, three: 300,
+                        },
+                        {
+                            name: 'Page B', one: 2000, two: 6210, three: 1398,
+                        },
+                        {
+                            name: 'Page C', one: 2800, two: 8200, three: 100,
+                        },
+                    ],
+                },
+            }
+        },
+        template: `
+           <WCartesian
+                :dataset="data"
+                responsive
+                scatter
+                :bound="[n => n - 1000,n => n + 1000]"
+                :xBound="[n => n - 1000,n => n + 1000]"
+            >
+                <WCartesianGrid />
+                <WScatter datakey="one" />
+                <WScatter line datakey="two" legend="Two Scatter" />
+                <WXAxis
+                    name="one"
+                    datakey="one"
+                    :space="[0, 50, 80, 50]"
+                />
+                <WYAxis
+                    name="two"
+                    datakey="two"
+                    :space="[25, 0, 0, 50]"
+                />
+                <WZAxis
+                    name="three"
+                    datakey="three"
+                    :range="[100, 5000]"
+                />
+                <WTooltip />
             </WCartesian>
         `,
     }))

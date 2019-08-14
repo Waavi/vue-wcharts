@@ -124,9 +124,8 @@ export default {
         dotsData () {
             if (this.dot) {
                 const {
-                    data, xScale, yScale, datakeys, colors, axis,
+                    data, xScale, yScale, datakeys, axis,
                 } = this.Chart
-                const color = colors[this.index]
                 return data.map((item, index) => {
                     const line = data[index]
                     const key = datakeys[this.index]
@@ -142,7 +141,7 @@ export default {
                             label,
                             value: [{
                                 value,
-                                color,
+                                color: this.fillColor,
                             }],
                         },
                         value: item[this.datakey],
@@ -210,7 +209,7 @@ export default {
             }
         },
         fillColor () {
-            return this.Chart.colors[this.index]
+            return (this.colors || [])[this.index] || this.Chart.colors[this.index]
         },
     },
 }

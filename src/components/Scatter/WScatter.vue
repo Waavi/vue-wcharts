@@ -93,7 +93,7 @@ export default {
             }
         },
         fillColor () {
-            return this.Chart.colors[this.index]
+            return (this.colors || [])[this.index] || this.Chart.colors[this.index]
         },
         active () {
             return this.Chart.activeElements.includes(this.index)
@@ -111,9 +111,8 @@ export default {
         },
         dotsData () {
             const {
-                xScale, yScale, zScale, axis, colors,
+                xScale, yScale, zScale, axis,
             } = this.Chart
-            const color = colors[this.index]
 
             return this.points
                 .map((item, index) => {
@@ -131,9 +130,9 @@ export default {
                             data: item,
                             label: item.name || '',
                             value: [
-                                this.generateAxisValue(axis.x, item[axis.x.datakey], color),
-                                this.generateAxisValue(axis.y, item[axis.y.datakey], color),
-                                ...(axis.z.datakey ? [this.generateAxisValue(axis.z, item[axis.z.datakey], color)] : []),
+                                this.generateAxisValue(axis.x, item[axis.x.datakey], this.fillColor),
+                                this.generateAxisValue(axis.y, item[axis.y.datakey], this.fillColor),
+                                ...(axis.z.datakey ? [this.generateAxisValue(axis.z, item[axis.z.datakey], this.fillColor)] : []),
                             ],
                         },
                         ...this.dotStylesCmp,
