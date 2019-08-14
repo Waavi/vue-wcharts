@@ -24,7 +24,6 @@
     "build:docs": "vuepress build docs",
     "serve:docs": "vuepress dev docs",
     "test": "vue-cli-service test:unit",
-    "test:debug": "node --inspect-brk node_modules/.bin/vue-cli-service test:unit --no-cache --watch --runInBand",
     "lint": "vue-cli-service lint",
     "stylelint": "node_modules/stylelint/bin/stylelint.js ./src --formatter verbose",
     "validate": "yarn lint && yarn stylelint && yarn test",
@@ -52,6 +51,7 @@
     "vue": "^2.5.0"
   },
   "devDependencies": {
+    "@babel/runtime": "7.0.0-beta.55",
     "@storybook/addon-actions": "^5.0.8",
     "@storybook/addon-backgrounds": "^5.0.8",
     "@storybook/addon-console": "^1.1.0",
@@ -88,7 +88,9 @@
     "stylelint-webpack-plugin": "^0.10.5",
     "vue": "^2.6.6",
     "vue-cli-plugin-storybook": "^0.6.1",
-    "vue-template-compiler": "^2.5.21"
+    "vue-sauce": "^1.0.2",
+    "vue-template-compiler": "^2.5.21",
+    "vuepress": "^0.14.11"
   },
   "gitHooks": {
     "pre-push": "yarn validate"
