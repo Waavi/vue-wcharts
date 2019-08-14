@@ -7,7 +7,7 @@ import themeMixin from './theme'
 export default {
     mixins: [activeMixin, themeMixin],
     props: {
-        dataset: VueTypes.array.def([]),
+        dataset: VueTypes.oneOfType([Array, Object]).def([]),
         responsive: VueTypes.bool.def(false),
         height: VueTypes.number.def(400),
         width: VueTypes.number.def(600),
@@ -29,7 +29,7 @@ export default {
         }
     },
     computed: {
-    // View size, include canvas and paddings/margins
+        // View size, include canvas and paddings/margins
         viewWidth () {
             return this.parentWidth || this.width
         },
@@ -49,6 +49,13 @@ export default {
                 x1,
                 y1,
             }
+        },
+        // Generate data array
+        data () {
+            if (Array.isArray(this.dataset)) return this.dataset
+            if (!Object.keys(this.dataset).length) return []
+            return Object.keys(this.dataset)
+                .reduce((acc, key) => [...acc, ...this.dataset[key].map(d => ({ ...d, $dataset: key }))], [])
         },
     },
     mounted () {

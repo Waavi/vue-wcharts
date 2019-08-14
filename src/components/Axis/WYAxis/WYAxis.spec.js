@@ -44,6 +44,7 @@ describe('Axis/WYAxis', () => {
     const provide = {
         Chart: {
             dataset,
+            data: dataset,
             canvas,
             bounds,
             spaceObjects: [10, 10, 10, 10],

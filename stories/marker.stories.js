@@ -148,7 +148,7 @@ storiesOf('Markers', module)
                                 :y="y"
                                 :dy="dy"
                                 text-anchor="end"
-                                :style="{ fontSize: 20, fill: 'red' }"
+                                :style="{ fontSize: 20, fill: 'tomato' }"
                             >
                                 🤔 {{ value }}
                             </text>

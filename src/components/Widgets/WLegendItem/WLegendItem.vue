@@ -2,10 +2,7 @@
     <a
         :title="text"
         :style="stylesCmp"
-        @click.prevent="$emit('onClick', { text, index })"
-        @mouseenter="$emit('onMouseenter', { text, index })"
-        @mouseleave="$emit('onMouseleave', { text, index })"
-        v-on="$listeners"
+        v-on="legentItemListeners"
     >
         <slot
             name="bullet"
@@ -23,6 +20,7 @@
 
 <script>
 import VueTypes from 'vue-types'
+import merge from 'lodash.merge'
 import themeMixin from '../../../mixins/theme'
 import animationMixin from '../../../mixins/animation'
 import WBullet from '../WBullet/WBullet.vue'
@@ -39,16 +37,35 @@ export default {
         active: VueTypes.bool.def(false),
         color: VueTypes.string,
         styles: VueTypes.object,
-        noActiveStyles: VueTypes.object,
+        disabledStyles: VueTypes.object,
         bulletStyles: VueTypes.object,
     },
     computed: {
+        // Event Listeners
+        legentItemListeners () {
+            return merge({}, this.$listeners, {
+                click: (event) => {
+                    const { text, index } = this
+                    this.$emit('onClick', { text, index })
+                },
+                mouseenter: (event) => {
+                    const { text, index } = this
+                    this.$emit('onMouseenter', { text, index })
+                },
+                mouseleave: () => {
+                    const { text, index } = this
+                    this.$emit('onMouseleave', { text, index })
+                },
+            })
+        },
+        // Styles
         stylesCmp () {
             return {
                 transition: this.transition,
                 ...this.themeStyles.styles,
                 ...this.styles,
-                ...(this.active ? {} : { ...this.noActiveStyles, ...this.themeStyles.noActive }),
+                ...(this.active ? {} : { ...this.themeStyles.disabledStyles, ...this.disabledStyles }),
+                ...(this.trigger === 'click' ? { cursor: 'pointer' } : {}),
             }
         },
         bulletStylesCmp () {

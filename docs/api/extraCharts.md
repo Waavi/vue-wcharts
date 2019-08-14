@@ -15,6 +15,7 @@ sidebarDepth: 3
 | Property | Type | Default value | Description |
 |----------|------|---------------|-------------|
 | dataset | array | [] | Chart data, example:  ```[{name: 'Page A', one: 3000, two: 1400, three: 400}, ...]``` |
+| trigger | string | `'hover'`, `'click'`, `'manual'` | Events triggering the tooltip |
 | colors | array | ```['#3fb1e3',  '#6be6c1',  '#626c91',  '#a0a7e6',  '#c4ebad',  '#96dee8',  '#013566',  '##ff4f81'  ]``` | Colors palette |
 | total | number |  | Total value |
 | markers | array | [] | Points over the bars, example: ```[10, 50, 100]``` |

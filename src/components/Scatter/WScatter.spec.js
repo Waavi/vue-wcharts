@@ -40,6 +40,7 @@ describe('Components/WScatter', () => {
             space: [20, 20, 20, 20],
             activeElements: [0, 1],
             dataset,
+            data: dataset,
             axis,
             colors,
             zScale: a => a,
@@ -82,7 +83,7 @@ describe('Components/WScatter', () => {
 
     it('It emits the handleClick event', () => {
         const wrapper = mount(WScatter, defaultConfig)
-        wrapper.find(WDot).trigger('click')
+        wrapper.find(WDot).trigger('onClick')
         expect(wrapper.emitted('onClickDot')).toHaveLength(1)
     })
 })
