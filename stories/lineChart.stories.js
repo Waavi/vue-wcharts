@@ -628,8 +628,7 @@ storiesOf('Charts/Line', module)
                     <WTooltip :style="styles">
                         <template #default="tooltip">
                             <div class="Wrapper">
-                                <div :style="labelStyle"><strong>Category</strong>: {{ tooltip.xAxisVal }}</div>
-                                <div :style="labelStyle"><strong>Point</strong>: {{ tooltip.yAxisVal }}</div>
+                                <div :style="labelStyle"><strong>Category</strong>: {{ tooltip.label }}</div>
                                 <div :style="{ ...lineStyle, background: tooltip.color }"></div>
                             </div>
                         </template>

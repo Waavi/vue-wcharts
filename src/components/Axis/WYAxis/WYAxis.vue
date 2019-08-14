@@ -24,13 +24,23 @@
                     :stroke="markStylesCmp.stroke"
                 />
                 <slot
-                    name="tickText"
+                    name="tick"
                     v-bind="tick.text"
+                    :styles="tickStylesCmp"
                 >
                     <WTickText
                         v-bind="tick.text"
                         :styles="tickStylesCmp"
-                    />
+                    >
+                        <template #default="{ value }">
+                            <slot
+                                name="tickText"
+                                :value="value"
+                            >
+                                {{ value }}
+                            </slot>
+                        </template>
+                    </WTickText>
                 </slot>
             </g>
         </template>

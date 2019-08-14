@@ -16,11 +16,9 @@
             :stroke="path.stroke"
             :style="{
                 ...pathStylesCmp,
-                opacity: activePath === null ? 1 : activePath === index ? 1 : opacityDisabled,
+                opacity: activePath === null ? 1 : activePath === i ? 1 : opacityDisabled,
             }"
-            @mouseenter="handleMouseEnter"
-            @mouseleave="handleMouseLeave"
-            @click="handleClick"
+            v-on="pieListeners"
         />
     </g>
 </template>
@@ -29,6 +27,7 @@
 import VueTypes from 'vue-types'
 import omit from 'lodash.omit'
 import noop from 'lodash.noop'
+import merge from 'lodash.merge'
 import pie from 'd3-shape/src/pie'
 import arc from 'd3-shape/src/arc'
 import themeMixin from '../../mixins/theme'
@@ -42,6 +41,7 @@ export default {
         // internal props set by the parent (WPieChart)
         index: VueTypes.number,
         datakey: VueTypes.string.isRequired,
+        trigger: VueTypes.oneOf(['hover', 'click', 'manual']).def('hover'),
         angles: VueTypes.oneOfType([
             VueTypes.number,
             VueTypes.arrayOf(VueTypes.number).def([0, Math.PI * 2]),
@@ -73,6 +73,7 @@ export default {
             return {
                 ...omit(this.themeStyles.path, ['stroke']),
                 ...omit(this.pathStyles, ['stroke']),
+                ...(this.trigger === 'click' ? { cursor: 'pointer' } : {}),
             }
         },
         // Active elem
@@ -92,12 +93,12 @@ export default {
         },
         // Values
         curValues () {
-            return this.Chart.dataset.map(item => item[this.datakey])
+            return this.Chart.data.map(item => item[this.datakey])
         },
         // Values
         values () {
             const total = this.curValues.reduce((acc, a) => acc + a, 0)
-            return this.Chart.dataset.map((item, index) => ({
+            return this.Chart.data.map((item, index) => ({
                 ...item,
                 percentage: item[this.datakey] * 100 / total,
                 color: this.Chart.colors[index],
@@ -124,6 +125,32 @@ export default {
                 stroke: this.pathStylesCmp.stroke,
             }))
         },
+        // Event Listeners
+        pieListeners () {
+            return merge({}, this.$listeners, {
+                click: (event) => {
+                    if (this.trigger === 'click') {
+                        this.setActivePath(parseInt(event.target.id, 0))
+                        this.handleActive(event)
+                    }
+                    this.$emit('onClick')
+                },
+                mouseenter: (event) => {
+                    if (this.trigger === 'hover') {
+                        this.setActivePath(parseInt(event.target.id, 0))
+                        this.handleActive(event)
+                    }
+                    this.$emit('onMouseenter')
+                },
+                mouseleave: () => {
+                    if (['hover', 'click'].includes(this.trigger)) {
+                        this.setActivePath(null)
+                        this.Chart.cleanActive()
+                    }
+                    this.$emit('onMouseleave')
+                },
+            })
+        },
         // Slot styles
         contentStyles () {
             const [, width] = this.curRadius
@@ -141,21 +168,14 @@ export default {
         },
     },
     methods: {
-        handleMouseEnter (event) {
-            if ([null, undefined].includes(this.active)) this.activePath = parseInt(event.target.id, 0)
-            this.handleActive(event, 'onHover')
+        setActivePath (id) {
+            if ([null, undefined].includes(this.active)) this.activePath = id
         },
-        handleMouseLeave () {
-            if ([null, undefined].includes(this.active)) this.activePath = null
-            this.Chart.cleanActive()
-        },
-        handleClick (event) {
-            this.handleActive(event, 'onClick')
-        },
-        handleActive (event, eventName) {
+        handleActive (event) {
             const { id } = event.target
+            const { setActive, colors } = this.Chart
             const value = this.curValues[id]
-            const color = this.fill || this.Chart.colors[id]
+            const color = this.fill || colors[id]
             const el = {
                 id,
                 value: [{
@@ -163,9 +183,8 @@ export default {
                     color,
                 }],
             }
-
-            this.Chart.setActive(el, event)
-            this.$emit(eventName || 'onEvent', el)
+            // Set active bar to show tooltip
+            setActive(el, event)
         },
     },
 }

@@ -47,6 +47,7 @@ describe('Axis/WXAxis', () => {
     const provide = {
         Chart: {
             dataset,
+            data: dataset,
             canvas,
             bounds,
             snap,

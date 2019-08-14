@@ -24,6 +24,7 @@
                         v-bind="dotItem"
                         :styles="{ opacity: dotStylesCmp.opacity }"
                         :transition="`all 250ms ${transEffect}`"
+                        :trigger="trigger"
                         @onClick="$emit('onClickDot', $event)"
                     />
                 </slot>
@@ -58,6 +59,8 @@ export default {
     props: {
         // internal props set by the parent (WPieChart)
         index: VueTypes.number,
+        datakey: VueTypes.string,
+        trigger: VueTypes.oneOf(['hover', 'click', 'manual']).def('hover'),
         legend: VueTypes.string,
         curve: VueTypes.oneOfType([VueTypes.bool, VueTypes.func]).def(false),
         line: VueTypes.bool.def(false),
@@ -90,49 +93,55 @@ export default {
             }
         },
         fillColor () {
-            return this.Chart.colors[this.index]
+            return (this.colors || [])[this.index] || this.Chart.colors[this.index]
         },
         active () {
             return this.Chart.activeElements.includes(this.index)
         },
+        points () {
+            // Check if has a multiple scatter
+            return this.datakey ? this.Chart.data.filter(item => item.$dataset === this.datakey) : (this.Chart.data || [])
+        },
         lineData () {
             // We sort values becouse we want a left to right line
-            return sortBy(this.Chart.dataset, this.Chart.axis.x.datakey).map((item, index) => ({
+            return sortBy(this.points, this.Chart.axis.x.datakey).map((item, index) => ({
                 x: item[this.Chart.axis.x.datakey],
                 y: item[this.Chart.axis.y.datakey],
             }))
         },
         dotsData () {
             const {
-                dataset, xScale, yScale, zScale, axis, colors,
+                xScale, yScale, zScale, axis,
             } = this.Chart
-            const color = colors[this.index]
 
-            return dataset.map((item, index) => {
-                const z = axis.z.datakey ? zScale(item[axis.z.datakey]) : this.dotStylesCmp.radius
-                return {
-                    index,
-                    cartesianIndex: this.index,
-                    x: xScale(item[axis.x.datakey]),
-                    y: yScale(item[axis.y.datakey]),
-                    z,
-                    value: item[axis.y.datakey],
-                    info: {
-                        id: index,
-                        label: item.name || '',
-                        value: [
-                            this.generateAxisValue(axis.x, item[axis.x.datakey], color),
-                            this.generateAxisValue(axis.y, item[axis.y.datakey], color),
-                            ...(axis.z.datakey ? [this.generateAxisValue(axis.z, item[axis.z.datakey], color)] : []),
-                        ],
-                    },
-                    ...this.dotStylesCmp,
-                    stroke: this.dotStylesCmp.stroke || this.fillColor,
-                    fill: this.dotStylesCmp.fill || this.fillColor,
-                    radius: z,
-                    hoverRadius: z,
-                }
-            })
+            return this.points
+                .map((item, index) => {
+                    const z = axis.z.datakey ? zScale(item[axis.z.datakey]) : this.dotStylesCmp.radius
+                    return {
+                        index,
+                        cartesianIndex: this.index,
+                        x: xScale(item[axis.x.datakey]),
+                        y: yScale(item[axis.y.datakey]),
+                        z,
+                        value: item[axis.y.datakey],
+                        info: {
+                            $dataset: item.$dataset,
+                            id: index,
+                            data: item,
+                            label: item.name || '',
+                            value: [
+                                this.generateAxisValue(axis.x, item[axis.x.datakey], this.fillColor),
+                                this.generateAxisValue(axis.y, item[axis.y.datakey], this.fillColor),
+                                ...(axis.z.datakey ? [this.generateAxisValue(axis.z, item[axis.z.datakey], this.fillColor)] : []),
+                            ],
+                        },
+                        ...this.dotStylesCmp,
+                        stroke: this.dotStylesCmp.stroke || this.fillColor,
+                        fill: this.dotStylesCmp.fill || this.fillColor,
+                        radius: z,
+                        hoverRadius: z,
+                    }
+                })
         },
         genLine () {
             return d3Line()
@@ -148,7 +157,9 @@ export default {
     methods: {
         generateAxisValue ({ name, datakey }, data, color) {
             return ({
-                name, data, color, value: `${name}: ${data}`,
+                key: name,
+                value: data,
+                color,
             })
         },
     },

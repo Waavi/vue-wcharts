@@ -13,16 +13,14 @@
             :fill="fill"
             :r="rStyle"
             :style="dotStyles"
-            @click="$emit('onClick', info)"
-            @mouseenter="handleMouseEnter"
-            @mouseleave="Chart.cleanActive"
-            v-on="$listeners"
+            v-on="dotListeners"
         />
     </WTrans>
 </template>
 
 <script>
 import VueTypes from 'vue-types'
+import merge from 'lodash.merge'
 import { WTrans } from '../../../transitions'
 import themeMixin from '../../../mixins/theme'
 
@@ -37,6 +35,7 @@ export default {
     props: {
         index: VueTypes.number.isRequired,
         cartesianIndex: VueTypes.number.isRequired,
+        trigger: VueTypes.oneOf(['hover', 'click', 'manual']).def('hover'),
         x: VueTypes.number.isRequired,
         y: VueTypes.number.isRequired,
         fill: VueTypes.string,
@@ -57,7 +56,25 @@ export default {
             return {
                 ...this.themeStyles.styles,
                 ...this.styles,
+                ...(this.trigger === 'click' ? { cursor: 'pointer' } : {}),
             }
+        },
+        // Event Listeners
+        dotListeners () {
+            return merge({}, this.$listeners, {
+                click: (event) => {
+                    if (this.trigger === 'click') this.handleActive(event)
+                    this.$emit('onClick', this.info)
+                },
+                mouseenter: (event) => {
+                    if (this.trigger === 'hover') this.handleActive(event)
+                    this.$emit('onMouseenter', this.info)
+                },
+                mouseleave: () => {
+                    if (['hover', 'click'].includes(this.trigger)) this.Chart.cleanActive()
+                    this.$emit('onMouseleave')
+                },
+            })
         },
         // Return styles active or default point,
         rStyle () {
@@ -68,7 +85,7 @@ export default {
     },
     methods: {
         // Set active element
-        handleMouseEnter (event) {
+        handleActive (event) {
             const { setActive } = this.Chart
             setActive(
                 this.info,

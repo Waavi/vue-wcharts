@@ -1,7 +1,7 @@
 {
   "author": "WAAVI",
   "name": "vue-wcharts",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Vuejs charts",
   "license": "MIT",
   "homepage": "https://vue-wcharts.waavi.com",
@@ -87,6 +87,7 @@
     "stylelint-webpack-plugin": "^0.10.5",
     "vue": "^2.6.6",
     "vue-cli-plugin-storybook": "^0.6.1",
+    "vue-sauce": "^1.0.2",
     "vue-template-compiler": "^2.5.21"
   },
   "gitHooks": {

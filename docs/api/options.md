@@ -184,6 +184,9 @@ Vue.use(WCharts, {
         fontSize: '12px',
         cursor: 'pointer',
     },
+    legendStylesDisabled: {
+        opacity: '0.5',
+    },
 }
 ```
 
@@ -196,7 +199,7 @@ Vue.use(WCharts, {
         fontSize: '12px',
         cursor: 'pointer',
     },
-    noActive: { opacity: '0.5' },
+    disabledStyles: { opacity: '0.5' },
     bulletStyles: {
         display: 'inline-block',
         width: '8px',
