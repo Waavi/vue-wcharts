@@ -56,6 +56,7 @@ export default {
             return {
                 ...this.themeStyles.styles,
                 ...this.styles,
+                ...(this.trigger === 'click' ? { cursor: 'pointer' } : {}),
             }
         },
         // Event Listeners
@@ -67,7 +68,7 @@ export default {
                 },
                 mouseenter: (event) => {
                     if (this.trigger === 'hover') this.handleActive(event)
-                    this.$emit('onMouseenter')
+                    this.$emit('onMouseenter', this.info)
                 },
                 mouseleave: () => {
                     if (['hover', 'click'].includes(this.trigger)) this.Chart.cleanActive()

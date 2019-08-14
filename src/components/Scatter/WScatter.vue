@@ -24,6 +24,7 @@
                         v-bind="dotItem"
                         :styles="{ opacity: dotStylesCmp.opacity }"
                         :transition="`all 250ms ${transEffect}`"
+                        :trigger="trigger"
                         @onClick="$emit('onClickDot', $event)"
                     />
                 </slot>
@@ -59,6 +60,7 @@ export default {
         // internal props set by the parent (WPieChart)
         index: VueTypes.number,
         datakey: VueTypes.string,
+        trigger: VueTypes.oneOf(['hover', 'click', 'manual']).def('hover'),
         legend: VueTypes.string,
         curve: VueTypes.oneOfType([VueTypes.bool, VueTypes.func]).def(false),
         line: VueTypes.bool.def(false),
@@ -96,21 +98,24 @@ export default {
         active () {
             return this.Chart.activeElements.includes(this.index)
         },
+        points () {
+            // Check if has a multiple scatter
+            return this.datakey ? this.Chart.data.filter(item => item.$dataset === this.datakey) : (this.Chart.data || [])
+        },
         lineData () {
             // We sort values becouse we want a left to right line
-            return sortBy(this.Chart.data, this.Chart.axis.x.datakey).map((item, index) => ({
+            return sortBy(this.points, this.Chart.axis.x.datakey).map((item, index) => ({
                 x: item[this.Chart.axis.x.datakey],
                 y: item[this.Chart.axis.y.datakey],
             }))
         },
         dotsData () {
             const {
-                data, xScale, yScale, zScale, axis, colors,
+                xScale, yScale, zScale, axis, colors,
             } = this.Chart
             const color = colors[this.index]
-            const dots = this.datakey ? data.filter(item => item.$dataset === this.datakey) : (data || [])
 
-            return dots
+            return this.points
                 .map((item, index) => {
                     const z = axis.z.datakey ? zScale(item[axis.z.datakey]) : this.dotStylesCmp.radius
                     return {

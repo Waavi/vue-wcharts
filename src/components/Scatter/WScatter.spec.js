@@ -83,7 +83,7 @@ describe('Components/WScatter', () => {
 
     it('It emits the handleClick event', () => {
         const wrapper = mount(WScatter, defaultConfig)
-        wrapper.find(WDot).trigger('click')
+        wrapper.find(WDot).trigger('onClick')
         expect(wrapper.emitted('onClickDot')).toHaveLength(1)
     })
 })

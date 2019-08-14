@@ -28,6 +28,7 @@
                         opacity: launchAnimation ? 1 : 0,
                         background: stack.color,
                         maxWidth: `${stack.width}%`,
+                        ...(trigger === 'click' ? { cursor: 'pointer' } : {}),
                     }"
                     v-on="stackListeners"
                 >
@@ -81,6 +82,7 @@
                 :style="{
                     left: `${marker.left}%`,
                     ...markerStyles,
+                    ...(trigger === 'click' ? { cursor: 'pointer' } : {}),
                 }"
                 v-on="markerListeners"
             >

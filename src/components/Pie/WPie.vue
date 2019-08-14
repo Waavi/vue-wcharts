@@ -41,7 +41,7 @@ export default {
         // internal props set by the parent (WPieChart)
         index: VueTypes.number,
         datakey: VueTypes.string.isRequired,
-        trigger: VueTypes.oneOf(['hover', 'click', 'manual']).def('click'),
+        trigger: VueTypes.oneOf(['hover', 'click', 'manual']).def('hover'),
         angles: VueTypes.oneOfType([
             VueTypes.number,
             VueTypes.arrayOf(VueTypes.number).def([0, Math.PI * 2]),
@@ -73,6 +73,7 @@ export default {
             return {
                 ...omit(this.themeStyles.path, ['stroke']),
                 ...omit(this.pathStyles, ['stroke']),
+                ...(this.trigger === 'click' ? { cursor: 'pointer' } : {}),
             }
         },
         // Active elem
@@ -124,16 +125,6 @@ export default {
                 stroke: this.pathStylesCmp.stroke,
             }))
         },
-        // Slot styles
-        contentStyles () {
-            const [, width] = this.curRadius
-            const size = `${width * 2}px`
-            return {
-                width: size,
-                height: size,
-                transform: `translate(-${width}px, -${width}px)`,
-            }
-        },
         // Event Listeners
         pieListeners () {
             return merge({}, this.$listeners, {
@@ -159,6 +150,16 @@ export default {
                     this.$emit('onMouseleave')
                 },
             })
+        },
+        // Slot styles
+        contentStyles () {
+            const [, width] = this.curRadius
+            const size = `${width * 2}px`
+            return {
+                width: size,
+                height: size,
+                transform: `translate(-${width}px, -${width}px)`,
+            }
         },
     },
     watch: {

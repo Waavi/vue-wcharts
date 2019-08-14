@@ -36,6 +36,7 @@ describe('Components/WLine', () => {
             data: dataset,
             xScale: a => a,
             yScale: a => a,
+            setActive: () => undefined,
         },
     }
 
@@ -101,20 +102,16 @@ describe('Components/WLine', () => {
     it('It emits the handleMouseEnter event', () => {
         const wrapper = mount(WLine, defaultConfig)
         wrapper.find('path').trigger('mouseenter')
-        expect(wrapper.emitted('onMouseEnter')).toHaveLength(1)
+        expect(wrapper.emitted('onMouseenter')).toHaveLength(1)
     })
-
     it('It emits the mouseleave event', () => {
         const wrapper = mount(WLine, defaultConfig)
         wrapper.find('path').trigger('mouseleave')
-        expect(wrapper.emitted('onMouseLeave')).toHaveLength(1)
+        expect(wrapper.emitted('onMouseleave')).toHaveLength(1)
     })
-    // TODO:
-    // for some reason that  throw an error
-    // [Vue warn]: Invalid handler for event "mouseleave": got undefined
-    /* it('It emits the onClick event', () => {
+    it('It emits the onClick event', () => {
         const wrapper = mount(WLine, dotConfig)
-        wrapper.find(WDot).trigger('onClick')
+        wrapper.find(WDot).trigger('click')
         expect(wrapper.emitted('onClickDot')).toHaveLength(1)
-    }) */
+    })
 })

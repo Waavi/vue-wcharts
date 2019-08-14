@@ -9,8 +9,7 @@
                 :style="{ transition }"
                 v-bind="stylesCmp"
                 fill="none"
-                @mouseenter="$emit('onMouseEnter', $event)"
-                @mouseleave="$emit('onMouseLeave', $event)"
+                v-on="lineListeners"
             />
             <defs
                 v-if="area && stylesCmp.fill === ''"
@@ -27,8 +26,7 @@
                 :d="areaPath"
                 :fill="stylesCmp.fill || `url(#areaGradient${_uid})`"
                 :style="{ transition }"
-                @mouseenter="$emit('onMouseEnter', $event)"
-                @mouseleave="$emit('onMouseLeave', $event)"
+                v-on="lineListeners"
             />
         </WSpread>
         <g
@@ -49,6 +47,7 @@
                         :key="`dot${dotItem.cartesianIndex}${dotItem.index}`"
                         v-bind="dotItem"
                         :transition="`all 250ms ${transEffect}`"
+                        :trigger="trigger"
                         @onClick="$emit('onClickDot', $event)"
                     />
                 </slot>
@@ -61,6 +60,7 @@
 import VueTypes from 'vue-types'
 import d3Line from 'd3-shape/src/line'
 import d3Area from 'd3-shape/src/area'
+import merge from 'lodash.merge'
 import { monotoneX as curveMonotoneX } from 'd3-shape/src/curve/monotone'
 import { WDot } from '../Common'
 import animationMixin from '../../mixins/animation'
@@ -83,6 +83,7 @@ export default {
     props: {
         index: VueTypes.number.isRequired, // internal props set by the parent (WCartesian)
         datakey: VueTypes.string.isRequired,
+        trigger: VueTypes.oneOf(['hover', 'click', 'manual']).def('click'),
         legend: VueTypes.string,
         curve: VueTypes.oneOfType([VueTypes.bool, VueTypes.func]).def(false),
         area: VueTypes.bool.def(false),
@@ -111,24 +112,6 @@ export default {
         snap.linesByIndex = { ...snap.linesByIndex, [index]: { datakey } }
     },
     computed: {
-        stylesCmp () {
-            return {
-                ...this.themeStyles.styles,
-                ...this.styles,
-                stroke: (this.themeStyles && this.themeStyles.styles && this.themeStyles.styles.stroke) ||
-                 this.styles.stroke ||
-                 this.fillColor,
-            }
-        },
-        dotStylesCmp () {
-            return {
-                ...this.themeStyles.dot,
-                ...this.dotStyles,
-            }
-        },
-        fillColor () {
-            return this.Chart.colors[this.index]
-        },
         active () {
             return this.Chart.activeElements.includes(this.index)
         },
@@ -195,6 +178,39 @@ export default {
             if (this.curve === false) return this.genArea(this.lineData)
             const curveFn = isFunc(this.curve) ? this.curve : curveMonotoneX
             return this.genArea.curve(curveFn)(this.lineData)
+        },
+        // Event Listeners
+        lineListeners () {
+            return merge({}, this.$listeners, {
+                click: (event) => {
+                    this.$emit('onClick', event)
+                },
+                mouseenter: (event) => {
+                    this.$emit('onMouseenter', event)
+                },
+                mouseleave: () => {
+                    this.$emit('onMouseleave')
+                },
+            })
+        },
+        // Styles
+        stylesCmp () {
+            return {
+                ...this.themeStyles.styles,
+                ...this.styles,
+                stroke: (this.themeStyles && this.themeStyles.styles && this.themeStyles.styles.stroke) ||
+                 this.styles.stroke ||
+                 this.fillColor,
+            }
+        },
+        dotStylesCmp () {
+            return {
+                ...this.themeStyles.dot,
+                ...this.dotStyles,
+            }
+        },
+        fillColor () {
+            return this.Chart.colors[this.index]
         },
     },
 }
