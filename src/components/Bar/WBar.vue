@@ -98,7 +98,7 @@
 
 <script>
 import VueTypes from 'vue-types'
-import merge from 'lodash.merge'
+import merge from '../../utils/merge'
 import animationMixin from '../../mixins/animation'
 import themeMixin from '../../mixins/theme'
 import { WTrans } from '../../transitions'

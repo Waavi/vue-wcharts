@@ -27,9 +27,9 @@
 import VueTypes from 'vue-types'
 import omit from 'lodash.omit'
 import noop from 'lodash.noop'
-import merge from 'lodash.merge'
 import pie from 'd3-shape/src/pie'
 import arc from 'd3-shape/src/arc'
+import merge from '../../utils/merge'
 import themeMixin from '../../mixins/theme'
 
 export default {

@@ -20,7 +20,7 @@
 
 <script>
 import VueTypes from 'vue-types'
-import merge from 'lodash.merge'
+import merge from '../../../utils/merge'
 import { WTrans } from '../../../transitions'
 import themeMixin from '../../../mixins/theme'
 

@@ -109,7 +109,7 @@
 
 <script>
 import VueTypes from 'vue-types'
-import merge from 'lodash.merge'
+import merge from '../../utils/merge'
 import { WTooltip, WBullet, WShowIfFit } from '../../components/Widgets'
 import activeMixin from '../../mixins/active'
 import animationMixin from '../../mixins/animation'

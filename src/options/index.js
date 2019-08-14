@@ -1,5 +1,5 @@
 /* eslint-disable import/no-mutable-exports */
-import merge from 'lodash.merge'
+import merge from '../utils/merge'
 import c from '../utils/colors'
 import Theme from './theme'
 
