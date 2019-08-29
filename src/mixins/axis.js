@@ -83,6 +83,11 @@ export default {
                 data, canvas, bounds, xBounds, padding, yScale, xScale, scatter,
             } = this.Chart
 
+            // Return a empty array if we don't have any data
+            if (!data || data.length === 0) {
+                return []
+            }
+
             // If xAxis
             if (this.isX) {
                 // If is scatter, x axis is non categorical
