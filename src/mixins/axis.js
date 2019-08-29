@@ -114,11 +114,11 @@ export default {
                 // Calc offset
                 const offset = padding[1] + padding[3]
                 // Calc space
-                const space = (canvas.width - offset) / (data.length - 1)
+                const space = (canvas.width - offset) / Math.max(data.length - 1, 1)
                 // Generate ticks objects by data of parents
                 return data.map((props, index) => {
                     // Calc proportional size between ticks
-                    const x = canvas.x0 + (space * index) + padding[3]
+                    const x = canvas.x0 + space * (data.length === 1 ? 0.5 : index) + padding[3]
                     return {
                         mark: {
                             index,
