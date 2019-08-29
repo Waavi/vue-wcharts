@@ -21,7 +21,7 @@ export default {
         textOffset: VueTypes.number.def(20),
         hideLine: VueTypes.bool.def(false),
         hideTickMark: VueTypes.bool.def(false),
-        numTicks: VueTypes.number.def(0),
+        numTicks: VueTypes.number.def(8),
         format: VueTypes.func.def(value => value),
         // Label
         labelText: VueTypes.string,
@@ -87,11 +87,9 @@ export default {
             if (this.isX) {
                 // If is scatter, x axis is non categorical
                 if (scatter) {
-                    // Ticks num
-                    const numTicks = this.numTicks || data.length
                     // Generate array tick by d3, https://github.com/d3/d3-array
                     const getTicksFn = this.numTicks ? genExactNbTicks : genTicks
-                    const ticks = getTicksFn(xBounds.min, xBounds.max, numTicks).reverse()
+                    const ticks = getTicksFn(xBounds.min, xBounds.max, this.numTicks).reverse()
                     // Generate ticks objects by ticksNum or data of parents
                     return ticks.map((value, index) => {
                         // Calc size between ticks with scale parent
@@ -139,11 +137,9 @@ export default {
                 })
             }
 
-            // Ticks num
-            const numTicks = this.numTicks || data.length
             // Generate array tick by d3, https://github.com/d3/d3-array
             const getTicksFn = this.numTicks ? genExactNbTicks : genTicks
-            const ticks = getTicksFn(bounds.min, bounds.max, numTicks).reverse()
+            const ticks = getTicksFn(bounds.min, bounds.max, this.numTicks).reverse()
             // Added 0 tick if has nevagative bound.min and hideNegativeAxis it is false
             if (bounds.min < 0 && !ticks.includes(0) && !this.hideNegativeAxis) ticks.push(0)
             // Generate ticks objects by ticksNum or data of parents

@@ -28,8 +28,8 @@ export default {
     props: {
         hideH: VueTypes.bool.def(false),
         hideV: VueTypes.bool.def(false),
-        numLinesH: VueTypes.number.def(0),
-        numLinesV: VueTypes.number.def(0),
+        numLinesH: VueTypes.number.def(8),
+        numLinesV: VueTypes.number.def(8),
         styles: VueTypes.shape({
             stroke: VueTypes.string,
             strokeWidth: VueTypes.number,
@@ -46,11 +46,9 @@ export default {
         hLines () {
             // Return a empty array if we don't want to show horizontal lines
             if (this.hideH) return []
-            const {
-                data, canvas, bounds, yScale,
-            } = this.Chart
+            const { canvas, bounds, yScale } = this.Chart
             // Calculate number of lines to paint
-            const numLines = this.numLinesH || data.length
+            const numLines = this.numLinesH
             // Select the correct function and generate the value of the lines. ex: [100, 500, 1500, 2500, 5000]
             const getLinesFn = this.numLinesH ? genExactNbTicks : genTicks
             const lines = getLinesFn(bounds.min, bounds.max, numLines).reverse()
@@ -69,10 +67,10 @@ export default {
             // Return a empty array if we don't want to show vertical lines
             if (this.hideV) return []
             const {
-                data, canvas, padding, xBounds, xScale, scatter,
+                canvas, padding, xBounds, xScale, scatter,
             } = this.Chart
             // Calculate number of lines to generate
-            const numLines = this.numLinesV || data.length
+            const numLines = this.numLinesV
             if (scatter) {
                 // Select the correct function and generate the value of the lines. ex: [100, 500, 1500, 2500, 5000]
                 const getLinesFn = this.numLinesH ? genExactNbTicks : genTicks
