@@ -246,6 +246,8 @@ sidebarDepth: 3
     | styles | Bar styles |
     | align | The horizontal position of the label |
     | size | The font size of the label |
+    | datakey | The corresponding datakey |
+    | index | The corresponding index |
 
 -   #### labelValue
 
@@ -256,6 +258,8 @@ sidebarDepth: 3
     | value | Value of the bar |
     | x | The x position of the label |
     | y | The y position of the label |
+    | datakey | The corresponding datakey |
+    | index | The corresponding index |
 
 -   #### stackedLabel
 
@@ -269,6 +273,7 @@ sidebarDepth: 3
     | styles | Bar styles |
     | align | The horizontal position of the label |
     | size | The font size of the label |
+    | index | The corresponding index |
 
 -   #### stackedLabelValue
 
@@ -279,6 +284,7 @@ sidebarDepth: 3
     | stackedValue | Total value of the stacked bar |
     | x | The x position of the label |
     | y | The y position of the label |
+    | index | The corresponding index |
 
 ## WPie
 
