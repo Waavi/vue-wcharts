@@ -44,9 +44,11 @@ export default {
             }
         },
         hLines () {
+            const {
+                data, canvas, bounds, yScale,
+            } = this.Chart
             // Return a empty array if we don't want to show horizontal lines
-            if (this.hideH) return []
-            const { canvas, bounds, yScale } = this.Chart
+            if (this.hideH || !data || data.length === 0) return []
             // Calculate number of lines to paint
             const numLines = this.numLinesH
             // Select the correct function and generate the value of the lines. ex: [100, 500, 1500, 2500, 5000]
@@ -64,11 +66,11 @@ export default {
             })
         },
         vLines () {
-            // Return a empty array if we don't want to show vertical lines
-            if (this.hideV) return []
             const {
-                canvas, padding, xBounds, xScale, scatter,
+                data, canvas, padding, xBounds, xScale, scatter,
             } = this.Chart
+            // Return a empty array if we don't want to show vertical lines
+            if (this.hideV || !data || data.length === 0) return []
             // Calculate number of lines to generate
             const numLines = this.numLinesV
             if (scatter) {
