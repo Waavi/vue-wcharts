@@ -67,7 +67,7 @@ export default {
         },
         vLines () {
             const {
-                canvas, padding, xBounds, xScale, scatter,
+                data, canvas, padding, xBounds, xScale, scatter,
             } = this.Chart
             // Return a empty array if we don't want to show vertical lines
             if (this.hideV || !data || data.length === 0) return []
