@@ -74,9 +74,9 @@ export default {
                 // Calculate left and right space
                 const offset = padding[1] + padding[3]
                 // Calculate space between lines
-                const space = (canvas.width - offset) / (data.length - 1)
+                const space = (canvas.width - offset) / Math.max(data.length - 1, 1)
                 const index = data.findIndex(d => d[axis.x.datakey] === this.value)
-                const x = canvas.x0 + (space * index) + padding[3]
+                const x = canvas.x0 + space * (data.length === 1 ? 0.5 : index) + padding[3]
                 return {
                     x1: x,
                     y1: canvas.y0,

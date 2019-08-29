@@ -39,6 +39,8 @@
                         <slot
                             name="label"
                             v-bind="bar.label"
+                            :datakey="datakey"
+                            :index="key"
                             :styles="{ ...labelStylesCmp, transition, transform: `translateY(${bar.label.y}px)` }"
                             :align="labelAlign"
                             :size="labelSize"
@@ -53,6 +55,8 @@
                                 <slot
                                     name="labelValue"
                                     v-bind="bar.label"
+                                    :datakey="datakey"
+                                    :index="key"
                                 >
                                     {{ bar.label.value }}
                                 </slot>
@@ -70,6 +74,7 @@
                         <slot
                             name="stackedLabel"
                             v-bind="bar.stackedLabel"
+                            :index="key"
                             :styles="{ ...stackedLabelStylesCmp, transition, transform: `translateY(${bar.stackedLabel.y}px)` }"
                             :align="stackedLabelAlign"
                             :size="stackedLabelSize"
@@ -84,6 +89,7 @@
                                 <slot
                                     name="stackedLabelValue"
                                     v-bind="bar.stackedLabel"
+                                    :index="key"
                                 >
                                     {{ bar.stackedLabel.stackedValue }}
                                 </slot>
@@ -224,7 +230,7 @@ export default {
             const data = curData.filter(arr => arr.key === this.datakey)[0] || []
 
             // Calc space between bars
-            const space = (canvas.width - (padding[1] + padding[3])) / (data.length - 1)
+            const space = (canvas.width - (padding[1] + padding[3])) / Math.max(data.length - 1, 1)
             // Generate points array
             return data.map((value, i) => {
                 let [start, end] = value
@@ -243,7 +249,7 @@ export default {
                 // Calc yAxis separation between points, if has stacked bars
                 const y1 = yScale(start)
                 // Calc xAxis pos
-                const x = x0 + space * i + padding[3]
+                const x = x0 + space * (data.length === 1 ? 0.5 : i) + padding[3]
                 return [x, y0, y1, label, stackedValue]
             })
         },
