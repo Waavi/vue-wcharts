@@ -39,6 +39,8 @@
                         <slot
                             name="label"
                             v-bind="bar.label"
+                            :datakey="datakey"
+                            :index="key"
                             :styles="{ ...labelStylesCmp, transition, transform: `translateY(${bar.label.y}px)` }"
                             :align="labelAlign"
                             :size="labelSize"
@@ -53,6 +55,8 @@
                                 <slot
                                     name="labelValue"
                                     v-bind="bar.label"
+                                    :datakey="datakey"
+                                    :index="key"
                                 >
                                     {{ bar.label.value }}
                                 </slot>
@@ -70,6 +74,7 @@
                         <slot
                             name="stackedLabel"
                             v-bind="bar.stackedLabel"
+                            :index="key"
                             :styles="{ ...stackedLabelStylesCmp, transition, transform: `translateY(${bar.stackedLabel.y}px)` }"
                             :align="stackedLabelAlign"
                             :size="stackedLabelSize"
@@ -84,6 +89,7 @@
                                 <slot
                                     name="stackedLabelValue"
                                     v-bind="bar.stackedLabel"
+                                    :index="key"
                                 >
                                     {{ bar.stackedLabel.stackedValue }}
                                 </slot>
