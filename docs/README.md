@@ -15,4 +15,4 @@ features:
 footer: MIT Licensed | Copyright © 2019-by Waavi Studio S.L.
 ---
 
-<Docs-Home />
+<Api-Home />

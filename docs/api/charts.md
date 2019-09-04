@@ -6,7 +6,7 @@ sidebarDepth: 3
 ## WCartesian
 
 <br>
-<Docs-Cartesian />
+<Api-Cartesian />
 
 ### Child components
 **[\<WLine />](/api/components.html#wline)**
@@ -37,7 +37,7 @@ sidebarDepth: 3
 ## WPieChart
 
 <br>
-<Docs-PieChart />
+<Api-PieChart />
 
 ### Child components
 **[\<WPie />](/api/components.html#wpie)**

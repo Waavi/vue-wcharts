@@ -8,7 +8,13 @@ sidebarDepth: 3
 *X axis component.*
 
 <br>
-<Docs-XAxis />
+<Api-XAxis />
+
+<br>
+
+<SourceCode>
+<<< @/docs/.vuepress/components/Api/XAxis.vue
+</SourceCode>
 
 ### Parent components
 **[\<WCartesian />](/api/charts.html#wcartesian)**
@@ -67,7 +73,7 @@ sidebarDepth: 3
 *Y axis component.*
 
 <br>
-<Docs-YAxis />
+<Api-YAxis />
 
 ### Parent components
 **[\<WCartesian />](/api/charts.html#wcartesian)**
@@ -124,7 +130,7 @@ sidebarDepth: 3
 *Z axis component.*
 
 <br>
-<Docs-ZAxis />
+<Api-ZAxis />
 
 ### Parent components
 **[\<WCartesian />](/api/charts.html#wcartesian)**
@@ -153,7 +159,7 @@ sidebarDepth: 3
 *Line component.*
 
 <br>
-<Docs-Lines />
+<Api-Lines />
 
 ### Parent components
 **[\<WCartesian />](/api/charts.html#wcartesian)**
@@ -203,7 +209,7 @@ sidebarDepth: 3
 *Bar component.*
 
 <br>
-<Docs-Bars />
+<Api-Bars />
 
 ### Parent components
 **[\<WCartesian />](/api/charts.html#wcartesian)**
@@ -283,7 +289,7 @@ sidebarDepth: 3
 *Pie component.*
 
 <br>
-<Docs-Pie />
+<Api-Pie />
 
 ### Parent components
 **[\<WPieChart />](/api/charts.html#wpiechart)**
@@ -323,7 +329,7 @@ sidebarDepth: 3
 *Grid component.*
 
 <br>
-<Docs-Grid />
+<Api-Grid />
 
 ### Parent components
 **[\<WCartesian />](/api/charts.html#wcartesian)**
@@ -342,7 +348,7 @@ sidebarDepth: 3
 *Scatter chart.*
 
 <br>
-<Docs-Scatter />
+<Api-Scatter />
 
 ### Parent components
 **[\<WCartesian />](/api/charts.html#wcartesian)**
@@ -387,7 +393,7 @@ sidebarDepth: 3
 *Component to show a reference line in the chart.*
 
 <br>
-<Docs-Markers />
+<Api-Markers />
 
 ### Parent components
 **[\<WCartesian />](/api/charts.html#wcartesian)**
@@ -421,7 +427,7 @@ sidebarDepth: 3
 *Component to show circle in WLine but it can be used wherever you want it needs access to Chart api.*
 
 <br>
-<Docs-Dots />
+<Api-Dots />
 
 ### Parent components
 **[\<WLine />](#wline)**
@@ -452,7 +458,7 @@ sidebarDepth: 3
 *Component to show text in the axis but it can be used wherever you want.*
 
 <br>
-<Docs-Texts />
+<Api-Texts />
 
 ### Parent components
 **[\<WXAxis />](#wxaxis)**
