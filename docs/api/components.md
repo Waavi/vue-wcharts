@@ -406,8 +406,9 @@ sidebarDepth: 3
 ### Properties
 | Property | Type | Default value | Description |
 |----------|------|---------------|-------------|
-| type | oneOf(['y', 'x']) | y | Axis direction |
-| value | any | Required property | Value in the choosen axis |
+| x | number or array[number] | undefined | If number, it defines the value X of a "line marker" or "dot marker". If array, it defines the x range for a "x range marker" or "rect marker" |
+| y | number or array[number] | undefined | If number, it defines the value Y of a "line marker" or "dot marker". If array, it defines the y range for a "y range marker" or "rect marker" |
+| borderSpacing | array[number] | [0, 0, 0, 0] | Only applies for "range or rect markers". Border spacing between the "rect" defined by x and y props and the real rendered rect. Used to "widen" the range. For "category" axes, the value is expressed by the distance between each category (from 0 to 1); i.e. 0.5 means it's added a half of the space between categories. For "non-category" axes, the value is directly a number of "points" (in "view-box") |
 | label | string | Required property | Label of the marker |
 | labelAlign | oneOf(['start', 'end']) | Required property |  |
 | styles | object | ```{stroke: '#333',strokeWidth: 1,strokeDasharray: '0'}``` | Line styles |
