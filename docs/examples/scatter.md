@@ -32,3 +32,13 @@ sidebarDepth: 1
 <SourceCode>
 <<< @/docs/.vuepress/components/Examples/Scatter/CustomDimension.vue
 </SourceCode>
+
+## Multiple
+
+<br>
+
+<Examples-Scatter-Multiple />
+
+<SourceCode>
+<<< @/docs/.vuepress/components/Examples/Scatter/Multiple.vue
+</SourceCode>
