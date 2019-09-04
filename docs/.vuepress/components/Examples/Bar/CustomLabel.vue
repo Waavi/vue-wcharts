@@ -35,9 +35,10 @@
                     :y="0"
                     :font-size="12"
                     text-anchor="middle"
+                    :fill="label.value < 1000  ? 'tomato' : '#00AB84'"
                     :style="{ transform: `translateY(${label.y}px)` }"
                 >
-                    {{ label.value > 1000 ? '🤔' : label.value }}
+                    {{ label.value < 1000 ? '&#9660;' : '&#9650;'}}
                 </text>
             </template>
         </WBar>

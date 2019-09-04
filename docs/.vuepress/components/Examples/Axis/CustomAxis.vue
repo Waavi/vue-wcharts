@@ -18,14 +18,8 @@
             }"
             :space="[0, 50, 50, 50]"
         >
-            <template #tickText="props">
-                <text
-                    :x="props.x"
-                    :y="props.y"
-                    :dy="props.dy"
-                >
-                    🤔
-                </text>
+            <template #tickText="{ value }">
+                {{ value }} &#9673;
             </template>
         </WXAxis>
         <WYAxis

@@ -150,7 +150,7 @@ storiesOf('Markers', module)
                                 text-anchor="end"
                                 :style="{ fontSize: 20, fill: 'tomato' }"
                             >
-                                🤔 {{ value }}
+                                &#9650; {{ value }}
                             </text>
                         </template>
                     </WMarker>
