@@ -2,9 +2,11 @@ import { shallowMount } from '@vue/test-utils'
 import WSimpleHStackBar from './WSimpleHStackBar.vue'
 
 describe('Components/WLine', () => {
+    const dataset = [37.3, 10.3, 23.6]
     const propsData = {
         total: 71.6,
-        dataset: [37.3, 10.3, 23.6],
+        dataset,
+        data: dataset,
     }
 
     const defaultConfig = {

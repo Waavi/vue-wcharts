@@ -9,8 +9,7 @@
         >
             <g
                 :id="key"
-                @mouseenter="handleMouseEnter"
-                @mouseleave="Chart.cleanActive"
+                v-on="barListeners"
             >
                 <WTrans
                     :initialProps="{
@@ -40,6 +39,8 @@
                         <slot
                             name="label"
                             v-bind="bar.label"
+                            :datakey="datakey"
+                            :index="key"
                             :styles="{ ...labelStylesCmp, transition, transform: `translateY(${bar.label.y}px)` }"
                             :align="labelAlign"
                             :size="labelSize"
@@ -54,6 +55,8 @@
                                 <slot
                                     name="labelValue"
                                     v-bind="bar.label"
+                                    :datakey="datakey"
+                                    :index="key"
                                 >
                                     {{ bar.label.value }}
                                 </slot>
@@ -71,6 +74,7 @@
                         <slot
                             name="stackedLabel"
                             v-bind="bar.stackedLabel"
+                            :index="key"
                             :styles="{ ...stackedLabelStylesCmp, transition, transform: `translateY(${bar.stackedLabel.y}px)` }"
                             :align="stackedLabelAlign"
                             :size="stackedLabelSize"
@@ -85,6 +89,7 @@
                                 <slot
                                     name="stackedLabelValue"
                                     v-bind="bar.stackedLabel"
+                                    :index="key"
                                 >
                                     {{ bar.stackedLabel.stackedValue }}
                                 </slot>
@@ -99,6 +104,7 @@
 
 <script>
 import VueTypes from 'vue-types'
+import merge from '../../utils/merge'
 import animationMixin from '../../mixins/animation'
 import themeMixin from '../../mixins/theme'
 import { WTrans } from '../../transitions'
@@ -117,6 +123,7 @@ export default {
     props: {
         index: VueTypes.number, // internal props set by the parent (WPieChart)
         datakey: VueTypes.string.isRequired,
+        trigger: VueTypes.oneOf(['hover', 'click', 'manual']).def('hover'),
         legend: VueTypes.string, // Prop to apply filters
         stacked: VueTypes.bool.def(false),
         showLabel: VueTypes.bool.def(false),
@@ -138,7 +145,7 @@ export default {
     // It's called by parent components to necessary calcs before be rendering
     // Componen is not mounted and cannot access to default props
     preload ({ parent, props, index }) {
-        const { snap, colors, dataset } = parent
+        const { snap, colors, data } = parent
         const { datakey, color, stacked } = props
 
         const isStacked = stacked !== undefined && stacked !== false
@@ -162,13 +169,13 @@ export default {
         if (!color) {
             snap.barsDatakeysColors = {
                 ...snap.barsDatakeysColors,
-                [datakey]: Array(dataset.length).fill(colors[index]),
+                [datakey]: Array(data.length).fill(colors[index]),
             }
             // Same color for every bar: string
         } else if (typeof color === 'string') {
             snap.barsDatakeysColors = {
                 ...snap.barsDatakeysColors,
-                [datakey]: Array(dataset.length).fill(color),
+                [datakey]: Array(data.length).fill(color),
             }
             // Different color for every bar: array
         } else if (!!color && color.length > 0) {
@@ -223,7 +230,7 @@ export default {
             const data = curData.filter(arr => arr.key === this.datakey)[0] || []
 
             // Calc space between bars
-            const space = (canvas.width - (padding[1] + padding[3])) / (data.length - 1)
+            const space = (canvas.width - (padding[1] + padding[3])) / Math.max(data.length - 1, 1)
             // Generate points array
             return data.map((value, i) => {
                 let [start, end] = value
@@ -242,7 +249,7 @@ export default {
                 // Calc yAxis separation between points, if has stacked bars
                 const y1 = yScale(start)
                 // Calc xAxis pos
-                const x = x0 + space * i + padding[3]
+                const x = x0 + space * (data.length === 1 ? 0.5 : i) + padding[3]
                 return [x, y0, y1, label, stackedValue]
             })
         },
@@ -281,6 +288,23 @@ export default {
                     stackedLabel,
                     color,
                 }
+            })
+        },
+        // Event Listeners
+        barListeners () {
+            return merge({}, this.$listeners, {
+                click: (event) => {
+                    if (this.trigger === 'click') this.handleActive(event)
+                    this.$emit('onClick')
+                },
+                mouseenter: (event) => {
+                    if (this.trigger === 'hover') this.handleActive(event)
+                    this.$emit('onMouseenter')
+                },
+                mouseleave: () => {
+                    if (['hover', 'click'].includes(this.trigger)) this.Chart.cleanActive()
+                    this.$emit('onMouseleave')
+                },
             })
         },
         // Check if label position it is inside
@@ -358,12 +382,12 @@ export default {
             }
         },
         // Set active element
-        handleMouseEnter (event) {
+        handleActive (event) {
             const {
                 stackedCurData, barsCurData, setActive, snap, axis,
             } = this.Chart
-            const { id } = event.target
-            const line = this.Chart.dataset[id]
+            const { id } = event.currentTarget
+            const line = this.Chart.data[id]
             const label = line[axis.x.datakey]
 
             // Generate tooltip config

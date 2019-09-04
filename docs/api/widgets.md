@@ -121,7 +121,7 @@ sidebarDepth: 3
 | text |  string | | The text of the legend |
 | active |  bool | false | If is set to true the legend has opacity 1. If is set to false the legend has opacity .5 |
 | styles |  object | { display: 'flex', alignItems: 'center', fontSize: '12px', cursor: 'pointer' } | The style of the legend |
-| noActiveStyles |  object | { opacity: '0.5' } | The style of the legend in no active state |
+| disabledStyles |  object | { opacity: '0.5' } | The style of the legend in no active state |
 | bulletStyles |  object | { display: 'inline-block', width: '8px', height: '8px', background: 'white',borderRadius: '50%', borderWidth: '2px', borderColor: 'white', borderStyle: 'solid', margin: '0px 8px 0px 0px', } | The style of the legend text |
 | color |  string | | The color of the legend |
 

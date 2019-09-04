@@ -9,7 +9,9 @@
         :font-size="fontSize"
         :style="stylesCmp"
     >
-        {{ value }}
+        <slot :value="value">
+            {{ value }}
+        </slot>
     </text>
 </template>
 

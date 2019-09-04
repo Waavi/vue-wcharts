@@ -22,6 +22,7 @@ describe('Components/WCartesianGrid', () => {
     const provide = {
         Chart: {
             dataset,
+            data: dataset,
         },
     }
 
@@ -42,6 +43,7 @@ describe('Components/WCartesianGrid', () => {
         Chart: {
             ...provide.Chart,
             dataset,
+            data: dataset,
             canvas: {
                 x0: 50, y0: 25, x1: 500, y1: 250,
             },
