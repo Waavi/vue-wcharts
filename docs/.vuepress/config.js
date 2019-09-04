@@ -44,6 +44,7 @@ module.exports = {
             '/examples/': [
                 ['', 'Introduction'],
                 ['axis', 'Axis'],
+                ['scatter', 'Scatter'],
                 ['widgets', 'Widgets'],
             ],
         },
