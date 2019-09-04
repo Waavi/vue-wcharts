@@ -125,7 +125,6 @@ export default {
                     // Calc proportional size between ticks
                     const x = canvas.x0 + space * (data.length === 1 ? 0.5 : index) + padding[3]
                     const value = ['string', 'number'].includes(typeof props[this.datakey]) ? props[this.datakey] : index
-                    console.log(props)
                     return {
                         mark: {
                             index,
