@@ -9,6 +9,8 @@ sidebarDepth: 1
 
 <Examples-Axis-Default />
 
+<br>
+
 <SourceCode>
 <<< @/docs/.vuepress/components/Examples/Axis/Default.vue
 </SourceCode>
