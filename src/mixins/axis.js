@@ -21,7 +21,7 @@ export default {
         textOffset: VueTypes.number.def(20),
         hideLine: VueTypes.bool.def(false),
         hideTickMark: VueTypes.bool.def(false),
-        numTicks: VueTypes.number.def(0),
+        numTicks: VueTypes.number.def(8),
         format: VueTypes.func.def(value => value),
         // Label
         labelText: VueTypes.string,
@@ -80,19 +80,22 @@ export default {
         // Generate ticks array
         ticks () {
             const {
-                dataset, canvas, bounds, xBounds, padding, yScale, xScale, scatter,
+                data, canvas, bounds, xBounds, padding, yScale, xScale, scatter,
             } = this.Chart
+
+            // Return a empty array if we don't have any data
+            if (!data || data.length === 0) {
+                return []
+            }
 
             // If xAxis
             if (this.isX) {
                 // If is scatter, x axis is non categorical
                 if (scatter) {
-                    // Ticks num
-                    const numTicks = this.numTicks || dataset.length
                     // Generate array tick by d3, https://github.com/d3/d3-array
                     const getTicksFn = this.numTicks ? genExactNbTicks : genTicks
-                    const ticks = getTicksFn(xBounds.min, xBounds.max, numTicks).reverse()
-                    // Generate ticks objects by ticksNum or dataset of parents
+                    const ticks = getTicksFn(xBounds.min, xBounds.max, this.numTicks).reverse()
+                    // Generate ticks objects by ticksNum or data of parents
                     return ticks.map((value, index) => {
                         // Calc size between ticks with scale parent
                         const x = xScale(value)
@@ -116,11 +119,11 @@ export default {
                 // Calc offset
                 const offset = padding[1] + padding[3]
                 // Calc space
-                const space = (canvas.width - offset) / (dataset.length - 1)
-                // Generate ticks objects by dataset of parents
-                return dataset.map((props, index) => {
+                const space = (canvas.width - offset) / Math.max(data.length - 1, 1)
+                // Generate ticks objects by data of parents
+                return data.map((props, index) => {
                     // Calc proportional size between ticks
-                    const x = canvas.x0 + (space * index) + padding[3]
+                    const x = canvas.x0 + space * (data.length === 1 ? 0.5 : index) + padding[3]
                     return {
                         mark: {
                             index,
@@ -139,14 +142,12 @@ export default {
                 })
             }
 
-            // Ticks num
-            const numTicks = this.numTicks || dataset.length
             // Generate array tick by d3, https://github.com/d3/d3-array
             const getTicksFn = this.numTicks ? genExactNbTicks : genTicks
-            const ticks = getTicksFn(bounds.min, bounds.max, numTicks).reverse()
+            const ticks = getTicksFn(bounds.min, bounds.max, this.numTicks).reverse()
             // Added 0 tick if has nevagative bound.min and hideNegativeAxis it is false
             if (bounds.min < 0 && !ticks.includes(0) && !this.hideNegativeAxis) ticks.push(0)
-            // Generate ticks objects by ticksNum or dataset of parents
+            // Generate ticks objects by ticksNum or data of parents
             return ticks.map((value, index) => {
                 // Calc size between ticks with scale parent
                 const y = yScale(value)

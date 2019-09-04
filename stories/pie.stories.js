@@ -52,7 +52,6 @@ storiesOf('Pie', module)
                     :dataset="data"
                 >
                     <WPie datakey="one" :stroke="stroke"/>
-                    <WTooltip />
                 </WPieChart>
             </div>
         `,
@@ -74,7 +73,12 @@ storiesOf('Pie', module)
                     justifyContent: 'center',
                     height: '100%',
                 },
-                stroke: color('Stroke color', 'black'),
+                stroke: color('Stroke color', '#888'),
+                totalStyles: {
+                    fontSize: '20px',
+                    textAlign: 'center',
+                    color: '#888',
+                },
             }
         },
         template: `
@@ -89,7 +93,7 @@ storiesOf('Pie', module)
                     >
                         <template>
                             <div class="WPieContent" :style="styles">
-                                <span style="font-size: 20px; text-align: center;">
+                                <span :style="totalStyles">
                                     {{ total }}<br>Total
                                 </span>
                             </div>

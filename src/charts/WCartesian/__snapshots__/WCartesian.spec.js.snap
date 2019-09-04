@@ -24,8 +24,36 @@ exports[`Charts/WCartesian Should be render correctly with axix 1`] = `
     <g id="WYAxis">
       <line x1="40" y1="10" x2="40" y2="376" stroke="#cccccc"></line>
       <g text-anchor="end">
-        <line x1="35" x2="40" stroke="#cccccc"></line>
-        <WTickText-stub colors="#48c0b6,#9d6af5,#ffde69,#e8e8e8,#54ddd9,#6e19ff,#dfbd46" x="30" y="NaN" dy="" index="0" value="NaN" styles="[object Object]"></WTickText-stub>
+        <line x1="35" y1="193" x2="40" y2="193" stroke="#cccccc"></line>
+        <WTickText-stub colors="#48c0b6,#9d6af5,#ffde69,#e8e8e8,#54ddd9,#6e19ff,#dfbd46" x="30" y="197" dy="" index="0" value="0" styles="[object Object]"></WTickText-stub>
+      </g>
+      <g text-anchor="end">
+        <line x1="35" y1="193" x2="40" y2="193" stroke="#cccccc"></line>
+        <WTickText-stub colors="#48c0b6,#9d6af5,#ffde69,#e8e8e8,#54ddd9,#6e19ff,#dfbd46" x="30" y="197" dy="" index="1" value="0" styles="[object Object]"></WTickText-stub>
+      </g>
+      <g text-anchor="end">
+        <line x1="35" y1="193" x2="40" y2="193" stroke="#cccccc"></line>
+        <WTickText-stub colors="#48c0b6,#9d6af5,#ffde69,#e8e8e8,#54ddd9,#6e19ff,#dfbd46" x="30" y="197" dy="" index="2" value="0" styles="[object Object]"></WTickText-stub>
+      </g>
+      <g text-anchor="end">
+        <line x1="35" y1="193" x2="40" y2="193" stroke="#cccccc"></line>
+        <WTickText-stub colors="#48c0b6,#9d6af5,#ffde69,#e8e8e8,#54ddd9,#6e19ff,#dfbd46" x="30" y="197" dy="" index="3" value="0" styles="[object Object]"></WTickText-stub>
+      </g>
+      <g text-anchor="end">
+        <line x1="35" y1="193" x2="40" y2="193" stroke="#cccccc"></line>
+        <WTickText-stub colors="#48c0b6,#9d6af5,#ffde69,#e8e8e8,#54ddd9,#6e19ff,#dfbd46" x="30" y="197" dy="" index="4" value="0" styles="[object Object]"></WTickText-stub>
+      </g>
+      <g text-anchor="end">
+        <line x1="35" y1="193" x2="40" y2="193" stroke="#cccccc"></line>
+        <WTickText-stub colors="#48c0b6,#9d6af5,#ffde69,#e8e8e8,#54ddd9,#6e19ff,#dfbd46" x="30" y="197" dy="" index="5" value="0" styles="[object Object]"></WTickText-stub>
+      </g>
+      <g text-anchor="end">
+        <line x1="35" y1="193" x2="40" y2="193" stroke="#cccccc"></line>
+        <WTickText-stub colors="#48c0b6,#9d6af5,#ffde69,#e8e8e8,#54ddd9,#6e19ff,#dfbd46" x="30" y="197" dy="" index="6" value="0" styles="[object Object]"></WTickText-stub>
+      </g>
+      <g text-anchor="end">
+        <line x1="35" y1="193" x2="40" y2="193" stroke="#cccccc"></line>
+        <WTickText-stub colors="#48c0b6,#9d6af5,#ffde69,#e8e8e8,#54ddd9,#6e19ff,#dfbd46" x="30" y="197" dy="" index="7" value="0" styles="[object Object]"></WTickText-stub>
       </g>
       <!---->
     </g>
@@ -35,9 +63,21 @@ exports[`Charts/WCartesian Should be render correctly with axix 1`] = `
 exports[`Charts/WCartesian Should be render correctly with legend and markers 1`] = `
 <div class="WCartesian" style="position: relative; width: 600px;"><svg width="600" height="400" viewBox="0 0 600 400">
     <g>
-      <line x1="0" x2="600" stroke="#cccccc" stroke-width="1" stroke-dasharray="3" fill="none"></line>
+      <line x1="0" y1="200" x2="600" y2="200" stroke="#cccccc" stroke-width="1" stroke-dasharray="3" fill="none"></line>
+      <line x1="0" y1="200" x2="600" y2="200" stroke="#cccccc" stroke-width="1" stroke-dasharray="3" fill="none"></line>
+      <line x1="0" y1="200" x2="600" y2="200" stroke="#cccccc" stroke-width="1" stroke-dasharray="3" fill="none"></line>
+      <line x1="0" y1="200" x2="600" y2="200" stroke="#cccccc" stroke-width="1" stroke-dasharray="3" fill="none"></line>
+      <line x1="0" y1="200" x2="600" y2="200" stroke="#cccccc" stroke-width="1" stroke-dasharray="3" fill="none"></line>
+      <line x1="0" y1="200" x2="600" y2="200" stroke="#cccccc" stroke-width="1" stroke-dasharray="3" fill="none"></line>
+      <line x1="0" y1="200" x2="600" y2="200" stroke="#cccccc" stroke-width="1" stroke-dasharray="3" fill="none"></line>
+      <line x1="0" y1="200" x2="600" y2="200" stroke="#cccccc" stroke-width="1" stroke-dasharray="3" fill="none"></line>
       <line x1="0" y1="0" x2="0" y2="400" stroke="#cccccc" stroke-width="1" stroke-dasharray="3" fill="none"></line>
-      <line x1="300" y1="0" x2="300" y2="400" stroke="#cccccc" stroke-width="1" stroke-dasharray="3" fill="none"></line>
+      <line x1="85.71428571428571" y1="0" x2="85.71428571428571" y2="400" stroke="#cccccc" stroke-width="1" stroke-dasharray="3" fill="none"></line>
+      <line x1="171.42857142857142" y1="0" x2="171.42857142857142" y2="400" stroke="#cccccc" stroke-width="1" stroke-dasharray="3" fill="none"></line>
+      <line x1="257.1428571428571" y1="0" x2="257.1428571428571" y2="400" stroke="#cccccc" stroke-width="1" stroke-dasharray="3" fill="none"></line>
+      <line x1="342.85714285714283" y1="0" x2="342.85714285714283" y2="400" stroke="#cccccc" stroke-width="1" stroke-dasharray="3" fill="none"></line>
+      <line x1="428.57142857142856" y1="0" x2="428.57142857142856" y2="400" stroke="#cccccc" stroke-width="1" stroke-dasharray="3" fill="none"></line>
+      <line x1="514.2857142857142" y1="0" x2="514.2857142857142" y2="400" stroke="#cccccc" stroke-width="1" stroke-dasharray="3" fill="none"></line>
       <line x1="600" y1="0" x2="600" y2="400" stroke="#cccccc" stroke-width="1" stroke-dasharray="3" fill="none"></line>
     </g>
   </svg>
@@ -50,9 +90,9 @@ exports[`Charts/WCartesian Should be render correctly with scatter 1`] = `
     <g>
       <!---->
       <g>
-        <WDot-stub colors="#48c0b6,#9d6af5,#ffde69,#e8e8e8,#54ddd9,#6e19ff,#dfbd46" index="0" cartesianIndex="0" x="0" y="0" fill="#48c0b6" stroke="#48c0b6" strokeWidth="0" radius="8" hoverRadius="8" info="[object Object]" styles="[object Object]" transition="all 250ms ease" z="8" opacity="0.8"></WDot-stub>
-        <WDot-stub colors="#48c0b6,#9d6af5,#ffde69,#e8e8e8,#54ddd9,#6e19ff,#dfbd46" index="1" cartesianIndex="0" x="0" y="0" fill="#48c0b6" stroke="#48c0b6" strokeWidth="0" radius="8" hoverRadius="8" info="[object Object]" styles="[object Object]" transition="all 250ms ease" z="8" opacity="0.8"></WDot-stub>
-        <WDot-stub colors="#48c0b6,#9d6af5,#ffde69,#e8e8e8,#54ddd9,#6e19ff,#dfbd46" index="2" cartesianIndex="0" x="0" y="0" fill="#48c0b6" stroke="#48c0b6" strokeWidth="0" radius="8" hoverRadius="8" info="[object Object]" styles="[object Object]" transition="all 250ms ease" z="8" opacity="0.8"></WDot-stub>
+        <WDot-stub colors="#48c0b6,#9d6af5,#ffde69,#e8e8e8,#54ddd9,#6e19ff,#dfbd46" index="0" cartesianIndex="0" trigger="hover" x="0" y="0" fill="#48c0b6" stroke="#48c0b6" strokeWidth="0" radius="8" hoverRadius="8" info="[object Object]" styles="[object Object]" transition="all 250ms ease" z="8" opacity="0.8"></WDot-stub>
+        <WDot-stub colors="#48c0b6,#9d6af5,#ffde69,#e8e8e8,#54ddd9,#6e19ff,#dfbd46" index="1" cartesianIndex="0" trigger="hover" x="0" y="0" fill="#48c0b6" stroke="#48c0b6" strokeWidth="0" radius="8" hoverRadius="8" info="[object Object]" styles="[object Object]" transition="all 250ms ease" z="8" opacity="0.8"></WDot-stub>
+        <WDot-stub colors="#48c0b6,#9d6af5,#ffde69,#e8e8e8,#54ddd9,#6e19ff,#dfbd46" index="2" cartesianIndex="0" trigger="hover" x="0" y="0" fill="#48c0b6" stroke="#48c0b6" strokeWidth="0" radius="8" hoverRadius="8" info="[object Object]" styles="[object Object]" transition="all 250ms ease" z="8" opacity="0.8"></WDot-stub>
       </g>
     </g>
   </svg></div>

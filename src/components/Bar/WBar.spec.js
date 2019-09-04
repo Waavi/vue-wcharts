@@ -22,6 +22,7 @@ describe('Components/WBar', () => {
     const provide = {
         Chart: {
             dataset,
+            data: dataset,
             activeElements: [0],
             bounds: {
                 max: 8800,

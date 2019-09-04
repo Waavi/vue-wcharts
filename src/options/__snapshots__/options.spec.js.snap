@@ -59,6 +59,10 @@ Object {
       "display": "flex",
       "fontSize": "12px",
     },
+    "legendStylesDisabled": Object {
+      "cursor": "default",
+      "opacity": "0.5",
+    },
     "styles": Object {
       "display": "flex",
       "position": "absolute",
@@ -82,7 +86,8 @@ Object {
       "margin": "0px 8px 0px 0px",
       "width": "8px",
     },
-    "noActive": Object {
+    "disabledStyles": Object {
+      "cursor": "default",
       "opacity": "0.5",
     },
     "styles": Object {
@@ -287,6 +292,10 @@ Object {
       "display": "flex",
       "fontSize": "12px",
     },
+    "legendStylesDisabled": Object {
+      "cursor": "default",
+      "opacity": "0.5",
+    },
     "styles": Object {
       "display": "flex",
       "position": "absolute",
@@ -310,7 +319,8 @@ Object {
       "margin": "0px 8px 0px 0px",
       "width": "8px",
     },
-    "noActive": Object {
+    "disabledStyles": Object {
+      "cursor": "default",
       "opacity": "0.5",
     },
     "styles": Object {

@@ -172,6 +172,7 @@ sidebarDepth: 3
 | Property | Type | Default value | Description |
 |----------|------|---------------|-------------|
 | datakey | string | Required property | The key of dataset |
+| trigger | string | `'hover'`, `'click'`, `'manual'` | Events triggering the tooltip |
 | legend | string |  | Legend's text |
 | curve | bool, func | false | Curve of the line, you can specify the curve function |
 | area | bool | false | If true set, area will be drawn  |
@@ -218,6 +219,7 @@ sidebarDepth: 3
 | Property | Type | Default value | Description |
 |----------|------|---------------|-------------|
 | datakey | string | Required property | The key of dataset |
+| trigger | string | `'hover'`, `'click'`, `'manual'` | Events triggering the tooltip |
 | legend | string |  | The text of the legend |
 | width | number | 20 | The width of the bar |
 | color | string    arrayOf(string) |  | Accept a color for all bars or one color for every bar |
@@ -250,6 +252,8 @@ sidebarDepth: 3
     | styles | Bar styles |
     | align | The horizontal position of the label |
     | size | The font size of the label |
+    | datakey | The corresponding datakey |
+    | index | The corresponding index |
 
 -   #### labelValue
 
@@ -260,6 +264,8 @@ sidebarDepth: 3
     | value | Value of the bar |
     | x | The x position of the label |
     | y | The y position of the label |
+    | datakey | The corresponding datakey |
+    | index | The corresponding index |
 
 -   #### stackedLabel
 
@@ -273,6 +279,7 @@ sidebarDepth: 3
     | styles | Bar styles |
     | align | The horizontal position of the label |
     | size | The font size of the label |
+    | index | The corresponding index |
 
 -   #### stackedLabelValue
 
@@ -283,6 +290,7 @@ sidebarDepth: 3
     | stackedValue | Total value of the stacked bar |
     | x | The x position of the label |
     | y | The y position of the label |
+    | index | The corresponding index |
 
 ## WPie
 
@@ -298,6 +306,7 @@ sidebarDepth: 3
 | Property | Type | Default value | Description |
 |----------|------|---------------|-------------|
 | datakey | string | Required property | The key of dataset |
+| trigger | string | `'hover'`, `'click'`, `'manual'` | Events triggering the tooltip |
 | angles | number, array | [0, Math.PI * 2] | Start and end pie angle |
 | radius | number, array | [0, 100] | Start and end radius number |
 | styles | object | ```{position: 'relative',transform: 'translate(50%, 50%)'}``` | Container styles |
@@ -360,6 +369,8 @@ sidebarDepth: 3
 ### Properties
 | Property | Type | Default value | Description |
 |----------|------|---------------|-------------|
+| datakey | string | Required property | The key of dataset |
+| trigger | string | `'hover'`, `'click'`, `'manual'` | Events triggering the tooltip |
 | legend | string | | Legend's text |
 | curve | bool, func | false | Curve of the line, you can choose the curve function if you want |
 | line | bool | false | Draw a line joining the dots |
@@ -442,6 +453,7 @@ sidebarDepth: 3
 |----------|------|---------------|-------------|-------------|
 | index | number | Required property | | Dot index |
 | cartesianIndex | number | Required property | | Cartesian element index |
+| trigger | string | `'hover'`, `'click'`, `'manual'` | Events triggering the tooltip |
 | x | number | Required property | | X coordinate |
 | y | number | Required property | | Y coordinate |
 | styles | object | Required property | ```{fill: '',stroke: '',strokeWidth: 0,radius: 4,hoverRadius: 8}``` | X coordinate |
