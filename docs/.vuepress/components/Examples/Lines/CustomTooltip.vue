@@ -17,11 +17,11 @@
         />
         <WYAxis />
         <WTooltip :style="styles">
-            <template #default="tooltip">
-                <div class="Wrapper">
-                    <div :style="labelStyle"><strong>Category</strong>: {{ tooltip.xAxisVal }}</div>
-                    <div :style="labelStyle"><strong>Point</strong>: {{ tooltip.yAxisVal }}</div>
-                    <div :style="{ ...lineStyle, background: tooltip.color }"></div>
+            <template #default="{ point, value }">
+                <div class="Wrapper" v-for="({ value : text , color }, index) in value" :key="index">
+                    <div :style="labelStyle"><strong>Category</strong>: {{ text }}</div>
+                    <div :style="labelStyle"><strong>Point</strong>: {{ point }}</div>
+                    <div :style="{ ...lineStyle, background: color }"></div>
                 </div>
             </template>
         </WTooltip>
@@ -67,7 +67,6 @@ export default {
                 height: '2px',
                 width: '50px',
                 marginTop: '5px',
-                marginBottom: '5px',
             },
         }
     }
