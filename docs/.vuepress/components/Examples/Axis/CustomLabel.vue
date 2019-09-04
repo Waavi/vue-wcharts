@@ -30,7 +30,7 @@
                         :text-anchor="label.textAnchor"
                         :transform="label.transform"
                         :font-size="14"
-                        fill="DarkOrange"
+                        fill="#48c0b6"
                     >
                         Categories
                     </text>
@@ -52,7 +52,7 @@
                         :text-anchor="label.textAnchor"
                         :transform="label.transform"
                         :font-size="18"
-                        fill="SteelBlue"
+                        fill="#5400e8"
                     >
                         Values
                     </text>

@@ -23,6 +23,16 @@ sidebarDepth: 1
 <<< @/docs/.vuepress/components/Examples/Bar/TwoBars.vue
 </SourceCode>
 
+## Multiple Bars
+
+<br>
+
+<Examples-Bar-MultipleBars />
+
+<SourceCode>
+<<< @/docs/.vuepress/components/Examples/Bar/MultipleBars.vue
+</SourceCode>
+
 ## With Line
 
 <br>
