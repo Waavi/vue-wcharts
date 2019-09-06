@@ -48,6 +48,7 @@ module.exports = {
                 ['bar', 'Bar'],
                 ['scatter', 'Scatter'],
                 ['pie', 'Pie'],
+                ['marker', 'Marker'],
                 ['widgets', 'Widgets'],
                 ['extraCharts', 'Extra Charts'],
             ],
