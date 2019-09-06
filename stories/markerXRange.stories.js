@@ -1,5 +1,5 @@
 import {
-    number, color, select, text,
+    number, color, select,
 } from '@storybook/addon-knobs'
 import { storiesOf } from '@storybook/vue'
 
@@ -32,7 +32,7 @@ const data = [
 ]
 
 storiesOf('Markers', module)
-    .add('Default', () => ({
+    .add('X Range', () => ({
         components: {
             WCartesian,
             WLine,
@@ -56,30 +56,19 @@ storiesOf('Markers', module)
                         min: 0,
                         max: 10,
                     }),
+                    fill: color('Fill', 'rgba(0,0,0,0.1)'),
                 },
-                labelStyles: {
-                    fill: color('Font color', '#333'),
-                    fontSize: number('Font size', 14, {
-                        range: true,
-                        min: 8,
-                        max: 25,
-                    }),
-                },
-                labelTextX: text('Marker X', 'Marker X'),
-                valueX: select('Value Marker Y', valueXOptions, valueXOptions['Page C']),
-                labelTextXAnchor: select('Marker X - Align', {
-                    start: 'start',
-                    end: 'end',
-                }, 'end'),
-                labelTextY: text('Marker Y', 'Marker Y'),
-                labelTextYAnchor: select('Marker Y - Align', {
-                    start: 'start',
-                    end: 'end',
-                }, 'end'),
-                valueY: number('Value Marker X', 1500, {
+                valueX1: select('X1', valueXOptions, valueXOptions['Page C']),
+                valueX2: select('X2', valueXOptions, valueXOptions['Page E']),
+                bs1: number('BorderSpacing (index 1) (%)', 50, {
                     range: true,
-                    min: 1000,
-                    max: 3000,
+                    min: 0,
+                    max: 100,
+                }),
+                bs3: number('BorderSpacing (index 3) (%)', 50, {
+                    range: true,
+                    min: 0,
+                    max: 100,
                 }),
             }
         },
@@ -93,20 +82,9 @@ storiesOf('Markers', module)
                         legend="One Line"
                     />
                     <WMarker
+                        :x="[valueX1, valueX2]"
+                        :borderSpacing="[0, bs1 / 100, 0, bs3 / 100]"
                         :styles="styles"
-                        :labelStyles="labelStyles"
-                        :value="valueY"
-                        :label="labelTextY"
-                        :labelAlign="labelTextYAnchor"
-                        type="y"
-                    />
-                    <WMarker
-                        :styles="styles"
-                        :labelStyles="labelStyles"
-                        :value="valueX"
-                        :label="labelTextX"
-                        :labelAlign="labelTextXAnchor"
-                        type="x"
                     />
                     <WXAxis datakey="name" />
                     <WYAxis />
@@ -150,7 +128,7 @@ storiesOf('Markers', module)
                                 text-anchor="end"
                                 :style="{ fontSize: 20, fill: 'tomato' }"
                             >
-                                &#9650; {{ value }}
+                                🤔 {{ value }}
                             </text>
                         </template>
                     </WMarker>

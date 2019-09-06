@@ -94,6 +94,8 @@ export default {
             stroke: colors.grayDarker,
             strokeWidth: 1,
             strokeDasharray: '0',
+            r: 10,
+            fill: 'none',
         },
         label: {
             fill: colors.grayDarker,
