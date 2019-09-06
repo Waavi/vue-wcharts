@@ -1,30 +1,35 @@
 
 <template>
     <g>
-        <line
-            v-if="line"
-            v-bind="line"
-            :stroke="stylesCmp.stroke"
-            :stroke-width="stylesCmp.strokeWidth"
-            :stroke-dasharray="stylesCmp.strokeDasharray"
-        />
-        <circle
-            v-if="circle"
-            v-bind="circle"
-            :stroke="stylesCmp.stroke"
-            :stroke-width="stylesCmp.strokeWidth"
-            :stroke-dasharray="stylesCmp.strokeDasharray"
-            :fill="stylesCmp.fill"
-            :r="stylesCmp.r"
-        />
-        <rect
-            v-if="rect"
-            v-bind="rect"
-            :stroke="stylesCmp.stroke"
-            :stroke-width="stylesCmp.strokeWidth"
-            :stroke-dasharray="stylesCmp.strokeDasharray"
-            :fill="stylesCmp.fill"
-        />
+        <slot
+            v-bind="line || circle || rect"
+            :styles="stylesCmp"
+        >
+            <line
+                v-if="line"
+                v-bind="line"
+                :stroke="stylesCmp.stroke"
+                :stroke-width="stylesCmp.strokeWidth"
+                :stroke-dasharray="stylesCmp.strokeDasharray"
+            />
+            <circle
+                v-if="circle"
+                v-bind="circle"
+                :stroke="stylesCmp.stroke"
+                :stroke-width="stylesCmp.strokeWidth"
+                :stroke-dasharray="stylesCmp.strokeDasharray"
+                :fill="stylesCmp.fill"
+                :r="stylesCmp.r"
+            />
+            <rect
+                v-if="rect"
+                v-bind="rect"
+                :stroke="stylesCmp.stroke"
+                :stroke-width="stylesCmp.strokeWidth"
+                :stroke-dasharray="stylesCmp.strokeDasharray"
+                :fill="stylesCmp.fill"
+            />
+        </slot>
         <slot
             v-if="['xLine', 'yLine'].includes(type)"
             v-bind="labelCoordinates"
