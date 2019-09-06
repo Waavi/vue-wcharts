@@ -91,13 +91,13 @@ export default {
             const withXPoint = !withXRange && this.scaledX !== undefined
             const withYRange = Array.isArray(this.scaledY)
             const withYPoint = !withYRange && this.scaledY !== undefined
-            return (withXRange && withYRange && 'rect') ||
-                (withXRange && 'xRange') ||
-                (withYRange && 'yRange') ||
-                (withXPoint && withYPoint && 'point') ||
-                (withXPoint && 'xLine') ||
-                (withYPoint && 'yLine') ||
-                undefined
+            if (withXRange && withYRange) return 'rect'
+            if (withXRange) return 'xRange'
+            if (withYRange) return 'yRange'
+            if (withXPoint && withYPoint) return 'point'
+            if (withXPoint) return 'xLine'
+            if (withYPoint) return 'yLine'
+            return undefined
         },
         // Generate styles of line
         stylesCmp () {
