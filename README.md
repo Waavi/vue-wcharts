@@ -26,11 +26,11 @@ Customizable & composable charts for VueJS
 [https://vue-wcharts.waavi.com/examples](https://vue-wcharts.waavi.com/examples)
 
 ## Features & characteristics:
-* [Linear Charts](https://vue-wcharts.waavi.com/examples/?path=/story/charts-line--simple)
-* [Scatter Charts](https://vue-wcharts.waavi.com/examples/?path=/story/charts-scatter--simple)
-* [Bar Charts](https://vue-wcharts.waavi.com/examples/?path=/story/charts-bar--simple)
-* [StackBar Charts](https://vue-wcharts.waavi.com/examples/?path=/story/charts-bar--stacked-with-stacked-label)
-* [Pie Charts](https://vue-wcharts.waavi.com/examples/?path=/story/pie--default)
+* [Linear Charts](https://vue-wcharts.waavi.com/examples/lines.html)
+* [Scatter Charts](https://vue-wcharts.waavi.com/examples/scatter.html)
+* [Bar Charts](https://vue-wcharts.waavi.com/examples/lines.html)
+* [StackBar Charts](https://vue-wcharts.waavi.com/examples/bar.html#stacked)
+* [Pie Charts](https://vue-wcharts.waavi.com/examples/pie.html#default)
 * [Animation components](https://vue-wcharts.waavi.com/examples)
 * [Additional components](https://vue-wcharts.waavi.com/examples)
 
