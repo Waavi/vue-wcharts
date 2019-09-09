@@ -1,6 +1,6 @@
 <template>
     <div
-        v-if="!!Chart.legends.length"
+        v-if="!!legendsCmp.length"
         class="WLegend"
         :style="stylesCmp.component"
     >
@@ -9,7 +9,7 @@
             :style="stylesCmp.wrapper"
         >
             <li
-                v-for="(legend, index) in Chart.legends"
+                v-for="(legend, index) in legendsCmp"
                 :key="legend"
                 class="Legend"
                 :style="stylesCmp.legend"
@@ -58,6 +58,7 @@ export default {
     },
     mixins: [themeMixin],
     props: {
+        legends: VueTypes.arrayOf([String]),
         position: VueTypes.oneOf(['top', 'bottom', 'left', 'right']).def('bottom'),
         align: VueTypes.oneOf(['start', 'center', 'end']).def('center'),
         space: VueTypes.arrayOf(VueTypes.number).def([16, 16, 16, 16]),
@@ -86,14 +87,22 @@ export default {
         parent.addSpace(spaces)
     },
     computed: {
+        legendsCmp () {
+            return (this.legends || []).length ? this.legends : (this.Chart || {}).legends
+        },
+        chartSpace () {
+            return (this.Chart || {}).space || [0, 0, 0, 0]
+        },
         stylesCmp () {
-            const { position, align, size } = this
+            const {
+                position, align, size, chartSpace,
+            } = this
             const isHorizontal = getIsHorizontal(position)
             // Positions
             const width = isHorizontal ? '100%' : size || toPx(85)
             const height = !isHorizontal ? '100%' : size || toPx(20)
             // Spaces
-            const [topParent, rightParent, bottomParent, leftParent] = this.Chart.space
+            const [topParent, rightParent, bottomParent, leftParent] = chartSpace
             const [top, right, bottom, left] = this.space
             const spaces = {
                 top, bottom, left, right,
