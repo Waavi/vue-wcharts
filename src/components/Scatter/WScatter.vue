@@ -41,6 +41,7 @@ import { monotoneX as curveMonotoneX } from 'd3-shape/src/curve/monotone'
 import { WDot } from '../Common'
 import animationMixin from '../../mixins/animation'
 import themeMixin from '../../mixins/theme'
+import visibleMixin from '../../mixins/visible'
 import { WSpread } from '../../transitions'
 import { isFunc } from '../../utils/checks'
 
@@ -54,6 +55,7 @@ export default {
     mixins: [
         themeMixin,
         animationMixin,
+        visibleMixin,
     ],
     inject: ['Chart'],
     props: {
