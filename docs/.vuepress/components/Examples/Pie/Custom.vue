@@ -5,7 +5,7 @@
         <WPie
             datakey="one"
             :radius="[110, 150]"
-            :styles="{ stroke: '#888' }"
+            :styles="{ stroke: '#FFF', strokeWidth: 10 }"
         >
             <template>
                 <div
@@ -25,7 +25,12 @@
                             color: '#888',
                         }"
                     >
-                        {{ total }}<br>Total
+                        {{ total }} €
+                        <span :style="{
+                            display: 'block',
+                            marginTop: '5px',
+                            fontWeight: 'bold',
+                        }">Total</span>
                     </span>
                 </div>
             </template>
