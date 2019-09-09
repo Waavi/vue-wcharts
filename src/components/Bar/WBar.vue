@@ -5,7 +5,7 @@
     >
         <g
             v-for="(bar, key) in bars"
-            :key="key"
+            :key="`${bar.x}-${bar.y}`"
         >
             <g
                 :id="key"
