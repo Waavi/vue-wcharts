@@ -79,3 +79,14 @@ sidebarDepth: 1
 <<< @/docs/.vuepress/components/Examples/Markers/CustomMarkers.vue
 </SourceCode>
 
+
+## Markers on front and back
+
+<br>
+
+<Examples-Markers-MarkersOnFrontAndBack />
+
+<SourceCode>
+<<< @/docs/.vuepress/components/Examples/Markers/MarkersOnFrontAndBack.vue
+</SourceCode>
+
