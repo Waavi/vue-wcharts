@@ -202,7 +202,6 @@ export default {
         const plugins = []
 
         // Props
-        const activeElements = []
         const legends = []
 
         // Reset snap to manage bars
@@ -219,15 +218,13 @@ export default {
                 return
             }
             const { propsData } = options
-            const { datakey, legend, visible } = propsData
+            const { datakey, legend } = propsData
             const cartesiansLength = cartesians.length
 
             switch (sealed.type) {
                 case 'cartesian':
                     // Add datekeys. Removed unique datakey condiition to use multiple elements
                     if (datakey) datakeys = [...datakeys.filter(key => key !== datakey), datakey]
-                    // Add to actives elements
-                    if (visible) activeElements.push(cartesiansLength)
                     // Add to legends elements
                     if (legend) legends.push(legend)
                     // Add slot
@@ -254,7 +251,6 @@ export default {
 
         const { viewWidth, height, responsive } = this
         this.datakeys = datakeys
-        this.activeElements = activeElements
         this.legends = legends
 
         return h(
