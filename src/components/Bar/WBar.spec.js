@@ -72,7 +72,7 @@ describe('Components/WBar', () => {
     })
 
     it(`Shouldn't be render`, () => {
-        const customConfig = { ...defaultConfig, provide: { ...defaultConfig.provide, Chart: { ...defaultConfig.provide.Chart, activeElements: [] } } }
+        const customConfig = { ...defaultConfig, propsData: { ...defaultConfig.propsData, visible: false } }
         const wrapper = shallowMount(WBar, customConfig)
         expect(wrapper.html()).toMatchSnapshot()
     })

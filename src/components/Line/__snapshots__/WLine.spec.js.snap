@@ -52,13 +52,4 @@ exports[`Components/WLine Should be render correctly with dots 1`] = `
 </g>
 `;
 
-exports[`Components/WLine Shouldn't be render 1`] = `
-<g>
-  <WSpread-stub axis="x" transition="all 1s ease">
-    <path d="M0,4000L1,3000L2,9800" fill="none" stroke="FFF" strokeWidth="2" strokeDasharray="0" style="transition: all 1s ease;"></path>
-    <!---->
-    <!---->
-  </WSpread-stub>
-  <!---->
-</g>
-`;
+exports[`Components/WLine Shouldn't be render 1`] = `undefined`;
