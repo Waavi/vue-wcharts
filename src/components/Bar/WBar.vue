@@ -107,6 +107,7 @@ import VueTypes from 'vue-types'
 import merge from '../../utils/merge'
 import animationMixin from '../../mixins/animation'
 import themeMixin from '../../mixins/theme'
+import visibleMixin from '../../mixins/visible'
 import { WTrans } from '../../transitions'
 
 const DEFAULT_WIDTH = 45
@@ -118,7 +119,7 @@ export default {
     components: {
         WTrans,
     },
-    mixins: [animationMixin, themeMixin],
+    mixins: [animationMixin, themeMixin, visibleMixin],
     inject: ['Chart'],
     props: {
         index: VueTypes.number, // internal props set by the parent (WPieChart)

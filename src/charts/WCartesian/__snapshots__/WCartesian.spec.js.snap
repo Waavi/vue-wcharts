@@ -87,13 +87,5 @@ exports[`Charts/WCartesian Should be render correctly with legend and markers 1`
 
 exports[`Charts/WCartesian Should be render correctly with scatter 1`] = `
 <div class="WCartesian" style="position: relative; width: 600px;"><svg width="600" height="400" viewBox="0 0 600 400">
-    <g>
-      <!---->
-      <g>
-        <WDot-stub colors="#48c0b6,#9d6af5,#ffde69,#e8e8e8,#54ddd9,#6e19ff,#dfbd46" index="0" cartesianIndex="0" trigger="hover" x="0" y="0" fill="#48c0b6" stroke="#48c0b6" strokeWidth="0" radius="8" hoverRadius="8" info="[object Object]" styles="[object Object]" transition="all 250ms ease" z="8" opacity="0.8"></WDot-stub>
-        <WDot-stub colors="#48c0b6,#9d6af5,#ffde69,#e8e8e8,#54ddd9,#6e19ff,#dfbd46" index="1" cartesianIndex="0" trigger="hover" x="0" y="0" fill="#48c0b6" stroke="#48c0b6" strokeWidth="0" radius="8" hoverRadius="8" info="[object Object]" styles="[object Object]" transition="all 250ms ease" z="8" opacity="0.8"></WDot-stub>
-        <WDot-stub colors="#48c0b6,#9d6af5,#ffde69,#e8e8e8,#54ddd9,#6e19ff,#dfbd46" index="2" cartesianIndex="0" trigger="hover" x="0" y="0" fill="#48c0b6" stroke="#48c0b6" strokeWidth="0" radius="8" hoverRadius="8" info="[object Object]" styles="[object Object]" transition="all 250ms ease" z="8" opacity="0.8"></WDot-stub>
-      </g>
-    </g>
-  </svg></div>
+    <!----></svg></div>
 `;

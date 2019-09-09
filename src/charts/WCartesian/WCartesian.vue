@@ -219,7 +219,7 @@ export default {
                 return
             }
             const { propsData } = options
-            const { datakey, legend } = propsData
+            const { datakey, legend, visible } = propsData
             const cartesiansLength = cartesians.length
 
             switch (sealed.type) {
@@ -227,7 +227,7 @@ export default {
                     // Add datekeys. Removed unique datakey condiition to use multiple elements
                     if (datakey) datakeys = [...datakeys.filter(key => key !== datakey), datakey]
                     // Add to actives elements
-                    activeElements.push(cartesiansLength)
+                    if (visible) activeElements.push(cartesiansLength)
                     // Add to legends elements
                     if (legend) legends.push(legend)
                     // Add slot
