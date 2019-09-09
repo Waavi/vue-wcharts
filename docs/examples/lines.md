@@ -10,7 +10,6 @@ sidebarDepth: 1
 <Examples-Lines-Tiny />
 
 <br>
-<br>
 
 <SourceCode>
 <<< @/docs/.vuepress/components/Examples/Lines/Tiny.vue
@@ -22,7 +21,6 @@ sidebarDepth: 1
 
 <Examples-Lines-Simple />
 
-<br>
 <br>
 
 <SourceCode>
@@ -36,7 +34,6 @@ sidebarDepth: 1
 <Examples-Lines-BoundsAndGap />
 
 <br>
-<br>
 
 <SourceCode>
 <<< @/docs/.vuepress/components/Examples/Lines/BoundsAndGap.vue
@@ -48,7 +45,6 @@ sidebarDepth: 1
 
 <Examples-Lines-Gradient />
 
-<br>
 <br>
 
 <SourceCode>
@@ -62,7 +58,6 @@ sidebarDepth: 1
 <Examples-Lines-Curve />
 
 <br>
-<br>
 
 <SourceCode>
 <<< @/docs/.vuepress/components/Examples/Lines/Curve.vue
@@ -74,7 +69,6 @@ sidebarDepth: 1
 
 <Examples-Lines-CustomCurve />
 
-<br>
 <br>
 
 <SourceCode>
@@ -88,7 +82,6 @@ sidebarDepth: 1
 <Examples-Lines-Dots />
 
 <br>
-<br>
 
 <SourceCode>
 <<< @/docs/.vuepress/components/Examples/Lines/Dots.vue
@@ -100,7 +93,6 @@ sidebarDepth: 1
 
 <Examples-Lines-CustomDots />
 
-<br>
 <br>
 
 <SourceCode>
@@ -114,7 +106,6 @@ sidebarDepth: 1
 <Examples-Lines-Area />
 
 <br>
-<br>
 
 <SourceCode>
 <<< @/docs/.vuepress/components/Examples/Lines/Area.vue
@@ -126,7 +117,6 @@ sidebarDepth: 1
 
 <Examples-Lines-AreaGradient />
 
-<br>
 <br>
 
 <SourceCode>
@@ -140,7 +130,6 @@ sidebarDepth: 1
 <Examples-Lines-Grid />
 
 <br>
-<br>
 
 <SourceCode>
 <<< @/docs/.vuepress/components/Examples/Lines/Grid.vue
@@ -152,7 +141,6 @@ sidebarDepth: 1
 
 <Examples-Lines-Tooltip />
 
-<br>
 <br>
 
 <SourceCode>
@@ -166,7 +154,6 @@ sidebarDepth: 1
 <Examples-Lines-CustomTooltipDot />
 
 <br>
-<br>
 
 <SourceCode>
 <<< @/docs/.vuepress/components/Examples/Lines/CustomTooltipDot.vue
@@ -178,7 +165,6 @@ sidebarDepth: 1
 
 <Examples-Lines-CustomTooltip />
 
-<br>
 <br>
 
 <SourceCode>

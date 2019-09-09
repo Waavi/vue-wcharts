@@ -4,10 +4,10 @@ exports[`Widgets/WLegend Should be render correctly 1`] = `
 <div class="WLegend" style="top: 20px; width: 100%; height: 20px; position: absolute; display: flex; background-color: rgb(0, 0, 0);">
   <ul class="Wrapper" style="flex-direction: row; padding: 0px 20px 0px 20px; justify-content: flex-start; display: flex; flex: 1; margin: 0px; list-style: none; background-color: rgb(0, 0, 0);">
     <li class="Legend" style="margin: 0px 0px 0px .75rem;">
-      <wlegenditem-stub colors="#48c0b6,#9d6af5,#ffde69,#e8e8e8,#54ddd9,#6e19ff,#dfbd46" animated="true" transduration="1" transeffect="ease" index="0" text="One Bar" active="true" color="" styles="[object Object]" disabledstyles="[object Object]" bulletstyles="[object Object]"></wlegenditem-stub>
+      <wlegenditem-stub colors="#48c0b6,#9d6af5,#ffde69,#e8e8e8,#54ddd9,#5C6BC0,#FB499D" animated="true" transduration="1" transeffect="ease" index="0" text="One Bar" active="true" color="" styles="[object Object]" disabledstyles="[object Object]" bulletstyles="[object Object]"></wlegenditem-stub>
     </li>
     <li class="Legend" style="margin: 0px 0px 0px .75rem;">
-      <wlegenditem-stub colors="#48c0b6,#9d6af5,#ffde69,#e8e8e8,#54ddd9,#6e19ff,#dfbd46" animated="true" transduration="1" transeffect="ease" index="1" text="Two Bar" active="true" color="" styles="[object Object]" disabledstyles="[object Object]" bulletstyles="[object Object]"></wlegenditem-stub>
+      <wlegenditem-stub colors="#48c0b6,#9d6af5,#ffde69,#e8e8e8,#54ddd9,#5C6BC0,#FB499D" animated="true" transduration="1" transeffect="ease" index="1" text="Two Bar" active="true" color="" styles="[object Object]" disabledstyles="[object Object]" bulletstyles="[object Object]"></wlegenditem-stub>
     </li>
   </ul>
 </div>

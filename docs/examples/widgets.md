@@ -9,6 +9,8 @@ sidebarDepth: 1
 
 <Examples-Widgets-LegendItem />
 
+<br>
+
 <SourceCode>
 <<< @/docs/.vuepress/components/Examples/Widgets/LegendItem.vue
 </SourceCode>
@@ -19,6 +21,8 @@ sidebarDepth: 1
 
 <Examples-Widgets-Legend />
 
+<br>
+
 <SourceCode>
 <<< @/docs/.vuepress/components/Examples/Widgets/Legend.vue
 </SourceCode>
@@ -28,6 +32,8 @@ sidebarDepth: 1
 <br>
 
 <Examples-Widgets-LegendCustom />
+
+<br>
 
 <SourceCode>
 <<< @/docs/.vuepress/components/Examples/Widgets/LegendCustom.vue

@@ -19,10 +19,10 @@ exports[`Widgets/WTooltip Should be render correctly with values 1`] = `
   <div style="display: flex; flex-direction: column;">
     <!---->
     <div>
-      <wbullet-stub colors="#48c0b6,#9d6af5,#ffde69,#e8e8e8,#54ddd9,#6e19ff,#dfbd46" styles="[object Object]"></wbullet-stub> <span>1</span>
+      <wbullet-stub colors="#48c0b6,#9d6af5,#ffde69,#e8e8e8,#54ddd9,#5C6BC0,#FB499D" styles="[object Object]"></wbullet-stub> <span>1</span>
     </div>
     <div>
-      <wbullet-stub colors="#48c0b6,#9d6af5,#ffde69,#e8e8e8,#54ddd9,#6e19ff,#dfbd46" styles="[object Object]"></wbullet-stub> <span>2</span>
+      <wbullet-stub colors="#48c0b6,#9d6af5,#ffde69,#e8e8e8,#54ddd9,#5C6BC0,#FB499D" styles="[object Object]"></wbullet-stub> <span>2</span>
     </div>
   </div>
 </div>

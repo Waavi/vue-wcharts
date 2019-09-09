@@ -9,6 +9,8 @@ sidebarDepth: 1
 
 <Examples-Scatter-Default />
 
+<br>
+
 <SourceCode>
 <<< @/docs/.vuepress/components/Examples/Scatter/Default.vue
 </SourceCode>
@@ -29,6 +31,8 @@ sidebarDepth: 1
 
 <Examples-Scatter-CustomDimension />
 
+<br>
+
 <SourceCode>
 <<< @/docs/.vuepress/components/Examples/Scatter/CustomDimension.vue
 </SourceCode>
@@ -38,6 +42,8 @@ sidebarDepth: 1
 <br>
 
 <Examples-Scatter-Multiple />
+
+<br>
 
 <SourceCode>
 <<< @/docs/.vuepress/components/Examples/Scatter/Multiple.vue
