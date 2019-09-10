@@ -50,7 +50,7 @@
             v-bind="labels"
             :styles="labelStylesCmp"
         >
-            <WLabel
+            <WAxisLabel
                 v-if="label"
                 v-bind="labels"
                 :styles="labelStylesCmp"

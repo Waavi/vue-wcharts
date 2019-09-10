@@ -35,6 +35,7 @@ sidebarDepth: 3
 | numTicks | number | 0 | Number of ticks |
 | format | func | value => value | Formatted tick text function |
 | label | string, array |  | Axis label |
+| labelSize | number | 12 | Label size |
 | labelAlign | oneOf(['start', 'middle', 'end']) | end | Axis label position |
 | axisStyles | object | ```{stroke: '#999'}``` | Axis line styles |
 | labelStyles | object | ```{fill: '#999'}``` | Label styles |
@@ -92,6 +93,7 @@ sidebarDepth: 3
 | numTicks | number | 0 | Number of ticks |
 | format | func | value => value | Formatted tick text function |
 | label | string, array |  | Axis label |
+| labelSize | number | 12 | Label size |
 | labelAlign | oneOf(['start', 'middle', 'end']) | start | Axis label position |
 | axisStyles | object | ```{stroke: '#999'}``` | Axis line styles |
 | labelStyles | object | ```{fill: '#999'}``` | Label styles |
@@ -145,6 +147,7 @@ sidebarDepth: 3
 | numTicks | number | 0 | Number of ticks |
 | format | func | value => value | Formatted tick text function |
 | label | string, array |  | Axis label |
+| labelSize | number | 12 | Label size |
 | labelAlign | oneOf(['start', 'middle', 'end']) | start | Axis label position |
 | axisStyles | object | ```{stroke: '#999'}``` | Axis line styles |
 | labelStyles | object | ```{fill: '#999'}``` | Label styles |
@@ -461,6 +464,28 @@ sidebarDepth: 3
 | Property | Arguments | Description |
 |----------|------------|------------|
 | onClickDot | Dot info prop | Event emitted on click dot |
+
+## WAxisLabel
+
+*Component to show label in the axis but it can be used wherever you want.*
+
+<br>
+<Api-AxisLabel />
+
+### Parent components
+**[\<WXAxis />](#wxaxis)**
+**[\<WYAxis />](#wyaxis)**
+**Valid SVG elements**
+
+### Properties
+| Property | Type | Default value | Description |
+|----------|------|---------------|-------------|
+| x |  number |  | X coordinate |
+| y |  number |  | Y coordinate |
+| value |  array | | Array of labels |
+| textAnchor | Text anchor style |
+| transform | Transform style |
+| styles |  object | ```{ fill: 'none', stroke: 'none' }``` | |
 
 ## WTickText
 

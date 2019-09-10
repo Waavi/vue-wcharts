@@ -35,7 +35,7 @@ exports[`Axis/WYAxis Should be render correctly 1`] = `
     <line x1="35" y1="10" x2="40" y2="10" stroke="#cccccc"></line>
     <WTickText-stub colors="#48c0b6,#9d6af5,#ffde69,#e8e8e8,#54ddd9,#5C6BC0,#FB499D" x="30" y="14" dy="" index="7" value="10" styles="[object Object]"></WTickText-stub>
   </g>
-  <WLabel styles="[object Object]" x="17" y="376" transform="rotate(-90 17 376)" textAnchor="start" value="Y Axis"></WLabel>
+  <WAxisLabel styles="[object Object]" x="17" y="376" transform="rotate(-90 17 376)" textAnchor="start" value="Y Axis"></WAxisLabel>
 </g>
 `;
 
@@ -74,7 +74,7 @@ exports[`Axis/WYAxis Should be render correctly without line 1`] = `
     <line x1="35" y1="10" x2="40" y2="10" stroke="#cccccc"></line>
     <WTickText-stub colors="#48c0b6,#9d6af5,#ffde69,#e8e8e8,#54ddd9,#5C6BC0,#FB499D" x="30" y="14" dy="" index="7" value="10" styles="[object Object]"></WTickText-stub>
   </g>
-  <WLabel styles="[object Object]" x="17" y="376" transform="rotate(-90 17 376)" textAnchor="start" value="Y Axis"></WLabel>
+  <WAxisLabel styles="[object Object]" x="17" y="376" transform="rotate(-90 17 376)" textAnchor="start" value="Y Axis"></WAxisLabel>
 </g>
 `;
 
@@ -113,6 +113,6 @@ exports[`Axis/WYAxis Should be render correctly without ticks lines 1`] = `
     <!---->
     <WTickText-stub colors="#48c0b6,#9d6af5,#ffde69,#e8e8e8,#54ddd9,#5C6BC0,#FB499D" x="30" y="14" dy="" index="7" value="10" styles="[object Object]"></WTickText-stub>
   </g>
-  <WLabel styles="[object Object]" x="17" y="376" transform="rotate(-90 17 376)" textAnchor="start" value="Y Axis"></WLabel>
+  <WAxisLabel styles="[object Object]" x="17" y="376" transform="rotate(-90 17 376)" textAnchor="start" value="Y Axis"></WAxisLabel>
 </g>
 `;

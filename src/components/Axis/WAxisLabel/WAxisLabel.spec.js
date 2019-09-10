@@ -1,7 +1,7 @@
 import { shallowMount } from '@vue/test-utils'
-import WLabel from './WLabel.vue'
+import WAxisLabel from './WAxisLabel.vue'
 
-describe('Common/WLabel', () => {
+describe('Common/WAxisLabel', () => {
     const propsData = {
         textAnchor: 'middle',
         transform: 'rotate(-90 30 135)',
@@ -32,7 +32,7 @@ describe('Common/WLabel', () => {
     }
 
     it(`Should be render correctly`, () => {
-        const wrapper = shallowMount(WLabel, defaultConfig)
+        const wrapper = shallowMount(WAxisLabel, defaultConfig)
         expect(wrapper.html()).toMatchSnapshot()
     })
 })

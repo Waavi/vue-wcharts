@@ -15,7 +15,7 @@ exports[`Axis/WXAxis Should be render correctly 1`] = `
     <line x1="560" y1="376" x2="560" y2="381" stroke="#cccccc"></line>
     <WTickText-stub colors="#48c0b6,#9d6af5,#ffde69,#e8e8e8,#54ddd9,#5C6BC0,#FB499D" x="560" y="396" dy="" index="2" value="Page C" styles="[object Object]"></WTickText-stub>
   </g>
-  <WLabel styles="[object Object]" x="580" y="387" textAnchor="end" value="X Axis"></WLabel>
+  <WAxisLabel styles="[object Object]" x="580" y="387" textAnchor="end" value="X Axis"></WAxisLabel>
   <!---->
 </g>
 `;
@@ -35,7 +35,7 @@ exports[`Axis/WXAxis Should be render correctly with negative values 1`] = `
     <line x1="560" y1="376" x2="560" y2="381" stroke="#cccccc"></line>
     <WTickText-stub colors="#48c0b6,#9d6af5,#ffde69,#e8e8e8,#54ddd9,#5C6BC0,#FB499D" x="560" y="396" dy="" index="2" value="Page C" styles="[object Object]"></WTickText-stub>
   </g>
-  <WLabel styles="[object Object]" x="580" y="387" textAnchor="end" value="X Axis"></WLabel>
+  <WAxisLabel styles="[object Object]" x="580" y="387" textAnchor="end" value="X Axis"></WAxisLabel>
   <line x1="40" y1="0" x2="580" y2="0" style="stroke: #999; stroke-width: 1; stroke-dasharray: 0;"></line>
 </g>
 `;
@@ -55,7 +55,7 @@ exports[`Axis/WXAxis Should be render correctly without line 1`] = `
     <line x1="560" y1="376" x2="560" y2="381" stroke="#cccccc"></line>
     <WTickText-stub colors="#48c0b6,#9d6af5,#ffde69,#e8e8e8,#54ddd9,#5C6BC0,#FB499D" x="560" y="396" dy="" index="2" value="Page C" styles="[object Object]"></WTickText-stub>
   </g>
-  <WLabel styles="[object Object]" x="580" y="387" textAnchor="end" value="X Axis"></WLabel>
+  <WAxisLabel styles="[object Object]" x="580" y="387" textAnchor="end" value="X Axis"></WAxisLabel>
   <!---->
 </g>
 `;
@@ -75,7 +75,7 @@ exports[`Axis/WXAxis Should be render correctly without ticks lines 1`] = `
     <!---->
     <WTickText-stub colors="#48c0b6,#9d6af5,#ffde69,#e8e8e8,#54ddd9,#5C6BC0,#FB499D" x="560" y="396" dy="" index="2" value="Page C" styles="[object Object]"></WTickText-stub>
   </g>
-  <WLabel styles="[object Object]" x="580" y="387" textAnchor="end" value="X Axis"></WLabel>
+  <WAxisLabel styles="[object Object]" x="580" y="387" textAnchor="end" value="X Axis"></WAxisLabel>
   <!---->
 </g>
 `;

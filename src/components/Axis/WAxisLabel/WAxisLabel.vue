@@ -21,7 +21,7 @@
 import VueTypes from 'vue-types'
 
 export default {
-    name: 'WLabel',
+    name: 'WAxisLabel',
     props: {
         x: VueTypes.number,
         y: VueTypes.number,
