@@ -28,7 +28,7 @@
                     v-bind="tick.text"
                     :styles="tickStylesCmp"
                 >
-                    <WTickText
+                    <WAxisText
                         v-bind="tick.text"
                         :styles="tickStylesCmp"
                     >
@@ -40,7 +40,7 @@
                                 {{ value }}
                             </slot>
                         </template>
-                    </WTickText>
+                    </WAxisText>
                 </slot>
             </g>
         </template>

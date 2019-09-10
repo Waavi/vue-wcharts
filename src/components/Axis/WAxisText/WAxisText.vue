@@ -18,10 +18,10 @@
 <script>
 import VueTypes from 'vue-types'
 import omit from 'lodash.omit'
-import themeMixin from '../../mixins/theme'
+import themeMixin from '../../../mixins/theme'
 
 export default {
-    name: 'WTickText',
+    name: 'WAxisText',
     mixins: [themeMixin],
     props: {
         x: VueTypes.number,

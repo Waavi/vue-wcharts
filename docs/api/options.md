@@ -272,7 +272,7 @@ Vue.use(WCharts, {
 }
 ```
 
-### WTickText
+### WAxisText
 ```js
 {
     styles: {

@@ -173,7 +173,7 @@ export default {
             cursor: 'default',
         },
     },
-    WTickText: {
+    WAxisText: {
         styles: {
             fill: 'none',
             stroke: 'none',

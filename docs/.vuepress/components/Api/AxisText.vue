@@ -28,7 +28,7 @@ import { chart as data } from '../data'
 import colors from '../../colors'
 
 export default {
-    name: 'Texts',
+    name: 'AxisText',
     data () {
         return {
             data,

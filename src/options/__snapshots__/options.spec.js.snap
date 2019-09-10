@@ -2,6 +2,13 @@
 
 exports[`Options/theme Set theme theme via setOptions correctly 1`] = `
 Object {
+  "WAxisText": Object {
+    "styles": Object {
+      "fill": "none",
+      "fontSize": 14,
+      "stroke": "none",
+    },
+  },
   "WBar": Object {
     "label": Object {
       "cursor": "default",
@@ -147,13 +154,6 @@ Object {
       "stroke": "",
       "strokeDasharray": "0",
       "strokeWidth": 1,
-    },
-  },
-  "WTickText": Object {
-    "styles": Object {
-      "fill": "none",
-      "fontSize": 14,
-      "stroke": "none",
     },
   },
   "WTooltip": Object {
@@ -237,6 +237,13 @@ Object {
 
 exports[`Options/theme Set theme via setTheme correctly 1`] = `
 Object {
+  "WAxisText": Object {
+    "styles": Object {
+      "fill": "none",
+      "fontSize": 14,
+      "stroke": "none",
+    },
+  },
   "WBar": Object {
     "label": Object {
       "cursor": "default",
@@ -382,13 +389,6 @@ Object {
       "stroke": "",
       "strokeDasharray": "0",
       "strokeWidth": 1,
-    },
-  },
-  "WTickText": Object {
-    "styles": Object {
-      "fill": "none",
-      "fontSize": 14,
-      "stroke": "none",
     },
   },
   "WTooltip": Object {
