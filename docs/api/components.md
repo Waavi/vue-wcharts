@@ -20,6 +20,7 @@ sidebarDepth: 3
 **[\<WCartesian />](/api/charts.html#wcartesian)**
 
 ### Child components
+**[\<WAxisLabel />](#waxislabel)**
 **[\<WTickText />](#wticktext)**
 
 ### Properties
@@ -79,6 +80,7 @@ sidebarDepth: 3
 **[\<WCartesian />](/api/charts.html#wcartesian)**
 
 ### Child components
+**[\<WAxisLabel />](#waxislabel)**
 **[\<WTickText />](#wticktext)**
 
 ### Properties
