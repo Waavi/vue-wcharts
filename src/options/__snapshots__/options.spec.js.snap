@@ -149,7 +149,7 @@ Object {
       "strokeWidth": 1,
     },
   },
-  "WTickText": Object {
+  "WAxisText": Object {
     "styles": Object {
       "fill": "none",
       "fontSize": 14,
@@ -384,7 +384,7 @@ Object {
       "strokeWidth": 1,
     },
   },
-  "WTickText": Object {
+  "WAxisText": Object {
     "styles": Object {
       "fill": "none",
       "fontSize": 14,

@@ -1,7 +1,7 @@
 
 import VueTypes from 'vue-types'
 import { genTicks, genExactNbTicks } from '../utils/maths'
-import WTickText from '../components/Axis/WTickText.vue'
+import WAxisText from '../components/Axis/WAxisText/WAxisText.vue'
 import themeMixin from './theme'
 
 const spaceLabel = (label, isX) => {
@@ -15,7 +15,7 @@ export default {
     inject: ['Chart'],
     mixins: [themeMixin],
     components: {
-        WTickText,
+        WAxisText,
     },
     props: {
         // Settings

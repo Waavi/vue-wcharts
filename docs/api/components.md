@@ -21,7 +21,7 @@ sidebarDepth: 3
 
 ### Child components
 **[\<WAxisLabel />](#waxislabel)**
-**[\<WTickText />](#wticktext)**
+**[\<WAxisText />](#waxistext)**
 
 ### Properties
 | Property | Type | Default value | Description |
@@ -81,7 +81,7 @@ sidebarDepth: 3
 
 ### Child components
 **[\<WAxisLabel />](#waxislabel)**
-**[\<WTickText />](#wticktext)**
+**[\<WAxisText />](#waxistext)**
 
 ### Properties
 | Property | Type | Default value | Description |
@@ -489,12 +489,12 @@ sidebarDepth: 3
 | transform | Transform style |
 | styles |  object | ```{ fill: 'none', stroke: 'none' }``` | |
 
-## WTickText
+## WAxisText
 
 *Component to show text in the axis but it can be used wherever you want.*
 
 <br>
-<Api-Texts />
+<Api-AxisText />
 
 ### Parent components
 **[\<WXAxis />](#wxaxis)**

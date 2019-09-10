@@ -6,14 +6,17 @@
         <WLine
             datakey="one"
             dot
+            :trigger="trigger"
         />
         <WLine
             datakey="two"
             dot
+            :trigger="trigger"
         />
         <WLine
             datakey="three"
             dot
+            :trigger="trigger"
         />
         <WXAxis
             datakey="name"
@@ -78,6 +81,7 @@ export default {
     data () {
         return {
             data: dataOne,
+            trigger: 'hover',
             delay: 3000,
         }
     },
