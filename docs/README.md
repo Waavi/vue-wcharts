@@ -14,7 +14,3 @@ features:
   details: We rely only on small D3 submodules, keeping us reliable and lightweight.
 footer: MIT Licensed | Copyright © 2019-by Waavi Studio S.L.
 ---
-
-<Api-Home />
-
-<br><br>

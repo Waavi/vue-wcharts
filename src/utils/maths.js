@@ -54,7 +54,6 @@ export function genExactNbTicks (min, max, count) {
 }
 
 export function bound (data, type, key) {
-    if (!(data || []).length) return 0
     return Math[type](
         ...data.map(arr => Math[type](...arr.map(item => item[key]).filter(isNumber)))
     )

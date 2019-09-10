@@ -14,7 +14,6 @@ import {
     WPie,
     WTooltip,
     WDot,
-    WAxisLabel,
     WBullet,
     WShowIfFit,
 } from './components'
@@ -47,7 +46,6 @@ export default (Vue, opts = {}) => {
         WPie,
         WTooltip,
         WDot,
-        WAxisLabel,
         WBullet,
         WShowIfFit,
     ]

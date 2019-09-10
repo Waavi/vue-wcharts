@@ -118,8 +118,6 @@ Object {
       "fontSize": 14,
     },
     "styles": Object {
-      "fill": "none",
-      "r": 10,
       "stroke": "#333333",
       "strokeDasharray": "0",
       "strokeWidth": 1,
@@ -353,8 +351,6 @@ Object {
       "fontSize": 14,
     },
     "styles": Object {
-      "fill": "none",
-      "r": 10,
       "stroke": "#333333",
       "strokeDasharray": "0",
       "strokeWidth": 1,

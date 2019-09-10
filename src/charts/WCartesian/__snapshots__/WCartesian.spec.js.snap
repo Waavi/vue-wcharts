@@ -8,15 +8,15 @@ exports[`Charts/WCartesian Should be render correctly with axix 1`] = `
       <line x1="40" y1="376" x2="580" y2="376" stroke="#cccccc"></line>
       <g text-anchor="middle">
         <line x1="40" y1="376" x2="40" y2="381" stroke="#cccccc"></line>
-        <WTickText-stub colors="#48c0b6,#9d6af5,#ffde69,#e8e8e8,#54ddd9,#5C6BC0,#FB499D" x="40" y="396" dy="" index="0" value="0" styles="[object Object]"></WTickText-stub>
+        <WTickText-stub colors="#48c0b6,#9d6af5,#ffde69,#e8e8e8,#54ddd9,#6e19ff,#dfbd46" x="40" y="396" dy="" index="0" value="0" styles="[object Object]"></WTickText-stub>
       </g>
       <g text-anchor="middle">
         <line x1="310" y1="376" x2="310" y2="381" stroke="#cccccc"></line>
-        <WTickText-stub colors="#48c0b6,#9d6af5,#ffde69,#e8e8e8,#54ddd9,#5C6BC0,#FB499D" x="310" y="396" dy="" index="1" value="1" styles="[object Object]"></WTickText-stub>
+        <WTickText-stub colors="#48c0b6,#9d6af5,#ffde69,#e8e8e8,#54ddd9,#6e19ff,#dfbd46" x="310" y="396" dy="" index="1" value="1" styles="[object Object]"></WTickText-stub>
       </g>
       <g text-anchor="middle">
         <line x1="580" y1="376" x2="580" y2="381" stroke="#cccccc"></line>
-        <WTickText-stub colors="#48c0b6,#9d6af5,#ffde69,#e8e8e8,#54ddd9,#5C6BC0,#FB499D" x="580" y="396" dy="" index="2" value="2" styles="[object Object]"></WTickText-stub>
+        <WTickText-stub colors="#48c0b6,#9d6af5,#ffde69,#e8e8e8,#54ddd9,#6e19ff,#dfbd46" x="580" y="396" dy="" index="2" value="2" styles="[object Object]"></WTickText-stub>
       </g>
       <!---->
       <!---->
@@ -25,35 +25,35 @@ exports[`Charts/WCartesian Should be render correctly with axix 1`] = `
       <line x1="40" y1="10" x2="40" y2="376" stroke="#cccccc"></line>
       <g text-anchor="end">
         <line x1="35" y1="193" x2="40" y2="193" stroke="#cccccc"></line>
-        <WTickText-stub colors="#48c0b6,#9d6af5,#ffde69,#e8e8e8,#54ddd9,#5C6BC0,#FB499D" x="30" y="197" dy="" index="0" value="0" styles="[object Object]"></WTickText-stub>
+        <WTickText-stub colors="#48c0b6,#9d6af5,#ffde69,#e8e8e8,#54ddd9,#6e19ff,#dfbd46" x="30" y="197" dy="" index="0" value="0" styles="[object Object]"></WTickText-stub>
       </g>
       <g text-anchor="end">
         <line x1="35" y1="193" x2="40" y2="193" stroke="#cccccc"></line>
-        <WTickText-stub colors="#48c0b6,#9d6af5,#ffde69,#e8e8e8,#54ddd9,#5C6BC0,#FB499D" x="30" y="197" dy="" index="1" value="0" styles="[object Object]"></WTickText-stub>
+        <WTickText-stub colors="#48c0b6,#9d6af5,#ffde69,#e8e8e8,#54ddd9,#6e19ff,#dfbd46" x="30" y="197" dy="" index="1" value="0" styles="[object Object]"></WTickText-stub>
       </g>
       <g text-anchor="end">
         <line x1="35" y1="193" x2="40" y2="193" stroke="#cccccc"></line>
-        <WTickText-stub colors="#48c0b6,#9d6af5,#ffde69,#e8e8e8,#54ddd9,#5C6BC0,#FB499D" x="30" y="197" dy="" index="2" value="0" styles="[object Object]"></WTickText-stub>
+        <WTickText-stub colors="#48c0b6,#9d6af5,#ffde69,#e8e8e8,#54ddd9,#6e19ff,#dfbd46" x="30" y="197" dy="" index="2" value="0" styles="[object Object]"></WTickText-stub>
       </g>
       <g text-anchor="end">
         <line x1="35" y1="193" x2="40" y2="193" stroke="#cccccc"></line>
-        <WTickText-stub colors="#48c0b6,#9d6af5,#ffde69,#e8e8e8,#54ddd9,#5C6BC0,#FB499D" x="30" y="197" dy="" index="3" value="0" styles="[object Object]"></WTickText-stub>
+        <WTickText-stub colors="#48c0b6,#9d6af5,#ffde69,#e8e8e8,#54ddd9,#6e19ff,#dfbd46" x="30" y="197" dy="" index="3" value="0" styles="[object Object]"></WTickText-stub>
       </g>
       <g text-anchor="end">
         <line x1="35" y1="193" x2="40" y2="193" stroke="#cccccc"></line>
-        <WTickText-stub colors="#48c0b6,#9d6af5,#ffde69,#e8e8e8,#54ddd9,#5C6BC0,#FB499D" x="30" y="197" dy="" index="4" value="0" styles="[object Object]"></WTickText-stub>
+        <WTickText-stub colors="#48c0b6,#9d6af5,#ffde69,#e8e8e8,#54ddd9,#6e19ff,#dfbd46" x="30" y="197" dy="" index="4" value="0" styles="[object Object]"></WTickText-stub>
       </g>
       <g text-anchor="end">
         <line x1="35" y1="193" x2="40" y2="193" stroke="#cccccc"></line>
-        <WTickText-stub colors="#48c0b6,#9d6af5,#ffde69,#e8e8e8,#54ddd9,#5C6BC0,#FB499D" x="30" y="197" dy="" index="5" value="0" styles="[object Object]"></WTickText-stub>
+        <WTickText-stub colors="#48c0b6,#9d6af5,#ffde69,#e8e8e8,#54ddd9,#6e19ff,#dfbd46" x="30" y="197" dy="" index="5" value="0" styles="[object Object]"></WTickText-stub>
       </g>
       <g text-anchor="end">
         <line x1="35" y1="193" x2="40" y2="193" stroke="#cccccc"></line>
-        <WTickText-stub colors="#48c0b6,#9d6af5,#ffde69,#e8e8e8,#54ddd9,#5C6BC0,#FB499D" x="30" y="197" dy="" index="6" value="0" styles="[object Object]"></WTickText-stub>
+        <WTickText-stub colors="#48c0b6,#9d6af5,#ffde69,#e8e8e8,#54ddd9,#6e19ff,#dfbd46" x="30" y="197" dy="" index="6" value="0" styles="[object Object]"></WTickText-stub>
       </g>
       <g text-anchor="end">
         <line x1="35" y1="193" x2="40" y2="193" stroke="#cccccc"></line>
-        <WTickText-stub colors="#48c0b6,#9d6af5,#ffde69,#e8e8e8,#54ddd9,#5C6BC0,#FB499D" x="30" y="197" dy="" index="7" value="0" styles="[object Object]"></WTickText-stub>
+        <WTickText-stub colors="#48c0b6,#9d6af5,#ffde69,#e8e8e8,#54ddd9,#6e19ff,#dfbd46" x="30" y="197" dy="" index="7" value="0" styles="[object Object]"></WTickText-stub>
       </g>
       <!---->
     </g>
@@ -90,9 +90,9 @@ exports[`Charts/WCartesian Should be render correctly with scatter 1`] = `
     <g>
       <!---->
       <g>
-        <WDot-stub colors="#48c0b6,#9d6af5,#ffde69,#e8e8e8,#54ddd9,#5C6BC0,#FB499D" index="0" cartesianIndex="0" trigger="hover" x="0" y="0" fill="#48c0b6" stroke="#48c0b6" strokeWidth="0" radius="8" hoverRadius="8" info="[object Object]" styles="[object Object]" transition="all 250ms ease" z="8" opacity="0.8"></WDot-stub>
-        <WDot-stub colors="#48c0b6,#9d6af5,#ffde69,#e8e8e8,#54ddd9,#5C6BC0,#FB499D" index="1" cartesianIndex="0" trigger="hover" x="0" y="0" fill="#48c0b6" stroke="#48c0b6" strokeWidth="0" radius="8" hoverRadius="8" info="[object Object]" styles="[object Object]" transition="all 250ms ease" z="8" opacity="0.8"></WDot-stub>
-        <WDot-stub colors="#48c0b6,#9d6af5,#ffde69,#e8e8e8,#54ddd9,#5C6BC0,#FB499D" index="2" cartesianIndex="0" trigger="hover" x="0" y="0" fill="#48c0b6" stroke="#48c0b6" strokeWidth="0" radius="8" hoverRadius="8" info="[object Object]" styles="[object Object]" transition="all 250ms ease" z="8" opacity="0.8"></WDot-stub>
+        <WDot-stub colors="#48c0b6,#9d6af5,#ffde69,#e8e8e8,#54ddd9,#6e19ff,#dfbd46" index="0" cartesianIndex="0" trigger="hover" x="0" y="0" fill="#48c0b6" stroke="#48c0b6" strokeWidth="0" radius="8" hoverRadius="8" info="[object Object]" styles="[object Object]" transition="all 250ms ease" z="8" opacity="0.8"></WDot-stub>
+        <WDot-stub colors="#48c0b6,#9d6af5,#ffde69,#e8e8e8,#54ddd9,#6e19ff,#dfbd46" index="1" cartesianIndex="0" trigger="hover" x="0" y="0" fill="#48c0b6" stroke="#48c0b6" strokeWidth="0" radius="8" hoverRadius="8" info="[object Object]" styles="[object Object]" transition="all 250ms ease" z="8" opacity="0.8"></WDot-stub>
+        <WDot-stub colors="#48c0b6,#9d6af5,#ffde69,#e8e8e8,#54ddd9,#6e19ff,#dfbd46" index="2" cartesianIndex="0" trigger="hover" x="0" y="0" fill="#48c0b6" stroke="#48c0b6" strokeWidth="0" radius="8" hoverRadius="8" info="[object Object]" styles="[object Object]" transition="all 250ms ease" z="8" opacity="0.8"></WDot-stub>
       </g>
     </g>
   </svg></div>

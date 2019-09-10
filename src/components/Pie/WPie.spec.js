@@ -65,8 +65,8 @@ describe('Components/WPie', () => {
 
     it('Should be active 1', () => {
         const wrapper = mount(WPie, defaultConfig)
-        wrapper.setProps({ itemActive: 1 })
-        expect(wrapper.props('itemActive')).toBe(1)
+        wrapper.setProps({ active: 1 })
+        expect(wrapper.props('active')).toBe(1)
         expect(wrapper.vm.activePath).toBe(1)
     })
 })

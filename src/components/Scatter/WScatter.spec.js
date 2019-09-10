@@ -65,7 +65,7 @@ describe('Components/WScatter', () => {
     })
 
     it(`Shouldn't be render`, () => {
-        const customConfig = { ...defaultConfig, propsData: { ...defaultConfig.propsData, visible: false } }
+        const customConfig = { ...defaultConfig, provide: { ...defaultConfig.provide, Chart: { ...defaultConfig.provide.Chart, activeElements: [] } } }
         const wrapper = shallowMount(WScatter, customConfig)
         expect(wrapper.html()).toMatchSnapshot()
     })

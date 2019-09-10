@@ -5,7 +5,7 @@
     >
         <g
             v-for="(bar, key) in bars"
-            :key="`${key}-${bar.x}-${bar.y}-${bar.color}`"
+            :key="key"
         >
             <g
                 :id="key"
@@ -107,7 +107,6 @@ import VueTypes from 'vue-types'
 import merge from '../../utils/merge'
 import animationMixin from '../../mixins/animation'
 import themeMixin from '../../mixins/theme'
-import visibleMixin from '../../mixins/visible'
 import { WTrans } from '../../transitions'
 
 const DEFAULT_WIDTH = 45
@@ -119,7 +118,7 @@ export default {
     components: {
         WTrans,
     },
-    mixins: [animationMixin, themeMixin, visibleMixin],
+    mixins: [animationMixin, themeMixin],
     inject: ['Chart'],
     props: {
         index: VueTypes.number, // internal props set by the parent (WPieChart)
@@ -257,7 +256,6 @@ export default {
         // Bars
         bars () {
             // Generate bars array
-            // TODO: Check bug with unique key in v-for template
             return this.points.map((point, index) => {
                 const [x0, y0, y1, value, stackedValue] = point
                 // Generate coords
@@ -336,7 +334,7 @@ export default {
         },
     },
     methods: {
-        // Generate label of bar
+    // Generate label of bar
         getLabel ({
             x, y, value, height,
         }) {
@@ -366,16 +364,16 @@ export default {
         getStackedLabel ({ x, y, stackedValue }) {
             if (
                 !this.showStackedLabel ||
-                !this.stacked ||
-                stackedValue === 0 || // Hide labels if value it's zero
-                this.index !== this.getLastBarActive() || // Only last bar shown the stacked label
-                (this.showLabel && !this.isLabelInside) // If label is printed outside, not render staked label
+        !this.stacked ||
+        stackedValue === 0 || // Hide labels if value it's zero
+        this.index !== this.getLastBarActive() || // Only last bar shown the stacked label
+        (this.showLabel && !this.isLabelInside) // If label is printed outside, not render staked label
             ) return undefined
             // Calc position of label [x, y]
             const top = this.stackedLabelSize
             const x0 = x + this.adjustedWidth / 2
             const y1 =
-            y + this.stackedLabelSize / 2 + (stackedValue > 0 ? -top : top)
+        y + this.stackedLabelSize / 2 + (stackedValue > 0 ? -top : top)
 
             return {
                 x: x0,

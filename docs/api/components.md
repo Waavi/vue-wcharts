@@ -8,19 +8,12 @@ sidebarDepth: 3
 *X axis component.*
 
 <br>
-<Api-XAxis />
-
-<br>
-
-<SourceCode>
-<<< @/docs/.vuepress/components/Api/XAxis.vue
-</SourceCode>
+<XAxis />
 
 ### Parent components
 **[\<WCartesian />](/api/charts.html#wcartesian)**
 
 ### Child components
-**[\<WAxisLabel />](#waxislabel)**
 **[\<WTickText />](#wticktext)**
 
 ### Properties
@@ -35,9 +28,9 @@ sidebarDepth: 3
 | hideNegativeAxis | bool | false | It true set, negative axis won't be drawn |
 | numTicks | number | 0 | Number of ticks |
 | format | func | value => value | Formatted tick text function |
-| label | string, array |  | Axis label |
-| labelSize | number | 12 | Label size |
 | labelAlign | oneOf(['start', 'middle', 'end']) | end | Axis label position |
+| labelText | string |  | Axis label |
+| labelSize | number | 12 | Label size |
 | axisStyles | object | ```{stroke: '#999'}``` | Axis line styles |
 | labelStyles | object | ```{fill: '#999'}``` | Label styles |
 | markStyles | object | ```{stroke: '#999'}``` | Tick mark styles |
@@ -74,13 +67,12 @@ sidebarDepth: 3
 *Y axis component.*
 
 <br>
-<Api-YAxis />
+<YAxis />
 
 ### Parent components
 **[\<WCartesian />](/api/charts.html#wcartesian)**
 
 ### Child components
-**[\<WAxisLabel />](#waxislabel)**
 **[\<WTickText />](#wticktext)**
 
 ### Properties
@@ -94,9 +86,9 @@ sidebarDepth: 3
 | hideTickMark | bool | false | It true set, line won't be drawn |
 | numTicks | number | 0 | Number of ticks |
 | format | func | value => value | Formatted tick text function |
-| label | string, array |  | Axis label |
-| labelSize | number | 12 | Label size |
 | labelAlign | oneOf(['start', 'middle', 'end']) | start | Axis label position |
+| labelText | string |  | Axis label |
+| labelSize | number | 12 | Label size |
 | axisStyles | object | ```{stroke: '#999'}``` | Axis line styles |
 | labelStyles | object | ```{fill: '#999'}``` | Label styles |
 | markStyles | object | ```{stroke: '#999'}``` | Tick mark styles |
@@ -132,7 +124,7 @@ sidebarDepth: 3
 *Z axis component.*
 
 <br>
-<Api-ZAxis />
+<ZAxis />
 
 ### Parent components
 **[\<WCartesian />](/api/charts.html#wcartesian)**
@@ -148,9 +140,9 @@ sidebarDepth: 3
 | hideTickMark | bool | false | It true set, line won't be drawn |
 | numTicks | number | 0 | Number of ticks |
 | format | func | value => value | Formatted tick text function |
-| label | string, array |  | Axis label |
-| labelSize | number | 12 | Label size |
 | labelAlign | oneOf(['start', 'middle', 'end']) | start | Axis label position |
+| labelText | string |  | Axis label |
+| labelSize | number | 12 | Label size |
 | axisStyles | object | ```{stroke: '#999'}``` | Axis line styles |
 | labelStyles | object | ```{fill: '#999'}``` | Label styles |
 | markStyles | object | ```{stroke: '#999'}``` | Tick mark styles |
@@ -161,7 +153,7 @@ sidebarDepth: 3
 *Line component.*
 
 <br>
-<Api-Lines />
+<Lines />
 
 ### Parent components
 **[\<WCartesian />](/api/charts.html#wcartesian)**
@@ -212,7 +204,7 @@ sidebarDepth: 3
 *Bar component.*
 
 <br>
-<Api-Bars />
+<Bars />
 
 ### Parent components
 **[\<WCartesian />](/api/charts.html#wcartesian)**
@@ -227,6 +219,7 @@ sidebarDepth: 3
 | color | string    arrayOf(string) |  | Accept a color for all bars or one color for every bar |
 | styles | object |  | The styles of the bar |
 | showLabel | bool | false | If is set to true, the label will be drawn |
+| labelSize | number | 12 | The font size of the label |
 | labelAlign | oneOf(['start', 'middle', 'end']) | middle | The horizontal position of the label |
 | labelPosition | oneOf(['inside', 'outside']) | outside | The vertical position of the label. If the chart is stacked the label position will be `inside` |
 | labelStyles | object | ```{ fill: '#333', cursor: 'default' }``` | The styles of the label |
@@ -298,7 +291,7 @@ sidebarDepth: 3
 *Pie component.*
 
 <br>
-<Api-Pie />
+<Pie />
 
 ### Parent components
 **[\<WPieChart />](/api/charts.html#wpiechart)**
@@ -339,7 +332,7 @@ sidebarDepth: 3
 *Grid component.*
 
 <br>
-<Api-Grid />
+<Grid />
 
 ### Parent components
 **[\<WCartesian />](/api/charts.html#wcartesian)**
@@ -358,7 +351,7 @@ sidebarDepth: 3
 *Scatter chart.*
 
 <br>
-<Api-Scatter />
+<Scatter />
 
 ### Parent components
 **[\<WCartesian />](/api/charts.html#wcartesian)**
@@ -405,7 +398,7 @@ sidebarDepth: 3
 *Component to show a reference line in the chart.*
 
 <br>
-<Api-Markers />
+<Markers />
 
 ### Parent components
 **[\<WCartesian />](/api/charts.html#wcartesian)**
@@ -413,9 +406,8 @@ sidebarDepth: 3
 ### Properties
 | Property | Type | Default value | Description |
 |----------|------|---------------|-------------|
-| x | number or array[number] | undefined | If number, it defines the value X of a "line marker" or "dot marker". If array, it defines the x range for a "x range marker" or "rect marker" |
-| y | number or array[number] | undefined | If number, it defines the value Y of a "line marker" or "dot marker". If array, it defines the y range for a "y range marker" or "rect marker" |
-| borderSpacing | array[number] | [0, 0, 0, 0] | Only applies for "range or rect markers". Border spacing between the "rect" defined by x and y props and the real rendered rect. Used to "widen" the range. For "category" axes, the value is expressed by the distance between each category (from 0 to 1); i.e. 0.5 means it's added a half of the space between categories. For "non-category" axes, the value is directly a number of "points" (in "view-box") |
+| type | oneOf(['y', 'x']) | y | Axis direction |
+| value | any | Required property | Value in the choosen axis |
 | label | string | Required property | Label of the marker |
 | labelAlign | oneOf(['start', 'end']) | Required property |  |
 | styles | object | ```{stroke: '#333',strokeWidth: 1,strokeDasharray: '0'}``` | Line styles |
@@ -440,7 +432,7 @@ sidebarDepth: 3
 *Component to show circle in WLine but it can be used wherever you want it needs access to Chart api.*
 
 <br>
-<Api-Dots />
+<Dots />
 
 ### Parent components
 **[\<WLine />](#wline)**
@@ -467,34 +459,12 @@ sidebarDepth: 3
 |----------|------------|------------|
 | onClickDot | Dot info prop | Event emitted on click dot |
 
-## WAxisLabel
-
-*Component to show label in the axis but it can be used wherever you want.*
-
-<br>
-<Api-AxisLabel />
-
-### Parent components
-**[\<WXAxis />](#wxaxis)**
-**[\<WYAxis />](#wyaxis)**
-**Valid SVG elements**
-
-### Properties
-| Property | Type | Default value | Description |
-|----------|------|---------------|-------------|
-| x |  number |  | X coordinate |
-| y |  number |  | Y coordinate |
-| value |  array | | Array of labels |
-| textAnchor | Text anchor style |
-| transform | Transform style |
-| styles |  object | ```{ fill: 'none', stroke: 'none' }``` | |
-
 ## WTickText
 
 *Component to show text in the axis but it can be used wherever you want.*
 
 <br>
-<Api-Texts />
+<Texts />
 
 ### Parent components
 **[\<WXAxis />](#wxaxis)**

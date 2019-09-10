@@ -78,7 +78,7 @@ describe('Components/WLine', () => {
     })
 
     it(`Shouldn't be render`, () => {
-        const wrapper = shallowMount(WLine, { ...defaultConfig, propsData: { ...propsData, visible: false } })
+        const wrapper = shallowMount(WLine, { ...defaultConfig, propsData: { ...propsData, index: 2 } })
         expect(wrapper.html()).toMatchSnapshot()
     })
 
