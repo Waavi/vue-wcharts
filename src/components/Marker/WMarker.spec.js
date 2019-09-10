@@ -14,14 +14,6 @@ describe('Components/WMarker', () => {
         },
     ]
 
-    const propsData = {
-        value: {
-            range: true,
-            min: 1000,
-            max: 3000,
-        },
-    }
-
     const provide = {
         Chart: {
             dataset,
@@ -43,24 +35,22 @@ describe('Components/WMarker', () => {
         },
     }
 
-    const defaultConfig = {
+    const defaultConfigForProps = (propsData = {}) => ({
         propsData,
         provide,
+    })
+
+    function snapshot (description, alias, props) {
+        it(`render a "${description}" ("${alias}") correctly`, () => {
+            const wrapper = shallowMount(WMarker, defaultConfigForProps(props))
+            expect(wrapper.html()).toMatchSnapshot()
+        })
     }
 
-    it(`Should be render correctly`, () => {
-        const wrapper = shallowMount(WMarker, defaultConfig)
-        expect(wrapper.html()).toMatchSnapshot()
-    })
-
-    it(`Should be render correctly with x type`, () => {
-        const wrapper = shallowMount(WMarker, {
-            ...defaultConfig,
-            propsData: {
-                ...defaultConfig.propsData,
-                type: 'x',
-            },
-        })
-        expect(wrapper.html()).toMatchSnapshot()
-    })
+    snapshot('vertical marker', 'xLine', { x: 10 })
+    snapshot('horizontal marker', 'yLine', { y: 10 })
+    snapshot('point marker', 'point', { x: 10, y: 20 })
+    snapshot('vertical range marker', 'xRange', { x: [10, 20] })
+    snapshot('horizontal range marker', 'yRange', { y: [10, 20] })
+    snapshot('area marker', 'rect', { x: [10, 20], y: [30, 40] })
 })

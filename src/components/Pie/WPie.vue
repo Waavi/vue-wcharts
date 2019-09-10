@@ -1,6 +1,6 @@
 <template>
     <g
-        v-if="visible"
+        v-if="active"
         :style="stylesCmp"
     >
         <foreignObject :style="contentStyles">
@@ -31,12 +31,13 @@ import pie from 'd3-shape/src/pie'
 import arc from 'd3-shape/src/arc'
 import merge from '../../utils/merge'
 import themeMixin from '../../mixins/theme'
+import visibleMixin from '../../mixins/visible'
 
 export default {
     name: 'WPie',
     type: 'pie',
     inject: ['Chart'],
-    mixins: [themeMixin],
+    mixins: [themeMixin, visibleMixin],
     props: {
         // internal props set by the parent (WPieChart)
         index: VueTypes.number,
@@ -55,7 +56,8 @@ export default {
             stroke: VueTypes.string,
         }).loose,
         opacityDisabled: VueTypes.number.def(0.5),
-        active: VueTypes.oneOfType([Number, null]),
+        // index of item active
+        itemActive: VueTypes.oneOfType([Number, null]),
     },
     data () {
         return {
@@ -63,21 +65,8 @@ export default {
         }
     },
     computed: {
-        stylesCmp () {
-            return {
-                ...this.themeStyles.styles,
-                ...this.styles,
-            }
-        },
-        pathStylesCmp () {
-            return {
-                ...omit(this.themeStyles.path, ['stroke']),
-                ...omit(this.pathStyles, ['stroke']),
-                ...(this.trigger === 'click' ? { cursor: 'pointer' } : {}),
-            }
-        },
         // Active elem
-        visible () {
+        active () {
             return this.Chart.activeElements.includes(this.index)
         },
         curRadius () {
@@ -161,15 +150,31 @@ export default {
                 transform: `translate(-${width}px, -${width}px)`,
             }
         },
+        stylesCmp () {
+            return {
+                ...this.themeStyles.styles,
+                ...this.styles,
+            }
+        },
+        pathStylesCmp () {
+            return {
+                ...omit(this.themeStyles.path, ['stroke']),
+                ...omit(this.pathStyles, ['stroke']),
+                ...(this.trigger === 'click' ? { cursor: 'pointer' } : {}),
+            }
+        },
     },
     watch: {
-        active (newValue) {
-            this.activePath = newValue
+        itemActive: {
+            handler (id) {
+                if (id) this.activePath = id
+            },
+            immediate: true,
         },
     },
     methods: {
         setActivePath (id) {
-            if ([null, undefined].includes(this.active)) this.activePath = id
+            if ([null, undefined].includes(this.itemActive)) this.activePath = id
         },
         handleActive (event) {
             const { id } = event.target

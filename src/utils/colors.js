@@ -1,6 +1,7 @@
 export default {
     primary: '#48c0b6',
     secondary: '#5400e8',
+
     barney: '#a712b5',
     black: '#000000',
     brightCyan: '#54ddd9',
@@ -14,7 +15,8 @@ export default {
     macaroniAndCheeseTwo: '#ebd13b',
     paleGold: '#ffde69',
     paleTeal: '#87cac4',
-    purplishBlue: '#6e19ff',
+    pink: '#FB499D',
+    purplishBlue: '#5C6BC0',
     rustyRed: '#cb1b1b',
     sea: '#348c85',
     veryLightPink: '#e8e8e8',

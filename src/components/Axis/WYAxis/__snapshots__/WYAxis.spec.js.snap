@@ -5,38 +5,37 @@ exports[`Axis/WYAxis Should be render correctly 1`] = `
   <line x1="40" y1="10" x2="40" y2="376" stroke="#cccccc"></line>
   <g text-anchor="end">
     <line x1="35" y1="8800" x2="40" y2="8800" stroke="#cccccc"></line>
-    <WTickText-stub colors="#48c0b6,#9d6af5,#ffde69,#e8e8e8,#54ddd9,#6e19ff,#dfbd46" x="30" y="8804" dy="" index="0" value="8800" styles="[object Object]"></WTickText-stub>
+    <WTickText-stub colors="#48c0b6,#9d6af5,#ffde69,#e8e8e8,#54ddd9,#5C6BC0,#FB499D" x="30" y="8804" dy="" index="0" value="8800" styles="[object Object]"></WTickText-stub>
   </g>
   <g text-anchor="end">
     <line x1="35" y1="7544" x2="40" y2="7544" stroke="#cccccc"></line>
-    <WTickText-stub colors="#48c0b6,#9d6af5,#ffde69,#e8e8e8,#54ddd9,#6e19ff,#dfbd46" x="30" y="7548" dy="" index="1" value="7544" styles="[object Object]"></WTickText-stub>
+    <WTickText-stub colors="#48c0b6,#9d6af5,#ffde69,#e8e8e8,#54ddd9,#5C6BC0,#FB499D" x="30" y="7548" dy="" index="1" value="7544" styles="[object Object]"></WTickText-stub>
   </g>
   <g text-anchor="end">
     <line x1="35" y1="6288" x2="40" y2="6288" stroke="#cccccc"></line>
-    <WTickText-stub colors="#48c0b6,#9d6af5,#ffde69,#e8e8e8,#54ddd9,#6e19ff,#dfbd46" x="30" y="6292" dy="" index="2" value="6288" styles="[object Object]"></WTickText-stub>
+    <WTickText-stub colors="#48c0b6,#9d6af5,#ffde69,#e8e8e8,#54ddd9,#5C6BC0,#FB499D" x="30" y="6292" dy="" index="2" value="6288" styles="[object Object]"></WTickText-stub>
   </g>
   <g text-anchor="end">
     <line x1="35" y1="5032" x2="40" y2="5032" stroke="#cccccc"></line>
-    <WTickText-stub colors="#48c0b6,#9d6af5,#ffde69,#e8e8e8,#54ddd9,#6e19ff,#dfbd46" x="30" y="5036" dy="" index="3" value="5032" styles="[object Object]"></WTickText-stub>
+    <WTickText-stub colors="#48c0b6,#9d6af5,#ffde69,#e8e8e8,#54ddd9,#5C6BC0,#FB499D" x="30" y="5036" dy="" index="3" value="5032" styles="[object Object]"></WTickText-stub>
   </g>
   <g text-anchor="end">
     <line x1="35" y1="3777" x2="40" y2="3777" stroke="#cccccc"></line>
-    <WTickText-stub colors="#48c0b6,#9d6af5,#ffde69,#e8e8e8,#54ddd9,#6e19ff,#dfbd46" x="30" y="3781" dy="" index="4" value="3777" styles="[object Object]"></WTickText-stub>
+    <WTickText-stub colors="#48c0b6,#9d6af5,#ffde69,#e8e8e8,#54ddd9,#5C6BC0,#FB499D" x="30" y="3781" dy="" index="4" value="3777" styles="[object Object]"></WTickText-stub>
   </g>
   <g text-anchor="end">
     <line x1="35" y1="2521" x2="40" y2="2521" stroke="#cccccc"></line>
-    <WTickText-stub colors="#48c0b6,#9d6af5,#ffde69,#e8e8e8,#54ddd9,#6e19ff,#dfbd46" x="30" y="2525" dy="" index="5" value="2521" styles="[object Object]"></WTickText-stub>
+    <WTickText-stub colors="#48c0b6,#9d6af5,#ffde69,#e8e8e8,#54ddd9,#5C6BC0,#FB499D" x="30" y="2525" dy="" index="5" value="2521" styles="[object Object]"></WTickText-stub>
   </g>
   <g text-anchor="end">
     <line x1="35" y1="1265" x2="40" y2="1265" stroke="#cccccc"></line>
-    <WTickText-stub colors="#48c0b6,#9d6af5,#ffde69,#e8e8e8,#54ddd9,#6e19ff,#dfbd46" x="30" y="1269" dy="" index="6" value="1265" styles="[object Object]"></WTickText-stub>
+    <WTickText-stub colors="#48c0b6,#9d6af5,#ffde69,#e8e8e8,#54ddd9,#5C6BC0,#FB499D" x="30" y="1269" dy="" index="6" value="1265" styles="[object Object]"></WTickText-stub>
   </g>
   <g text-anchor="end">
     <line x1="35" y1="10" x2="40" y2="10" stroke="#cccccc"></line>
-    <WTickText-stub colors="#48c0b6,#9d6af5,#ffde69,#e8e8e8,#54ddd9,#6e19ff,#dfbd46" x="30" y="14" dy="" index="7" value="10" styles="[object Object]"></WTickText-stub>
-  </g> <svg width="100%" height="100%"><text x="25" y="376" text-anchor="start" transform="rotate(-90 25 376)" style="font-size: 12; fill: #414141; font-weight: 800;">
-      Y Axis
-    </text></svg>
+    <WTickText-stub colors="#48c0b6,#9d6af5,#ffde69,#e8e8e8,#54ddd9,#5C6BC0,#FB499D" x="30" y="14" dy="" index="7" value="10" styles="[object Object]"></WTickText-stub>
+  </g>
+  <WAxisLabel styles="[object Object]" x="17" y="376" transform="rotate(-90 17 376)" textAnchor="start" value="Y Axis"></WAxisLabel>
 </g>
 `;
 
@@ -45,38 +44,37 @@ exports[`Axis/WYAxis Should be render correctly without line 1`] = `
   <!---->
   <g text-anchor="end">
     <line x1="35" y1="8800" x2="40" y2="8800" stroke="#cccccc"></line>
-    <WTickText-stub colors="#48c0b6,#9d6af5,#ffde69,#e8e8e8,#54ddd9,#6e19ff,#dfbd46" x="30" y="8804" dy="" index="0" value="8800" styles="[object Object]"></WTickText-stub>
+    <WTickText-stub colors="#48c0b6,#9d6af5,#ffde69,#e8e8e8,#54ddd9,#5C6BC0,#FB499D" x="30" y="8804" dy="" index="0" value="8800" styles="[object Object]"></WTickText-stub>
   </g>
   <g text-anchor="end">
     <line x1="35" y1="7544" x2="40" y2="7544" stroke="#cccccc"></line>
-    <WTickText-stub colors="#48c0b6,#9d6af5,#ffde69,#e8e8e8,#54ddd9,#6e19ff,#dfbd46" x="30" y="7548" dy="" index="1" value="7544" styles="[object Object]"></WTickText-stub>
+    <WTickText-stub colors="#48c0b6,#9d6af5,#ffde69,#e8e8e8,#54ddd9,#5C6BC0,#FB499D" x="30" y="7548" dy="" index="1" value="7544" styles="[object Object]"></WTickText-stub>
   </g>
   <g text-anchor="end">
     <line x1="35" y1="6288" x2="40" y2="6288" stroke="#cccccc"></line>
-    <WTickText-stub colors="#48c0b6,#9d6af5,#ffde69,#e8e8e8,#54ddd9,#6e19ff,#dfbd46" x="30" y="6292" dy="" index="2" value="6288" styles="[object Object]"></WTickText-stub>
+    <WTickText-stub colors="#48c0b6,#9d6af5,#ffde69,#e8e8e8,#54ddd9,#5C6BC0,#FB499D" x="30" y="6292" dy="" index="2" value="6288" styles="[object Object]"></WTickText-stub>
   </g>
   <g text-anchor="end">
     <line x1="35" y1="5032" x2="40" y2="5032" stroke="#cccccc"></line>
-    <WTickText-stub colors="#48c0b6,#9d6af5,#ffde69,#e8e8e8,#54ddd9,#6e19ff,#dfbd46" x="30" y="5036" dy="" index="3" value="5032" styles="[object Object]"></WTickText-stub>
+    <WTickText-stub colors="#48c0b6,#9d6af5,#ffde69,#e8e8e8,#54ddd9,#5C6BC0,#FB499D" x="30" y="5036" dy="" index="3" value="5032" styles="[object Object]"></WTickText-stub>
   </g>
   <g text-anchor="end">
     <line x1="35" y1="3777" x2="40" y2="3777" stroke="#cccccc"></line>
-    <WTickText-stub colors="#48c0b6,#9d6af5,#ffde69,#e8e8e8,#54ddd9,#6e19ff,#dfbd46" x="30" y="3781" dy="" index="4" value="3777" styles="[object Object]"></WTickText-stub>
+    <WTickText-stub colors="#48c0b6,#9d6af5,#ffde69,#e8e8e8,#54ddd9,#5C6BC0,#FB499D" x="30" y="3781" dy="" index="4" value="3777" styles="[object Object]"></WTickText-stub>
   </g>
   <g text-anchor="end">
     <line x1="35" y1="2521" x2="40" y2="2521" stroke="#cccccc"></line>
-    <WTickText-stub colors="#48c0b6,#9d6af5,#ffde69,#e8e8e8,#54ddd9,#6e19ff,#dfbd46" x="30" y="2525" dy="" index="5" value="2521" styles="[object Object]"></WTickText-stub>
+    <WTickText-stub colors="#48c0b6,#9d6af5,#ffde69,#e8e8e8,#54ddd9,#5C6BC0,#FB499D" x="30" y="2525" dy="" index="5" value="2521" styles="[object Object]"></WTickText-stub>
   </g>
   <g text-anchor="end">
     <line x1="35" y1="1265" x2="40" y2="1265" stroke="#cccccc"></line>
-    <WTickText-stub colors="#48c0b6,#9d6af5,#ffde69,#e8e8e8,#54ddd9,#6e19ff,#dfbd46" x="30" y="1269" dy="" index="6" value="1265" styles="[object Object]"></WTickText-stub>
+    <WTickText-stub colors="#48c0b6,#9d6af5,#ffde69,#e8e8e8,#54ddd9,#5C6BC0,#FB499D" x="30" y="1269" dy="" index="6" value="1265" styles="[object Object]"></WTickText-stub>
   </g>
   <g text-anchor="end">
     <line x1="35" y1="10" x2="40" y2="10" stroke="#cccccc"></line>
-    <WTickText-stub colors="#48c0b6,#9d6af5,#ffde69,#e8e8e8,#54ddd9,#6e19ff,#dfbd46" x="30" y="14" dy="" index="7" value="10" styles="[object Object]"></WTickText-stub>
-  </g> <svg width="100%" height="100%"><text x="25" y="376" text-anchor="start" transform="rotate(-90 25 376)" style="font-size: 12; fill: #414141; font-weight: 800;">
-      Y Axis
-    </text></svg>
+    <WTickText-stub colors="#48c0b6,#9d6af5,#ffde69,#e8e8e8,#54ddd9,#5C6BC0,#FB499D" x="30" y="14" dy="" index="7" value="10" styles="[object Object]"></WTickText-stub>
+  </g>
+  <WAxisLabel styles="[object Object]" x="17" y="376" transform="rotate(-90 17 376)" textAnchor="start" value="Y Axis"></WAxisLabel>
 </g>
 `;
 
@@ -85,37 +83,36 @@ exports[`Axis/WYAxis Should be render correctly without ticks lines 1`] = `
   <line x1="40" y1="10" x2="40" y2="376" stroke="#cccccc"></line>
   <g text-anchor="end">
     <!---->
-    <WTickText-stub colors="#48c0b6,#9d6af5,#ffde69,#e8e8e8,#54ddd9,#6e19ff,#dfbd46" x="30" y="8804" dy="" index="0" value="8800" styles="[object Object]"></WTickText-stub>
+    <WTickText-stub colors="#48c0b6,#9d6af5,#ffde69,#e8e8e8,#54ddd9,#5C6BC0,#FB499D" x="30" y="8804" dy="" index="0" value="8800" styles="[object Object]"></WTickText-stub>
   </g>
   <g text-anchor="end">
     <!---->
-    <WTickText-stub colors="#48c0b6,#9d6af5,#ffde69,#e8e8e8,#54ddd9,#6e19ff,#dfbd46" x="30" y="7548" dy="" index="1" value="7544" styles="[object Object]"></WTickText-stub>
+    <WTickText-stub colors="#48c0b6,#9d6af5,#ffde69,#e8e8e8,#54ddd9,#5C6BC0,#FB499D" x="30" y="7548" dy="" index="1" value="7544" styles="[object Object]"></WTickText-stub>
   </g>
   <g text-anchor="end">
     <!---->
-    <WTickText-stub colors="#48c0b6,#9d6af5,#ffde69,#e8e8e8,#54ddd9,#6e19ff,#dfbd46" x="30" y="6292" dy="" index="2" value="6288" styles="[object Object]"></WTickText-stub>
+    <WTickText-stub colors="#48c0b6,#9d6af5,#ffde69,#e8e8e8,#54ddd9,#5C6BC0,#FB499D" x="30" y="6292" dy="" index="2" value="6288" styles="[object Object]"></WTickText-stub>
   </g>
   <g text-anchor="end">
     <!---->
-    <WTickText-stub colors="#48c0b6,#9d6af5,#ffde69,#e8e8e8,#54ddd9,#6e19ff,#dfbd46" x="30" y="5036" dy="" index="3" value="5032" styles="[object Object]"></WTickText-stub>
+    <WTickText-stub colors="#48c0b6,#9d6af5,#ffde69,#e8e8e8,#54ddd9,#5C6BC0,#FB499D" x="30" y="5036" dy="" index="3" value="5032" styles="[object Object]"></WTickText-stub>
   </g>
   <g text-anchor="end">
     <!---->
-    <WTickText-stub colors="#48c0b6,#9d6af5,#ffde69,#e8e8e8,#54ddd9,#6e19ff,#dfbd46" x="30" y="3781" dy="" index="4" value="3777" styles="[object Object]"></WTickText-stub>
+    <WTickText-stub colors="#48c0b6,#9d6af5,#ffde69,#e8e8e8,#54ddd9,#5C6BC0,#FB499D" x="30" y="3781" dy="" index="4" value="3777" styles="[object Object]"></WTickText-stub>
   </g>
   <g text-anchor="end">
     <!---->
-    <WTickText-stub colors="#48c0b6,#9d6af5,#ffde69,#e8e8e8,#54ddd9,#6e19ff,#dfbd46" x="30" y="2525" dy="" index="5" value="2521" styles="[object Object]"></WTickText-stub>
+    <WTickText-stub colors="#48c0b6,#9d6af5,#ffde69,#e8e8e8,#54ddd9,#5C6BC0,#FB499D" x="30" y="2525" dy="" index="5" value="2521" styles="[object Object]"></WTickText-stub>
   </g>
   <g text-anchor="end">
     <!---->
-    <WTickText-stub colors="#48c0b6,#9d6af5,#ffde69,#e8e8e8,#54ddd9,#6e19ff,#dfbd46" x="30" y="1269" dy="" index="6" value="1265" styles="[object Object]"></WTickText-stub>
+    <WTickText-stub colors="#48c0b6,#9d6af5,#ffde69,#e8e8e8,#54ddd9,#5C6BC0,#FB499D" x="30" y="1269" dy="" index="6" value="1265" styles="[object Object]"></WTickText-stub>
   </g>
   <g text-anchor="end">
     <!---->
-    <WTickText-stub colors="#48c0b6,#9d6af5,#ffde69,#e8e8e8,#54ddd9,#6e19ff,#dfbd46" x="30" y="14" dy="" index="7" value="10" styles="[object Object]"></WTickText-stub>
-  </g> <svg width="100%" height="100%"><text x="25" y="376" text-anchor="start" transform="rotate(-90 25 376)" style="font-size: 12; fill: #414141; font-weight: 800;">
-      Y Axis
-    </text></svg>
+    <WTickText-stub colors="#48c0b6,#9d6af5,#ffde69,#e8e8e8,#54ddd9,#5C6BC0,#FB499D" x="30" y="14" dy="" index="7" value="10" styles="[object Object]"></WTickText-stub>
+  </g>
+  <WAxisLabel styles="[object Object]" x="17" y="376" transform="rotate(-90 17 376)" textAnchor="start" value="Y Axis"></WAxisLabel>
 </g>
 `;
