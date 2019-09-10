@@ -9,11 +9,11 @@
         />
         <WXAxis
             datakey="name"
-            labelText="Categories"
+            label="Categories"
             labelAlign="middle"
         />
         <WYAxis
-            labelText="Values"
+            label="Values"
             labelAlign="middle"
         />
     </WCartesian>

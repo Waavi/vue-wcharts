@@ -34,9 +34,8 @@ sidebarDepth: 3
 | hideNegativeAxis | bool | false | It true set, negative axis won't be drawn |
 | numTicks | number | 0 | Number of ticks |
 | format | func | value => value | Formatted tick text function |
+| label | string, array |  | Axis label |
 | labelAlign | oneOf(['start', 'middle', 'end']) | end | Axis label position |
-| labelText | string |  | Axis label |
-| labelSize | number | 12 | Label size |
 | axisStyles | object | ```{stroke: '#999'}``` | Axis line styles |
 | labelStyles | object | ```{fill: '#999'}``` | Label styles |
 | markStyles | object | ```{stroke: '#999'}``` | Tick mark styles |
@@ -92,9 +91,8 @@ sidebarDepth: 3
 | hideTickMark | bool | false | It true set, line won't be drawn |
 | numTicks | number | 0 | Number of ticks |
 | format | func | value => value | Formatted tick text function |
+| label | string, array |  | Axis label |
 | labelAlign | oneOf(['start', 'middle', 'end']) | start | Axis label position |
-| labelText | string |  | Axis label |
-| labelSize | number | 12 | Label size |
 | axisStyles | object | ```{stroke: '#999'}``` | Axis line styles |
 | labelStyles | object | ```{fill: '#999'}``` | Label styles |
 | markStyles | object | ```{stroke: '#999'}``` | Tick mark styles |
@@ -146,9 +144,8 @@ sidebarDepth: 3
 | hideTickMark | bool | false | It true set, line won't be drawn |
 | numTicks | number | 0 | Number of ticks |
 | format | func | value => value | Formatted tick text function |
+| label | string, array |  | Axis label |
 | labelAlign | oneOf(['start', 'middle', 'end']) | start | Axis label position |
-| labelText | string |  | Axis label |
-| labelSize | number | 12 | Label size |
 | axisStyles | object | ```{stroke: '#999'}``` | Axis line styles |
 | labelStyles | object | ```{fill: '#999'}``` | Label styles |
 | markStyles | object | ```{stroke: '#999'}``` | Tick mark styles |
@@ -225,7 +222,6 @@ sidebarDepth: 3
 | color | string    arrayOf(string) |  | Accept a color for all bars or one color for every bar |
 | styles | object |  | The styles of the bar |
 | showLabel | bool | false | If is set to true, the label will be drawn |
-| labelSize | number | 12 | The font size of the label |
 | labelAlign | oneOf(['start', 'middle', 'end']) | middle | The horizontal position of the label |
 | labelPosition | oneOf(['inside', 'outside']) | outside | The vertical position of the label. If the chart is stacked the label position will be `inside` |
 | labelStyles | object | ```{ fill: '#333', cursor: 'default' }``` | The styles of the label |

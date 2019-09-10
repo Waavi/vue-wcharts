@@ -38,7 +38,7 @@ describe('Axis/WYAxis', () => {
     }
 
     const propsData = {
-        labelText: 'Y Axis',
+        label: 'Y Axis',
     }
 
     const provide = {

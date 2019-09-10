@@ -34,9 +34,8 @@ exports[`Axis/WYAxis Should be render correctly 1`] = `
   <g text-anchor="end">
     <line x1="35" y1="10" x2="40" y2="10" stroke="#cccccc"></line>
     <WTickText-stub colors="#48c0b6,#9d6af5,#ffde69,#e8e8e8,#54ddd9,#5C6BC0,#FB499D" x="30" y="14" dy="" index="7" value="10" styles="[object Object]"></WTickText-stub>
-  </g> <svg width="100%" height="100%"><text x="25" y="376" text-anchor="start" transform="rotate(-90 25 376)" style="font-size: 12; fill: #414141; font-weight: 800;">
-      Y Axis
-    </text></svg>
+  </g>
+  <WLabel styles="[object Object]" x="25" y="376" transform="rotate(-90 25 376)" textAnchor="start" value="Y Axis"></WLabel>
 </g>
 `;
 
@@ -74,9 +73,8 @@ exports[`Axis/WYAxis Should be render correctly without line 1`] = `
   <g text-anchor="end">
     <line x1="35" y1="10" x2="40" y2="10" stroke="#cccccc"></line>
     <WTickText-stub colors="#48c0b6,#9d6af5,#ffde69,#e8e8e8,#54ddd9,#5C6BC0,#FB499D" x="30" y="14" dy="" index="7" value="10" styles="[object Object]"></WTickText-stub>
-  </g> <svg width="100%" height="100%"><text x="25" y="376" text-anchor="start" transform="rotate(-90 25 376)" style="font-size: 12; fill: #414141; font-weight: 800;">
-      Y Axis
-    </text></svg>
+  </g>
+  <WLabel styles="[object Object]" x="25" y="376" transform="rotate(-90 25 376)" textAnchor="start" value="Y Axis"></WLabel>
 </g>
 `;
 
@@ -114,8 +112,7 @@ exports[`Axis/WYAxis Should be render correctly without ticks lines 1`] = `
   <g text-anchor="end">
     <!---->
     <WTickText-stub colors="#48c0b6,#9d6af5,#ffde69,#e8e8e8,#54ddd9,#5C6BC0,#FB499D" x="30" y="14" dy="" index="7" value="10" styles="[object Object]"></WTickText-stub>
-  </g> <svg width="100%" height="100%"><text x="25" y="376" text-anchor="start" transform="rotate(-90 25 376)" style="font-size: 12; fill: #414141; font-weight: 800;">
-      Y Axis
-    </text></svg>
+  </g>
+  <WLabel styles="[object Object]" x="25" y="376" transform="rotate(-90 25 376)" textAnchor="start" value="Y Axis"></WLabel>
 </g>
 `;

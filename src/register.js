@@ -14,6 +14,7 @@ import {
     WPie,
     WTooltip,
     WDot,
+    WLabel,
     WBullet,
     WShowIfFit,
 } from './components'
@@ -46,6 +47,7 @@ export default (Vue, opts = {}) => {
         WPie,
         WTooltip,
         WDot,
+        WLabel,
         WBullet,
         WShowIfFit,
     ]

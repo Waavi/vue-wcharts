@@ -28,6 +28,7 @@ const axisStyles = {
     },
     label: {
         fill: colors.grayDark,
+        fontSize: '12px',
         fontWeight: 800,
     },
     tick: {

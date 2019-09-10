@@ -47,23 +47,13 @@
 
         <slot
             name="label"
-            v-bind="label"
+            v-bind="labels"
+            :styles="labelStylesCmp"
         >
-            <svg
-                v-if="labelText"
-                width="100%"
-                height="100%"
-            >
-                <text
-                    :x="label.x"
-                    :y="label.y"
-                    :text-anchor="label.textAnchor"
-                    :transform="label.transform"
-                    :style="labelStylesCmp"
-                >
-                    {{ labelText }}
-                </text>
-            </svg>
+            <WLabel
+                v-bind="labels"
+                :styles="labelStylesCmp"
+            />
         </slot>
     </g>
 </template>

@@ -41,7 +41,7 @@ describe('Axis/WXAxis', () => {
 
     const propsData = {
         datakey: 'name',
-        labelText: 'X Axis',
+        label: 'X Axis',
     }
 
     const provide = {

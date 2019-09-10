@@ -23,9 +23,10 @@ export default {
         hideTickMark: VueTypes.bool.def(false),
         numTicks: VueTypes.number.def(8),
         format: VueTypes.func.def(value => value),
-        // Label
-        labelText: VueTypes.string,
-        labelSize: VueTypes.number.def(12),
+        label: VueTypes.oneOfType([
+            VueTypes.string,
+            VueTypes.arrayOf(VueTypes.string),
+        ]).optional,
         // Negative axis
         hideNegativeAxis: VueTypes.bool.def(false),
         // Style
@@ -36,14 +37,14 @@ export default {
     },
     preload ({ parent, props, index }) {
         const {
-            space, labelText, datakey, name,
+            space, label, datakey, name,
         } = props
         // Check type axis
         const isX = this.axis === 'x'
         // Get spaces binding or default
         let spaces = space || this.props.space.default()
-        // Set default space if has labelText and not space value
-        if (!space && labelText) {
+        // Set default space if has label and not space value
+        if (!space && label) {
             spaces = isX ? spaceLabelX : spaceLabelY
         }
         // Added spaces of parent
@@ -186,8 +187,9 @@ export default {
             return this.Chart.canvas.y1
         },
         // Return label config
-        label () {
-            const { labelAlign: textAnchor, labelSize: fontSize } = this
+        labels () {
+            const { label = [], labelAlign: textAnchor } = this
+            const value = Array.isArray(label) ? label : [label]
             // Get setting of label
             const { x, y, transform } = (this.isX ? this.getLabelXAxis : this.getLabelYAxis)(textAnchor)
 
@@ -196,7 +198,7 @@ export default {
                 y,
                 transform,
                 textAnchor,
-                fontSize,
+                value,
             }
         },
         // Generate styles of axis
@@ -223,7 +225,6 @@ export default {
         // Generate styles of label
         labelStylesCmp () {
             return {
-                fontSize: this.labelSize,
                 ...this.themeStyles.label,
                 ...this.labelStyles,
             }
