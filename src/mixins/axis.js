@@ -84,7 +84,7 @@ export default {
             } = this.Chart
 
             // Return a empty array if we don't have any data
-            if (!data || data.length === 0) {
+            if (!data || data.length === 0 || this.numTicks === 0) {
                 return []
             }
 
@@ -124,6 +124,7 @@ export default {
                 return data.map((props, index) => {
                     // Calc proportional size between ticks
                     const x = canvas.x0 + space * (data.length === 1 ? 0.5 : index) + padding[3]
+                    const value = ['string', 'number'].includes(typeof props[this.datakey]) ? props[this.datakey] : index
                     return {
                         mark: {
                             index,
@@ -134,7 +135,7 @@ export default {
                         },
                         text: {
                             index,
-                            value: props[this.datakey] || index,
+                            value,
                             x,
                             y: canvas.y1 + this.textOffset,
                         },

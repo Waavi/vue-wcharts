@@ -8,7 +8,13 @@ sidebarDepth: 3
 *X axis component.*
 
 <br>
-<XAxis />
+<Api-XAxis />
+
+<br>
+
+<SourceCode>
+<<< @/docs/.vuepress/components/Api/XAxis.vue
+</SourceCode>
 
 ### Parent components
 **[\<WCartesian />](/api/charts.html#wcartesian)**
@@ -67,7 +73,7 @@ sidebarDepth: 3
 *Y axis component.*
 
 <br>
-<YAxis />
+<Api-YAxis />
 
 ### Parent components
 **[\<WCartesian />](/api/charts.html#wcartesian)**
@@ -124,7 +130,7 @@ sidebarDepth: 3
 *Z axis component.*
 
 <br>
-<ZAxis />
+<Api-ZAxis />
 
 ### Parent components
 **[\<WCartesian />](/api/charts.html#wcartesian)**
@@ -153,7 +159,7 @@ sidebarDepth: 3
 *Line component.*
 
 <br>
-<Lines />
+<Api-Lines />
 
 ### Parent components
 **[\<WCartesian />](/api/charts.html#wcartesian)**
@@ -204,7 +210,7 @@ sidebarDepth: 3
 *Bar component.*
 
 <br>
-<Bars />
+<Api-Bars />
 
 ### Parent components
 **[\<WCartesian />](/api/charts.html#wcartesian)**
@@ -291,7 +297,7 @@ sidebarDepth: 3
 *Pie component.*
 
 <br>
-<Pie />
+<Api-Pie />
 
 ### Parent components
 **[\<WPieChart />](/api/charts.html#wpiechart)**
@@ -332,7 +338,7 @@ sidebarDepth: 3
 *Grid component.*
 
 <br>
-<Grid />
+<Api-Grid />
 
 ### Parent components
 **[\<WCartesian />](/api/charts.html#wcartesian)**
@@ -351,7 +357,7 @@ sidebarDepth: 3
 *Scatter chart.*
 
 <br>
-<Scatter />
+<Api-Scatter />
 
 ### Parent components
 **[\<WCartesian />](/api/charts.html#wcartesian)**
@@ -398,7 +404,7 @@ sidebarDepth: 3
 *Component to show a reference line in the chart.*
 
 <br>
-<Markers />
+<Api-Markers />
 
 ### Parent components
 **[\<WCartesian />](/api/charts.html#wcartesian)**
@@ -433,7 +439,7 @@ sidebarDepth: 3
 *Component to show circle in WLine but it can be used wherever you want it needs access to Chart api.*
 
 <br>
-<Dots />
+<Api-Dots />
 
 ### Parent components
 **[\<WLine />](#wline)**
@@ -465,7 +471,7 @@ sidebarDepth: 3
 *Component to show text in the axis but it can be used wherever you want.*
 
 <br>
-<Texts />
+<Api-Texts />
 
 ### Parent components
 **[\<WXAxis />](#wxaxis)**

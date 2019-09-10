@@ -13,7 +13,7 @@ export let colors = [
     c.veryLightPink,
     c.brightCyan,
     c.purplishBlue,
-    c.macaroniAndCheese,
+    c.pink,
 ]
 
 export let theme = {

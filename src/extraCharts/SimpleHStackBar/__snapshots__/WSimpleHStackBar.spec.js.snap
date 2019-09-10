@@ -27,7 +27,7 @@ exports[`Components/WLine Should be render correctly 1`] = `
         </div>
       </div>
     </div>
-    <wtooltip-stub colors="#48c0b6,#9d6af5,#ffde69,#e8e8e8,#54ddd9,#6e19ff,#dfbd46" id="" gap="10" styles="[object Object]" visiblestyles="[object Object]" titlestyles="[object Object]" wrapperstyles="[object Object]"></wtooltip-stub>
+    <wtooltip-stub colors="#48c0b6,#9d6af5,#ffde69,#e8e8e8,#54ddd9,#5C6BC0,#FB499D" id="" gap="10" styles="[object Object]" visiblestyles="[object Object]" titlestyles="[object Object]" wrapperstyles="[object Object]"></wtooltip-stub>
     <div class="End"></div>
   </div>
 </div>
@@ -54,7 +54,7 @@ exports[`Components/WLine Should be render correctly with labels 1`] = `
         </div>
       </div>
     </div>
-    <wtooltip-stub colors="#48c0b6,#9d6af5,#ffde69,#e8e8e8,#54ddd9,#6e19ff,#dfbd46" id="" gap="10" styles="[object Object]" visiblestyles="[object Object]" titlestyles="[object Object]" wrapperstyles="[object Object]"></wtooltip-stub>
+    <wtooltip-stub colors="#48c0b6,#9d6af5,#ffde69,#e8e8e8,#54ddd9,#5C6BC0,#FB499D" id="" gap="10" styles="[object Object]" visiblestyles="[object Object]" titlestyles="[object Object]" wrapperstyles="[object Object]"></wtooltip-stub>
     <div class="End"></div>
   </div>
 </div>
@@ -81,7 +81,7 @@ exports[`Components/WLine Should be render correctly with markers 1`] = `
         </div>
       </div>
     </div>
-    <wtooltip-stub colors="#48c0b6,#9d6af5,#ffde69,#e8e8e8,#54ddd9,#6e19ff,#dfbd46" id="" gap="10" styles="[object Object]" visiblestyles="[object Object]" titlestyles="[object Object]" wrapperstyles="[object Object]"></wtooltip-stub>
+    <wtooltip-stub colors="#48c0b6,#9d6af5,#ffde69,#e8e8e8,#54ddd9,#5C6BC0,#FB499D" id="" gap="10" styles="[object Object]" visiblestyles="[object Object]" titlestyles="[object Object]" wrapperstyles="[object Object]"></wtooltip-stub>
     <div id="0" data-type="marker" class="Marker" style="left: 13.966480446927376%;">
       <div data-value="10"></div>
     </div>
@@ -98,7 +98,7 @@ exports[`Components/WLine Should be render correctly without stacks 1`] = `
   <div class="Container">
     <!---->
     <div class="Stacks"></div>
-    <wtooltip-stub colors="#48c0b6,#9d6af5,#ffde69,#e8e8e8,#54ddd9,#6e19ff,#dfbd46" id="" gap="10" styles="[object Object]" visiblestyles="[object Object]" titlestyles="[object Object]" wrapperstyles="[object Object]"></wtooltip-stub>
+    <wtooltip-stub colors="#48c0b6,#9d6af5,#ffde69,#e8e8e8,#54ddd9,#5C6BC0,#FB499D" id="" gap="10" styles="[object Object]" visiblestyles="[object Object]" titlestyles="[object Object]" wrapperstyles="[object Object]"></wtooltip-stub>
     <!---->
   </div>
 </div>
