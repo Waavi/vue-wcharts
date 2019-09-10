@@ -44,7 +44,7 @@
         </WBar>
         <WXAxis
             datakey="name"
-            :space="[0, 50, 80, 50]"
+            :space="[0, 50, 50, 50]"
         />
         <WYAxis :space="[25, 0, 0, 50]" />
     </WCartesian>

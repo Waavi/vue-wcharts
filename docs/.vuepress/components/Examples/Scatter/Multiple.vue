@@ -12,7 +12,7 @@
         <WXAxis
             name="one"
             datakey="one"
-            :space="[0, 50, 80, 50]"
+            :space="[0, 50, 50, 50]"
         />
         <WYAxis
             name="two"
