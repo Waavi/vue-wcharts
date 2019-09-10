@@ -7,11 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.3.0] - 2019-09-10
 ### Added
 - WMarkers custom components
+- WLabel component
 - 'visible' prop in WLine, WBar, WScatter components
 
 ### Changed
 - Updated docs and examples of components
 - Palette colors
+- 'labelText' prop in Axis to 'label', to use label array strings
 
 ### Removed
 - Storybook
