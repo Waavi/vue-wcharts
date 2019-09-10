@@ -5,7 +5,7 @@ exports[`Common/WLabel Should be render correctly 1`] = `
   <tspan x="30" dy="0em" style="font-size: 12px; color: rgb(68, 68, 68);">
     Production loss from potential
   </tspan>
-  <tspan x="30" dy="1em" style="font-size: 12px; color: rgb(68, 68, 68);">
+  <tspan x="30" dy="1.25em" style="font-size: 12px; color: rgb(68, 68, 68);">
     out of service (€/year)
   </tspan>
 </text>

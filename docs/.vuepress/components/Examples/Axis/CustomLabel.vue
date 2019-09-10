@@ -1,6 +1,7 @@
 <template>
     <WCartesian
         :dataset="data"
+        responsive
     >
         <WLine
             datakey="one"
@@ -17,46 +18,38 @@
         <WXAxis
             datakey="name"
             :space="[0, 50, 80, 50]"
+            :labelSize="14"
             labelAlign="middle"
         >
             <template #label="label">
-                <svg
-                    width="100%"
-                    height="100%"
+                <text
+                    :x="label.x"
+                    :y="label.y"
+                    :text-anchor="label.textAnchor"
+                    :transform="label.transform"
+                    :font-size="14"
+                    fill="#48c0b6"
                 >
-                    <text
-                        :x="label.x"
-                        :y="label.y"
-                        :text-anchor="label.textAnchor"
-                        :transform="label.transform"
-                        :font-size="14"
-                        fill="#48c0b6"
-                    >
-                        Categories
-                    </text>
-                </svg>
+                    Categories &#9673;
+                </text>
             </template>
         </WXAxis>
         <WYAxis
             :space="[50, 0, 0, 100]"
+            :labelSize="14"
             labelAlign="middle"
         >
             <template #label="label">
-                <svg
-                    width="100%"
-                    height="100%"
+                <text
+                    :x="label.x"
+                    :y="label.y"
+                    :text-anchor="label.textAnchor"
+                    :transform="label.transform"
+                    :font-size="14"
+                    fill="#5400e8"
                 >
-                    <text
-                        :x="label.x"
-                        :y="label.y"
-                        :text-anchor="label.textAnchor"
-                        :transform="label.transform"
-                        :font-size="18"
-                        fill="#5400e8"
-                    >
-                        Values
-                    </text>
-                </svg>
+                    Values (€/year)
+                </text>
             </template>
         </WYAxis>
     </WCartesian>

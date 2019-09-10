@@ -18,7 +18,7 @@ exports[`Charts/WCartesian Should be render correctly with axix 1`] = `
         <line x1="580" y1="376" x2="580" y2="381" stroke="#cccccc"></line>
         <WTickText-stub colors="#48c0b6,#9d6af5,#ffde69,#e8e8e8,#54ddd9,#5C6BC0,#FB499D" x="580" y="396" dy="" index="2" value="2" styles="[object Object]"></WTickText-stub>
       </g>
-      <WLabel styles="[object Object]" x="580" y="408" textAnchor="end" value=""></WLabel>
+      <!---->
       <!---->
     </g>
     <g id="WYAxis">
@@ -55,7 +55,7 @@ exports[`Charts/WCartesian Should be render correctly with axix 1`] = `
         <line x1="35" y1="193" x2="40" y2="193" stroke="#cccccc"></line>
         <WTickText-stub colors="#48c0b6,#9d6af5,#ffde69,#e8e8e8,#54ddd9,#5C6BC0,#FB499D" x="30" y="197" dy="" index="7" value="0" styles="[object Object]"></WTickText-stub>
       </g>
-      <WLabel styles="[object Object]" x="10" y="376" transform="rotate(-90 10 376)" textAnchor="start" value=""></WLabel>
+      <!---->
     </g>
   </svg></div>
 `;

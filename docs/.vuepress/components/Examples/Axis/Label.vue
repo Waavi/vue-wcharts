@@ -13,7 +13,7 @@
             labelAlign="middle"
         />
         <WYAxis
-            label="Values"
+            :label="['Values', '(€/year))']"
             labelAlign="middle"
         />
     </WCartesian>

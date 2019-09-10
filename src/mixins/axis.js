@@ -4,8 +4,11 @@ import { genTicks, genExactNbTicks } from '../utils/maths'
 import WTickText from '../components/Axis/WTickText.vue'
 import themeMixin from './theme'
 
-const spaceLabelX = [0, 50, 65, 50]
-const spaceLabelY = [50, 0, 0, 80]
+const spaceLabel = (label, isX) => {
+    const num = Array.isArray(label) ? label.length : 2
+    if (isX) return [0, 50, (30 + (25 * num)), 50]
+    return [50, 0, 0, (30 + (25 * num))]
+}
 
 export default {
     type: 'axis',
@@ -27,6 +30,7 @@ export default {
             VueTypes.string,
             VueTypes.arrayOf(VueTypes.string),
         ]).optional,
+        labelSize: VueTypes.number.def(12),
         // Negative axis
         hideNegativeAxis: VueTypes.bool.def(false),
         // Style
@@ -45,7 +49,7 @@ export default {
         let spaces = space || this.props.space.default()
         // Set default space if has label and not space value
         if (!space && label) {
-            spaces = isX ? spaceLabelX : spaceLabelY
+            spaces = spaceLabel(label, isX)
         }
         // Added spaces of parent
         parent.addSpaceObjects(spaces)
@@ -187,9 +191,12 @@ export default {
             return this.Chart.canvas.y1
         },
         // Return label config
+        labelsLength () {
+            return (Array.isArray(this.label) ? this.label : [this.label]).length
+        },
         labels () {
             const { label = [], labelAlign: textAnchor } = this
-            const value = Array.isArray(label) ? label : [label]
+            const value = this.labelsLength > 1 ? label : [label]
             // Get setting of label
             const { x, y, transform } = (this.isX ? this.getLabelXAxis : this.getLabelYAxis)(textAnchor)
 
@@ -225,6 +232,7 @@ export default {
         // Generate styles of label
         labelStylesCmp () {
             return {
+                fontSize: `${this.labelSize}px`,
                 ...this.themeStyles.label,
                 ...this.labelStyles,
             }
@@ -238,7 +246,8 @@ export default {
                 middle: (this.Chart.canvas.x1 - this.Chart.canvas.x0) / 2 + this.Chart.canvas.x0,
                 end: this.Chart.canvas.x1,
             }
-            const y = this.Chart.canvas.y1 + (this.Chart.spaceObjects[2] / 2 + this.textOffset)
+            // AxisPos + labelSize + halfSpaceBottom + (labelSize * labelLines)
+            const y = (this.Chart.canvas.y1 + this.labelSize + (this.Chart.spaceObjects[2] / 2)) - (this.labelSize * (this.labelsLength / 2))
             const x = pos[align]
 
             return { x, y }
@@ -251,7 +260,8 @@ export default {
                 middle: (this.Chart.canvas.y1 - this.Chart.canvas.y0) / 2 + this.Chart.canvas.y0,
                 end: this.Chart.canvas.y0,
             }
-            const x = this.Chart.canvas.x0 - (this.Chart.spaceObjects[3] / 2 + this.textOffset)
+            // AxisPos - labelSize - halfSpaceLeft - (labelSize * labelLines)
+            const x = this.Chart.canvas.x0 - this.labelSize - (this.Chart.spaceObjects[3] / 2) - (this.labelSize * (this.labelsLength / 2))
             const y = pos[align]
 
             return { x, y, transform: `rotate(-90 ${x} ${y})` }

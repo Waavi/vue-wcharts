@@ -9,7 +9,7 @@
             v-for="(text, index) in value"
             :key="index"
             :x="x"
-            :dy="`${index * 1}em`"
+            :dy="`${index ? lineHeight : 0}em`"
             :style="styles"
         >
             {{ text }}
@@ -29,6 +29,7 @@ export default {
         transform: VueTypes.string,
         value: VueTypes.arrayOf(VueTypes.string),
         styles: VueTypes.any,
+        lineHeight: VueTypes.number.def(1.25),
     },
 }
 </script>

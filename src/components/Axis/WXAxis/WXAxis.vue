@@ -51,6 +51,7 @@
             :styles="labelStylesCmp"
         >
             <WLabel
+                v-if="label"
                 v-bind="labels"
                 :styles="labelStylesCmp"
             />

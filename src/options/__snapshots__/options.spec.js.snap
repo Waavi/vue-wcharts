@@ -184,7 +184,6 @@ Object {
   "WXAxis": Object {
     "label": Object {
       "fill": "#414141",
-      "fontSize": "12px",
       "fontWeight": 800,
     },
     "mark": Object {
@@ -202,7 +201,6 @@ Object {
   "WYAxis": Object {
     "label": Object {
       "fill": "#414141",
-      "fontSize": "12px",
       "fontWeight": 800,
     },
     "mark": Object {
@@ -220,7 +218,6 @@ Object {
   "WZAxis": Object {
     "label": Object {
       "fill": "#414141",
-      "fontSize": "12px",
       "fontWeight": 800,
     },
     "mark": Object {
@@ -422,7 +419,6 @@ Object {
   "WXAxis": Object {
     "label": Object {
       "fill": "#414141",
-      "fontSize": "12px",
       "fontWeight": 800,
     },
     "mark": Object {
@@ -440,7 +436,6 @@ Object {
   "WYAxis": Object {
     "label": Object {
       "fill": "#414141",
-      "fontSize": "12px",
       "fontWeight": 800,
     },
     "mark": Object {
@@ -458,7 +453,6 @@ Object {
   "WZAxis": Object {
     "label": Object {
       "fill": "#414141",
-      "fontSize": "12px",
       "fontWeight": 800,
     },
     "mark": Object {
