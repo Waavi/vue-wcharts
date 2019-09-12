@@ -87,10 +87,7 @@ export default {
         // Set active element
         handleActive (event) {
             const { setActive } = this.Chart
-            setActive(
-                this.info,
-                event
-            )
+            setActive(this.info, event)
         },
     },
 }

@@ -156,6 +156,26 @@ Object {
       "strokeWidth": 1,
     },
   },
+  "WSimpleHStackBar": Object {
+    "label": Object {
+      "color": "#ffffff",
+      "left": "5px",
+      "position": "absolute",
+      "top": "50%",
+      "transform": "translateY(-50%)",
+    },
+    "marker": Object {
+      "background": "#ffffff",
+      "height": "10px",
+      "position": "absolute",
+      "top": "50%",
+      "transform": "translateY(-50%)",
+      "width": "10px",
+    },
+    "styles": Object {
+      "height": "20px",
+    },
+  },
   "WTooltip": Object {
     "styles": Object {
       "background": "white",
@@ -389,6 +409,26 @@ Object {
       "stroke": "",
       "strokeDasharray": "0",
       "strokeWidth": 1,
+    },
+  },
+  "WSimpleHStackBar": Object {
+    "label": Object {
+      "color": "#ffffff",
+      "left": "5px",
+      "position": "absolute",
+      "top": "50%",
+      "transform": "translateY(-50%)",
+    },
+    "marker": Object {
+      "background": "#ffffff",
+      "height": "10px",
+      "position": "absolute",
+      "top": "50%",
+      "transform": "translateY(-50%)",
+      "width": "10px",
+    },
+    "styles": Object {
+      "height": "20px",
     },
   },
   "WTooltip": Object {

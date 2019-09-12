@@ -389,14 +389,15 @@ export default {
                 stackedCurData, barsCurData, setActive, snap, axis,
             } = this.Chart
             const { id } = event.currentTarget
-            const line = this.Chart.data[id]
-            const label = line[axis.x.datakey]
+            const data = this.Chart.data[id]
+            const label = data[axis.x.datakey]
 
             // Generate tooltip config
             const values = (this.stacked ? stackedCurData : barsCurData).map((item) => {
                 const { key } = item
                 const color = snap.barsDatakeysColors[key][id]
                 const value = item[id].data[key]
+
                 return {
                     key,
                     color,
@@ -408,7 +409,9 @@ export default {
                 ? values
                 : [values.find(v => v.key === this.datakey)]
             // Set active bar to show tooltip
-            setActive({ id: this.index, label, value }, event)
+            setActive({
+                id: this.index, label, value, data,
+            }, event)
         },
         // Return id of last bar active
         getLastBarActive () {

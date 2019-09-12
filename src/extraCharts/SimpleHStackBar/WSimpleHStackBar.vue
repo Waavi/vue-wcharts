@@ -24,17 +24,16 @@
                     class="Stack"
                     :class="{ First: index === 0, Last: index === stacks.length - 1 }"
                     :style="{
-                        ...styles,
+                        ...barStylesCmp,
                         opacity: launchAnimation ? 1 : 0,
                         background: stack.color,
                         maxWidth: `${stack.width}%`,
-                        ...(trigger === 'click' ? { cursor: 'pointer' } : {}),
                     }"
                     v-on="stackListeners"
                 >
                     <div
                         class="Value"
-                        :style="labelStyles"
+                        :style="labelStylesCmp"
                     >
                         <WShowIfFit>
                             <slot
@@ -57,17 +56,15 @@
             </div>
 
             <WTooltip>
-                <template #default="{ value: [first] }">
-                    <div class="Wrapper">
-                        <div class="TooltipItem">
-                            <WBullet :styles="{ background: first.color }" />
-                            <slot
-                                name="tooltip"
-                                v-bind="first"
-                            >
-                                {{ first.value }}
-                            </slot>
-                        </div>
+                <template #default="{ value: [data] }">
+                    <div class="Toolip">
+                        <WBullet :styles="{ background: data.color }" />
+                        <slot
+                            name="tooltip"
+                            v-bind="data"
+                        >
+                            {{ data.value }}
+                        </slot>
                     </div>
                 </template>
             </WTooltip>
@@ -81,8 +78,7 @@
                 class="Marker"
                 :style="{
                     left: `${marker.left}%`,
-                    ...markerStyles,
-                    ...(trigger === 'click' ? { cursor: 'pointer' } : {}),
+                    ...markerStylesCmp,
                 }"
                 v-on="markerListeners"
             >
@@ -142,15 +138,16 @@ export default {
     ],
     props: {
         dataset: VueTypes.arrayOf(VueTypes.number).def([]),
-        trigger: VueTypes.oneOf(['hover', 'click', 'manual']).def('hover'),
         markers: VueTypes.arrayOf(VueTypes.number).def([]),
+        trigger: VueTypes.oneOf(['hover', 'click', 'manual']).def('hover'),
         total: VueTypes.number,
-        labelStyles: VueTypes.object,
         showLabel: VueTypes.bool.def(false),
-        styles: VueTypes.object.def({}),
-        markerStyles: VueTypes.object.def({}),
         delay: VueTypes.number.def(300),
         minWidth: VueTypes.number,
+        // Styles
+        styles: VueTypes.object.def({}),
+        labelStyles: VueTypes.object,
+        markerStyles: VueTypes.object.def({}),
     },
     data () {
         return {
@@ -196,11 +193,11 @@ export default {
         stackListeners () {
             return merge({}, this.$listeners, {
                 click: (event) => {
-                    if (this.trigger === 'click') this.handleActive(event, this.getStack)
+                    if (this.trigger === 'click') this.handleActive(event)
                     this.$emit('onClick', this.info)
                 },
                 mouseenter: (event) => {
-                    if (this.trigger === 'hover') this.handleActive(event, this.getStack)
+                    if (this.trigger === 'hover') this.handleActive(event)
                     this.$emit('onMouseenter')
                 },
                 mouseleave: () => {
@@ -212,11 +209,11 @@ export default {
         markerListeners () {
             return merge({}, this.$listeners, {
                 click: (event) => {
-                    if (this.trigger === 'click') this.handleActive(event, this.getMarker)
+                    if (this.trigger === 'click') this.handleActiveMarker(event)
                     this.$emit('onClickMarker', this.info)
                 },
                 mouseenter: (event) => {
-                    if (this.trigger === 'hover') this.handleActive(event, this.getMarker)
+                    if (this.trigger === 'hover') this.handleActiveMarker(event)
                     this.$emit('onMouseenterMarker')
                 },
                 mouseleave: () => {
@@ -224,6 +221,27 @@ export default {
                     this.$emit('onMouseleaveMarker')
                 },
             })
+        },
+        // Styles
+        barStylesCmp () {
+            return {
+                ...this.themeStyles.styles,
+                ...this.styles,
+                ...(this.trigger === 'click' ? { cursor: 'pointer' } : {}),
+            }
+        },
+        labelStylesCmp () {
+            return {
+                ...this.themeStyles.label,
+                ...this.labelStyles,
+            }
+        },
+        markerStylesCmp () {
+            return {
+                ...this.themeStyles.marker,
+                ...this.markerStyles,
+                ...(this.trigger === 'click' ? { cursor: 'pointer' } : {}),
+            }
         },
     },
     mounted () {
@@ -235,33 +253,39 @@ export default {
         launch () {
             this.launchAnimation = true
         },
-        // Set active bar element, to show tooltip
-        handleActive (event, getValue) {
+        // Set active marker, to show tooltip
+        handleActiveMarker (event) {
             const { id, offsetLeft } = event.target
-            this.setActive({ id, value: getValue(id), offsetLeft }, event)
+            const value = [{ key: id, color: this.markerStylesCmp.background, value: this.stackMarkers[id].value }]
+            this.setActive({
+                id, value, offsetLeft,
+            }, event)
         },
-        // Return stack value of id
-        getStack (id) {
-            const { value, width } = this.stacks.find(stack => stack.id === parseInt(id, 0)) || {}
-            return [{
+        // Set active bar, to show tooltip
+        handleActive (event, isMarker) {
+            const { id, offsetLeft } = event.target
+            const data = this.stacks.find(stack => stack.id === parseInt(id, 0)) || {}
+            const value = [{
                 key: id,
                 color: this.colors[id],
-                value,
-                width,
+                value: data.value,
+                width: data.width,
             }]
-        },
-        // Return marker value of id
-        getMarker (id) {
-            return [{
-                key: id,
-                color: '#000',
-                value: this.stackMarkers[id].value,
-            }]
+            return this.setActive({
+                id, value, data, offsetLeft,
+            }, event)
         },
     },
 }
 </script>
 <style scoped lang="scss">
+.center {
+    position: relative;
+    display: flex;
+    flex: 1;
+    align-items: center;
+}
+
 .WSimpleHStackBar {
     display: flex;
     justify-content: space-between;
@@ -270,16 +294,10 @@ export default {
 }
 
 .Container {
-    position: relative;
-    display: flex;
-    flex: 1;
-    align-items: center;
+    @extend .center
 }
 
 .Value {
-    position: absolute;
-    top: calc(100% + 5px);
-    left: 0;
     max-width: 100%;
     font-size: 12px;
     font-weight: bold;
@@ -289,17 +307,11 @@ export default {
 }
 
 .Stacks {
-    display: flex;
-    flex: 1;
-    align-items: center;
-    height: 20px;
+    @extend .center;
 }
 
 .Stack {
-    position: relative;
-    display: flex;
-    flex: 1;
-    height: 20px;
+    @extend .center;
     width: 100%;
     max-width: 0%;
     transition: all 250ms ease;
@@ -315,17 +327,7 @@ export default {
     }
 }
 
-.Marker {
-    position: absolute;
-    top: 0;
-    width: 10px;
-    height: 10px;
-    background: #FFF;
-    transform: rotate(45deg) translateY(7px);
-    outline: 1px solid;
-}
-
-.TooltipItem {
+.Toolip {
     display: flex;
     align-items: center;
 }
