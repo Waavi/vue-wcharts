@@ -68,7 +68,6 @@ describe('Components/WLine', () => {
 
     it(`Should be render correctly`, () => {
         const wrapper = shallowMount(WLine, defaultConfig)
-        debugger
         expect(wrapper.html()).toMatchSnapshot()
     })
 

@@ -65,41 +65,32 @@ export default {
         bounds () {
             if (this.datakeys.length || this.axis.y.datakey) {
                 const [boundMin, boundMax] = this.bound
-                return {
-                    min: this.getBound(boundMin),
-                    max: this.getBound(boundMax, 'max'),
-                }
+                return this.sanitizeBounds({
+                    min: this.getBound(boundMin, 'min', 'y'),
+                    max: this.getBound(boundMax, 'max', 'y'),
+                })
             }
-            return {
-                max: 0,
-                min: 0,
-            }
+            return { max: 0, min: 0 }
         },
         xBounds () {
             if (this.scatter && this.axis.x.datakey) {
                 const [boundMin, boundMax] = this.xBound
-                return {
+                return this.sanitizeBounds({
                     min: this.getBound(boundMin, 'min', 'x'),
                     max: this.getBound(boundMax, 'max', 'x'),
-                }
+                })
             }
-            return {
-                max: 0,
-                min: 0,
-            }
+            return { max: 0, min: 0 }
         },
         zBounds () {
             if (this.scatter && this.axis.z.datakey) {
                 const values = this.data.map(d => d[this.axis.z.datakey])
-                return {
+                return this.sanitizeBounds({
                     min: Math.min(...values),
                     max: Math.max(...values),
-                }
+                })
             }
-            return {
-                max: 0,
-                min: 0,
-            }
+            return { max: 0, min: 0 }
         },
         // Generate padding by array or number.
         // return [10, 10, 10, 10]
@@ -176,6 +167,18 @@ export default {
             if (typeof val === 'function') return val(result)
 
             return result
+        },
+        sanitizeBounds ({ min, max }) {
+            if (min === max) {
+                if (min === 0) {
+                    return { min: -1, max: 1 }
+                }
+                if (min < 0) {
+                    return { min: -2 * min, max: 0 }
+                }
+                return { min: 0, max: 2 * max }
+            }
+            return { min, max }
         },
         // Return list of datakeys of an array of active elements (bar, stacked bars or lines)
         getActiveElementsDatakeys (elements) {

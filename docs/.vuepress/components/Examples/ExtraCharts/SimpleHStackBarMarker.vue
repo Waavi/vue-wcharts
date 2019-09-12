@@ -3,11 +3,6 @@
         :total="81.6"
         :dataset="[37.3, 20.3, 23.6]"
         showLabel
-        :labelStyles="{
-            top: '4px',
-            left: '6px',
-            color: 'white',
-        }"
         :markers="[13.3, 78]"
         :style="{ marginBottom: '50px' }"
     >
