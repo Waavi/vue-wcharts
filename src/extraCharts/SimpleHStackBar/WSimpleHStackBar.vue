@@ -256,23 +256,24 @@ export default {
         // Set active marker, to show tooltip
         handleActiveMarker (event) {
             const { id, offsetLeft } = event.target
-            const value = [{ key: id, color: this.markerStylesCmp.background, value: this.stackMarkers[id].value }]
+            const datum = this.stackMarkers[id]
+            const value = [{ key: id, color: this.markerStylesCmp.background, value: datum.value }]
             this.setActive({
-                id, value, offsetLeft,
+                id, value, datum, offsetLeft,
             }, event)
         },
         // Set active bar, to show tooltip
         handleActive (event, isMarker) {
             const { id, offsetLeft } = event.target
-            const data = this.stacks.find(stack => stack.id === parseInt(id, 0)) || {}
+            const datum = this.stacks.find(stack => stack.id === parseInt(id, 0)) || {}
             const value = [{
                 key: id,
                 color: this.colors[id],
-                value: data.value,
-                width: data.width,
+                value: datum.value,
+                width: datum.width,
             }]
             return this.setActive({
-                id, value, data, offsetLeft,
+                id, value, datum, offsetLeft,
             }, event)
         },
     },
