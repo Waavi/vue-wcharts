@@ -180,4 +180,24 @@ export default {
             fontSize: 14,
         },
     },
+    WSimpleHStackBar: {
+        styles: {
+            height: '20px',
+        },
+        label: {
+            position: 'absolute',
+            top: '50%',
+            left: '5px',
+            transform: 'translateY(-50%)',
+            color: colors.white,
+        },
+        marker: {
+            position: 'absolute',
+            top: '50%',
+            transform: 'translateY(-50%)',
+            width: '10px',
+            height: '10px',
+            background: colors.white,
+        },
+    },
 }

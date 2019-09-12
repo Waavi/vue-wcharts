@@ -116,34 +116,36 @@ export default {
                 xScale, yScale, zScale, axis,
             } = this.Chart
 
-            return this.points
-                .map((item, index) => {
-                    const z = axis.z.datakey ? zScale(item[axis.z.datakey]) : this.dotStylesCmp.radius
-                    return {
-                        index,
-                        cartesianIndex: this.index,
-                        x: xScale(item[axis.x.datakey]),
-                        y: yScale(item[axis.y.datakey]),
-                        z,
-                        value: item[axis.y.datakey],
-                        info: {
-                            $dataset: item.$dataset,
-                            id: index,
-                            data: item,
-                            label: item.name || '',
-                            value: [
-                                this.generateAxisValue(axis.x, item[axis.x.datakey], this.fillColor),
-                                this.generateAxisValue(axis.y, item[axis.y.datakey], this.fillColor),
-                                ...(axis.z.datakey ? [this.generateAxisValue(axis.z, item[axis.z.datakey], this.fillColor)] : []),
-                            ],
-                        },
-                        ...this.dotStylesCmp,
-                        stroke: this.dotStylesCmp.stroke || this.fillColor,
-                        fill: this.dotStylesCmp.fill || this.fillColor,
-                        radius: z,
-                        hoverRadius: z,
-                    }
-                })
+            return this.points.map((item, index) => {
+                const z = axis.z.datakey ? zScale(item[axis.z.datakey]) : this.dotStylesCmp.radius
+                const value = [
+                    this.generateAxisValue(axis.x, item[axis.x.datakey], this.fillColor),
+                    this.generateAxisValue(axis.y, item[axis.y.datakey], this.fillColor),
+                    ...(axis.z.datakey ? [this.generateAxisValue(axis.z, item[axis.z.datakey], this.fillColor)] : []),
+                ]
+
+                return {
+                    index,
+                    cartesianIndex: this.index,
+                    value: item[axis.y.datakey],
+                    x: xScale(item[axis.x.datakey]),
+                    y: yScale(item[axis.y.datakey]),
+                    z,
+                    info: {
+                        $dataset: item.$dataset,
+                        id: index,
+                        data: item,
+                        label: item.name || '',
+                        value,
+                    },
+                    // Styles
+                    ...this.dotStylesCmp,
+                    stroke: this.dotStylesCmp.stroke || this.fillColor,
+                    fill: this.dotStylesCmp.fill || this.fillColor,
+                    radius: z,
+                    hoverRadius: z,
+                }
+            })
         },
         genLine () {
             return d3Line()

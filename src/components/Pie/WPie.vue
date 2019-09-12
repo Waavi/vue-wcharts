@@ -179,17 +179,13 @@ export default {
         handleActive (event) {
             const { id } = event.target
             const { setActive, colors } = this.Chart
-            const value = this.curValues[id]
+            const datum = this.Chart.data[id]
             const color = this.fill || colors[id]
-            const el = {
-                id,
-                value: [{
-                    value,
-                    color,
-                }],
-            }
+            const value = [{ value: this.curValues[id], color }]
             // Set active bar to show tooltip
-            setActive(el, event)
+            setActive({
+                id, value, datum,
+            }, event)
         },
     },
 }

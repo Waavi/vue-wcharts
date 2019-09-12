@@ -129,27 +129,27 @@ export default {
                     data, xScale, yScale, datakeys, axis,
                 } = this.Chart
                 return data.map((item, index) => {
-                    const line = data[index]
                     const key = datakeys[this.index]
-                    const value = line[key]
-                    const label = line[axis.x.datakey]
+                    const label = item[axis.x.datakey]
+                    const value = [{
+                        value: item[key],
+                        color: this.fillColor,
+                    }]
 
                     return {
+                        index,
+                        cartesianIndex: this.index,
+                        value: item[this.datakey],
                         x: xScale(index),
                         y: yScale(item[this.datakey]),
                         info: {
                             id: this.index,
-                            point: index,
                             label,
-                            value: [{
-                                value,
-                                color: this.fillColor,
-                            }],
+                            data: item,
+                            point: index,
+                            value,
                         },
-                        value: item[this.datakey],
-                        index,
-                        cartesianIndex: this.index,
-                        // Style props
+                        // Styles
                         ...this.dotStylesCmp,
                         stroke: this.dotStylesCmp.stroke || this.fillColor,
                         fill: this.dotStylesCmp.fill || this.fillColor,
