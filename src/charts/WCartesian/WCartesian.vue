@@ -40,17 +40,22 @@ export default {
         // yScale with scaleLinear of d3
         // ref: https://github.com/d3/d3-scale#_continuous
         yScale () {
+            const domain = [this.bounds.min, this.bounds.max]
+            const bottom = this.canvas.y1 - this.padding[2]
+            const top = domain[1] > 0 ? this.canvas.y0 + this.padding[0] : bottom
             return scaleLinear()
-                .domain([this.bounds.min, this.bounds.max])
-                .range([this.canvas.y1 - this.padding[2], this.canvas.y0 + this.padding[0]])
+                .domain(domain)
+                .range([bottom, top])
         },
         // xScale with scaleLinear of d3
         // ref: https://github.com/d3/d3-scale#_continuous
         xScale () {
             const domain = this.scatter ? [this.xBounds.min, this.xBounds.max] : [0, this.data.length - 1]
+            const left = this.canvas.x0 + this.padding[3]
+            const right = domain[1] > 0 ? this.canvas.x1 - this.padding[1] : left
             return scaleLinear()
                 .domain(domain)
-                .range([this.canvas.x0 + this.padding[3], this.canvas.x1 - this.padding[1]])
+                .range([left, right])
         },
         // zScale calculate like Recharts
         zScale () {
@@ -169,7 +174,7 @@ export default {
             return result
         },
         sanitizeBounds ({ min, max }) {
-            if (min === max) {
+            if (min === max && max !== 0) {
                 if (min === 0) {
                     return { min: -1, max: 1 }
                 }
