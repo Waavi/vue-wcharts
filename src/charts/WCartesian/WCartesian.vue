@@ -42,7 +42,7 @@ export default {
         yScale () {
             const domain = [this.bounds.min, this.bounds.max]
             const bottom = this.canvas.y1 - this.padding[2]
-            const top = domain[1] > 0 ? this.canvas.y0 + this.padding[0] : bottom
+            const top = this.canvas.y0 + this.padding[0]
             return scaleLinear()
                 .domain(domain)
                 .range([bottom, top])
@@ -52,7 +52,7 @@ export default {
         xScale () {
             const domain = this.scatter ? [this.xBounds.min, this.xBounds.max] : [0, this.data.length - 1]
             const left = this.canvas.x0 + this.padding[3]
-            const right = domain[1] > 0 ? this.canvas.x1 - this.padding[1] : left
+            const right = this.canvas.x1 - this.padding[1]
             return scaleLinear()
                 .domain(domain)
                 .range([left, right])
@@ -174,9 +174,9 @@ export default {
             return result
         },
         sanitizeBounds ({ min, max }) {
-            if (min === max && max !== 0) {
+            if (min === max) {
                 if (min === 0) {
-                    return { min: -1, max: 1 }
+                    return { min: 0, max: 1 }
                 }
                 if (min < 0) {
                     return { min: -2 * min, max: 0 }
