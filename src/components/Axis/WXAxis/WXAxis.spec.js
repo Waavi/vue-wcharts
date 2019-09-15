@@ -54,6 +54,7 @@ describe('Axis/WXAxis', () => {
             padding: [20, 20, 20, 20],
             spaceObjects: [10, 10, 10, 10],
             yScale: a => a,
+            setAxisOptions: () => undefined,
         },
     }
 
