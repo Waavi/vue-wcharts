@@ -3,10 +3,12 @@ import debounce from 'lodash.debounce'
 
 import activeMixin from './active'
 import themeMixin from './theme'
+import { random } from '../utils/maths'
 
 export default {
     mixins: [activeMixin, themeMixin],
     props: {
+        id: VueTypes.string,
         dataset: VueTypes.oneOfType([Array, Object]).def([]),
         responsive: VueTypes.bool.def(false),
         height: VueTypes.number.def(400),
@@ -29,6 +31,10 @@ export default {
         }
     },
     computed: {
+        // Create a uniqye chart id
+        chartId () {
+            return this.id || `chart-${random()}`
+        },
         // View size, include canvas and paddings/margins
         viewWidth () {
             return this.parentWidth || this.width

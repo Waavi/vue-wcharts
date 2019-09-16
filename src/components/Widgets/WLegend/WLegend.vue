@@ -21,7 +21,7 @@
                     :active="!selectable ? false : Chart.activeElements.includes(index)"
                     :styles="legendStylesCmp"
                     :disabledStyles="legendStylesDisabledCmp"
-                    :colors="colors"
+                    :colors="colorsCmp"
                     @onClick="handleClick"
                 >
                     <template #bullet="{ index, text, color }">
@@ -61,10 +61,10 @@ export default {
         legends: VueTypes.arrayOf([String]),
         position: VueTypes.oneOf(['top', 'bottom', 'left', 'right']).def('bottom'),
         align: VueTypes.oneOf(['start', 'center', 'end']).def('center'),
-        space: VueTypes.arrayOf(VueTypes.number).def([16, 16, 16, 16]),
-        size: VueTypes.number, // Width or height, with different positiion prop top-bottom/left-right
         selectable: VueTypes.bool.def(false),
-        colors: VueTypes.arrayOf(VueTypes.string),
+        size: VueTypes.number, // Width or height, with different positiion prop top-bottom/left-right
+        space: VueTypes.arrayOf(VueTypes.number).def([16, 16, 16, 16]),
+        colors: VueTypes.arrayOf(VueTypes.string).optional,
         // Styles
         styles: VueTypes.object.def({}),
         wrapperStyles: VueTypes.object.def({}),
@@ -87,12 +87,19 @@ export default {
         parent.addSpace(spaces)
     },
     computed: {
+        // Get legends array
         legendsCmp () {
             return (this.legends || []).length ? this.legends : (this.Chart || {}).legends
         },
+        // Sanitize space prop
         chartSpace () {
             return (this.Chart || {}).space || [0, 0, 0, 0]
         },
+        // Colors paletter
+        colorsCmp () {
+            return this.colors || (this.Chart || {}).colors
+        },
+        // Styles
         stylesCmp () {
             const {
                 position, align, size, chartSpace,
@@ -134,18 +141,21 @@ export default {
                 },
             }
         },
+        // Legend styles
         legendStylesCmp () {
             return {
                 ...this.themeStyles.legendStyles,
                 ...this.legendStyles,
             }
         },
+        // Legend disabled styles
         legendStylesDisabledCmp () {
             return {
                 ...this.themeStyles.legendStylesDisabled,
                 ...this.legendStylesDisabled,
             }
         },
+        // Bullet styles
         bulletStylesCmp () {
             return {
                 ...this.themeStyles.bulletStyles,

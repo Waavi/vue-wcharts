@@ -5,11 +5,27 @@
     >
         <g
             v-for="(bar, key) in bars"
+            :id="key"
             :key="`${key}-${bar.x}-${bar.y}-${bar.color}`"
+            v-on="barListeners"
         >
+            <defs v-if="bar.isLastBar">
+                <clipPath :id="`path-${key}-${pathId}`">
+                    <rect
+                        :rx="borderRadius[0]"
+                        :ry="borderRadius[1] || borderRadius[0]"
+                        :x="bar.x"
+                        :y="bar.y"
+                        :width="bar.width"
+                        :height="(bar.accHeight + (!borderRadius[1] ? 20 : 0))"
+                        fill="tomato"
+                    />
+                </clipPath>
+            </defs>
+
             <g
-                :id="key"
-                v-on="barListeners"
+                id="line"
+                :style="{ 'clip-path': `url(#path-${key}-${pathId})`}"
             >
                 <WTrans
                     :initialProps="{
@@ -29,74 +45,80 @@
                         :style="{ ...stylesCmp, transition }"
                     />
                 </WTrans>
-                <g v-if="bar.label">
-                    <WTrans
-                        :initialProps="{
-                            opacity: 0,
-                        }"
-                        :transition="`all ${transDuration / 2}s ${transDuration}s ${transEffect}`"
+            </g>
+            <g
+                v-if="bar.label"
+                id="label"
+            >
+                <WTrans
+                    :initialProps="{
+                        opacity: 0,
+                    }"
+                    :transition="`all ${transDuration / 2}s ${transDuration}s ${transEffect}`"
+                >
+                    <slot
+                        name="label"
+                        v-bind="bar.label"
+                        :datakey="datakey"
+                        :index="key"
+                        :styles="{ ...labelStylesCmp, transition, transform: `translateY(${bar.label.y}px)` }"
+                        :align="labelAlign"
+                        :size="labelSize"
                     >
-                        <slot
-                            name="label"
-                            v-bind="bar.label"
-                            :datakey="datakey"
-                            :index="key"
-                            :styles="{ ...labelStylesCmp, transition, transform: `translateY(${bar.label.y}px)` }"
-                            :align="labelAlign"
-                            :size="labelSize"
+                        <text
+                            :x="bar.label.x"
+                            :y="0"
+                            :text-anchor="labelAlign"
+                            :font-size="labelSize"
+                            :style="{ ...labelStylesCmp, transition, transform: `translateY(${bar.label.y}px)` }"
                         >
-                            <text
-                                :x="bar.label.x"
-                                :y="0"
-                                :text-anchor="labelAlign"
-                                :font-size="labelSize"
-                                :style="{ ...labelStylesCmp, transition, transform: `translateY(${bar.label.y}px)` }"
+                            <slot
+                                name="labelValue"
+                                v-bind="bar.label"
+                                :datakey="datakey"
+                                :index="key"
                             >
-                                <slot
-                                    name="labelValue"
-                                    v-bind="bar.label"
-                                    :datakey="datakey"
-                                    :index="key"
-                                >
-                                    {{ bar.label.value }}
-                                </slot>
-                            </text>
-                        </slot>
-                    </WTrans>
-                </g>
-                <g v-if="bar.stackedLabel">
-                    <WTrans
-                        :initialProps="{
-                            opacity: 0,
-                        }"
-                        :transition="`all ${transDuration / 2}s ${transDuration}s ${transEffect}`"
+                                {{ bar.label.value }}
+                            </slot>
+                        </text>
+                    </slot>
+                </WTrans>
+            </g>
+            <g
+                v-if="bar.stackedLabel"
+                id="label"
+            >
+                <WTrans
+                    :initialProps="{
+                        opacity: 0,
+                    }"
+                    :transition="`all ${transDuration / 2}s ${transDuration}s ${transEffect}`"
+                >
+                    <slot
+                        name="stackedLabel"
+                        v-bind="bar.stackedLabel"
+                        :index="key"
+                        :styles="{ ...stackedLabelStylesCmp, transition, transform: `translateY(${bar.stackedLabel.y}px)` }"
+                        :align="stackedLabelAlign"
+                        :size="stackedLabelSize"
                     >
-                        <slot
-                            name="stackedLabel"
-                            v-bind="bar.stackedLabel"
-                            :index="key"
-                            :styles="{ ...stackedLabelStylesCmp, transition, transform: `translateY(${bar.stackedLabel.y}px)` }"
-                            :align="stackedLabelAlign"
-                            :size="stackedLabelSize"
+                        <text
+                            :x="bar.stackedLabel.x"
+                            :y="0"
+                            :text-anchor="stackedLabelAlign"
+                            :font-size="stackedLabelSize"
+                            :style="{ ...stackedLabelStylesCmp, transition, transform: `translateY(${bar.stackedLabel.y}px)` }"
                         >
-                            <text
-                                :x="bar.stackedLabel.x"
-                                :y="0"
-                                :text-anchor="stackedLabelAlign"
-                                :font-size="stackedLabelSize"
-                                :style="{ ...stackedLabelStylesCmp, transition, transform: `translateY(${bar.stackedLabel.y}px)` }"
+                            <slot
+                                name="stackedLabelValue"
+                                v-bind="bar.stackedLabel"
+                                :index="key"
                             >
-                                <slot
-                                    name="stackedLabelValue"
-                                    v-bind="bar.stackedLabel"
-                                    :index="key"
-                                >
-                                    {{ bar.stackedLabel.stackedValue }}
-                                </slot>
-                            </text>
-                        </slot>
-                    </WTrans>
-                </g>
+                                {{ bar.stackedLabel.stackedValue }}
+                            </slot>
+                        </text>
+                    </slot>
+                </WTrans>
             </g>
         </g>
     </g>
@@ -105,12 +127,13 @@
 <script>
 import VueTypes from 'vue-types'
 import merge from '../../utils/merge'
+import { random } from '../../utils/maths'
 import animationMixin from '../../mixins/animation'
 import themeMixin from '../../mixins/theme'
 import visibleMixin from '../../mixins/visible'
 import { WTrans } from '../../transitions'
 
-const DEFAULT_WIDTH = 45
+const DEFAULT_WIDTH = 32
 
 export default {
     name: 'WBar',
@@ -122,11 +145,13 @@ export default {
     mixins: [animationMixin, themeMixin, visibleMixin],
     inject: ['Chart'],
     props: {
+        // Settings
         index: VueTypes.number, // internal props set by the parent (WPieChart)
         datakey: VueTypes.string.isRequired,
         trigger: VueTypes.oneOf(['hover', 'click', 'manual']).def('hover'),
         legend: VueTypes.string, // Prop to apply filters
         stacked: VueTypes.bool.def(false),
+        // Label
         showLabel: VueTypes.bool.def(false),
         labelSize: VueTypes.number.def(12),
         labelAlign: VueTypes.oneOf(['start', 'middle', 'end']).def('middle'),
@@ -136,11 +161,16 @@ export default {
         stackedLabelSize: VueTypes.number.def(12),
         stackedLabelAlign: VueTypes.oneOf(['start', 'middle', 'end']).def('middle'),
         stackedLabelStyles: VueTypes.object,
+        // Styles
         width: VueTypes.number.def(DEFAULT_WIDTH),
         color: VueTypes.oneOfType([
             VueTypes.string,
             VueTypes.arrayOf(VueTypes.string),
         ]),
+        rounded: VueTypes.oneOfType([
+            VueTypes.number,
+            VueTypes.arrayOf(VueTypes.number),
+        ]).def([5, 0]),
         styles: VueTypes.object,
     },
     // It's called by parent components to necessary calcs before be rendering
@@ -190,6 +220,14 @@ export default {
         // Active elem
         active () {
             return this.Chart.activeElements.includes(this.index)
+        },
+        // Path unique Id
+        pathId () {
+            return this.stacked ? this.Chart.chartId : `bar-${random()}`
+        },
+        // Sanitize rounded prop to borderRadius
+        borderRadius () {
+            return Array.isArray(this.rounded) ? this.rounded.slice(0, 2) : Array(2).fill(this.rounded)
         },
         // Get yAxis origin by bounds.min or zero
         y () {
@@ -249,17 +287,18 @@ export default {
                 const y0 = yScale(end)
                 // Calc yAxis separation between points, if has stacked bars
                 const y1 = yScale(start)
+                // Calc acc height bar
+                const accHeight = yScale(0) - y0
                 // Calc xAxis pos
                 const x = x0 + space * (data.length === 1 ? 0.5 : i) + padding[3]
-                return [x, y0, y1, label, stackedValue]
+                return [x, y0, y1, label, stackedValue, accHeight]
             })
         },
         // Bars
         bars () {
             // Generate bars array
-            // TODO: Check bug with unique key in v-for template
             return this.points.map((point, index) => {
-                const [x0, y0, y1, value, stackedValue] = point
+                const [x0, y0, y1, value, stackedValue, accHeight] = point
                 // Generate coords
                 const height = y1 - y0
                 const x = x0 + this.margin
@@ -289,6 +328,8 @@ export default {
                     label,
                     stackedLabel,
                     color,
+                    isLastBar: this.isLastBar,
+                    accHeight,
                 }
             })
         },
@@ -312,6 +353,10 @@ export default {
         // Check if label position it is inside
         isLabelInside () {
             return this.labelPosition === 'inside'
+        },
+        // Check is it is lat bar
+        isLastBar () {
+            return !this.stacked || this.index === this.getLastBarActive()
         },
         // Styles
         stylesCmp () {
@@ -366,9 +411,8 @@ export default {
         getStackedLabel ({ x, y, stackedValue }) {
             if (
                 !this.showStackedLabel ||
-                !this.stacked ||
                 stackedValue === 0 || // Hide labels if value it's zero
-                this.index !== this.getLastBarActive() || // Only last bar shown the stacked label
+                !this.isLastBar || // Only last bar shown the stacked label
                 (this.showLabel && !this.isLabelInside) // If label is printed outside, not render staked label
             ) return undefined
             // Calc position of label [x, y]

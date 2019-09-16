@@ -112,3 +112,13 @@ sidebarDepth: 1
 <SourceCode>
 <<< @/docs/.vuepress/components/Examples/Bar/Mix.vue
 </SourceCode>
+
+## Custom
+
+<br>
+
+<Examples-Bar-Custom />
+
+<SourceCode>
+<<< @/docs/.vuepress/components/Examples/Bar/Custom.vue
+</SourceCode>
