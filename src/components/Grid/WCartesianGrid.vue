@@ -85,12 +85,12 @@ export default {
             // Calculate left and right space
             const offset = padding[1] + padding[3]
             // Calculate space between lines
-            const space = (canvas.width - offset) / ((numLines <= 1 ? 2 : numLines) - 1)
+            const space = (canvas.width - offset) / (numLines <= 1 ? 0.5 : (numLines - 1))
             // Generate lines coordinates
 
             return Array.from({ length: numLines }).map((props, index) => {
                 // X position is calculated taking x0 canvas position adding space between lines times index (0...numLines-1) and adding left space
-                const x = canvas.x0 + (space * index) + padding[3]
+                const x = canvas.x1 - (space * index) - padding[3]
                 return {
                     x1: x,
                     y1: canvas.y0,
