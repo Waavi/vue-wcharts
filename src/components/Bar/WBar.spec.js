@@ -15,12 +15,14 @@ describe('Components/WBar', () => {
     ]
 
     const propsData = {
-        datakey: 'one',
+        id: 'barTest',
         index: 0,
+        datakey: 'one',
     }
 
     const provide = {
         Chart: {
+            id: 'test',
             dataset,
             data: dataset,
             activeElements: [0],

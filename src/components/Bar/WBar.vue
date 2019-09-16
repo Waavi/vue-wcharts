@@ -145,6 +145,7 @@ export default {
     mixins: [animationMixin, themeMixin, visibleMixin],
     inject: ['Chart'],
     props: {
+        id: VueTypes.string,
         // Settings
         index: VueTypes.number, // internal props set by the parent (WPieChart)
         datakey: VueTypes.string.isRequired,
@@ -223,7 +224,7 @@ export default {
         },
         // Path unique Id
         pathId () {
-            return this.stacked ? this.Chart.chartId : `bar-${random()}`
+            return this.stacked ? this.Chart.chartId : (this.id || `bar-${random()}`)
         },
         // Sanitize rounded prop to borderRadius
         borderRadius () {

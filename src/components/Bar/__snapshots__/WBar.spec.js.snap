@@ -4,11 +4,11 @@ exports[`Components/WBar Should be render correctly 1`] = `
 <g id="Bars">
   <g id="0">
     <defs>
-      <clipPath id="path-0-bar-336907">
+      <clipPath id="path-0-barTest">
         <rect rx="5" ry="5" x="2" y="0" width="32" height="-3980" fill="tomato"></rect>
       </clipPath>
     </defs>
-    <g id="line" style="clip-path: url(#path-0-bar-336907);">
+    <g id="line" style="clip-path: url(#path-0-barTest);">
       <WTrans-stub initialProps="[object Object]" transition="all 1s ease">
         <rect x="2" y="0" width="32" height="4000" fill="#e8e8e8" style="transition: all 1s ease;"></rect>
       </WTrans-stub>
@@ -18,11 +18,11 @@ exports[`Components/WBar Should be render correctly 1`] = `
   </g>
   <g id="1">
     <defs>
-      <clipPath id="path-1-bar-336907">
+      <clipPath id="path-1-barTest">
         <rect rx="5" ry="5" x="353" y="0" width="32" height="-2980" fill="tomato"></rect>
       </clipPath>
     </defs>
-    <g id="line" style="clip-path: url(#path-1-bar-336907);">
+    <g id="line" style="clip-path: url(#path-1-barTest);">
       <WTrans-stub initialProps="[object Object]" transition="all 1s ease">
         <rect x="353" y="0" width="32" height="3000" fill="#e8e8e8" style="transition: all 1s ease;"></rect>
       </WTrans-stub>
@@ -32,11 +32,11 @@ exports[`Components/WBar Should be render correctly 1`] = `
   </g>
   <g id="2">
     <defs>
-      <clipPath id="path-2-bar-336907">
+      <clipPath id="path-2-barTest">
         <rect rx="5" ry="5" x="704" y="0" width="32" height="-9780" fill="tomato"></rect>
       </clipPath>
     </defs>
-    <g id="line" style="clip-path: url(#path-2-bar-336907);">
+    <g id="line" style="clip-path: url(#path-2-barTest);">
       <WTrans-stub initialProps="[object Object]" transition="all 1s ease">
         <rect x="704" y="0" width="32" height="9800" fill="#e8e8e8" style="transition: all 1s ease;"></rect>
       </WTrans-stub>
@@ -51,11 +51,11 @@ exports[`Components/WBar Should be render with label correctly 1`] = `
 <g id="Bars">
   <g id="0">
     <defs>
-      <clipPath id="path-0-bar-255133">
+      <clipPath id="path-0-barTest">
         <rect rx="5" ry="5" x="2" y="0" width="32" height="-3980" fill="tomato"></rect>
       </clipPath>
     </defs>
-    <g id="line" style="clip-path: url(#path-0-bar-255133);">
+    <g id="line" style="clip-path: url(#path-0-barTest);">
       <WTrans-stub initialProps="[object Object]" transition="all 1s ease">
         <rect x="2" y="0" width="32" height="4000" fill="#e8e8e8" style="transition: all 1s ease;"></rect>
       </WTrans-stub>
@@ -69,11 +69,11 @@ exports[`Components/WBar Should be render with label correctly 1`] = `
   </g>
   <g id="1">
     <defs>
-      <clipPath id="path-1-bar-255133">
+      <clipPath id="path-1-barTest">
         <rect rx="5" ry="5" x="353" y="0" width="32" height="-2980" fill="tomato"></rect>
       </clipPath>
     </defs>
-    <g id="line" style="clip-path: url(#path-1-bar-255133);">
+    <g id="line" style="clip-path: url(#path-1-barTest);">
       <WTrans-stub initialProps="[object Object]" transition="all 1s ease">
         <rect x="353" y="0" width="32" height="3000" fill="#e8e8e8" style="transition: all 1s ease;"></rect>
       </WTrans-stub>
@@ -87,11 +87,11 @@ exports[`Components/WBar Should be render with label correctly 1`] = `
   </g>
   <g id="2">
     <defs>
-      <clipPath id="path-2-bar-255133">
+      <clipPath id="path-2-barTest">
         <rect rx="5" ry="5" x="704" y="0" width="32" height="-9780" fill="tomato"></rect>
       </clipPath>
     </defs>
-    <g id="line" style="clip-path: url(#path-2-bar-255133);">
+    <g id="line" style="clip-path: url(#path-2-barTest);">
       <WTrans-stub initialProps="[object Object]" transition="all 1s ease">
         <rect x="704" y="0" width="32" height="9800" fill="#e8e8e8" style="transition: all 1s ease;"></rect>
       </WTrans-stub>
