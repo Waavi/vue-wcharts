@@ -12,12 +12,12 @@
             <defs v-if="bar.isLastBar">
                 <clipPath :id="`path-${key}-${pathId}`">
                     <rect
-                        :rx="borderRadius[0]"
-                        :ry="borderRadius[1] || borderRadius[0]"
+                        :rx="normalizedBorderRadius[0]"
+                        :ry="normalizedBorderRadius[1] || normalizedBorderRadius[0]"
                         :x="bar.x"
                         :y="bar.y"
                         :width="bar.width"
-                        :height="(bar.accHeight + (!borderRadius[1] ? 20 : 0))"
+                        :height="(bar.accHeight + (!normalizedBorderRadius[1] ? 20 : 0))"
                         fill="tomato"
                     />
                 </clipPath>
@@ -168,7 +168,7 @@ export default {
             VueTypes.string,
             VueTypes.arrayOf(VueTypes.string),
         ]),
-        rounded: VueTypes.oneOfType([
+        borderRadius: VueTypes.oneOfType([
             VueTypes.number,
             VueTypes.arrayOf(VueTypes.number),
         ]).def([5, 0]),
@@ -226,9 +226,9 @@ export default {
         pathId () {
             return this.stacked ? this.Chart.chartId : (this.id || `bar-${random()}`)
         },
-        // Sanitize rounded prop to borderRadius
-        borderRadius () {
-            return Array.isArray(this.rounded) ? this.rounded.slice(0, 2) : Array(2).fill(this.rounded)
+        // Normalize borderRadius prop to borders array
+        normalizedBorderRadius () {
+            return Array.isArray(this.borderRadius) ? this.borderRadius.slice(0, 2) : Array(2).fill(this.borderRadius)
         },
         // Get yAxis origin by bounds.min or zero
         y () {

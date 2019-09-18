@@ -226,7 +226,7 @@ sidebarDepth: 3
 | width | number | 20 | The width of the bar |
 | color | string    arrayOf(string) |  | Accept a color for all bars or one color for every bar |
 | styles | object |  | The styles of the bar |
-| rounded | array, number | [5, 0] | Top and bottom border-radius |
+| borderRadius | array, number | [5, 0] | Top and bottom border-radius |
 | showLabel | bool | false | If is set to true, the label will be drawn |
 | labelAlign | oneOf(['start', 'middle', 'end']) | middle | The horizontal position of the label |
 | labelPosition | oneOf(['inside', 'outside']) | outside | The vertical position of the label. If the chart is stacked the label position will be `inside` |

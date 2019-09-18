@@ -9,22 +9,22 @@
     >
         <WBar
             datakey="one"
-            :rounded="5"
+            :borderRadius="5"
             legend="One Bar"
         />
         <WBar
             datakey="two"
-            :rounded="5"
+            :borderRadius="5"
             legend="Two Bar"
         />
         <WBar
             datakey="three"
-            :rounded="5"
+            :borderRadius="5"
             legend="Three Bar"
         />
         <WBar
             datakey="four"
-            :rounded="5"
+            :borderRadius="5"
             legend="Other"
         />
         <WXAxis
