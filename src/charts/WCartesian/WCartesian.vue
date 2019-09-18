@@ -5,6 +5,7 @@ import stack from 'd3-shape/src/stack'
 import stackOffsetDiverging from 'd3-shape/src/offset/diverging'
 import noop from 'lodash.noop'
 import { bound } from '../../utils/maths'
+import merge from '../../utils/merge'
 
 import chartMixin from '../../mixins/chart'
 
@@ -23,10 +24,12 @@ export default {
                 x: {
                     datakey: null,
                     name: null,
+                    numTicks: null,
                 },
                 y: {
                     datakey: null,
                     name: null,
+                    numTicks: null,
                 },
                 z: {
                     datakey: null,
@@ -142,6 +145,7 @@ export default {
         },
         // Return max possible bar width saving space between group of bars
         maxBarWidth () {
+            if (!this.numberOfBarsPerGroup) return 0
             return this.canvas.width / (this.numberOfBarsPerGroup * (this.data.length + 1))
         },
         // Return position of bars per group
@@ -198,6 +202,10 @@ export default {
         // ref: https://github.com/d3/d3-shape#stacks
         getDataStacked (datakeys, offset = noop) {
             return stack().keys(datakeys).offset(offset)(this.data)
+        },
+        // Set axis options
+        setAxisOptions (options) {
+            this.axis = merge(this.axis, options)
         },
     },
     render (h) {

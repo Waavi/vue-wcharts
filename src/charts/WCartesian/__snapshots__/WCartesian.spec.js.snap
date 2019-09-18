@@ -63,22 +63,7 @@ exports[`Charts/WCartesian Should be render correctly with axix 1`] = `
 exports[`Charts/WCartesian Should be render correctly with legend and markers 1`] = `
 <div class="WCartesian" style="position: relative; width: 600px;"><svg width="600" height="400" viewBox="0 0 600 400">
     <g>
-      <line x1="0" y1="200" x2="600" y2="200" stroke="#cccccc" stroke-width="1" stroke-dasharray="3" fill="none"></line>
-      <line x1="0" y1="200" x2="600" y2="200" stroke="#cccccc" stroke-width="1" stroke-dasharray="3" fill="none"></line>
-      <line x1="0" y1="200" x2="600" y2="200" stroke="#cccccc" stroke-width="1" stroke-dasharray="3" fill="none"></line>
-      <line x1="0" y1="200" x2="600" y2="200" stroke="#cccccc" stroke-width="1" stroke-dasharray="3" fill="none"></line>
-      <line x1="0" y1="200" x2="600" y2="200" stroke="#cccccc" stroke-width="1" stroke-dasharray="3" fill="none"></line>
-      <line x1="0" y1="200" x2="600" y2="200" stroke="#cccccc" stroke-width="1" stroke-dasharray="3" fill="none"></line>
-      <line x1="0" y1="200" x2="600" y2="200" stroke="#cccccc" stroke-width="1" stroke-dasharray="3" fill="none"></line>
-      <line x1="0" y1="200" x2="600" y2="200" stroke="#cccccc" stroke-width="1" stroke-dasharray="3" fill="none"></line>
-      <line x1="0" y1="0" x2="0" y2="400" stroke="#cccccc" stroke-width="1" stroke-dasharray="3" fill="none"></line>
-      <line x1="85.71428571428571" y1="0" x2="85.71428571428571" y2="400" stroke="#cccccc" stroke-width="1" stroke-dasharray="3" fill="none"></line>
-      <line x1="171.42857142857142" y1="0" x2="171.42857142857142" y2="400" stroke="#cccccc" stroke-width="1" stroke-dasharray="3" fill="none"></line>
-      <line x1="257.1428571428571" y1="0" x2="257.1428571428571" y2="400" stroke="#cccccc" stroke-width="1" stroke-dasharray="3" fill="none"></line>
-      <line x1="342.85714285714283" y1="0" x2="342.85714285714283" y2="400" stroke="#cccccc" stroke-width="1" stroke-dasharray="3" fill="none"></line>
-      <line x1="428.57142857142856" y1="0" x2="428.57142857142856" y2="400" stroke="#cccccc" stroke-width="1" stroke-dasharray="3" fill="none"></line>
-      <line x1="514.2857142857142" y1="0" x2="514.2857142857142" y2="400" stroke="#cccccc" stroke-width="1" stroke-dasharray="3" fill="none"></line>
-      <line x1="600" y1="0" x2="600" y2="400" stroke="#cccccc" stroke-width="1" stroke-dasharray="3" fill="none"></line>
+      <line x1="0" x2="600" style="stroke: #cccccc; stroke-width: 1; stroke-dasharray: 3;"></line>
     </g>
   </svg>
   <!---->

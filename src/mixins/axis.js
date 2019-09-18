@@ -238,6 +238,17 @@ export default {
             }
         },
     },
+    watch: {
+        // Set num ticks in axis setiings chart
+        ticks: {
+            handler (ticks) {
+                const axis = this.isX ? 'x' : 'y'
+                const numTicks = (ticks || []).length
+                this.Chart.setAxisOptions({ [axis]: { numTicks } })
+            },
+            immediate: true,
+        },
+    },
     methods: {
         // Return coords of the label xAxis by align
         getLabelXAxis (align) {

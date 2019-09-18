@@ -49,6 +49,7 @@ describe('Axis/WYAxis', () => {
             bounds,
             spaceObjects: [10, 10, 10, 10],
             yScale: a => a,
+            setAxisOptions: () => undefined,
         },
     }
 
