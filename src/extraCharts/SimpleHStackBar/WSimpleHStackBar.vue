@@ -168,7 +168,7 @@ export default {
         stacks () {
             const values = this.launchAnimation ? this.dataset : Array.from({ length: (this.dataset || []).length })
             return values.reduce((acc, value, index) => {
-                if (value === 0) return acc
+                if (value === 0 || !value) return acc
                 const width = (value * 100 / this.totalValues)
                 acc.push({
                     id: index,

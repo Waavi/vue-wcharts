@@ -103,14 +103,6 @@ export default {
                 ...this.titleStyles,
             }
         },
-        // Bullet style
-        bulletStyle () {
-            if (!this.selected) return {}
-
-            return {
-                background: this.selected.color,
-            }
-        },
     },
     watch: {
         'Chart.active': function watchActive ({ el, event }) {

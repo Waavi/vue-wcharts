@@ -1,3 +1,16 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Charts/WCartesian Should be render correctly 1`] = `<div class="WPieChart" style="position: relative; width: 600px;"><svg width="600" height="400" viewBox="0 0 600 400"></svg></div>`;
+
+exports[`Charts/WCartesian Should be render correctly with WPie component and WTooltip 1`] = `
+<div class="WPieChart" style="position: relative; width: 600px;"><svg width="600" height="400" viewBox="0 0 600 400">
+    <g style="position: relative; transform: translate(50%, 50%);">
+      <foreignObject style="width: 300px; height: 300px; transform: translate(-150px, -150px);"></foreignObject>
+      <path id="0" d="M9.184850993605149e-15,-150A150,150,0,0,1,129.9038105676658,-75L95.26279441628824,-55A110,110,0,0,0,6.735557395310443e-15,-110Z" fill="#48c0b6" style="opacity: 1;"></path>
+      <path id="1" d="M129.9038105676658,-75A150,150,0,1,1,-129.90381056766577,75.00000000000006L-95.26279441628823,55.000000000000036A110,110,0,1,0,95.26279441628824,-55Z" fill="#9d6af5" style="opacity: 1;"></path>
+      <path id="2" d="M-129.90381056766577,75.00000000000006A150,150,0,0,1,-2.7554552980815446e-14,-150L-2.0206672185931328e-14,-110A110,110,0,0,0,-95.26279441628823,55.000000000000036Z" fill="#ffde69" style="opacity: 1;"></path>
+    </g>
+  </svg>
+  <!---->
+</div>
+`;

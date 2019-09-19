@@ -1,4 +1,4 @@
-import { shallowMount } from '@vue/test-utils'
+import { mount, shallowMount } from '@vue/test-utils'
 import WBar from './WBar.vue'
 
 describe('Components/WBar', () => {
@@ -57,6 +57,20 @@ describe('Components/WBar', () => {
                     0,
                 ],
             },
+            axis: {
+                x: {
+                    datakey: 'name',
+                },
+            },
+            stackedCurData: [],
+            barsCurData: [{
+                key: 'one',
+                0: {
+                    data: {
+                        one: 3000,
+                    },
+                },
+            }],
             yScale: a => a,
             cleanActive: a => a,
         },
@@ -89,5 +103,61 @@ describe('Components/WBar', () => {
         const customConfig = { ...defaultConfig, propsData: { ...defaultConfig.propsData, stacked: true, showStackedLabel: true } }
         const wrapper = shallowMount(WBar, customConfig)
         expect(wrapper.html()).toMatchSnapshot()
+    })
+
+    describe('Events', () => {
+        it(`It emits the onClick event`, () => {
+            const wrapper = mount(WBar, defaultConfig)
+            wrapper.find('#Bars > g').trigger('click')
+            expect(wrapper.emitted('onClick')).toHaveLength(1)
+        })
+
+        it(`It emits the onMouseenter event`, () => {
+            const wrapper = mount(WBar, {
+                ...defaultConfig,
+                propsData: {
+                    ...defaultConfig.propsData,
+                    trigger: 'manual',
+                },
+            })
+            wrapper.find('#Bars > g').trigger('mouseenter')
+            expect(wrapper.emitted('onMouseenter')).toHaveLength(1)
+        })
+
+        it(`It emits the onMouseleave event`, () => {
+            const wrapper = mount(WBar, {
+                ...defaultConfig,
+                propsData: {
+                    ...defaultConfig.propsData,
+                    trigger: 'hover',
+                },
+            })
+            wrapper.find('#Bars > g').trigger('mouseleave')
+            expect(wrapper.emitted('onMouseleave')).toHaveLength(1)
+        })
+    })
+
+    describe('Methods', () => {
+        it(`Should be set active in Chart after trigger event`, (done) => {
+            const setActive = ({ id }) => {
+                expect(id).toEqual(0)
+                done()
+            }
+            const wrapper = mount(WBar, {
+                ...defaultConfig,
+                provide: {
+                    Chart: {
+                        ...provide.Chart,
+                        setActive,
+                    },
+                },
+            })
+            const event = {
+                currentTarget: {
+                    id: '0',
+                },
+            }
+            wrapper.vm.handleActive(event)
+        })
     })
 })
