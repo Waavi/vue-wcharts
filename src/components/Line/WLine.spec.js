@@ -97,7 +97,11 @@ describe('Components/WLine', () => {
         const wrapper = shallowMount(WLine, customConfig)
         expect(wrapper.html()).toMatchSnapshot()
     })
-
+    it('It emits the handleMouseEnter event', () => {
+        const wrapper = mount(WLine, defaultConfig)
+        wrapper.find('path').trigger('click')
+        expect(wrapper.emitted('onClick')).toHaveLength(1)
+    })
     it('It emits the handleMouseEnter event', () => {
         const wrapper = mount(WLine, defaultConfig)
         wrapper.find('path').trigger('mouseenter')

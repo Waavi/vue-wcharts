@@ -81,6 +81,30 @@ describe('Components/WScatter', () => {
         expect(wrapper.html()).toMatchSnapshot()
     })
 
+    it(`Shouldn be render with multiple scatter`, () => {
+        const wrapper = shallowMount(WScatter, {
+            ...defaultConfig,
+            propsData: {
+                ...propsData,
+                datakey: 'one',
+            },
+            provide: {
+                Chart: {
+                    ...provide.Chart,
+                    data: [
+                        {
+                            $dataset: 'one', name: 'Page A', one: 4000, two: 2400, three: 2300,
+                        },
+                        {
+                            $dataset: 'two', name: 'Page B', one: 3000, two: 2210, three: 1398,
+                        },
+                    ],
+                },
+            },
+        })
+        expect(wrapper.vm.points.length).toEqual(1)
+    })
+
     it('It emits the handleClick event', () => {
         const wrapper = mount(WScatter, defaultConfig)
         wrapper.find(WDot).trigger('onClick')
