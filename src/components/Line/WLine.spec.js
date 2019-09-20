@@ -118,7 +118,10 @@ describe('Components/WLine', () => {
         const customConfig = { ...defaultConfig, propsData: { ...defaultConfig.propsData, area: true, curve: true } }
         const wrapper = shallowMount(WLine, customConfig)
         expect(wrapper.vm.linePath).toEqual('M0,4000C0.3333333333333333,3500,0.6666666666666667,3000,1,3000C1.3333333333333333,3000,1.6666666666666667,6400,2,9800')
-        expect(wrapper.vm.areaPath).toEqual('M0,4000C0.3333333333333333,3500,0.6666666666666667,3000,1,3000C1.3333333333333333,3000,1.6666666666666667,6400,2,9800L2,250C1.6666666666666667,250,1.3333333333333333,250,1,250C0.6666666666666667,250,0.3333333333333333,250,0,250Z')
+        expect(wrapper.vm.areaPath).toEqual(
+            [`M0,4000C0.3333333333333333,3500,0.6666666666666667,3000,1,3000C1.3333333333333333,3000,1.6666666666666667,`,
+                `6400,2,9800L2,250C1.6666666666666667,250,1.3333333333333333,250,1,250C0.6666666666666667,250,0.3333333333333333,250,0,250Z`].join('')
+        )
     })
 
     it(`Should be render correctly with curve and func`, () => {
