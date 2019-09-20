@@ -172,5 +172,35 @@ describe('Components/WSimpleHStackBar', () => {
             }
             wrapper.vm.handleActive(event)
         })
+
+        it(`Should be set active in Cahrt after trigger event without stacks`, (done) => {
+            const setActive = ({
+                id, value, datum, offsetLeft,
+            }) => {
+                expect(id).toEqual(0)
+                expect(value).toEqual([{
+                    color: '#48c0b6', key: 0, value: undefined, width: undefined,
+                }])
+                expect(datum).toEqual({})
+                expect(offsetLeft).toEqual(10)
+                done()
+            }
+            const wrapper = mount(WSimpleHStackBar, {
+                ...defaultConfig,
+                propsData: {
+                    ...propsData,
+                    dataset: [],
+                },
+            })
+            wrapper.setData({ launchAnimation: true })
+            wrapper.vm.setActive = setActive
+            const event = {
+                target: {
+                    id: 0,
+                    offsetLeft: 10,
+                },
+            }
+            wrapper.vm.handleActive(event)
+        })
     })
 })

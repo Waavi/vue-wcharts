@@ -5,11 +5,11 @@ exports[`Charts/WCartesian Should be ommit children components not allowed 1`] =
     <g>
       <g>
         <defs>
-          <clipPath id="WSpread60">
+          <clipPath id="WSpread62">
             <rect x="0" y="0" width="0" height="100%" data-width="100%" data-height="100%" class="v-enter v-enter-active"></rect>
           </clipPath>
         </defs>
-        <g clip-path="url(#WSpread60)">
+        <g clip-path="url(#WSpread62)">
           <path d="M0,352.2970721256844L300,400L600,0" fill="none" stroke="#48c0b6" strokeWidth="2" strokeDasharray="0" style="transition: all 1s ease;"></path>
           <!---->
           <!---->
@@ -125,11 +125,11 @@ exports[`Charts/WCartesian Should be render correctly with bars and lines 1`] = 
     <g>
       <g>
         <defs>
-          <clipPath id="WSpread53">
+          <clipPath id="WSpread55">
             <rect x="0" y="0" width="0" height="100%" data-width="100%" data-height="100%" class="v-enter v-enter-active"></rect>
           </clipPath>
         </defs>
-        <g clip-path="url(#WSpread53)">
+        <g clip-path="url(#WSpread55)">
           <path d="M75,400L300,52L525,226" fill="none" stroke="#9d6af5" strokeWidth="2" strokeDasharray="0" style="transition: all 1s ease;"></path>
           <!---->
           <!---->
@@ -284,3 +284,5 @@ exports[`Charts/WCartesian Should be render correctly, with gap it is a number a
     </g>
   </svg></div>
 `;
+
+exports[`Charts/WCartesian Should be render responsive mode correctly 1`] = `<div class="WCartesian" style="position: relative; width: 100%;"><svg width="600" height="400" viewBox="0 0 600 400"></svg></div>`;

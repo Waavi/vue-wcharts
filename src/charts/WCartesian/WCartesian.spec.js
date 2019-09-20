@@ -59,6 +59,17 @@ describe('Charts/WCartesian', () => {
         expect(wrapper.html()).toMatchSnapshot()
     })
 
+    it(`Should be render responsive mode correctly`, () => {
+        const wrapper = shallowMount(WCartesian, {
+            ...defaultConfig,
+            propsData: {
+                ...propsData,
+                responsive: true,
+            },
+        })
+        expect(wrapper.html()).toMatchSnapshot()
+    })
+
     it(`Should be render correctly with axix`, () => {
         const wrapper = shallowMount(WCartesian, { ...defaultConfig, slots: axisSlots })
         expect(wrapper.html()).toMatchSnapshot()
@@ -118,6 +129,57 @@ describe('Charts/WCartesian', () => {
     it(`Should be render correctly with legend and markers`, () => {
         const wrapper = shallowMount(WCartesian, { ...defaultConfig, slots: legendAndGridSlots })
         expect(wrapper.html()).toMatchSnapshot()
+    })
+
+    it(`Should be render correctly with scatter check xBounds`, () => {
+        const wrapper = shallowMount(WCartesian, {
+            ...defaultConfig,
+            propsData: {
+                ...defaultConfig.propsData,
+                scatter: true,
+                xBound: [0, 100],
+            },
+            slots: {
+                default: `
+                    <WXAxis id="testBar" datakey="two" />
+                    <WLine datakey="one" legend="One Line" />
+                    <WLegend position="top" align="end" selectable />
+                `,
+            },
+        })
+        expect(wrapper.vm.xBounds).toEqual({ max: 100, min: 0 })
+    })
+
+    it(`Should be render correctly with scatter check zBounds`, () => {
+        const wrapper = shallowMount(WCartesian, {
+            ...defaultConfig,
+            propsData: {
+                ...defaultConfig.propsData,
+                scatter: true,
+            },
+            slots: {
+                default: `
+                    <WZAxis id="testBar" datakey="two" />
+                    <WLine datakey="one" legend="One Line" />
+                    <WLegend position="top" align="end" selectable />
+                `,
+            },
+        })
+        expect(wrapper.vm.zBounds).toEqual({ max: 9800, min: 1398 })
+    })
+
+    it(`Should be render correctly without scatter check zBounds`, () => {
+        const wrapper = shallowMount(WCartesian, {
+            ...defaultConfig,
+            slots: {
+                default: `
+                    <WZAxis id="testBar" datakey="two" />
+                    <WLine datakey="one" legend="One Line" />
+                    <WLegend position="top" align="end" selectable />
+                `,
+            },
+        })
+        expect(wrapper.vm.zBounds).toEqual({ max: 0, min: 0 })
     })
 
     it(`Should be render correctly with scatter`, () => {

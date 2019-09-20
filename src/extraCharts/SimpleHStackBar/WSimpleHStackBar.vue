@@ -162,6 +162,7 @@ export default {
         },
         // Sum values
         sumValues () {
+            if (!(this.dataset || []).length) return 0
             return this.dataset.reduce((a, b) => a + b)
         },
         // Generate and calc stack values
