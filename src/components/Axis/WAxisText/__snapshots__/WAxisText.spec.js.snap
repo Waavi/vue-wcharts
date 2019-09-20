@@ -1,6 +1,12 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Common/WAxisText Should be render correctly 1`] = `
+<text x="30" y="135" dy="" stroke="none" fill="none" font-size="14">
+  Page 1
+</text>
+`;
+
+exports[`Common/WAxisText Should be render correctly with custom styles 1`] = `
 <text x="30" y="135" dy="" stroke="#444" fill="#ddd" font-size="12">
   Page 1
 </text>

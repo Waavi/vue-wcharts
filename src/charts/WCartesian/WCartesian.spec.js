@@ -100,6 +100,21 @@ describe('Charts/WCartesian', () => {
         expect(wrapper.html()).toMatchSnapshot()
     })
 
+    it(`Should be ommit children components not allowed`, () => {
+        const wrapper = mount(WCartesian, {
+            ...defaultConfig,
+            slots: {
+                default: `
+                    <WLine datakey="two" />
+                    <WPie datakey="one" :radius="[110, 150]" />
+                    <WTooltip />
+                `,
+            },
+        })
+
+        expect(wrapper).toMatchSnapshot()
+    })
+
     it(`Should be render correctly with legend and markers`, () => {
         const wrapper = shallowMount(WCartesian, { ...defaultConfig, slots: legendAndGridSlots })
         expect(wrapper.html()).toMatchSnapshot()

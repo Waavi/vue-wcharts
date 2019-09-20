@@ -1,4 +1,5 @@
 import { shallowMount, mount } from '@vue/test-utils'
+import { curveStep } from 'd3-shape'
 import WScatter from './WScatter.vue'
 import WDot from '../Common/WDot/WDot.vue'
 
@@ -79,6 +80,28 @@ describe('Components/WScatter', () => {
         const customConfig = { ...defaultConfig, propsData: { ...defaultConfig.propsData, line: true } }
         const wrapper = shallowMount(WScatter, customConfig)
         expect(wrapper.html()).toMatchSnapshot()
+    })
+
+    it(`Should be render correctly with curve and bool`, () => {
+        const customConfig = { ...defaultConfig, propsData: { ...defaultConfig.propsData, curve: true } }
+        const wrapper = shallowMount(WScatter, customConfig)
+        expect(wrapper.vm.linePath).toBeFalsy()
+    })
+
+    it(`Should be render correctly with curve and func`, () => {
+        const customConfig = { ...defaultConfig, propsData: { ...defaultConfig.propsData, area: true, curve: curveStep } }
+        const wrapper = shallowMount(WScatter, customConfig)
+        expect(wrapper.vm.linePath).toBeFalsy()
+    })
+
+    it(`Should be render correctly with custom fillColor`, () => {
+        const customConfig = { ...defaultConfig, propsData: { ...defaultConfig.propsData, index: 1, colors: ['#000', '#FFF'] } }
+        const wrapper = shallowMount(WScatter, customConfig)
+        expect(wrapper.vm.fillColor).toEqual('#FFF')
+
+        const customConfigTwo = { ...defaultConfig, propsData: { ...defaultConfig.propsData, index: 3, colors: undefined } }
+        const wrapperTwo = shallowMount(WScatter, customConfigTwo)
+        expect(wrapperTwo.vm.fillColor).toEqual('#e8e8e8')
     })
 
     it(`Shouldn be render with multiple scatter`, () => {

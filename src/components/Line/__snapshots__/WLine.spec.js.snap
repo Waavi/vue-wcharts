@@ -45,9 +45,9 @@ exports[`Components/WLine Should be render correctly with dots 1`] = `
     <!---->
   </WSpread-stub>
   <g>
-    <WDot-stub colors="#48c0b6,#9d6af5,#ffde69,#e8e8e8,#54ddd9,#5C6BC0,#FB499D" index="0" cartesianIndex="0" trigger="click" x="0" y="4000" fill="white" stroke="#48c0b6" strokeWidth="2" radius="4" hoverRadius="8" info="[object Object]" styles="[object Object]" transition="all 250ms ease" value="4000"></WDot-stub>
-    <WDot-stub colors="#48c0b6,#9d6af5,#ffde69,#e8e8e8,#54ddd9,#5C6BC0,#FB499D" index="1" cartesianIndex="0" trigger="click" x="1" y="3000" fill="white" stroke="#48c0b6" strokeWidth="2" radius="4" hoverRadius="8" info="[object Object]" styles="[object Object]" transition="all 250ms ease" value="3000"></WDot-stub>
-    <WDot-stub colors="#48c0b6,#9d6af5,#ffde69,#e8e8e8,#54ddd9,#5C6BC0,#FB499D" index="2" cartesianIndex="0" trigger="click" x="2" y="9800" fill="white" stroke="#48c0b6" strokeWidth="2" radius="4" hoverRadius="8" info="[object Object]" styles="[object Object]" transition="all 250ms ease" value="9800"></WDot-stub>
+    <WDot-stub colors="#48c0b6,#9d6af5,#ffde69,#e8e8e8,#54ddd9,#5C6BC0,#FB499D" index="0" cartesianIndex="0" trigger="click" x="0" y="4000" fill="#48c0b6" stroke="#48c0b6" strokeWidth="2" radius="4" hoverRadius="8" info="[object Object]" styles="[object Object]" transition="all 250ms ease" value="4000"></WDot-stub>
+    <WDot-stub colors="#48c0b6,#9d6af5,#ffde69,#e8e8e8,#54ddd9,#5C6BC0,#FB499D" index="1" cartesianIndex="0" trigger="click" x="1" y="3000" fill="#48c0b6" stroke="#48c0b6" strokeWidth="2" radius="4" hoverRadius="8" info="[object Object]" styles="[object Object]" transition="all 250ms ease" value="3000"></WDot-stub>
+    <WDot-stub colors="#48c0b6,#9d6af5,#ffde69,#e8e8e8,#54ddd9,#5C6BC0,#FB499D" index="2" cartesianIndex="0" trigger="click" x="2" y="9800" fill="#48c0b6" stroke="#48c0b6" strokeWidth="2" radius="4" hoverRadius="8" info="[object Object]" styles="[object Object]" transition="all 250ms ease" value="9800"></WDot-stub>
   </g>
 </g>
 `;

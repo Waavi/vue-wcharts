@@ -25,6 +25,12 @@ describe('Components/WSimpleHStackBar', () => {
         expect(wrapper.html()).toMatchSnapshot()
     })
 
+    it(`Should be render correctly without total`, () => {
+        const customConfig = { ...defaultConfig, propsData: { dataset } }
+        const wrapper = shallowMount(WSimpleHStackBar, customConfig)
+        expect(parseInt(wrapper.vm.totalValues, 10)).toEqual(71)
+    })
+
     it(`Should be render correctly with labels`, () => {
         const customConfig = { ...defaultConfig, propsData: { ...defaultConfig.propsData, showLabel: true } }
         const wrapper = shallowMount(WSimpleHStackBar, customConfig)

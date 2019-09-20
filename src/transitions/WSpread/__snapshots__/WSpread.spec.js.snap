@@ -1,0 +1,38 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Widgets/WSpread Should be render correctly 1`] = `
+<g>
+  <defs>
+    <clipPath id="WSpread0">
+      <rect x="0" y="0" width="100%" height="100%"></rect>
+    </clipPath>
+  </defs>
+  <g clip-path="url(#WSpread0)"></g>
+</g>
+`;
+
+exports[`Widgets/WSpread Should be render correctly with children and axis it is x 1`] = `
+<div>
+  <g>
+    <defs>
+      <clipPath id="WSpread3">
+        <rect x="0" y="0" width="100%" height="100%"></rect>
+      </clipPath>
+    </defs>
+    <g clip-path="url(#WSpread3)"><span>Hello</span></g>
+  </g>
+</div>
+`;
+
+exports[`Widgets/WSpread Should be render correctly with children and axis it is y 1`] = `
+<div>
+  <g>
+    <defs>
+      <clipPath id="WSpread6">
+        <rect x="0" y="0" width="100%" height="100%"></rect>
+      </clipPath>
+    </defs>
+    <g clip-path="url(#WSpread6)"><span>Hello</span></g>
+  </g>
+</div>
+`;

@@ -105,6 +105,55 @@ describe('Components/WBar', () => {
         expect(wrapper.html()).toMatchSnapshot()
     })
 
+    it(`Should be executed preload method correctly`, () => {
+        const parent = {
+            snap: {},
+            data: [],
+            colors: ['#000', '#FFF'],
+            axis: {
+                z: {
+                    datakey: '',
+                    name: '',
+                    range: '',
+                },
+            },
+        }
+
+        const props = {
+            datakey: 'one',
+            stacked: true,
+            color: '#',
+        }
+
+        WBar.preload({ parent, props })
+        expect(parent.snap.barsDatakeysColors).toEqual({ one: [] })
+
+        WBar.preload({ parent, props: { ...props, color: ['#eee'] } })
+        expect(parent.snap.barsDatakeysColors).toEqual({ one: ['#eee'] })
+    })
+
+    it('Should be render correctly with borderRadius prop', () => {
+        const wrapperArray = mount(WBar, {
+            ...defaultConfig,
+            propsData: {
+                ...propsData,
+                borderRadius: [5, 10, 5, 10],
+            },
+        })
+
+        expect(wrapperArray.vm.normalizedBorderRadius).toEqual([5, 10])
+
+        const wrapperNum = mount(WBar, {
+            ...defaultConfig,
+            propsData: {
+                ...propsData,
+                borderRadius: 5,
+            },
+        })
+
+        expect(wrapperNum.vm.normalizedBorderRadius).toEqual([5, 5])
+    })
+
     describe('Events', () => {
         it(`It emits the onClick event`, () => {
             const wrapper = mount(WBar, defaultConfig)
@@ -138,6 +187,41 @@ describe('Components/WBar', () => {
     })
 
     describe('Methods', () => {
+        it('Should be no return config stacked label if it is outside', () => {
+            const wrapper = mount(WBar, {
+                ...defaultConfig,
+                propsData: {
+                    ...propsData,
+                    index: 2,
+                    showStackedLabel: false,
+                    showLabel: true,
+                    stacked: true,
+                    labelPosition: 'outside',
+                },
+            })
+            expect(wrapper.vm.getStackedLabel({
+                x: 10, y: 10, stackedValue: 0,
+            })).toBeFalsy()
+        })
+
+        it('Should be no return config label if it is outside and stacked, and check show console', () => {
+            const spy = jest.spyOn(console, 'warn')
+            const wrapper = mount(WBar, {
+                ...defaultConfig,
+                propsData: {
+                    ...propsData,
+                    showLabel: true,
+                    stacked: true,
+                    labelPosition: 'outside',
+                },
+            })
+            expect(wrapper.vm.getLabel({
+                x: 10, y: 10, value: 'Test', height: 14,
+            })).toBeFalsy()
+            expect(spy).toBeCalled()
+            spy.mockReset()
+        })
+
         it(`Should be set active in Chart after trigger event`, (done) => {
             const setActive = ({ id }) => {
                 expect(id).toEqual(0)
@@ -145,6 +229,32 @@ describe('Components/WBar', () => {
             }
             const wrapper = mount(WBar, {
                 ...defaultConfig,
+                provide: {
+                    Chart: {
+                        ...provide.Chart,
+                        setActive,
+                    },
+                },
+            })
+            const event = {
+                currentTarget: {
+                    id: '0',
+                },
+            }
+            wrapper.vm.handleActive(event)
+        })
+
+        it(`Should be set active in Chart after trigger event if stacked prop`, (done) => {
+            const setActive = ({ id }) => {
+                expect(id).toEqual(0)
+                done()
+            }
+            const wrapper = mount(WBar, {
+                ...defaultConfig,
+                propsData: {
+                    ...propsData,
+                    stacked: true,
+                },
                 provide: {
                     Chart: {
                         ...provide.Chart,

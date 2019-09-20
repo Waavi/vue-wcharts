@@ -43,13 +43,13 @@ export default {
             }
         },
         stroke () {
-            return this.styles.stroke || this.themeStyles.styles.stroke
+            return (this.styles || {}).stroke || this.themeStyles.styles.stroke
         },
         fill () {
-            return this.styles.fill || this.themeStyles.styles.fill
+            return (this.styles || {}).fill || this.themeStyles.styles.fill
         },
         fontSize () {
-            return this.styles.fontSize || this.themeStyles.styles.fontSize
+            return (this.styles || {}).fontSize || this.themeStyles.styles.fontSize
         },
     },
 }
