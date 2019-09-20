@@ -10,6 +10,9 @@ Object {
     },
   },
   "WBar": Object {
+    "background": Object {
+      "fill": "#eeeeee",
+    },
     "label": Object {
       "cursor": "default",
       "fill": "#333333",
@@ -265,6 +268,9 @@ Object {
     },
   },
   "WBar": Object {
+    "background": Object {
+      "fill": "#eeeeee",
+    },
     "label": Object {
       "cursor": "default",
       "fill": "#333333",

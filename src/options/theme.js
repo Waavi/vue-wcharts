@@ -63,6 +63,9 @@ export default {
             fill: colors.grayDarker,
             cursor: 'default',
         },
+        background: {
+            fill: colors.grayLight,
+        },
     },
     WScatter: {
         line: {
