@@ -23,7 +23,7 @@ module.exports = {
         '**/tests/unit/**/*.spec.(js|jsx|ts|tsx)|**/__tests__/*.(js|jsx|ts|tsx)|**/src/**/*.spec.(js|jsx|ts|tsx)',
     ],
     testURL: 'http://localhost/',
-    // collectCoverage: false,
+    collectCoverage: true,
     collectCoverageFrom: ['<rootDir>/src/**/*.{vue}'],
     coverageReporters: ['lcov', 'text-summary'],
 }
