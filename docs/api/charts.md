@@ -28,15 +28,20 @@ sidebarDepth: 3
 | responsive | bool | false | If true set, the container is responsive |
 | height | number | 400 | The height of the chart container in pixels |
 | width | number | 600 | The width of the chart container in pixels |
+| gap | array | 0 or [0, 0, 0, 0] | Padding inside the chart space |
+| colors | array | ```['#3fb1e3',  '#6be6c1',  '#626c91',  '#a0a7e6',  '#c4ebad',  '#96dee8',  '#013566',  '##ff4f81'  ]``` | Colors palette |
 | scatter | bool | false | If true set, the chart is scatter  |
 | bound | array | [] | Y axis bounds, can be function or number |
 | xBound | array | [] | X axis bounds, can be function or number |
-| gap | array | 0 or [0, 0, 0, 0] | Padding inside the chart space |
-| colors | array | ```['#3fb1e3',  '#6be6c1',  '#626c91',  '#a0a7e6',  '#c4ebad',  '#96dee8',  '#013566',  '##ff4f81'  ]``` | Colors palette |
+
+
+### Zones
+
+<br>
+<Api-Zones />
 
 ## WPieChart
 
-<br>
 <Api-PieChart />
 
 ### Child components
