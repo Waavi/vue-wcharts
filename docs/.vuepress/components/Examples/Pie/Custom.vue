@@ -1,6 +1,7 @@
 <template>
     <WPieChart
         :dataset="data"
+        :paddingAngle="10"
     >
         <WPie
             datakey="one"

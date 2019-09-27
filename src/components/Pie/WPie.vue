@@ -3,6 +3,10 @@
         v-if="active"
         class="pie-sectors"
     >
+        <foreignObject :style="contentStyles">
+            <slot />
+        </foreignObject>
+
         <g
             v-for="(path, i) in paths"
             :key="i"
@@ -151,6 +155,16 @@ export default {
             })
         },
         // Slot styles
+        contentStyles () {
+            const { height } = this.Chart
+            const { outerRadius } = this.curRadius
+            const size = `${outerRadius * 2}px`
+            return {
+                width: size,
+                height: size,
+                transform: `translate(${outerRadius}px, ${height / 2 - outerRadius}px)`,
+            }
+        },
         stylesCmp () {
             return {
                 ...this.themeStyles.styles,
