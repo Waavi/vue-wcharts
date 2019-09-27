@@ -1,37 +1,38 @@
 <template>
     <g
         v-if="active"
-        :style="stylesCmp"
+        class="pie-sectors"
     >
-        <foreignObject :style="contentStyles">
-            <slot :values="values" />
-        </foreignObject>
-
-        <path
+        <g
             v-for="(path, i) in paths"
-            :id="i"
             :key="i"
-            :d="path.d"
-            :fill="path.fill"
-            :stroke="path.stroke"
-            :style="{
-                ...pathStylesCmp,
-                opacity: activePath === null ? 1 : activePath === i ? 1 : opacityDisabled,
-            }"
-            v-on="pieListeners"
-        />
+            class="pie-sector"
+        >
+            <path
+                :id="i"
+                :d="path.d"
+                :fill="path.fill"
+                :stroke="path.stroke"
+                :style="{
+                    ...pathStylesCmp,
+                    opacity: activePath === null ? 1 : activePath === i ? 1 : opacityDisabled,
+                }"
+                v-on="pieListeners"
+            />
+        </g>
     </g>
 </template>
 
 <script>
 import VueTypes from 'vue-types'
 import omit from 'lodash.omit'
-import noop from 'lodash.noop'
-import pie from 'd3-shape/src/pie'
-import arc from 'd3-shape/src/arc'
 import merge from '../../utils/merge'
 import themeMixin from '../../mixins/theme'
 import visibleMixin from '../../mixins/visible'
+import { isNumber } from '../../utils/checks'
+import {
+    getSectorPath, mathSign, parseDeltaAngle,
+} from '../../utils/mathsPie'
 
 export default {
     name: 'WPie',
@@ -43,10 +44,6 @@ export default {
         index: VueTypes.number,
         datakey: VueTypes.string.isRequired,
         trigger: VueTypes.oneOf(['hover', 'click', 'manual']).def('hover'),
-        angles: VueTypes.oneOfType([
-            VueTypes.number,
-            VueTypes.arrayOf(VueTypes.number).def([0, Math.PI * 2]),
-        ]).def([0, Math.PI * 2]),
         radius: VueTypes.oneOfType([
             VueTypes.number,
             VueTypes.arrayOf(VueTypes.number).def([0, 100]),
@@ -69,47 +66,60 @@ export default {
         active () {
             return this.Chart.activeElements.includes(this.index)
         },
+        // Radius
         curRadius () {
             const innerRadius = Array.isArray(this.radius) ? this.radius[0] : 0
             const outerRadius = Array.isArray(this.radius) ? this.radius[1] : 100
 
-            return [innerRadius, outerRadius]
-        },
-        // Generate angles by number or array
-        curAngles () {
-            const { angles } = this
-            return Array.isArray(angles) ? angles : [0, angles]
+            return { innerRadius, outerRadius }
         },
         // Values
         curValues () {
             return this.Chart.data.map(item => item[this.datakey])
         },
-        // Values
-        values () {
-            const total = this.curValues.reduce((acc, a) => acc + a, 0)
-            return this.Chart.data.map((item, index) => ({
-                ...item,
-                percentage: item[this.datakey] * 100 / total,
-                color: this.Chart.colors[index],
-            }))
-        },
-        // Generate arrry of arcs
-        arcs () {
-            return pie()
-                .startAngle(this.curAngles[0])
-                .endAngle(this.curAngles[1])
-                .sortValues(noop)(this.curValues)
-        },
-        // Return the path of angles
-        draw () {
-            return arc()
-                .innerRadius(this.curRadius[0])
-                .outerRadius(this.curRadius[1])
+        // Sectors
+        sectors () {
+            const {
+                startAngle, endAngle, paddingAngle, curCx, curCy,
+            } = this.Chart
+            let prev
+            const sum = this.curValues.reduce((acc, a) => acc + a, 0)
+
+            const len = this.curValues.length
+            const deltaAngle = parseDeltaAngle({ startAngle, endAngle })
+            const absDeltaAngle = Math.abs(deltaAngle)
+            const totalPadingAngle = (absDeltaAngle >= 360 ? len : (len - 1)) * paddingAngle
+            const realTotalAngle = absDeltaAngle - totalPadingAngle
+
+            return this.curValues.map((value, index) => {
+                let tempStartAngle
+                const percentage = (isNumber(value) ? value : 0) / sum
+
+                if (index) {
+                    tempStartAngle = prev.endAngle + mathSign(deltaAngle) * paddingAngle
+                } else {
+                    tempStartAngle = startAngle
+                }
+                const tempEndAngle = tempStartAngle + mathSign(deltaAngle) * (percentage * realTotalAngle)
+
+                prev = {
+                    name: `Group ${index}`,
+                    cx: curCx,
+                    cy: curCy,
+                    value,
+                    percentage,
+                    startAngle: tempStartAngle,
+                    endAngle: tempEndAngle,
+                    ...this.curRadius,
+                }
+
+                return prev
+            })
         },
         // Generate paths array by arcs
         paths () {
-            return this.arcs.map(this.draw).map((d, index) => ({
-                d,
+            return this.sectors.map((sector, index) => ({
+                d: getSectorPath(sector),
                 fill: this.Chart.colors[index],
                 stroke: this.pathStylesCmp.stroke,
             }))
@@ -141,15 +151,6 @@ export default {
             })
         },
         // Slot styles
-        contentStyles () {
-            const [, width] = this.curRadius
-            const size = `${width * 2}px`
-            return {
-                width: size,
-                height: size,
-                transform: `translate(-${width}px, -${width}px)`,
-            }
-        },
         stylesCmp () {
             return {
                 ...this.themeStyles.styles,
