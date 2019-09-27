@@ -1,14 +1,55 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Components/WPie Should be render correctly 1`] = `
-<g style="position: relative; transform: translate(50%, 50%);">
-  <foreignObject style="width: 200px; height: 200px; transform: translate(-100px, -100px);"></foreignObject>
-  <path id="0" d="M6.123233995736766e-15,-100A100,100,0,0,1,37.05941686056085,-92.87948978087239L0,0Z" fill="red" style="opacity: 1;"></path>
-  <path id="1" d="M37.05941686056085,-92.87948978087239A100,100,0,0,1,99.86378011249683,-5.217798543723552L0,0Z" fill="red" style="opacity: 1;"></path>
-  <path id="2" d="M99.86378011249683,-5.217798543723552A100,100,0,0,1,76.02518428948741,64.96284594866111L0,0Z" fill="red" style="opacity: 1;"></path>
-  <path id="3" d="M76.02518428948741,64.96284594866111A100,100,0,0,1,-19.055018774541384,98.16774551502074L0,0Z" fill="red" style="opacity: 1;"></path>
-  <path id="4" d="M-19.055018774541384,98.16774551502074A100,100,0,0,1,-78.9048453811866,61.43309674248104L0,0Z" fill="red" style="opacity: 1;"></path>
-  <path id="5" d="M-78.9048453811866,61.43309674248104A100,100,0,0,1,-96.99374926279998,-24.335418713165552L0,0Z" fill="red" style="opacity: 1;"></path>
-  <path id="6" d="M-96.99374926279998,-24.335418713165552A100,100,0,0,1,-1.8369701987210297e-14,-100L0,0Z" fill="red" style="opacity: 1;"></path>
+<g class="pie-sectors">
+  <g class="pie-sector">
+    <path id="0" d="M 400,200
+    A 100,100,0,
+    0,0,
+    392.8794897808724,162.94058313943916
+L 300,200 Z" fill="red" style="opacity: 1;"></path>
+  </g>
+  <g class="pie-sector">
+    <path id="1" d="M 392.8794897808724,162.94058313943916
+    A 100,100,0,
+    0,0,
+    305.2177985437235,100.13621988750317
+L 300,200 Z" fill="red" style="opacity: 1;"></path>
+  </g>
+  <g class="pie-sector">
+    <path id="2" d="M 305.2177985437235,100.13621988750317
+    A 100,100,0,
+    0,0,
+    235.03715405133886,123.97481571051262
+L 300,200 Z" fill="red" style="opacity: 1;"></path>
+  </g>
+  <g class="pie-sector">
+    <path id="3" d="M 235.03715405133886,123.97481571051262
+    A 100,100,0,
+    0,0,
+    201.83225448497927,219.05501877454145
+L 300,200 Z" fill="red" style="opacity: 1;"></path>
+  </g>
+  <g class="pie-sector">
+    <path id="4" d="M 201.83225448497927,219.05501877454145
+    A 100,100,0,
+    0,0,
+    238.56690325751902,278.90484538118665
+L 300,200 Z" fill="red" style="opacity: 1;"></path>
+  </g>
+  <g class="pie-sector">
+    <path id="5" d="M 238.56690325751902,278.90484538118665
+    A 100,100,0,
+    0,0,
+    324.33541871316555,296.99374926279995
+L 300,200 Z" fill="red" style="opacity: 1;"></path>
+  </g>
+  <g class="pie-sector">
+    <path id="6" d="M 324.33541871316555,296.99374926279995
+    A 100,100,0,
+    0,0,
+    400,200.00000000000003
+L 300,200 Z" fill="red" style="opacity: 1;"></path>
+  </g>
 </g>
 `;
