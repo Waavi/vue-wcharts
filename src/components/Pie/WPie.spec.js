@@ -34,6 +34,8 @@ describe('Components/WPie', () => {
         Chart: {
             dataset,
             data: dataset,
+            width: 740,
+            height: 400,
             cx: '50%',
             cy: '50%',
             startAngle: 0,
