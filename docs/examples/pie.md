@@ -15,6 +15,18 @@ sidebarDepth: 1
 <<< @/docs/.vuepress/components/Examples/Pie/Default.vue
 </SourceCode>
 
+## Multiple
+
+<br>
+
+<Examples-Pie-Multiple />
+
+<br>
+
+<SourceCode>
+<<< @/docs/.vuepress/components/Examples/Pie/Multiple.vue
+</SourceCode>
+
 ## Custom
 
 <br>
