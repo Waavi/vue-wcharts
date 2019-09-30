@@ -9,7 +9,7 @@ export default {
         datakey: VueTypes.string.isRequired,
         range: VueTypes.array.def([100, 100]),
     },
-    preload ({ parent, props, index }) {
+    preload ({ parent, props }) {
         const { datakey, range, name } = props
         parent.axis.z.datakey = datakey
         parent.axis.z.name = name || ''

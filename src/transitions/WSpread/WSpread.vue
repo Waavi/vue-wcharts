@@ -1,6 +1,6 @@
 <script>
 import VueTypes from 'vue-types'
-import WTrans from './WTrans.vue'
+import WTrans from '../WTrans/WTrans.vue'
 
 export default {
     name: 'WSpread',

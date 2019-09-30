@@ -24,6 +24,7 @@ describe('Components/WMarker', () => {
             padding: [20, 20, 20, 20],
             activeElements: [0, 1],
             yScale: a => a,
+            scaledX: a => 5,
             canvas: {
                 x0: 40,
                 y0: 10,
@@ -53,4 +54,31 @@ describe('Components/WMarker', () => {
     snapshot('vertical range marker', 'xRange', { x: [10, 20] })
     snapshot('horizontal range marker', 'yRange', { y: [10, 20] })
     snapshot('area marker', 'rect', { x: [10, 20], y: [30, 40] })
+
+    it(`Should be render correctly, check labelCoordinates if has type XLine`, () => {
+        const wrapper = shallowMount(WMarker, defaultConfigForProps({ x: 10, labelAlign: 'start' }))
+        expect(wrapper.vm.labelCoordinates).toEqual({ dy: -10, x: -195, y: 381 })
+    })
+
+    it(`Should be render correctly, check labelCoordinates if has type YLine`, () => {
+        const wrapper = shallowMount(WMarker, defaultConfigForProps({ y: 10, labelAlign: 'start' }))
+        expect(wrapper.vm.labelCoordinates).toEqual({ dy: -10, x: 45, y: 10 })
+    })
+
+    it(`Should be render correctly, check labelCoordinates if has type point`, () => {
+        const wrapper = shallowMount(WMarker, defaultConfigForProps({ x: 10, y: 20, labelAlign: 'start' }))
+        expect(wrapper.vm.labelCoordinates).toEqual({})
+    })
+
+    describe('Methods', () => {
+        it(`Should be return getBorderSpacing, if has type xRange`, () => {
+            const wrapper = shallowMount(WMarker, defaultConfigForProps({ x: [10, 20], borderSpacing: [10, 10, 10, 10], labelAlign: 'start' }))
+            expect(wrapper.vm.getBorderSpacing({ index: 1, isX: true, isCategory: true })).toEqual(2500)
+        })
+
+        it(`Should be return getBorderSpacing, if has type yRange`, () => {
+            const wrapper = shallowMount(WMarker, defaultConfigForProps({ y: [10, 20], borderSpacing: [10, 10, 10, 10], labelAlign: 'start' }))
+            expect(wrapper.vm.getBorderSpacing({ index: 1, isX: false, isCategory: true })).toEqual(1630)
+        })
+    })
 })

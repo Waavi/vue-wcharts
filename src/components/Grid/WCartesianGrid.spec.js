@@ -89,4 +89,17 @@ describe('Components/WCartesianGrid', () => {
         const wrapper = mount(WCartesianGrid, defaultConfigWithLines)
         expect(wrapper.findAll('line')).toHaveLength(3)
     })
+
+    it(`Should be render correctly with 3 lines with scatter prop`, () => {
+        const wrapper = mount(WCartesianGrid, {
+            ...defaultConfigWithLines,
+            provide: {
+                Chart: {
+                    ...provideWithLines.Chart,
+                    scatter: true,
+                },
+            },
+        })
+        expect(wrapper.findAll('line')).toHaveLength(4)
+    })
 })
