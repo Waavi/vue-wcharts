@@ -30,6 +30,7 @@
 <script>
 import VueTypes from 'vue-types'
 import omit from 'lodash.omit'
+import TweenLite from 'gsap/TweenLite'
 import merge from '../../utils/merge'
 import themeMixin from '../../mixins/theme'
 import visibleMixin from '../../mixins/visible'
@@ -57,12 +58,16 @@ export default {
             stroke: VueTypes.string,
         }).loose,
         opacityDisabled: VueTypes.number.def(0.5),
+        // Animation
+        animation: VueTypes.bool.def(true),
+        animationDuration: VueTypes.number.def(2.5),
         // index of item active
         itemActive: VueTypes.oneOfType([Number, null]),
     },
     data () {
         return {
             activePath: null,
+            animatedSectors: [],
         }
     },
     computed: {
@@ -107,7 +112,6 @@ export default {
                 const tempEndAngle = tempStartAngle + mathSign(deltaAngle) * (percentage * realTotalAngle)
 
                 prev = {
-                    name: `Group ${index}`,
                     cx: curCx,
                     cy: curCy,
                     value,
@@ -122,7 +126,8 @@ export default {
         },
         // Generate paths array by arcs
         paths () {
-            return this.sectors.map((sector, index) => ({
+            const sectors = (this.animation ? this.animatedSectors : this.sectors)
+            return sectors.map((sector, index) => ({
                 d: getSectorPath(sector),
                 fill: this.Chart.colors[index],
                 stroke: this.pathStylesCmp.stroke,
@@ -154,7 +159,7 @@ export default {
                 },
             })
         },
-        // Slot styles
+        // Styles
         contentStyles () {
             const { height } = this.Chart
             const { outerRadius } = this.curRadius
@@ -180,6 +185,22 @@ export default {
         },
     },
     watch: {
+        sectors: {
+            handler (sectors) {
+                if (this.animation) {
+                    // Initialize sectors
+                    this.animatedSectors = sectors.map(s => ({ ...s, startAngle: 0, endAngle: 0 }))
+                    // Interpolate angles
+                    sectors.forEach((s, index) => {
+                        TweenLite.to(this.animatedSectors[index], this.animationDuration, {
+                            startAngle: sectors[index].startAngle,
+                            endAngle: sectors[index].endAngle,
+                        })
+                    })
+                }
+            },
+            immediate: true,
+        },
         itemActive: {
             handler (id) {
                 if (id) this.activePath = id
