@@ -314,6 +314,8 @@ sidebarDepth: 3
 | pathStyles | object | Required property | The key of dataset |
 | opacityDisabled | string | Required property | The key of dataset |
 | active | string | Required property | The key of dataset |
+| animation | bool | true | Animation enabled |
+| animationDuration | number | 2.5 | Animation duration (sec.) |
 
 ### Slots
 

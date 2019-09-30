@@ -4,6 +4,7 @@ import WPie from './WPie.vue'
 describe('Components/WPie', () => {
     const propsData = {
         datakey: 'one',
+        animation: false,
         index: 0,
     }
     const dataset = [
