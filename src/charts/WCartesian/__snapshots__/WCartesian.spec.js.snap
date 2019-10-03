@@ -88,9 +88,10 @@ exports[`Charts/WCartesian Should be render correctly with bars and lines 1`] = 
       <g id="0">
         <defs>
           <clipPath id="path-0-testBar">
-            <rect rx="5" ry="5" x="59" y="400" width="32" height="194" fill="tomato"></rect>
+            <rect rx="5" ry="5" x="59" y="400" width="32" height="194"></rect>
           </clipPath>
         </defs>
+        <!---->
         <g id="line" style="clip-path: url(#path-0-testBar);">
           <rect x="75" y="400" width="0" height="0" fill="#48c0b6" style="transition: all 1s ease;" data-height="0" data-width="32" data-y="400" data-x="59" class="v-enter v-enter-active"></rect>
         </g>
@@ -100,9 +101,10 @@ exports[`Charts/WCartesian Should be render correctly with bars and lines 1`] = 
       <g id="1">
         <defs>
           <clipPath id="path-1-testBar">
-            <rect rx="5" ry="5" x="284" y="52" width="32" height="542" fill="tomato"></rect>
+            <rect rx="5" ry="5" x="284" y="52" width="32" height="542"></rect>
           </clipPath>
         </defs>
+        <!---->
         <g id="line" style="clip-path: url(#path-1-testBar);">
           <rect x="300" y="400" width="0" height="0" fill="#48c0b6" style="transition: all 1s ease;" data-height="348" data-width="32" data-y="52" data-x="284" class="v-enter v-enter-active"></rect>
         </g>
@@ -112,9 +114,10 @@ exports[`Charts/WCartesian Should be render correctly with bars and lines 1`] = 
       <g id="2">
         <defs>
           <clipPath id="path-2-testBar">
-            <rect rx="5" ry="5" x="509" y="226" width="32" height="368" fill="tomato"></rect>
+            <rect rx="5" ry="5" x="509" y="226" width="32" height="368"></rect>
           </clipPath>
         </defs>
+        <!---->
         <g id="line" style="clip-path: url(#path-2-testBar);">
           <rect x="525" y="400" width="0" height="0" fill="#48c0b6" style="transition: all 1s ease;" data-height="174" data-width="32" data-y="226" data-x="509" class="v-enter v-enter-active"></rect>
         </g>

@@ -15,10 +15,10 @@ export default {
     },
     computed: {
         curCx () {
-            return getPercentValue(this.cx, this.width, this.width / 2)
+            return getPercentValue({ percent: this.cx, totalValue: this.width, defaultValue: this.width / 2 })
         },
         curCy () {
-            return getPercentValue(this.cy, this.height, this.height / 2)
+            return getPercentValue({ percent: this.cy, totalValue: this.height, defaultValue: this.height / 2 })
         },
     },
     render (h) {

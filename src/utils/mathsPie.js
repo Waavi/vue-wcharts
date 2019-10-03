@@ -30,7 +30,7 @@ export const polarToCartesian = (cx, cy, radius, angle) => ({
     y: cy + Math.sin(-RADIAN * angle) * radius,
 })
 
-export const getPercentValue = (percent, totalValue, defaultValue = 0, validate = false) => {
+export const getPercentValue = ({ percent, totalValue, defaultValue = 0 }) => {
     if (!isNumber(percent) && !isString(percent)) {
         return defaultValue
     }
@@ -38,7 +38,7 @@ export const getPercentValue = (percent, totalValue, defaultValue = 0, validate 
     let value
 
     if (isPercent(percent)) {
-        const index = percent.indexOf('%')
+        const index = percent.slice(0, -1)
         value = totalValue * parseFloat(percent.slice(0, index)) / 100
     } else {
         value = +percent
@@ -48,7 +48,7 @@ export const getPercentValue = (percent, totalValue, defaultValue = 0, validate 
         value = defaultValue
     }
 
-    if (validate && value > totalValue) {
+    if (value > totalValue) {
         value = totalValue
     }
 
