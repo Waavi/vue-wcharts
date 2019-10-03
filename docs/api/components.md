@@ -310,12 +310,13 @@ sidebarDepth: 3
 |----------|------|---------------|-------------|
 | datakey | string | Required property | The key of dataset |
 | trigger | string | `'hover'`, `'click'`, `'manual'` | Events triggering the tooltip |
-| angles | number, array | [0, Math.PI * 2] | Start and end pie angle |
 | radius | number, array | [0, 100] | Start and end radius number |
 | styles | object | ```{position: 'relative',transform: 'translate(50%, 50%)'}``` | Container styles |
 | pathStyles | object | Required property | The key of dataset |
 | opacityDisabled | string | Required property | The key of dataset |
 | active | string | Required property | The key of dataset |
+| animation | bool | true | Animation enabled |
+| animationDuration | number | 2.5 | Animation duration (sec.) |
 
 ### Slots
 

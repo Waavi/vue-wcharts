@@ -1,11 +1,12 @@
 <template>
        <WPieChart
         :dataset="data"
-        :endAngle="180"
     >
         <WPie
-            datakey="one"
-            :radius="[120, 150]"
+            datakey="one":radius="[120, 150]"
+        />
+        <WPie
+            datakey="three":radius="[70, 100]"
         />
         <WTooltip />
     </WPieChart>

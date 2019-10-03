@@ -11,8 +11,8 @@ export default {
         id: VueTypes.string,
         dataset: VueTypes.oneOfType([Array, Object]).def([]),
         responsive: VueTypes.bool.def(false),
-        height: VueTypes.number.def(400),
         width: VueTypes.number.def(600),
+        height: VueTypes.number.def(400),
     },
     provide () {
         return {
