@@ -18,10 +18,19 @@
                         :y="bar.y"
                         :width="bar.width"
                         :height="(bar.accHeight + (!normalizedBorderRadius[1] ? 20 : 0))"
-                        fill="tomato"
                     />
                 </clipPath>
             </defs>
+
+            <path
+                v-if="background"
+                :x="bar.x"
+                :y="Chart.canvas.y0"
+                :width="bar.width"
+                :height="maxHeight"
+                :d="`M ${bar.x},${Chart.canvas.y0} h ${bar.width} v ${maxHeight} h -${bar.width} Z`"
+                :style="backgroundStylesCmp"
+            />
 
             <g
                 id="line"
@@ -152,6 +161,11 @@ export default {
         trigger: VueTypes.oneOf(['hover', 'click', 'manual']).def('hover'),
         legend: VueTypes.string, // Prop to apply filters
         stacked: VueTypes.bool.def(false),
+        // Background
+        background: VueTypes.oneOfType([
+            VueTypes.bool,
+            VueTypes.object,
+        ]),
         // Label
         showLabel: VueTypes.bool.def(false),
         labelSize: VueTypes.number.def(12),
@@ -229,6 +243,10 @@ export default {
         // Normalize borderRadius prop to borders array
         normalizedBorderRadius () {
             return Array.isArray(this.borderRadius) ? this.borderRadius.slice(0, 2) : Array(2).fill(this.borderRadius)
+        },
+        // Max height
+        maxHeight () {
+            return this.Chart.canvas.y1 - this.Chart.canvas.y0
         },
         // Get yAxis origin by bounds.min or zero
         y () {
@@ -378,6 +396,12 @@ export default {
             return {
                 ...this.themeStyles.stackedLabel,
                 ...this.stackedLabelStyles,
+            }
+        },
+        backgroundStylesCmp () {
+            return {
+                ...this.themeStyles.background,
+                ...(typeof this.background === 'object' ? this.background : {}),
             }
         },
     },

@@ -223,6 +223,7 @@ sidebarDepth: 3
 | datakey | string | Required property | The key of dataset |
 | trigger | string | `'hover'`, `'click'`, `'manual'` | Events triggering the tooltip |
 | legend | string |  | The text of the legend |
+| background | bool, object | false | The background bar, enable background or custom your own background with custom styles |
 | width | number | 20 | The width of the bar |
 | color | string    arrayOf(string) |  | Accept a color for all bars or one color for every bar |
 | styles | object |  | The styles of the bar |
