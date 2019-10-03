@@ -4,6 +4,7 @@ import WLegendItem from './WLegendItem.vue'
 describe('Widgets/WLegendItem', () => {
     const propsData = {
         text: 'test',
+        trigger: 'click',
         styles: {
             color: '#000',
             bulletStyles: {

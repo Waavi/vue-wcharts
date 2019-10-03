@@ -35,6 +35,7 @@ export default {
         index: VueTypes.oneOfType([Number, String]),
         text: VueTypes.string,
         active: VueTypes.bool.def(false),
+        trigger: VueTypes.oneOf(['hover', 'click', 'manual']).def('hover'),
         color: VueTypes.string,
         styles: VueTypes.object,
         disabledStyles: VueTypes.object,

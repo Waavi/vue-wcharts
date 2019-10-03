@@ -1,0 +1,7 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Widgets/WTrans Should be render correctly 1`] = `undefined`;
+
+exports[`Widgets/WTrans Should be render correctly with children 1`] = `<div><span>Hello</span></div>`;
+
+exports[`Widgets/WTrans Should be render correctly with children 2`] = `undefined`;

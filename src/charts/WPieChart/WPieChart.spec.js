@@ -1,7 +1,8 @@
-import { shallowMount } from '@vue/test-utils'
+import { mount, shallowMount } from '@vue/test-utils'
+import localVue from '../../../config/tests'
 import WPieChart from './WPieChart.vue'
 
-describe('Charts/WCartesian', () => {
+describe('Charts/WPieChart', () => {
     const dataset = [
         {
             name: 'Page A',
@@ -27,12 +28,52 @@ describe('Charts/WCartesian', () => {
     }
 
     const defaultConfig = {
+        localVue,
         propsData,
     }
-    // TODO:
-    // add slots of WPie
+
     it(`Should be render correctly`, () => {
         const wrapper = shallowMount(WPieChart, defaultConfig)
         expect(wrapper.html()).toMatchSnapshot()
+    })
+
+    it(`Should be render responsive mode correctly`, () => {
+        const wrapper = shallowMount(WPieChart, {
+            ...defaultConfig,
+            propsData: {
+                ...propsData,
+                responsive: true,
+            },
+        })
+        expect(wrapper.html()).toMatchSnapshot()
+    })
+
+    it(`Should be render correctly with WPie component and WTooltip`, () => {
+        const wrapper = mount(WPieChart, {
+            ...defaultConfig,
+            slots: {
+                default: `
+                    <WPie datakey="one" :radius="[110, 150]" />
+                    <WTooltip />
+                `,
+            },
+        })
+
+        expect(wrapper).toMatchSnapshot()
+    })
+
+    it(`Should be ommit children components not allowed`, () => {
+        const wrapper = mount(WPieChart, {
+            ...defaultConfig,
+            slots: {
+                default: `
+                    <WLine datakey="two" />
+                    <WPie datakey="one" :radius="[110, 150]" />
+                    <WTooltip />
+                `,
+            },
+        })
+
+        expect(wrapper).toMatchSnapshot()
     })
 })

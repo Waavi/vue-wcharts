@@ -15,16 +15,16 @@ sidebarDepth: 1
 <<< @/docs/.vuepress/components/Examples/Pie/Default.vue
 </SourceCode>
 
-## Custom
+## Multiple
 
 <br>
 
-<Examples-Pie-Custom />
+<Examples-Pie-Multiple />
 
 <br>
 
 <SourceCode>
-<<< @/docs/.vuepress/components/Examples/Pie/Custom.vue
+<<< @/docs/.vuepress/components/Examples/Pie/Multiple.vue
 </SourceCode>
 
 ## Angle
@@ -37,4 +37,17 @@ sidebarDepth: 1
 
 <SourceCode>
 <<< @/docs/.vuepress/components/Examples/Pie/Angle.vue
+</SourceCode>
+
+
+## Custom
+
+<br>
+
+<Examples-Pie-Custom />
+
+<br>
+
+<SourceCode>
+<<< @/docs/.vuepress/components/Examples/Pie/Custom.vue
 </SourceCode>

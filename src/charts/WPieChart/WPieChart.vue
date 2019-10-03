@@ -1,9 +1,26 @@
 <script>
+import VueTypes from 'vue-types'
 import chartMixin from '../../mixins/chart'
+import { getPercentValue } from '../../utils/mathsPie'
 
 export default {
     name: 'WPieChart',
     mixins: [chartMixin],
+    props: {
+        cx: VueTypes.string.def('50%'),
+        cy: VueTypes.string.def('50%'),
+        startAngle: VueTypes.number.def(0),
+        endAngle: VueTypes.number.def(360),
+        paddingAngle: VueTypes.number.def(0),
+    },
+    computed: {
+        curCx () {
+            return getPercentValue({ percent: this.cx, totalValue: this.width, defaultValue: this.width / 2 })
+        },
+        curCy () {
+            return getPercentValue({ percent: this.cy, totalValue: this.height, defaultValue: this.height / 2 })
+        },
+    },
     render (h) {
         const slots = this.$slots.default || []
         let datakeys = [] // We need get slots datakey prop to calculate max and min values for the scales

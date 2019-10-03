@@ -1,4 +1,4 @@
-import { shallowMount } from '@vue/test-utils'
+import { mount, shallowMount } from '@vue/test-utils'
 import WBar from './WBar.vue'
 
 describe('Components/WBar', () => {
@@ -15,12 +15,14 @@ describe('Components/WBar', () => {
     ]
 
     const propsData = {
-        datakey: 'one',
+        id: 'barTest',
         index: 0,
+        datakey: 'one',
     }
 
     const provide = {
         Chart: {
+            id: 'test',
             dataset,
             data: dataset,
             activeElements: [0],
@@ -55,6 +57,20 @@ describe('Components/WBar', () => {
                     0,
                 ],
             },
+            axis: {
+                x: {
+                    datakey: 'name',
+                },
+            },
+            stackedCurData: [],
+            barsCurData: [{
+                key: 'one',
+                0: {
+                    data: {
+                        one: 3000,
+                    },
+                },
+            }],
             yScale: a => a,
             cleanActive: a => a,
         },
@@ -87,5 +103,171 @@ describe('Components/WBar', () => {
         const customConfig = { ...defaultConfig, propsData: { ...defaultConfig.propsData, stacked: true, showStackedLabel: true } }
         const wrapper = shallowMount(WBar, customConfig)
         expect(wrapper.html()).toMatchSnapshot()
+    })
+
+    it(`Should be executed preload method correctly`, () => {
+        const parent = {
+            snap: {},
+            data: [],
+            colors: ['#000', '#FFF'],
+            axis: {
+                z: {
+                    datakey: '',
+                    name: '',
+                    range: '',
+                },
+            },
+        }
+
+        const props = {
+            datakey: 'one',
+            stacked: true,
+            color: '#',
+        }
+
+        WBar.preload({ parent, props })
+        expect(parent.snap.barsDatakeysColors).toEqual({ one: [] })
+
+        WBar.preload({ parent, props: { ...props, color: ['#eee'] } })
+        expect(parent.snap.barsDatakeysColors).toEqual({ one: ['#eee'] })
+    })
+
+    it('Should be render correctly with borderRadius prop', () => {
+        const wrapperArray = mount(WBar, {
+            ...defaultConfig,
+            propsData: {
+                ...propsData,
+                borderRadius: [5, 10, 5, 10],
+            },
+        })
+
+        expect(wrapperArray.vm.normalizedBorderRadius).toEqual([5, 10])
+
+        const wrapperNum = mount(WBar, {
+            ...defaultConfig,
+            propsData: {
+                ...propsData,
+                borderRadius: 5,
+            },
+        })
+
+        expect(wrapperNum.vm.normalizedBorderRadius).toEqual([5, 5])
+    })
+
+    describe('Events', () => {
+        it(`It emits the onClick event`, () => {
+            const wrapper = mount(WBar, defaultConfig)
+            wrapper.find('#Bars > g').trigger('click')
+            expect(wrapper.emitted('onClick')).toHaveLength(1)
+        })
+
+        it(`It emits the onMouseenter event`, () => {
+            const wrapper = mount(WBar, {
+                ...defaultConfig,
+                propsData: {
+                    ...defaultConfig.propsData,
+                    trigger: 'manual',
+                },
+            })
+            wrapper.find('#Bars > g').trigger('mouseenter')
+            expect(wrapper.emitted('onMouseenter')).toHaveLength(1)
+        })
+
+        it(`It emits the onMouseleave event`, () => {
+            const wrapper = mount(WBar, {
+                ...defaultConfig,
+                propsData: {
+                    ...defaultConfig.propsData,
+                    trigger: 'hover',
+                },
+            })
+            wrapper.find('#Bars > g').trigger('mouseleave')
+            expect(wrapper.emitted('onMouseleave')).toHaveLength(1)
+        })
+    })
+
+    describe('Methods', () => {
+        it('Should be no return config stacked label if it is outside', () => {
+            const wrapper = mount(WBar, {
+                ...defaultConfig,
+                propsData: {
+                    ...propsData,
+                    index: 2,
+                    showStackedLabel: false,
+                    showLabel: true,
+                    stacked: true,
+                    labelPosition: 'outside',
+                },
+            })
+            expect(wrapper.vm.getStackedLabel({
+                x: 10, y: 10, stackedValue: 0,
+            })).toBeFalsy()
+        })
+
+        it('Should be no return config label if it is outside and stacked, and check show console', () => {
+            const spy = jest.spyOn(console, 'warn')
+            const wrapper = mount(WBar, {
+                ...defaultConfig,
+                propsData: {
+                    ...propsData,
+                    showLabel: true,
+                    stacked: true,
+                    labelPosition: 'outside',
+                },
+            })
+            expect(wrapper.vm.getLabel({
+                x: 10, y: 10, value: 'Test', height: 14,
+            })).toBeFalsy()
+            expect(spy).toBeCalled()
+            spy.mockReset()
+        })
+
+        it(`Should be set active in Chart after trigger event`, (done) => {
+            const setActive = ({ id }) => {
+                expect(id).toEqual(0)
+                done()
+            }
+            const wrapper = mount(WBar, {
+                ...defaultConfig,
+                provide: {
+                    Chart: {
+                        ...provide.Chart,
+                        setActive,
+                    },
+                },
+            })
+            const event = {
+                currentTarget: {
+                    id: '0',
+                },
+            }
+            wrapper.vm.handleActive(event)
+        })
+
+        it(`Should be set active in Chart after trigger event if stacked prop`, (done) => {
+            const setActive = ({ id }) => {
+                expect(id).toEqual(0)
+                done()
+            }
+            const wrapper = mount(WBar, {
+                ...defaultConfig,
+                propsData: {
+                    ...propsData,
+                    stacked: true,
+                },
+                provide: {
+                    Chart: {
+                        ...provide.Chart,
+                        setActive,
+                    },
+                },
+            })
+            const event = {
+                currentTarget: {
+                    id: '0',
+                },
+            }
+            wrapper.vm.handleActive(event)
+        })
     })
 })

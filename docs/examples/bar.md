@@ -43,6 +43,16 @@ sidebarDepth: 1
 <<< @/docs/.vuepress/components/Examples/Bar/WithLine.vue
 </SourceCode>
 
+## With Background
+
+<br>
+
+<Examples-Bar-WithBackground />
+
+<SourceCode>
+<<< @/docs/.vuepress/components/Examples/Bar/WithBackground.vue
+</SourceCode>
+
 ## Custom Label
 
 <br>
@@ -111,4 +121,14 @@ sidebarDepth: 1
 
 <SourceCode>
 <<< @/docs/.vuepress/components/Examples/Bar/Mix.vue
+</SourceCode>
+
+## Custom
+
+<br>
+
+<Examples-Bar-Custom />
+
+<SourceCode>
+<<< @/docs/.vuepress/components/Examples/Bar/Custom.vue
 </SourceCode>

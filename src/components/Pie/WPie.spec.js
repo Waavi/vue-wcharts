@@ -4,6 +4,7 @@ import WPie from './WPie.vue'
 describe('Components/WPie', () => {
     const propsData = {
         datakey: 'one',
+        animation: false,
         index: 0,
     }
     const dataset = [
@@ -34,8 +35,17 @@ describe('Components/WPie', () => {
         Chart: {
             dataset,
             data: dataset,
+            width: 740,
+            height: 400,
+            cx: '50%',
+            cy: '50%',
+            startAngle: 0,
+            endAngle: 360,
+            paddingAngle: 0,
             activeElements: [0],
             colors: ['red', 'red', 'red', 'red', 'red', 'red', 'red'],
+            curCx: 300,
+            curCy: 200,
             setActive: () => undefined,
             cleanActive: () => undefined,
         },
@@ -51,16 +61,42 @@ describe('Components/WPie', () => {
         expect(wrapper.html()).toMatchSnapshot()
     })
 
+    it('Should be render correctly with custom styles', () => {
+        const wrapper = mount(WPie, { ...defaultConfig, propsData: { ...propsData, styles: { backgroundColor: 'green' } } })
+        expect(wrapper.vm.stylesCmp).toEqual({ backgroundColor: 'green', position: 'relative', transform: 'translate(50%, 50%)' })
+    })
+
+    it('Should be render correctly with custom radius', () => {
+        const wrapper = mount(WPie, { ...defaultConfig, propsData: { ...propsData, radius: [150, 180] } })
+        expect(wrapper.vm.curRadius).toEqual({ innerRadius: 150, outerRadius: 180 })
+        expect(wrapper.html()).toMatchSnapshot()
+
+        const wrapperTwo = mount(WPie, { ...defaultConfig, propsData: { ...propsData, radius: null } })
+        expect(wrapperTwo.vm.curRadius).toEqual({ innerRadius: 0, outerRadius: 100 })
+    })
+
     it('It emits the handleClick event', () => {
-        const wrapper = mount(WPie, defaultConfig)
+        const wrapper = mount(WPie, { ...defaultConfig, propsData: { ...propsData, trigger: 'click' } })
         wrapper.findAll('path').at(0).trigger('click')
         expect(wrapper.emitted('onClick')).toHaveLength(1)
     })
 
-    it('It emits the handleMouseEnter  event', () => {
+    it('It emits the handleMouseEnter event', () => {
         const wrapper = mount(WPie, defaultConfig)
         wrapper.findAll('path').at(0).trigger('mouseenter')
         expect(wrapper.emitted('onMouseenter')).toHaveLength(1)
+    })
+
+    it('It emits the handleClick event', () => {
+        const wrapper = mount(WPie, { ...defaultConfig, propsData: { ...propsData, trigger: 'click' } })
+        wrapper.findAll('path').at(0).trigger('click')
+        expect(wrapper.emitted('onClick')).toHaveLength(1)
+    })
+
+    it('It emits the handleMouseleave event', () => {
+        const wrapper = mount(WPie, { ...defaultConfig, propsData: { ...propsData, trigger: 'hover' } })
+        wrapper.findAll('path').at(0).trigger('mouseleave')
+        expect(wrapper.emitted('onMouseleave')).toHaveLength(1)
     })
 
     it('Should be active 1', () => {

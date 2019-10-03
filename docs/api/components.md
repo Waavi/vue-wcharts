@@ -223,9 +223,11 @@ sidebarDepth: 3
 | datakey | string | Required property | The key of dataset |
 | trigger | string | `'hover'`, `'click'`, `'manual'` | Events triggering the tooltip |
 | legend | string |  | The text of the legend |
+| background | bool, object | false | The background bar, enable background or custom your own background with custom styles |
 | width | number | 20 | The width of the bar |
 | color | string    arrayOf(string) |  | Accept a color for all bars or one color for every bar |
 | styles | object |  | The styles of the bar |
+| borderRadius | array, number | [5, 0] | Top and bottom border-radius |
 | showLabel | bool | false | If is set to true, the label will be drawn |
 | labelAlign | oneOf(['start', 'middle', 'end']) | middle | The horizontal position of the label |
 | labelPosition | oneOf(['inside', 'outside']) | outside | The vertical position of the label. If the chart is stacked the label position will be `inside` |
@@ -308,12 +310,13 @@ sidebarDepth: 3
 |----------|------|---------------|-------------|
 | datakey | string | Required property | The key of dataset |
 | trigger | string | `'hover'`, `'click'`, `'manual'` | Events triggering the tooltip |
-| angles | number, array | [0, Math.PI * 2] | Start and end pie angle |
 | radius | number, array | [0, 100] | Start and end radius number |
 | styles | object | ```{position: 'relative',transform: 'translate(50%, 50%)'}``` | Container styles |
 | pathStyles | object | Required property | The key of dataset |
 | opacityDisabled | string | Required property | The key of dataset |
 | active | string | Required property | The key of dataset |
+| animation | bool | true | Animation enabled |
+| animationDuration | number | 2.5 | Animation duration (sec.) |
 
 ### Slots
 

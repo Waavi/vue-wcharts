@@ -45,7 +45,11 @@ describe('Components/WCartesianGrid', () => {
             dataset,
             data: dataset,
             canvas: {
-                x0: 50, y0: 25, x1: 500, y1: 250,
+                width: 680,
+                x0: 50,
+                y0: 25,
+                x1: 500,
+                y1: 250,
             },
             padding: [0, 0, 0, 0],
             bounds: {
@@ -58,7 +62,6 @@ describe('Components/WCartesianGrid', () => {
             },
             xScale: a => a,
             yScale: a => a,
-
         },
     }
 
@@ -85,5 +88,18 @@ describe('Components/WCartesianGrid', () => {
     it(`Should be render correctly with 3 lines`, () => {
         const wrapper = mount(WCartesianGrid, defaultConfigWithLines)
         expect(wrapper.findAll('line')).toHaveLength(3)
+    })
+
+    it(`Should be render correctly with 3 lines with scatter prop`, () => {
+        const wrapper = mount(WCartesianGrid, {
+            ...defaultConfigWithLines,
+            provide: {
+                Chart: {
+                    ...provideWithLines.Chart,
+                    scatter: true,
+                },
+            },
+        })
+        expect(wrapper.findAll('line')).toHaveLength(4)
     })
 })
