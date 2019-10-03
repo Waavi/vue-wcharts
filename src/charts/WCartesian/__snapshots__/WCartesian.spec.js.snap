@@ -1,5 +1,27 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Charts/WCartesian Should be ommit children components not allowed 1`] = `
+<div class="WCartesian" style="position: relative; width: 600px;"><svg width="600" height="400" viewBox="0 0 600 400">
+    <g>
+      <g>
+        <defs>
+          <clipPath id="WSpread62">
+            <rect x="0" y="0" width="0" height="100%" data-width="100%" data-height="100%" class="v-enter v-enter-active"></rect>
+          </clipPath>
+        </defs>
+        <g clip-path="url(#WSpread62)">
+          <path d="M0,352.2970721256844L300,400L600,0" fill="none" stroke="#48c0b6" strokeWidth="2" strokeDasharray="0" style="transition: all 1s ease;"></path>
+          <!---->
+          <!---->
+        </g>
+      </g>
+      <!---->
+    </g>
+  </svg>
+  <!---->
+</div>
+`;
+
 exports[`Charts/WCartesian Should be render correctly 1`] = `<div class="WCartesian" style="position: relative; width: 600px;"><svg width="600" height="400" viewBox="0 0 600 400"></svg></div>`;
 
 exports[`Charts/WCartesian Should be render correctly with axix 1`] = `
@@ -60,6 +82,70 @@ exports[`Charts/WCartesian Should be render correctly with axix 1`] = `
   </svg></div>
 `;
 
+exports[`Charts/WCartesian Should be render correctly with bars and lines 1`] = `
+<div class="WCartesian" style="position: relative; width: 600px;"><svg width="600" height="400" viewBox="0 0 600 400">
+    <g id="Bars">
+      <g id="0">
+        <defs>
+          <clipPath id="path-0-testBar">
+            <rect rx="5" ry="5" x="59" y="400" width="32" height="194" fill="tomato"></rect>
+          </clipPath>
+        </defs>
+        <g id="line" style="clip-path: url(#path-0-testBar);">
+          <rect x="75" y="400" width="0" height="0" fill="#48c0b6" style="transition: all 1s ease;" data-height="0" data-width="32" data-y="400" data-x="59" class="v-enter v-enter-active"></rect>
+        </g>
+        <!---->
+        <!---->
+      </g>
+      <g id="1">
+        <defs>
+          <clipPath id="path-1-testBar">
+            <rect rx="5" ry="5" x="284" y="52" width="32" height="542" fill="tomato"></rect>
+          </clipPath>
+        </defs>
+        <g id="line" style="clip-path: url(#path-1-testBar);">
+          <rect x="300" y="400" width="0" height="0" fill="#48c0b6" style="transition: all 1s ease;" data-height="348" data-width="32" data-y="52" data-x="284" class="v-enter v-enter-active"></rect>
+        </g>
+        <!---->
+        <!---->
+      </g>
+      <g id="2">
+        <defs>
+          <clipPath id="path-2-testBar">
+            <rect rx="5" ry="5" x="509" y="226" width="32" height="368" fill="tomato"></rect>
+          </clipPath>
+        </defs>
+        <g id="line" style="clip-path: url(#path-2-testBar);">
+          <rect x="525" y="400" width="0" height="0" fill="#48c0b6" style="transition: all 1s ease;" data-height="174" data-width="32" data-y="226" data-x="509" class="v-enter v-enter-active"></rect>
+        </g>
+        <!---->
+        <!---->
+      </g>
+    </g>
+    <g>
+      <g>
+        <defs>
+          <clipPath id="WSpread55">
+            <rect x="0" y="0" width="0" height="100%" data-width="100%" data-height="100%" class="v-enter v-enter-active"></rect>
+          </clipPath>
+        </defs>
+        <g clip-path="url(#WSpread55)">
+          <path d="M75,400L300,52L525,226" fill="none" stroke="#9d6af5" strokeWidth="2" strokeDasharray="0" style="transition: all 1s ease;"></path>
+          <!---->
+          <!---->
+        </g>
+      </g>
+      <!---->
+    </g>
+  </svg>
+  <div class="WLegend" style="top: 16px; width: 100%; height: 20px; position: absolute; display: flex;">
+    <ul class="Wrapper" style="flex-direction: row; padding: 0px 0px 0px 0px; justify-content: flex-end; display: flex; flex: 1; margin: 0px; list-style: none;">
+      <li class="Legend" style="margin: 0px 0px 0px .75rem;"><a title="One Line" style="transition: all 1s ease; display: flex; align-items: center; font-size: 12px; cursor: pointer;"><span class="WBullet" style="display: inline-block; width: 8px; height: 8px; background: white; border-radius: 50%; border-width: 2px; border-color: #48c0b6; border-style: solid; margin: 0px 8px 0px 0px;"></span> <span>One Line</span></a></li>
+    </ul>
+  </div>
+</div>
+`;
+
 exports[`Charts/WCartesian Should be render correctly with legend and markers 1`] = `
 <div class="WCartesian" style="position: relative; width: 600px;"><svg width="600" height="400" viewBox="0 0 600 400">
     <g>
@@ -82,3 +168,121 @@ exports[`Charts/WCartesian Should be render correctly with scatter 1`] = `
     </g>
   </svg></div>
 `;
+
+exports[`Charts/WCartesian Should be render correctly, with gap it is a number and array of numbers 1`] = `
+<div class="WCartesian" style="position: relative; width: 600px;"><svg width="600" height="400" viewBox="0 0 600 400">
+    <g id="WXAxis">
+      <line x1="40" y1="376" x2="580" y2="376" stroke="#cccccc"></line>
+      <g text-anchor="middle">
+        <line x1="45" y1="376" x2="45" y2="381" stroke="#cccccc"></line>
+        <WAxisText-stub colors="#48c0b6,#9d6af5,#ffde69,#e8e8e8,#54ddd9,#5C6BC0,#FB499D" x="45" y="396" dy="" index="0" value="0" styles="[object Object]"></WAxisText-stub>
+      </g>
+      <g text-anchor="middle">
+        <line x1="310" y1="376" x2="310" y2="381" stroke="#cccccc"></line>
+        <WAxisText-stub colors="#48c0b6,#9d6af5,#ffde69,#e8e8e8,#54ddd9,#5C6BC0,#FB499D" x="310" y="396" dy="" index="1" value="1" styles="[object Object]"></WAxisText-stub>
+      </g>
+      <g text-anchor="middle">
+        <line x1="575" y1="376" x2="575" y2="381" stroke="#cccccc"></line>
+        <WAxisText-stub colors="#48c0b6,#9d6af5,#ffde69,#e8e8e8,#54ddd9,#5C6BC0,#FB499D" x="575" y="396" dy="" index="2" value="2" styles="[object Object]"></WAxisText-stub>
+      </g>
+      <!---->
+      <!---->
+    </g>
+    <g id="WYAxis">
+      <line x1="40" y1="10" x2="40" y2="376" stroke="#cccccc"></line>
+      <g text-anchor="end">
+        <line x1="35" y1="193" x2="40" y2="193" stroke="#cccccc"></line>
+        <WAxisText-stub colors="#48c0b6,#9d6af5,#ffde69,#e8e8e8,#54ddd9,#5C6BC0,#FB499D" x="30" y="197" dy="" index="0" value="0" styles="[object Object]"></WAxisText-stub>
+      </g>
+      <g text-anchor="end">
+        <line x1="35" y1="193" x2="40" y2="193" stroke="#cccccc"></line>
+        <WAxisText-stub colors="#48c0b6,#9d6af5,#ffde69,#e8e8e8,#54ddd9,#5C6BC0,#FB499D" x="30" y="197" dy="" index="1" value="0" styles="[object Object]"></WAxisText-stub>
+      </g>
+      <g text-anchor="end">
+        <line x1="35" y1="193" x2="40" y2="193" stroke="#cccccc"></line>
+        <WAxisText-stub colors="#48c0b6,#9d6af5,#ffde69,#e8e8e8,#54ddd9,#5C6BC0,#FB499D" x="30" y="197" dy="" index="2" value="0" styles="[object Object]"></WAxisText-stub>
+      </g>
+      <g text-anchor="end">
+        <line x1="35" y1="193" x2="40" y2="193" stroke="#cccccc"></line>
+        <WAxisText-stub colors="#48c0b6,#9d6af5,#ffde69,#e8e8e8,#54ddd9,#5C6BC0,#FB499D" x="30" y="197" dy="" index="3" value="0" styles="[object Object]"></WAxisText-stub>
+      </g>
+      <g text-anchor="end">
+        <line x1="35" y1="193" x2="40" y2="193" stroke="#cccccc"></line>
+        <WAxisText-stub colors="#48c0b6,#9d6af5,#ffde69,#e8e8e8,#54ddd9,#5C6BC0,#FB499D" x="30" y="197" dy="" index="4" value="0" styles="[object Object]"></WAxisText-stub>
+      </g>
+      <g text-anchor="end">
+        <line x1="35" y1="193" x2="40" y2="193" stroke="#cccccc"></line>
+        <WAxisText-stub colors="#48c0b6,#9d6af5,#ffde69,#e8e8e8,#54ddd9,#5C6BC0,#FB499D" x="30" y="197" dy="" index="5" value="0" styles="[object Object]"></WAxisText-stub>
+      </g>
+      <g text-anchor="end">
+        <line x1="35" y1="193" x2="40" y2="193" stroke="#cccccc"></line>
+        <WAxisText-stub colors="#48c0b6,#9d6af5,#ffde69,#e8e8e8,#54ddd9,#5C6BC0,#FB499D" x="30" y="197" dy="" index="6" value="0" styles="[object Object]"></WAxisText-stub>
+      </g>
+      <g text-anchor="end">
+        <line x1="35" y1="193" x2="40" y2="193" stroke="#cccccc"></line>
+        <WAxisText-stub colors="#48c0b6,#9d6af5,#ffde69,#e8e8e8,#54ddd9,#5C6BC0,#FB499D" x="30" y="197" dy="" index="7" value="0" styles="[object Object]"></WAxisText-stub>
+      </g>
+      <!---->
+    </g>
+  </svg></div>
+`;
+
+exports[`Charts/WCartesian Should be render correctly, with gap it is a number and array of numbers 2`] = `
+<div class="WCartesian" style="position: relative; width: 600px;"><svg width="600" height="400" viewBox="0 0 600 400">
+    <g id="WXAxis">
+      <line x1="40" y1="376" x2="580" y2="376" stroke="#cccccc"></line>
+      <g text-anchor="middle">
+        <line x1="45" y1="376" x2="45" y2="381" stroke="#cccccc"></line>
+        <WAxisText-stub colors="#48c0b6,#9d6af5,#ffde69,#e8e8e8,#54ddd9,#5C6BC0,#FB499D" x="45" y="396" dy="" index="0" value="0" styles="[object Object]"></WAxisText-stub>
+      </g>
+      <g text-anchor="middle">
+        <line x1="310" y1="376" x2="310" y2="381" stroke="#cccccc"></line>
+        <WAxisText-stub colors="#48c0b6,#9d6af5,#ffde69,#e8e8e8,#54ddd9,#5C6BC0,#FB499D" x="310" y="396" dy="" index="1" value="1" styles="[object Object]"></WAxisText-stub>
+      </g>
+      <g text-anchor="middle">
+        <line x1="575" y1="376" x2="575" y2="381" stroke="#cccccc"></line>
+        <WAxisText-stub colors="#48c0b6,#9d6af5,#ffde69,#e8e8e8,#54ddd9,#5C6BC0,#FB499D" x="575" y="396" dy="" index="2" value="2" styles="[object Object]"></WAxisText-stub>
+      </g>
+      <!---->
+      <!---->
+    </g>
+    <g id="WYAxis">
+      <line x1="40" y1="10" x2="40" y2="376" stroke="#cccccc"></line>
+      <g text-anchor="end">
+        <line x1="35" y1="193" x2="40" y2="193" stroke="#cccccc"></line>
+        <WAxisText-stub colors="#48c0b6,#9d6af5,#ffde69,#e8e8e8,#54ddd9,#5C6BC0,#FB499D" x="30" y="197" dy="" index="0" value="0" styles="[object Object]"></WAxisText-stub>
+      </g>
+      <g text-anchor="end">
+        <line x1="35" y1="193" x2="40" y2="193" stroke="#cccccc"></line>
+        <WAxisText-stub colors="#48c0b6,#9d6af5,#ffde69,#e8e8e8,#54ddd9,#5C6BC0,#FB499D" x="30" y="197" dy="" index="1" value="0" styles="[object Object]"></WAxisText-stub>
+      </g>
+      <g text-anchor="end">
+        <line x1="35" y1="193" x2="40" y2="193" stroke="#cccccc"></line>
+        <WAxisText-stub colors="#48c0b6,#9d6af5,#ffde69,#e8e8e8,#54ddd9,#5C6BC0,#FB499D" x="30" y="197" dy="" index="2" value="0" styles="[object Object]"></WAxisText-stub>
+      </g>
+      <g text-anchor="end">
+        <line x1="35" y1="193" x2="40" y2="193" stroke="#cccccc"></line>
+        <WAxisText-stub colors="#48c0b6,#9d6af5,#ffde69,#e8e8e8,#54ddd9,#5C6BC0,#FB499D" x="30" y="197" dy="" index="3" value="0" styles="[object Object]"></WAxisText-stub>
+      </g>
+      <g text-anchor="end">
+        <line x1="35" y1="193" x2="40" y2="193" stroke="#cccccc"></line>
+        <WAxisText-stub colors="#48c0b6,#9d6af5,#ffde69,#e8e8e8,#54ddd9,#5C6BC0,#FB499D" x="30" y="197" dy="" index="4" value="0" styles="[object Object]"></WAxisText-stub>
+      </g>
+      <g text-anchor="end">
+        <line x1="35" y1="193" x2="40" y2="193" stroke="#cccccc"></line>
+        <WAxisText-stub colors="#48c0b6,#9d6af5,#ffde69,#e8e8e8,#54ddd9,#5C6BC0,#FB499D" x="30" y="197" dy="" index="5" value="0" styles="[object Object]"></WAxisText-stub>
+      </g>
+      <g text-anchor="end">
+        <line x1="35" y1="193" x2="40" y2="193" stroke="#cccccc"></line>
+        <WAxisText-stub colors="#48c0b6,#9d6af5,#ffde69,#e8e8e8,#54ddd9,#5C6BC0,#FB499D" x="30" y="197" dy="" index="6" value="0" styles="[object Object]"></WAxisText-stub>
+      </g>
+      <g text-anchor="end">
+        <line x1="35" y1="193" x2="40" y2="193" stroke="#cccccc"></line>
+        <WAxisText-stub colors="#48c0b6,#9d6af5,#ffde69,#e8e8e8,#54ddd9,#5C6BC0,#FB499D" x="30" y="197" dy="" index="7" value="0" styles="[object Object]"></WAxisText-stub>
+      </g>
+      <!---->
+    </g>
+  </svg></div>
+`;
+
+exports[`Charts/WCartesian Should be render responsive mode correctly 1`] = `<div class="WCartesian" style="position: relative; width: 100%;"><svg width="600" height="400" viewBox="0 0 600 400"></svg></div>`;

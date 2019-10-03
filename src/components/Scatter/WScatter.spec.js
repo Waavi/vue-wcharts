@@ -1,4 +1,5 @@
 import { shallowMount, mount } from '@vue/test-utils'
+import { curveStep } from 'd3-shape'
 import WScatter from './WScatter.vue'
 import WDot from '../Common/WDot/WDot.vue'
 
@@ -79,6 +80,52 @@ describe('Components/WScatter', () => {
         const customConfig = { ...defaultConfig, propsData: { ...defaultConfig.propsData, line: true } }
         const wrapper = shallowMount(WScatter, customConfig)
         expect(wrapper.html()).toMatchSnapshot()
+    })
+
+    it(`Should be render correctly with curve and bool`, () => {
+        const customConfig = { ...defaultConfig, propsData: { ...defaultConfig.propsData, curve: true } }
+        const wrapper = shallowMount(WScatter, customConfig)
+        expect(wrapper.vm.linePath).toBeFalsy()
+    })
+
+    it(`Should be render correctly with curve and func`, () => {
+        const customConfig = { ...defaultConfig, propsData: { ...defaultConfig.propsData, area: true, curve: curveStep } }
+        const wrapper = shallowMount(WScatter, customConfig)
+        expect(wrapper.vm.linePath).toBeFalsy()
+    })
+
+    it(`Should be render correctly with custom fillColor`, () => {
+        const customConfig = { ...defaultConfig, propsData: { ...defaultConfig.propsData, index: 1, colors: ['#000', '#FFF'] } }
+        const wrapper = shallowMount(WScatter, customConfig)
+        expect(wrapper.vm.fillColor).toEqual('#FFF')
+
+        const customConfigTwo = { ...defaultConfig, propsData: { ...defaultConfig.propsData, index: 3, colors: undefined } }
+        const wrapperTwo = shallowMount(WScatter, customConfigTwo)
+        expect(wrapperTwo.vm.fillColor).toEqual('#e8e8e8')
+    })
+
+    it(`Shouldn be render with multiple scatter`, () => {
+        const wrapper = shallowMount(WScatter, {
+            ...defaultConfig,
+            propsData: {
+                ...propsData,
+                datakey: 'one',
+            },
+            provide: {
+                Chart: {
+                    ...provide.Chart,
+                    data: [
+                        {
+                            $dataset: 'one', name: 'Page A', one: 4000, two: 2400, three: 2300,
+                        },
+                        {
+                            $dataset: 'two', name: 'Page B', one: 3000, two: 2210, three: 1398,
+                        },
+                    ],
+                },
+            },
+        })
+        expect(wrapper.vm.points.length).toEqual(1)
     })
 
     it('It emits the handleClick event', () => {

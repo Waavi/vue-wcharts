@@ -52,4 +52,28 @@ describe('Widgets/WLegend', () => {
         wrapper.vm.handleClick({ legend: undefined, index: 0 })
         expect(wrapper.vm.Chart.activeElements).toEqual([1])
     })
+
+    it(`Should be render correctly, without space of Chart`, () => {
+        const wrapper = shallowMount(WLegend, {
+            ...defaultConfig,
+            provide: {
+                Chart: {
+                    ...provide.Chart,
+                    space: undefined,
+                },
+            },
+        })
+        expect(wrapper.vm.chartSpace).toEqual([0, 0, 0, 0])
+    })
+
+    it(`Should be render correctly, with custom styles and position horizontal`, () => {
+        const wrapper = shallowMount(WLegend, {
+            ...defaultConfig,
+            propsData: {
+                ...propsData,
+                position: 'left',
+            },
+        })
+        expect(wrapper.vm.stylesCmp.component.width).toEqual('85px')
+    })
 })

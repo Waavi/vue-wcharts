@@ -51,8 +51,58 @@ describe('Components/WPie', () => {
         expect(wrapper.html()).toMatchSnapshot()
     })
 
+    it('Should be render correctly with radius prop', () => {
+        const wrapperArray = mount(WPie, {
+            ...defaultConfig,
+            propsData: {
+                ...propsData,
+                radius: [0, 50],
+            },
+        })
+
+        expect(wrapperArray.vm.curRadius).toEqual([0, 50])
+
+        const wrapperNum = mount(WPie, {
+            ...defaultConfig,
+            propsData: {
+                ...propsData,
+                radius: 5,
+            },
+        })
+
+        expect(wrapperNum.vm.curRadius).toEqual([0, 100])
+    })
+
+    it('Should be render correctly with angles prop', () => {
+        const wrapperArray = mount(WPie, {
+            ...defaultConfig,
+            propsData: {
+                ...propsData,
+                angles: [0, Math.PI * 3],
+            },
+        })
+
+        expect(wrapperArray.vm.curAngles).toEqual([0, Math.PI * 3])
+
+        const wrapperNum = mount(WPie, {
+            ...defaultConfig,
+            propsData: {
+                ...propsData,
+                angles: 5,
+            },
+        })
+
+        expect(wrapperNum.vm.curAngles).toEqual([0, 5])
+    })
+
     it('It emits the handleClick event', () => {
-        const wrapper = mount(WPie, defaultConfig)
+        const wrapper = mount(WPie, {
+            ...defaultConfig,
+            propsData: {
+                ...propsData,
+                trigger: 'click',
+            },
+        })
         wrapper.findAll('path').at(0).trigger('click')
         expect(wrapper.emitted('onClick')).toHaveLength(1)
     })
@@ -61,6 +111,18 @@ describe('Components/WPie', () => {
         const wrapper = mount(WPie, defaultConfig)
         wrapper.findAll('path').at(0).trigger('mouseenter')
         expect(wrapper.emitted('onMouseenter')).toHaveLength(1)
+    })
+
+    it('It emits the handleMouseEnter  event', () => {
+        const wrapper = mount(WPie, {
+            ...defaultConfig,
+            propsData: {
+                ...propsData,
+                trigger: 'hover',
+            },
+        })
+        wrapper.findAll('path').at(0).trigger('mouseleave')
+        expect(wrapper.emitted('onMouseleave')).toHaveLength(1)
     })
 
     it('Should be active 1', () => {
