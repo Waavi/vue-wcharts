@@ -26,8 +26,6 @@
                 v-if="background"
                 :x="bar.x"
                 :y="Chart.canvas.y0"
-                :width="bar.width"
-                :height="maxHeight"
                 :d="`M ${bar.x},${Chart.canvas.y0} h ${bar.width} v ${maxHeight} h -${bar.width} Z`"
                 :style="backgroundStylesCmp"
             />
