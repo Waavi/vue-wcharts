@@ -7,7 +7,7 @@ sidebarDepth: 3
 
 ### Introduction
 
-There are a lot of options to style your charts, you can set a color palette or styling components locally or globally, the same style property you can set to your componentes individually, you can set globally. We are using component name as key in this configuration object.
+There are a lot of options to style your charts, you can set a color palette or styling components locally or globally, the same style property you can set to your components individually, you can set globally. We are using component name as key in this configuration object.
 
 ### Configuration example
 ```js
