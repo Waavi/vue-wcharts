@@ -7,3 +7,6 @@ export * from './Bar'
 export * from './Pie'
 export * from './Widgets'
 export * from './Scatter'
+
+export * from './Axis2'
+export * from './Line2'

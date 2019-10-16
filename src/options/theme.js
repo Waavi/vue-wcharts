@@ -83,7 +83,9 @@ export default {
         },
     },
     WXAxis: { ...axisStyles },
+    WXAxis2: { ...axisStyles },
     WYAxis: { ...axisStyles },
+    WYAxis2: { ...axisStyles },
     WZAxis: { ...axisStyles },
     WCartesianGrid: {
         styles: {

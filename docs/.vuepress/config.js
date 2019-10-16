@@ -42,6 +42,7 @@ module.exports = {
                 ['extraCharts', 'Extra Charts'],
             ],
             '/examples/': [
+                ['refactor', 'Refactor'],
                 ['axis', 'Axis'],
                 ['lines', 'Lines'],
                 ['bar', 'Bar'],
