@@ -5,9 +5,9 @@
             responsive
             :padding="chartPadding"
         >
-            <!-- <WLine2
+            <WLine2
                 datakeyY="seatTime"
-            /> -->
+            />
             <!-- <WLine
                 series="chevrolet"
                 datakeyY="speed"

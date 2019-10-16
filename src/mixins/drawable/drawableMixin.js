@@ -1,5 +1,5 @@
 import VueTypes from 'vue-types'
-import visibleMixin from '../visible'
+// import visibleMixin from '../visible'
 import themeMixin from '../theme'
 import animationMixin from '../animation'
 
@@ -8,7 +8,7 @@ export default {
     mixins: [
         themeMixin,
         animationMixin,
-        visibleMixin,
+        // visibleMixin,
     ],
     inject: ['Chart'],
     props: {

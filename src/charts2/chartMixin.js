@@ -2,14 +2,14 @@ import VueTypes from 'vue-types'
 import debounce from 'lodash.debounce'
 import sortBy from 'lodash.sortby'
 
-import activeMixin from '../mixins/active'
+// import activeMixin from '../mixins/active'
 import themeMixin from '../mixins/theme'
 import { random } from '../utils/maths'
 import { getElementLayout } from './chartUtils'
 import { getUid } from '../mixins/registerUidMixin'
 
 export default {
-    mixins: [activeMixin, themeMixin],
+    mixins: [themeMixin],
     props: {
         id: VueTypes.oneOfType([VueTypes.string, VueTypes.number]).optional,
         dataset: VueTypes.oneOfType([Array, Object]).def([]),
@@ -37,8 +37,7 @@ export default {
             chartReady: !this.responsive,
             /**
              * Axes stores all the relevant information for each axis
-             * @property {Object.<string, Object>} axes
-             * @property {axisD} axisData.
+             * @property {Object.<string, Object>} axes map { [axisId]: axisData, ... }
              * @property {string} axisData.dimension "x", "y", "z", "angle", "radius".
              * @property {string} axisData.type "numeric", "categorical".
              * @property {string|string[]} axisData.datakey optional datakey or array of datakeys.

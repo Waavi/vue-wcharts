@@ -67,7 +67,6 @@ export default {
     preload ({ chart, options, props }) {
         const { dimension } = options
         const { id, type, datakey } = props || {}
-        // const uid = getUid(options, props)
 
         chart.registerAxis(id, {
             dimension,
