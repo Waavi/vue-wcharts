@@ -2,11 +2,11 @@
     <div>
         <WCartesian2 :dataset="dataset">
             <WLine
-                axisId="time"
+                yAxisId="time"
                 datakeyY="time"
             />
             <WLine
-                axisId="performance"
+                yAxisId="performance"
                 datakeyY="tiresPerformance"
             />
             <WXAxis2 type="categorical" datakey="lap" />

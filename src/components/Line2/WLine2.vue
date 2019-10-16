@@ -65,10 +65,10 @@ export default {
     },
     computed: {
         xAxis () {
-            return this.Chart.getAxis(this.xAxisId || AXIS_DIMENSION.X)
+            return this.Chart.axes[this.xAxisId || AXIS_DIMENSION.X]
         },
         yAxis () {
-            return this.Chart.getAxis(this.yAxisId || AXIS_DIMENSION.Y)
+            return this.Chart.axes[this.yAxisId || AXIS_DIMENSION.Y]
         },
         actualDatakeyX () {
             return this.datakeyX || this.xAxis.datakey

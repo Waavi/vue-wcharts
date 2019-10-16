@@ -76,18 +76,23 @@ export default {
         })
     },
     computed: {
-        actualDomain () {
+        dataDomain () {
             return [0, 100]
         },
-        actualBounds () {
+        actualDomain () {
+            return this.dataDomain
+        },
+        bounds () {
             return this.actualDomain
         },
-        actualTicks () {
-            return [0, 50, 100]
+        scale () {
+            // this needs the bounds
+            const { bounds } = this
+            return bounds ? x => x : x => undefined
         },
 
-        scale () {
-            return x => x
+        actualTicks () {
+            return [0, 50, 100]
         },
 
         // Generate styles of axis
@@ -98,12 +103,14 @@ export default {
             }
         },
     },
-    created () {
-        this.Chart.setAxisData(this.id, {
-            domain: [1, 99],
-            bounds: [0, 100],
-            scale: x => x,
-        })
+    watch: {
+        scale () {
+            this.Chart.setAxisData(this.id, {
+                domain: [1, 99],
+                bounds: [0, 100],
+                scale: x => x,
+            })
+        },
     },
     methods: {
 

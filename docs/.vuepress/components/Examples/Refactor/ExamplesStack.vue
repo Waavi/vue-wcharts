@@ -1,7 +1,12 @@
 <template>
     <div>
         <WCartesian2 :dataset="dataset">
-            <WStacked>
+            <WBar stackId="myGroup" datakeyY="lap1" />
+            <WBar stackId="myGroup" datakeyY="lap2" />
+            <WBar stackId="myGroup" datakeyY="lap3" />
+            <WBar stackId="myGroup" datakeyY="lap4" />
+            <WBar stackId="myGroup" datakeyY="lap5" />
+            <WStacked stackId="myGroup1">
                 <WBar datakeyY="lap1" />
                 <WBar datakeyY="lap2" />
                 <WBar datakeyY="lap3" />

@@ -85,7 +85,7 @@ export default {
     },
     layoutInOuterArea (props) {
         const {
-            position, tickLength, height, invisible,
+            position, height, invisible,
         } = props || {}
         return {
             reference: 'canvas',
@@ -93,7 +93,7 @@ export default {
             position,
             left: 0,
             width: '100%',
-            height: invisible ? 0 : tickLength + height,
+            height: invisible ? 0 : height,
         }
     },
     computed: {
