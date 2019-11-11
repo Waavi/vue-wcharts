@@ -25,7 +25,7 @@
 
 <script>
 export default {
-    name: 'Stacked',
+    name: 'MarkersOnFrontAndBack',
     data () {
         return {
             data: [

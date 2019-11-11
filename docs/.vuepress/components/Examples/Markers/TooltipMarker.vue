@@ -6,18 +6,20 @@
             legend="One Line"
         />
         <WMarker
-            :x="'Page C'"
-            :y="1500"
+            :x="['Page C', 'Page E']"
+            :info="tooltip"
+            :borderSpacing="[0, 0.5, 0, 0.5]"
             :styles="styles"
         />
         <WXAxis datakey="name" />
         <WYAxis />
+        <WTooltip />
     </WCartesian>
 </template>
 
 <script>
 export default {
-    name: 'PointMarker',
+    name: 'TooltipMarker',
     data () {
         return {
             data: [
@@ -48,6 +50,12 @@ export default {
                 fill: 'rgba(0, 0, 0, 0.1)',
                 strokeWidth: 1,
                 strokeDasharray: 0,
+            },
+            tooltip: {
+                label: 'Limit area',
+                value: [
+                    { value: '3490' },
+                ]
             },
         }
     }

@@ -41,7 +41,7 @@
 
 <script>
 export default {
-    name: 'Stacked',
+    name: 'CustomMarkers',
     data () {
         return {
             data: [

@@ -41,6 +41,18 @@ sidebarDepth: 1
 <<< @/docs/.vuepress/components/Examples/Markers/PointMarker.vue
 </SourceCode>
 
+## Tooltip marker
+
+<br>
+
+<Examples-Markers-TooltipMarker />
+
+<br>
+
+<SourceCode>
+<<< @/docs/.vuepress/components/Examples/Markers/TooltipMarker.vue
+</SourceCode>
+
 
 ## X Range marker
 

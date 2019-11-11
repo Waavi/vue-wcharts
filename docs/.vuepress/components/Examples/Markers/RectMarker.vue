@@ -18,7 +18,7 @@
 
 <script>
 export default {
-    name: 'Stacked',
+    name: 'RectMarker',
     data () {
         return {
             data: [

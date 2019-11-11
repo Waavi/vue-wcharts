@@ -11,6 +11,7 @@
                 :stroke="stylesCmp.stroke"
                 :stroke-width="stylesCmp.strokeWidth"
                 :stroke-dasharray="stylesCmp.strokeDasharray"
+                v-on="listeners"
             />
             <circle
                 v-if="circle"
@@ -20,6 +21,7 @@
                 :stroke-dasharray="stylesCmp.strokeDasharray"
                 :fill="stylesCmp.fill"
                 :r="stylesCmp.r"
+                v-on="listeners"
             />
             <rect
                 v-if="rect"
@@ -28,6 +30,7 @@
                 :stroke-width="stylesCmp.strokeWidth"
                 :stroke-dasharray="stylesCmp.strokeDasharray"
                 :fill="stylesCmp.fill"
+                v-on="listeners"
             />
         </slot>
         <slot
@@ -51,6 +54,7 @@
 
 <script>
 import VueTypes from 'vue-types'
+import merge from '../../utils/merge'
 import themeMixin from '../../mixins/theme'
 
 export default {
@@ -66,6 +70,12 @@ export default {
         labelAlign: VueTypes.oneOf(['start', 'end']).def('end'),
         styles: VueTypes.object.def({}),
         labelStyles: VueTypes.object,
+        trigger: VueTypes.oneOf(['hover', 'click', 'manual']).def('hover'),
+        info: VueTypes.shape({
+            id: VueTypes.any,
+            label: VueTypes.any,
+            value: VueTypes.array,
+        }).loose,
     },
     computed: {
         scaledX () {
@@ -184,6 +194,23 @@ export default {
             }
             return {}
         },
+        // Event Listeners
+        listeners () {
+            return merge({}, this.$listeners, {
+                click: (event) => {
+                    if (this.trigger === 'click') this.handleActive(event)
+                    this.$emit('onClick', event)
+                },
+                mouseenter: (event) => {
+                    if (this.trigger === 'hover') this.handleActive(event)
+                    this.$emit('onMouseenter', event)
+                },
+                mouseleave: () => {
+                    if (['hover', 'click'].includes(this.trigger)) this.Chart.cleanActive()
+                    this.$emit('onMouseleave')
+                },
+            })
+        },
     },
     methods: {
         getScaledValue ({ value, isX, isCategory }) {
@@ -214,6 +241,11 @@ export default {
                 return spacing * space
             }
             return spacing
+        },
+        // Set active element
+        handleActive (event) {
+            const { setActive } = this.Chart
+            setActive(this.info, event)
         },
     },
 }
