@@ -1,14 +1,20 @@
 <template>
-    <g />
+    <g>
+        <path
+            :d="linePath"
+            v-bind="stylesCmp"
+            fill="none"
+        />
+    </g>
 </template>
 
 <script>
 import VueTypes from 'vue-types'
+import d3Line from 'd3-shape/src/line'
+import { monotoneX as curveMonotoneX } from 'd3-shape/src/curve/monotone'
 import drawableCartesianMixin from '../../mixins/drawable/drawableCartesianMixin'
 import { AXIS_DIMENSION } from '../Axis2/axisMixin'
-// import d3Line from 'd3-shape/src/line'
 // import d3Area from 'd3-shape/src/area'
-// import { monotoneX as curveMonotoneX } from 'd3-shape/src/curve/monotone'
 // import merge from '../../utils/merge'
 // import { WDot } from '../Common'
 // import { WSpread } from '../../transitions'
@@ -23,14 +29,15 @@ export default {
     mixins: [drawableCartesianMixin],
     props: {
         xAxisId: VueTypes.string.optional,
-        datakeyX: VueTypes.string.optional,
+        xDatakey: VueTypes.string.optional,
         yAxisId: VueTypes.string.optional,
-        datakeyY: VueTypes.string.optional,
+        yDatakey: VueTypes.string.optional,
 
         trigger: VueTypes.oneOf(['hover', 'click', 'manual']).def('click'),
         label: VueTypes.string,
         curve: VueTypes.oneOfType([VueTypes.bool, VueTypes.func]).def(false),
         area: VueTypes.bool.def(false),
+        color: VueTypes.string.optional,
         styles: VueTypes.shape({
             fill: VueTypes.string,
             stroke: VueTypes.string,
@@ -48,19 +55,19 @@ export default {
     },
     preload ({ chart, uid, props }) {
         const {
-            xAxisId, yAxisId, series, datakeyX, datakeyY,
+            xAxisId, yAxisId, series, xDatakey, yDatakey,
         } = props || {}
         chart.registerAxisDatakey(uid, {
             axisId: xAxisId,
             dimension: AXIS_DIMENSION.X,
             series,
-            datakey: datakeyX,
+            datakey: xDatakey,
         })
         chart.registerAxisDatakey(uid, {
             axisId: yAxisId,
             dimension: AXIS_DIMENSION.Y,
             series,
-            datakey: datakeyY,
+            datakey: yDatakey,
         })
     },
     computed: {
@@ -70,21 +77,51 @@ export default {
         yAxis () {
             return this.Chart.axes[this.yAxisId || AXIS_DIMENSION.Y]
         },
-        actualDatakeyX () {
-            return this.datakeyX || this.xAxis.datakey
+        actualXDatakey () {
+            return this.xDatakey || this.xAxis.datakey
         },
-        actualDatakeyY () {
-            return this.datakeyY || this.yAxis.datakey
+        actualYDatakey () {
+            return this.yDatakey || this.yAxis.datakey
         },
         coords () {
-            if (!this.xAxis.scale || !this.yAxis.scale) return undefined
-            const data = this.Chart.getData(this.series)
+            const {
+                xAxis, yAxis, series, actualXDatakey, actualYDatakey, Chart,
+            } = this
+            if (!xAxis.scale || !yAxis.scale) return undefined
+            const data = Chart.getDatasetForSeries(series)
             if (!data || data.length === 0) return undefined
 
-            return data.map(datum => ({
-                x: this.xAxis.scale(datum[this.actualDatakeyX]),
-                y: this.yAxis.scale(datum[this.actualDatakeyY]),
-            }))
+            return data.map((datum) => {
+                const x = datum[actualXDatakey]
+                const y = datum[actualYDatakey]
+                return {
+                    x,
+                    y,
+                    xScaled: xAxis.scale(x),
+                    yScaled: yAxis.scale(y),
+                }
+            })
+        },
+        genLine () {
+            return d3Line().x(d => d.xScaled).y(d => d.yScaled)
+        },
+        linePath () {
+            const { coords, curve, genLine } = this
+            if (curve === false) return genLine(coords)
+            const curveFn = typeof curve === 'function' ? curve : curveMonotoneX
+            return genLine.curve(curveFn)(coords)
+        },
+
+        // Styles
+        stylesCmp () {
+            return {
+                ...this.themeStyles.styles,
+                ...this.styles,
+                stroke: (this.themeStyles && this.themeStyles.styles && this.themeStyles.styles.stroke) ||
+                 this.styles.stroke ||
+                 this.fillColor ||
+                 this.color,
+            }
         },
     },
 }

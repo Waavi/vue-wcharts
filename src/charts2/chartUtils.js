@@ -1,7 +1,42 @@
 /* eslint-disable prefer-destructuring */
 import { getPercentValue } from '../utils/mathsPie'
 
-export function getElementLayout ({
+/**
+ * Generate an "Unique Id" for the component within the chart
+ */
+
+export function generateUid (options, props) {
+    const { type, name } = options || {}
+    const { id } = props || {}
+    const random = Math.round(Math.random() * 10000)
+    return [type, name, id].filter(x => x).concat(random).join('-')
+}
+
+/**
+ * Gets the layout for an outer element
+ * @param {Object} obj object with parameters.
+ * @param {string} obj.position "top", "left", "right", "bottom".
+ * @param {Object} obj.element element information.
+ * @param {number} obj.element.distanceFromCanvas distance from canvas.
+ * @param {string} [obj.element.reference="canvas"] "canvas" or "view-box". Determines the layout's boundings for this component
+ * @param {number} [obj.element.left] left (take "reference" into account).
+ * @param {number} [obj.element.width] width (take "reference" into account).
+ * @param {number} [obj.element.right] right (take "reference" into account).
+ * @param {number} [obj.element.top] top (take "reference" into account).
+ * @param {number} [obj.element.height] height (take "reference" into account).
+ * @param {number} [obj.element.bottom] bottom (take "reference" into account).
+ * @param {Object} obj.canvas canvas layout.
+ * @param {number} obj.canvas.left canvas' left value.
+ * @param {number} obj.canvas.width canvas' width value.
+ * @param {number} obj.canvas.right canvas' right value.
+ * @param {number} obj.canvas.top canvas' top value.
+ * @param {number} obj.canvas.height canvas' height value.
+ * @param {number} obj.canvas.bottom canvas' bottom value.
+ * @param {Object} obj.viewBox viewBox layout.
+ * @param {number} obj.viewBox.width viewBox's width value.
+ * @param {number} obj.viewBox.height viewBox's height value.
+ */
+export function getOuterElementLayout ({
     position,
     element,
     canvas,
@@ -65,6 +100,9 @@ export function getElementLayout ({
     }
 }
 
+/**
+ *
+*/
 function getSanitizedSides ({
     start, end, size, max,
 }) {

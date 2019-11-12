@@ -5,8 +5,7 @@ import sortBy from 'lodash.sortby'
 // import activeMixin from '../mixins/active'
 import themeMixin from '../mixins/theme'
 import { random } from '../utils/maths'
-import { getElementLayout } from './chartUtils'
-import { getUid } from '../mixins/registerUidMixin'
+import { generateUid, getOuterElementLayout } from './chartUtils'
 
 export default {
     mixins: [themeMixin],
@@ -34,23 +33,7 @@ export default {
     },
     data () {
         return {
-            chartReady: !this.responsive,
-            /**
-             * Axes stores all the relevant information for each axis
-             * @property {Object.<string, Object>} axes map { [axisId]: axisData, ... }
-             * @property {string} axisData.dimension "x", "y", "z", "angle", "radius".
-             * @property {string} axisData.type "numeric", "categorical".
-             * @property {string|string[]} axisData.datakey optional datakey or array of datakeys.
-             * @property {Object.<string, string>} axisData.datakeys a "map" of element's "uid" and their "datakeys".
-             *      It must be a "map" to register who is requiring a datakey. It could be more than one element.
-            */
-            axes: {},
-            outterAreas: {
-                top: {},
-                left: {},
-                right: {},
-                bottom: {},
-            },
+            isChartReady: !this.responsive,
             parentWidth: null, // Width of chart
         }
     },
@@ -99,21 +82,21 @@ export default {
             }
         },
 
-        // ordered from outter to inner
+        // ordered from outer to inner
         topOuterElements () {
-            return this.outterElementsWithDistancesFromCanvas('top')
+            return this.outerElementsWithDistancesFromCanvas('top')
         },
-        // ordered from outter to inner
+        // ordered from outer to inner
         leftOuterElements () {
-            return this.outterElementsWithDistancesFromCanvas('left')
+            return this.outerElementsWithDistancesFromCanvas('left')
         },
-        // ordered from outter to inner
+        // ordered from outer to inner
         rightOuterElements () {
-            return this.outterElementsWithDistancesFromCanvas('right')
+            return this.outerElementsWithDistancesFromCanvas('right')
         },
-        // ordered from outter to inner
+        // ordered from outer to inner
         bottomOuterElements () {
-            return this.outterElementsWithDistancesFromCanvas('bottom')
+            return this.outerElementsWithDistancesFromCanvas('bottom')
         },
 
         // Canvas size
@@ -143,22 +126,22 @@ export default {
         outerElementLayoutsByUid () {
             const byUid = {}
             this.topOuterElements.forEach((element) => {
-                byUid[element.uid] = getElementLayout({
+                byUid[element.uid] = getOuterElementLayout({
                     position: 'top', element, canvas: this.canvas, viewBox: this.viewBox,
                 })
             })
             this.leftOuterElements.forEach((element) => {
-                byUid[element.uid] = getElementLayout({
+                byUid[element.uid] = getOuterElementLayout({
                     position: 'left', element, canvas: this.canvas, viewBox: this.viewBox,
                 })
             })
             this.rightOuterElements.forEach((element) => {
-                byUid[element.uid] = getElementLayout({
+                byUid[element.uid] = getOuterElementLayout({
                     position: 'right', element, canvas: this.canvas, viewBox: this.viewBox,
                 })
             })
             this.bottomOuterElements.forEach((element) => {
-                byUid[element.uid] = getElementLayout({
+                byUid[element.uid] = getOuterElementLayout({
                     position: 'bottom', element, canvas: this.canvas, viewBox: this.viewBox,
                 })
             })
@@ -172,6 +155,19 @@ export default {
             return Object.keys(this.dataset)
                 .reduce((acc, key) => [...acc, ...this.dataset[key].map(d => ({ ...d, $dataset: key }))], [])
         },
+    },
+    created () {
+        /**
+         * Axes stores all the relevant information for each axis
+         * @property {Object.<string, Object>} axes map { [axisId]: axisData, ... }
+         * @property {string} axisData.dimension "x", "y", "z", "angle", "radius".
+         * @property {string} axisData.type "numeric", "categorical".
+         * @property {string|string[]} axisData.datakey optional datakey or array of datakeys.
+         * @property {Object.<string, string>} axisData.datakeys a "map" of element's "uid" and their "datakeys".
+         *      It must be a "map" to register who is requiring a datakey. It could be more than one element.
+        */
+        this.axes = {}
+        this.outerAreas = {}
     },
     mounted () {
     // Added listenner if has response prop to true
@@ -212,8 +208,11 @@ export default {
             height,
             bottom,
         } = {}) {
-            if (this.outterAreas[position] !== undefined) {
-                this.outterAreas[position][uid] = {
+            if (['top', 'left', 'right', 'bottom'].includes(position)) {
+                if (!this.outerAreas[position]) {
+                    this.outerAreas[position] = {}
+                }
+                this.outerAreas[position][uid] = {
                     uid,
                     reference: reference || 'canvas',
                     order: order || 0,
@@ -230,17 +229,30 @@ export default {
         },
 
         /**
-         * Function that register the axes relevant information.
+         * Function that deletes the layout for a component on ViewBox Layout
+         * @param {string} uid unique identifier for the component.
+         */
+        leavePlaceInOuterArea (uid) {
+            Object.values(this.outerAreas).forEach((outerArea) => {
+                // eslint-disable-next-line no-param-reassign
+                delete outerArea[uid]
+            })
+        },
+
+        /**
+         * Function that registers the axes relevant information.
          * Every axis must use this function.
          * @param {string} id identifier for the axis.
          * @param {Object} obj object with parameters.
          * @param {string} obj.dimension "x", "y", "z", "angle", "radius".
          * @param {string} obj.type "numeric", "categorical".
-         * @param {string|string[]} [obj.datakey] optional datakey or array of datakeys.
+         * @param {string} [obj.series] optional series.
+         * @param {string} [obj.datakey] optional datakey.
          */
         registerAxis (id, {
             dimension,
             type,
+            series,
             datakey,
         }) {
             this.axes[id] = {
@@ -249,10 +261,27 @@ export default {
                 type,
                 datakey,
             }
+            if (datakey) {
+                this.axes[id].datakeys = {
+                    ...(this.axes[id].datakeys || {}),
+                    [id]: {
+                        series,
+                        datakey,
+                    },
+                }
+            }
         },
 
         /**
-         * Function that register a datakey for a specific axis.
+         * Function that unregisters the axes relevant information.
+         * @param {string} id identifier for the axis.
+         */
+        unregisterAxis (id) {
+            delete this.axes[id]
+        },
+
+        /**
+         * Function that registers a datakey for a specific axis.
          * @param {string} uid unique identifier for the component.
          * @param {Object} obj object with parameters.
          * @param {string} [obj.axisId] identifier for the axis.
@@ -266,19 +295,35 @@ export default {
             series,
             datakey,
         }) {
-            if (uid && (axisId || dimension)) {
-                const idOrDimension = axisId || dimension
-                const axisData = this.axes[idOrDimension] || {}
-                this.axes[idOrDimension] = {
-                    ...axisData,
-                    datakeys: {
-                        ...axisData.datakeys,
-                        [uid]: datakey,
-                    },
+            if (series || datakey) {
+                if (uid && (axisId || dimension)) {
+                    const idOrDimension = axisId || dimension
+                    const axisData = this.axes[idOrDimension] || {}
+                    this.axes[idOrDimension] = {
+                        ...axisData,
+                        datakeys: {
+                            ...axisData.datakeys,
+                            [uid]: {
+                                series,
+                                datakey,
+                            },
+                        },
+                    }
+                } else {
+                    console.warn('chart.registerAxisDatakey: there is no "uid" or "axisId"')
                 }
-            } else {
-                console.warn('chart.registerAxisDatakey: there is no "uid" or "axisId"')
             }
+        },
+
+        /**
+         * Function that unregisters a datakey for a specific axis.
+         * @param {string} uid unique identifier for the component.
+         */
+        unregisterAxisDatakey (uid) {
+            Object.values(this.axes).forEach((axis) => {
+                // eslint-disable-next-line no-param-reassign
+                delete axis.datakeys[uid]
+            })
         },
 
         getAxis (id) {
@@ -289,13 +334,19 @@ export default {
             domain,
             bounds,
             scale,
+            ticks,
         }) {
             this.axes[id] = {
                 ...(this.axes[id] || {}),
                 domain,
                 bounds,
                 scale,
+                ticks,
             }
+        },
+
+        getDatasetForSeries (series) {
+            return series ? this.dataset[series] : this.dataset
         },
 
         // Resize chart on event emited
@@ -304,18 +355,15 @@ export default {
                 const { width } = this.$el.getBoundingClientRect()
                 this.parentWidth = width
             }
-            this.setChartReady()
-        },
-        // Set and emit chartReady
-        setChartReady () {
-            this.chartReady = true
+            // Set and emit isChartReady
+            this.isChartReady = true
             this.$emit('onChartReady')
         },
 
-        // ordered from outter to inner
-        outterElementsWithDistancesFromCanvas (area) {
+        // ordered from outer to inner
+        outerElementsWithDistancesFromCanvas (area) {
             const relevantDimension = area === 'top' || area === 'bottom' ? 'height' : 'width'
-            const sorted = sortBy(Object.values(this.outterAreas[area]), 'order')
+            const sorted = sortBy(Object.values(this.outerAreas[area] || {}), 'order')
             const sortedWithDistances = []
             let accDistance = 0
             sorted.forEach((item) => {
@@ -327,57 +375,63 @@ export default {
     },
 
     render (h) {
+        const { viewBox, responsive, isChartReady } = this
+        this.axes = {}
+        this.outerAreas = {}
         const slots = this.$slots.default || []
         const drawables = [] // We need inject necessary props to cartesian slots
         const axis = []
         const plugins = []
         const others = []
 
-        slots.forEach((slot) => {
-            const options = slot.componentOptions
-            if (!options) {
-                others.push(slot)
-                return
-            }
-            const { sealedOptions } = options.Ctor
-            if (!sealedOptions) {
-                return
-            }
-
-            switch (sealedOptions.type) {
-                case 'drawable':
-                    drawables.push(slot)
-                    break
-                case 'axis':
-                    axis.push(slot)
-                    break
-                case 'plugins':
-                    plugins.push(slot)
-                    break
-                default:
-                    break
-            }
-
-            if (sealedOptions.preload || sealedOptions.layoutInOuterArea) {
-                const defaultProps = Object.entries(sealedOptions.props).reduce((acc, [key, val]) => ({
-                    ...acc,
-                    [key]: typeof val.default === 'function' ? val.default() : val.default,
-                }), {})
-                const props = { ...defaultProps, ...options.propsData }
-                const uid = getUid(sealedOptions, props)
-                sealedOptions.preload({
-                    uid,
-                    chart: this,
-                    options: sealedOptions,
-                    props,
-                })
-                if (sealedOptions.layoutInOuterArea) {
-                    this.reserveAPlaceInOuterArea(uid, sealedOptions.layoutInOuterArea(props))
+        if (isChartReady) {
+            slots.forEach((slot) => {
+                const options = slot.componentOptions
+                if (!options) {
+                    others.push(slot)
+                    return
                 }
-            }
-        })
+                const { sealedOptions } = options.Ctor
+                if (!sealedOptions) {
+                    return
+                }
 
-        const { viewBox, responsive } = this
+                switch (sealedOptions.type) {
+                    case 'drawable':
+                        drawables.push(slot)
+                        break
+                    case 'axis':
+                        axis.push(slot)
+                        break
+                    case 'plugins':
+                        plugins.push(slot)
+                        break
+                    default:
+                        break
+                }
+
+                if (sealedOptions.preload || sealedOptions.layoutInOuterArea) {
+                    const defaultProps = Object.entries(sealedOptions.props).reduce((acc, [key, val]) => ({
+                        ...acc,
+                        [key]: typeof val.default === 'function' ? val.default() : val.default,
+                    }), {})
+                    const props = { ...defaultProps, ...options.propsData }
+                    const uid = generateUid(sealedOptions, props)
+                    slot.componentOptions.propsData.uid = uid
+
+                    sealedOptions.preload({
+                        uid,
+                        chart: this,
+                        options: sealedOptions,
+                        props,
+                    })
+                    if (sealedOptions.layoutInOuterArea) {
+                        this.reserveAPlaceInOuterArea(uid, sealedOptions.layoutInOuterArea(props))
+                    }
+                }
+            })
+        }
+
         return h(
             'div',
             {
@@ -396,9 +450,9 @@ export default {
                             viewBox: `0 0 ${viewBox.width} ${viewBox.height}`,
                         },
                     },
-                    this.chartReady ? [others, axis, drawables] : []
+                    isChartReady ? [others, axis, drawables] : []
                 ),
-                this.chartReady ? plugins : [],
+                isChartReady ? plugins : [],
             ]
         )
     },

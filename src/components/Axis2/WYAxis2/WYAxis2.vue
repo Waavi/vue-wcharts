@@ -4,44 +4,45 @@
             v-if="lineProps"
             v-bind="lineProps"
         />
-        <!-- <template
-            v-for="(tick, index) in ticks"
+        <g
+            v-for="({ markY, value, label, textProps }, index) in ticksWithInfo"
+            :key="index"
         >
-            <g
-                :key="`tick-${index}`"
-                :text-anchor="textAnchor"
+            <line
+                v-if="!hideTickMark"
+                :x1="markX"
+                :y1="markY"
+                :x2="markX + tickLength"
+                :y2="markY"
+                :stroke="markStylesCmp.stroke"
+            />
+            <slot
+                name="tick"
+                :value="value"
+                :label="label"
+                :index="index"
+                :styles="tickStylesCmp"
             >
-                <line
-                    v-if="!hideTickMark"
-                    :x1="tick.mark.x1"
-                    :y1="tick.mark.y1"
-                    :x2="tick.mark.x2"
-                    :y2="tick.mark.y2"
-                    :stroke="markStylesCmp.stroke"
-                />
-                <slot
-                    name="tick"
-                    v-bind="tick.text"
+                <WAxisText
+                    v-if="label || label === 0"
+                    :x="markX"
+                    :y="markY"
+                    :value="label"
+                    v-bind="textProps"
                     :styles="tickStylesCmp"
+                    #default="{ value }"
                 >
-                    <WAxisText
-                        v-bind="tick.text"
-                        :styles="tickStylesCmp"
+                    <slot
+                        name="tickText"
+                        :value="value"
                     >
-                        <template #default="{ value }">
-                            <slot
-                                name="tickText"
-                                :value="value"
-                            >
-                                {{ value }}
-                            </slot>
-                        </template>
-                    </WAxisText>
-                </slot>
-            </g>
-        </template>
+                        {{ value }}
+                    </slot>
+                </WAxisText>
+            </slot>
+        </g>
 
-        <slot
+        <!-- <slot
             name="label"
             v-bind="labels"
             :styles="labelStylesCmp"
@@ -65,10 +66,14 @@
 import VueTypes from 'vue-types'
 import outerElementMixin from '../../../mixins/outerElementMixin'
 import axisMixin, { AXIS_TYPE, AXIS_TYPE_LIST, AXIS_DIMENSION } from '../axisMixin'
+import WAxisText from '../../Axis/WAxisText/WAxisText.vue'
 
 export default {
     name: 'WYAxis2',
     dimension: AXIS_DIMENSION.Y,
+    components: {
+        WAxisText,
+    },
     mixins: [axisMixin, outerElementMixin],
     props: {
         id: VueTypes.string.def(AXIS_DIMENSION.Y),
@@ -97,15 +102,50 @@ export default {
         }
     },
     computed: {
+        isOnRight () {
+            return this.position === 'right'
+        },
         lineProps () {
-            if (this.hideLine) return undefined
+            const {
+                hideLine, outerLayout, axisStylesCmp, isOnRight,
+            } = this
+            if (hideLine) return undefined
+            const x = isOnRight ? outerLayout.x : outerLayout.x + outerLayout.width
             return {
-                x1: this.outerLayout.x + this.outerLayout.width,
-                y1: this.outerLayout.y,
-                x2: this.outerLayout.x + this.outerLayout.width,
-                y2: this.outerLayout.y + this.outerLayout.height,
-                stroke: this.axisStylesCmp.stroke,
+                x1: x,
+                y1: outerLayout.y,
+                x2: x,
+                y2: outerLayout.y + outerLayout.height,
+                stroke: axisStylesCmp.stroke,
             }
+        },
+        markX () {
+            const { outerLayout, tickLength, isOnRight } = this
+            return isOnRight ? outerLayout.x : outerLayout.x + outerLayout.width - tickLength
+        },
+        ticksWithInfo () {
+            const {
+                actualTicks, scale, tickFormatter, tickLength, isOnRight,
+            } = this
+            const horizontalPadding = tickLength + 2
+            const textProps = {
+                'alignment-baseline': 'middle',
+                'text-anchor': isOnRight ? 'start' : 'end',
+                dx: (isOnRight ? horizontalPadding : -horizontalPadding).toString(),
+                dy: '1',
+            }
+            return actualTicks.map((value, index) => ({
+                markY: scale(value),
+                value,
+                label: tickFormatter(value, index),
+                textProps,
+            }))
+        },
+    },
+    methods: {
+        getRange (canvas, padding) {
+            const { top: topPadding = 0, bottom: bottomPadding = 0 } = padding || {}
+            return [canvas.top + canvas.height - bottomPadding, canvas.top + topPadding]
         },
     },
 }

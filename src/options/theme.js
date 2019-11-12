@@ -53,6 +53,21 @@ export default {
             hoverRadius: 8,
         },
     },
+    WLine2: {
+        styles: {
+            fill: '',
+            stroke: '',
+            strokeWidth: 2,
+            strokeDasharray: '0',
+        },
+        dot: {
+            fill: 'white',
+            stroke: '',
+            strokeWidth: 2,
+            radius: 4,
+            hoverRadius: 8,
+        },
+    },
     WBar: {
         styles: {},
         label: {

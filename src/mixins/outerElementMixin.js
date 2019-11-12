@@ -1,11 +1,11 @@
 /**
  * Mixin for "outer elements". It mainly gives the specific outer layout to render properly.
  */
-import registerUidMixin from './registerUidMixin'
+import withUidMixin from './withUidMixin'
 
 export default {
     inject: ['Chart'],
-    mixins: [registerUidMixin],
+    mixins: [withUidMixin],
     layoutInOuterArea (props) {
         throw Error('"layoutInOuterArea" must be implemented')
     },
@@ -21,5 +21,8 @@ export default {
                 x, y, width, height,
             }
         },
+    },
+    beforeDestroy () {
+        this.Chart.leavePlaceInOuterArea(this.uid)
     },
 }

@@ -122,6 +122,21 @@ Object {
       "strokeWidth": 4,
     },
   },
+  "WLine2": Object {
+    "dot": Object {
+      "fill": "white",
+      "hoverRadius": 8,
+      "radius": 4,
+      "stroke": "",
+      "strokeWidth": 2,
+    },
+    "styles": Object {
+      "fill": "",
+      "stroke": "",
+      "strokeDasharray": "0",
+      "strokeWidth": 2,
+    },
+  },
   "WMarker": Object {
     "label": Object {
       "fill": "#333333",
@@ -412,6 +427,21 @@ Object {
       "stroke": "#000",
       "strokeDasharray": 1,
       "strokeWidth": 4,
+    },
+  },
+  "WLine2": Object {
+    "dot": Object {
+      "fill": "white",
+      "hoverRadius": 8,
+      "radius": 4,
+      "stroke": "",
+      "strokeWidth": 2,
+    },
+    "styles": Object {
+      "fill": "",
+      "stroke": "",
+      "strokeDasharray": "0",
+      "strokeWidth": 2,
     },
   },
   "WMarker": Object {
