@@ -25,7 +25,7 @@
 
 <script>
 export default {
-    name: 'Stacked',
+    name: 'LineMarkers',
     data () {
         return {
             data: [
@@ -61,6 +61,6 @@ export default {
                 fontSize: 14
             },
         }
-    }
+    },
 }
 </script>

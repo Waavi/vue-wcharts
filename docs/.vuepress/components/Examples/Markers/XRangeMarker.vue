@@ -17,7 +17,7 @@
 
 <script>
 export default {
-    name: 'Stacked',
+    name: 'XRangeMarker',
     data () {
         return {
             data: [
