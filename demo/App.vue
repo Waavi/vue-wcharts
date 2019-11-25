@@ -98,7 +98,7 @@ export default {
     data () {
         return {
             data: dataTwo,
-            activeComponent: 'Cartesian',
+            activeComponent: 'Pie',
         }
     },
     methods: {

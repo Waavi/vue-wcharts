@@ -55,9 +55,112 @@ export const getPercentValue = ({ percent, totalValue, defaultValue = 0 }) => {
     return value
 }
 
-export const getSectorPath = ({
-    cx, cy, innerRadius, outerRadius, startAngle, endAngle,
+const getTangentCircle = ({
+    cx, cy, radius, angle, sign, isExternal,
+    borderRadius, cornerIsExternal,
 }) => {
+    const centerRadius = borderRadius * (isExternal ? 1 : -1) + radius
+    const theta = Math.asin(borderRadius / centerRadius) / RADIAN
+    const centerAngle = cornerIsExternal ? angle : angle + sign * theta
+    const center = polarToCartesian(cx, cy, centerRadius, centerAngle)
+    // The coordinate of point which is tangent to the circle
+    const circleTangency = polarToCartesian(cx, cy, radius, centerAngle)
+    // The coordinate of point which is tangent to the radius line
+    const lineTangencyAngle = cornerIsExternal ? angle - sign * theta : angle
+    const lineTangency = polarToCartesian(
+        cx, cy, centerRadius * Math.cos(theta * RADIAN), lineTangencyAngle
+    )
+    return {
+        center, circleTangency, lineTangency, theta,
+    }
+}
+
+export const getSectorWithCorner = ({
+    cx, cy, innerRadius, outerRadius, borderRadius, startAngle, endAngle, cornerIsExternal = true,
+}) => {
+    const sign = mathSign(endAngle - startAngle)
+    const { circleTangency: soct, lineTangency: solt, theta: sot } =
+    getTangentCircle({
+        cx,
+        cy,
+        radius: outerRadius,
+        angle: startAngle,
+        sign,
+        borderRadius,
+        cornerIsExternal,
+    })
+    const { circleTangency: eoct, lineTangency: eolt, theta: eot } =
+    getTangentCircle({
+        cx,
+        cy,
+        radius: outerRadius,
+        angle: endAngle,
+        sign: -sign,
+        borderRadius,
+        cornerIsExternal,
+    })
+    const outerArcAngle = Math.abs(startAngle - endAngle) - sot - eot
+    if (outerArcAngle < 0) {
+        return getSectorPath({
+            cx, cy, innerRadius, outerRadius, startAngle, endAngle,
+        })
+    }
+
+    let path = `M ${solt.x},${solt.y}
+        A${borderRadius},${borderRadius},0,0,${+(sign < 0)},${soct.x},${soct.y}
+        A${outerRadius},${outerRadius},0,${+(outerArcAngle > 180)},${+(sign < 0)},${eoct.x},${eoct.y}
+        A${borderRadius},${borderRadius},0,0,${+(sign < 0)},${eolt.x},${eolt.y}
+      `
+
+    if (innerRadius > 0) {
+        const { circleTangency: sict, lineTangency: silt, theta: sit } =
+          getTangentCircle({
+              cx,
+              cy,
+              radius: innerRadius,
+              angle: startAngle,
+              sign,
+              isExternal: true,
+              borderRadius,
+              cornerIsExternal,
+          })
+        const { circleTangency: eict, lineTangency: eilt, theta: eit } =
+          getTangentCircle({
+              cx,
+              cy,
+              radius: innerRadius,
+              angle: endAngle,
+              sign: -sign,
+              isExternal: true,
+              borderRadius,
+              cornerIsExternal,
+          })
+        const innerArcAngle = Math.abs(startAngle - endAngle) - sit - eit
+
+        if (innerArcAngle < 0) {
+            return `${path}L${cx},${cy}Z`
+        }
+
+        path += `L${eilt.x},${eilt.y}
+          A${borderRadius},${borderRadius},0,0,${+(sign < 0)},${eict.x},${eict.y}
+          A${innerRadius},${innerRadius},0,${+(innerArcAngle > 180)},${+(sign > 0)},${sict.x},${sict.y}
+          A${borderRadius},${borderRadius},0,0,${+(sign < 0)},${silt.x},${silt.y}Z`
+    } else {
+        path += `L${cx},${cy}Z`
+    }
+
+    return path
+}
+
+export const getSectorPath = ({
+    cx, cy, innerRadius, outerRadius, startAngle, endAngle, borderRadius,
+}) => {
+    if (borderRadius) {
+        return getSectorWithCorner({
+            cx, cy, innerRadius, outerRadius, borderRadius, startAngle, endAngle,
+        })
+    }
+
     const angle = getDeltaAngle(startAngle, endAngle)
 
     // When the angle of sector equals to 360, star point and end point coincide
