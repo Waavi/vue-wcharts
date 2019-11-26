@@ -93,7 +93,7 @@ export default {
         },
         // Values
         curValues () {
-            return this.Chart.data.map(item => item[this.datakey] || this.maxValue)
+            return this.Chart.data.map(item => (isNumber(item[this.datakey]) ? item[this.datakey] : this.maxValue))
         },
         // Sectors
         sectors () {
