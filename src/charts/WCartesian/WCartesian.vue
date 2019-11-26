@@ -234,7 +234,7 @@ export default {
                 return
             }
             const { propsData } = options
-            const { datakey, legend } = propsData
+            const { datakey, legend } = propsData || {}
             const cartesiansLength = cartesians.length
 
             switch (sealed.type) {

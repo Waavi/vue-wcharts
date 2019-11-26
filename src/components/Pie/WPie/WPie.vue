@@ -48,9 +48,9 @@ export default {
     inject: ['Chart'],
     mixins: [themeMixin, visibleMixin],
     props: {
-        // internal props set by the parent (WPieChart)
+        // Internal props set by the parent (WPieChart)
         index: VueTypes.number,
-        datakey: VueTypes.string.isRequired,
+        datakey: VueTypes.string,
         trigger: VueTypes.oneOf(['hover', 'click', 'manual']).def('hover'),
         startAngle: VueTypes.number.def(-1),
         endAngle: VueTypes.number.def(-1),
@@ -58,7 +58,8 @@ export default {
             VueTypes.number,
             VueTypes.arrayOf(VueTypes.number).def([0, 100]),
         ]).def([0, 100]),
-        limit: VueTypes.number.def(-1),
+        maxValue: VueTypes.number.def(-1), // Max value to limit curValues
+        // Styles
         styles: VueTypes.object,
         pathStyles: VueTypes.shape({
             stroke: VueTypes.string,
@@ -92,17 +93,17 @@ export default {
         },
         // Values
         curValues () {
-            return this.Chart.data.map(item => item[this.datakey])
+            return this.Chart.data.map(item => item[this.datakey] || this.maxValue)
         },
         // Sectors
         sectors () {
             const { paddingAngle, curCx, curCy } = this.Chart
             const {
-                curValues, curRadius, limit, borderRadius,
+                curValues, curRadius, maxValue, borderRadius,
             } = this
             const startAngle = this.startAngle >= 0 ? this.startAngle : this.Chart.startAngle
             const endAngle = this.endAngle >= 0 ? this.endAngle : this.Chart.endAngle
-            const sum = limit >= 0 ? limit : this.curValues.reduce((acc, a) => acc + a, 0)
+            const sum = maxValue >= 0 ? maxValue : this.curValues.reduce((acc, a) => acc + a, 0)
             let prev
 
             const { length } = curValues
@@ -121,7 +122,7 @@ export default {
                     tempStartAngle = startAngle
                 }
                 const tempEndAngle = tempStartAngle + mathSign(deltaAngle) * (percentage * realTotalAngle)
-                debugger
+
                 prev = {
                     cx: curCx,
                     cy: curCy,
@@ -205,8 +206,8 @@ export default {
             handler (sectors) {
                 if (this.animation) {
                     // Initialize sectors
-                    const { startAngle, endAngle } = this
-                    this.animatedSectors = sectors.map(s => ({ ...s, startAngle, endAngle }))
+                    const { startAngle } = this
+                    this.animatedSectors = sectors.map(s => ({ ...s, startAngle, endAngle: startAngle }))
                     // Interpolate angles
                     sectors.forEach((s, index) => {
                         TweenLite.to(this.animatedSectors[index], this.animationDuration, {

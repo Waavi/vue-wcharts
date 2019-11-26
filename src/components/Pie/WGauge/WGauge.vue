@@ -4,7 +4,6 @@
         id="gauge"
     >
         <WPie
-            datakey="total"
             :radius="radius"
             :startAngle="startAngle"
             :endAngle="endAngle"
@@ -14,10 +13,11 @@
         />
         <WPie
             :datakey="datakey"
-            :limit="limit"
+            :maxValue="maxValue"
             :radius="radius"
             :startAngle="startAngle"
             :endAngle="endAngle"
+            :color="color"
             :borderRadius="borderRadius"
             :animation="animation"
             :animationDuration="animationDuration"
@@ -47,14 +47,16 @@ export default {
         // internal props set by the parent (WPieChart)
         index: VueTypes.number,
         datakey: VueTypes.string.isRequired,
+        maxValue: VueTypes.number.def(100),
         trigger: VueTypes.oneOf(['hover', 'click', 'manual']).def('hover'),
-        limit: VueTypes.number.def(100),
         startAngle: VueTypes.number.def(180),
         endAngle: VueTypes.number.def(0),
         radius: VueTypes.oneOfType([
             VueTypes.number,
             VueTypes.arrayOf(VueTypes.number).def([85, 100]),
         ]).def([85, 100]),
+        // Styles
+        color: VueTypes.string,
         borderRadius: VueTypes.oneOfType([VueTypes.number, VueTypes.string]).def(0),
         styles: VueTypes.object,
         background: VueTypes.string.def('#eee'),

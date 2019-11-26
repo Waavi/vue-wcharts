@@ -114,6 +114,11 @@ export default {
             stroke: colors.white,
         },
     },
+    WGauge: {
+        styles: {
+            position: 'relative',
+        },
+    },
     WLegend: {
         styles: {
             position: 'absolute',
