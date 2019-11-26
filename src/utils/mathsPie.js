@@ -57,7 +57,7 @@ export const getPercentValue = ({ percent, totalValue, defaultValue = 0 }) => {
 
 const getTangentCircle = ({
     cx, cy, radius, angle, sign, isExternal,
-    borderRadius, cornerIsExternal,
+    borderRadius, cornerIsExternal = true,
 }) => {
     const centerRadius = borderRadius * (isExternal ? 1 : -1) + radius
     const theta = Math.asin(borderRadius / centerRadius) / RADIAN
@@ -76,7 +76,7 @@ const getTangentCircle = ({
 }
 
 export const getSectorWithCorner = ({
-    cx, cy, innerRadius, outerRadius, borderRadius, startAngle, endAngle, cornerIsExternal = true,
+    cx, cy, innerRadius, outerRadius, borderRadius, startAngle, endAngle,
 }) => {
     const sign = mathSign(endAngle - startAngle)
     const { circleTangency: soct, lineTangency: solt, theta: sot } =
@@ -87,7 +87,6 @@ export const getSectorWithCorner = ({
         angle: startAngle,
         sign,
         borderRadius,
-        cornerIsExternal,
     })
     const { circleTangency: eoct, lineTangency: eolt, theta: eot } =
     getTangentCircle({
@@ -97,7 +96,6 @@ export const getSectorWithCorner = ({
         angle: endAngle,
         sign: -sign,
         borderRadius,
-        cornerIsExternal,
     })
     const outerArcAngle = Math.abs(startAngle - endAngle) - sot - eot
     if (outerArcAngle < 0) {
@@ -122,7 +120,6 @@ export const getSectorWithCorner = ({
               sign,
               isExternal: true,
               borderRadius,
-              cornerIsExternal,
           })
         const { circleTangency: eict, lineTangency: eilt, theta: eit } =
           getTangentCircle({
@@ -133,7 +130,6 @@ export const getSectorWithCorner = ({
               sign: -sign,
               isExternal: true,
               borderRadius,
-              cornerIsExternal,
           })
         const innerArcAngle = Math.abs(startAngle - endAngle) - sit - eit
 
