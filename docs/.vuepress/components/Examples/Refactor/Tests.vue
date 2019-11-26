@@ -6,11 +6,13 @@
             :padding="chartPadding"
         >
             <WLine2
+                id="time"
                 yAxisId="time"
                 yDatakey="time"
                 color="#f55"
             />
             <WLine2
+                id="performance"
                 yAxisId="performance"
                 yDatakey="tiresPerformance"
                 color="#55f"
@@ -41,7 +43,7 @@
                 }"
             />
         </WCartesian2>
-
+<!--
         <WCartesian2
             :dataset="dataseries2"
             responsive
@@ -59,18 +61,21 @@
                 yDatakey="totalTime"
                 color="#55f"
             />
-            <!-- <WLine
-                series="chevrolet"
-                xDatakey="timestamp"
-                yDatakey="speed"
-            /> -->
+			<WPoint x="Lap 3" :y="35" :z="5" />
             <WXAxis2 type="categorical" position="bottom" />
             <WYAxis2
                 position="left"
                 :numTicks="4"
                 :domain2="[0, n => n]"
             />
-        </WCartesian2>
+            <WZAxis2
+				type="numeric"
+				series="chevrolet"
+				datakey="z"
+				scaleFn="circleArea"
+				:range="[0, 50]"
+			/>
+        </WCartesian2> -->
     </div>
 </template>
 
@@ -119,10 +124,10 @@ export default {
                     { lap: 'Lap 4', time: 39 },
                 ],
                 chevrolet: [
-                    { num: 'Lap 2', totalTime: 33 },
-                    { num: 'Lap 3', totalTime: 31 },
-                    { num: 'Lap 4', totalTime: 32 },
-                    { num: 'Lap 5', totalTime: 33 },
+                    { num: 'Lap 2', totalTime: 33, z: 0 },
+                    { num: 'Lap 3', totalTime: 31, z: 5 },
+                    { num: 'Lap 4', totalTime: 32, z: 8 },
+                    { num: 'Lap 5', totalTime: 33, z: 10 },
                 ],
             },
         }
@@ -130,12 +135,28 @@ export default {
     created () {
         // setTimeout(() => {
         //     this.chartPadding = 0
-        // }, 2000)
+		// }, 2000)
+		setTimeout(() => {
+			this.refreshDataset()
+		}, 5000)
+		setTimeout(() => {
+			this.refreshDataset()
+		}, 10000)
     },
     methods: {
         xTickFormatter (value, index) {
             return index % 2 === 0 ? value : null
-        }
+        },
+		refreshDataset () {
+			const r = (mean, delta = 2) => mean - delta + Math.round(Math.random() * 2 * delta)
+			this.dataset2 = [
+                { lap: 'Lap 1', time: r(37), tiresPerformance: r(90) },
+                { lap: 'Lap 2', time: r(38), tiresPerformance: r(85) },
+                { lap: 'Lap 3', time: r(36), tiresPerformance: r(83) },
+                { lap: 'Lap 4', time: r(38), tiresPerformance: r(79) },
+                { lap: 'Lap 5', time: r(39), tiresPerformance: r(72) },
+            ]
+		},
     },
 }
 </script>

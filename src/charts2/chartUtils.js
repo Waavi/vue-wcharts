@@ -7,9 +7,10 @@ import { getPercentValue } from '../utils/mathsPie'
 
 export function generateUid (options, props) {
     const { type, name } = options || {}
-    const { id } = props || {}
-    const random = Math.round(Math.random() * 10000)
-    return [type, name, id].filter(x => x).concat(random).join('-')
+    const { id, uid } = props || {}
+    if (uid) return uid
+    // const random = Math.round(Math.random() * 10000)
+    return [type, name, id].filter(x => x)./* concat(random). */join('-')
 }
 
 /**

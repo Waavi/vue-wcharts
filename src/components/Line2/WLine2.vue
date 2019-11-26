@@ -13,7 +13,8 @@ import VueTypes from 'vue-types'
 import d3Line from 'd3-shape/src/line'
 import { monotoneX as curveMonotoneX } from 'd3-shape/src/curve/monotone'
 import drawableCartesianMixin from '../../mixins/drawable/drawableCartesianMixin'
-import { AXIS_DIMENSION } from '../Axis2/axisMixin'
+import withXAxisMixin, { registerXAxisDataKey } from '../../mixins/axes/withXAxisMixin'
+import withYAxisMixin, { registerYAxisDataKey } from '../../mixins/axes/withYAxisMixin'
 // import d3Area from 'd3-shape/src/area'
 // import merge from '../../utils/merge'
 // import { WDot } from '../Common'
@@ -26,13 +27,12 @@ export default {
     //     WDot,
     //     WSpread,
     // },
-    mixins: [drawableCartesianMixin],
+    mixins: [
+        drawableCartesianMixin,
+        withXAxisMixin,
+        withYAxisMixin,
+    ],
     props: {
-        xAxisId: VueTypes.string.optional,
-        xDatakey: VueTypes.string.optional,
-        yAxisId: VueTypes.string.optional,
-        yDatakey: VueTypes.string.optional,
-
         trigger: VueTypes.oneOf(['hover', 'click', 'manual']).def('click'),
         label: VueTypes.string,
         curve: VueTypes.oneOfType([VueTypes.bool, VueTypes.func]).def(false),
@@ -54,53 +54,26 @@ export default {
         }).def({}),
     },
     preload ({ chart, uid, props }) {
-        const {
-            xAxisId, yAxisId, series, xDatakey, yDatakey,
-        } = props || {}
-        chart.registerAxisDatakey(uid, {
-            axisId: xAxisId,
-            dimension: AXIS_DIMENSION.X,
-            series,
-            datakey: xDatakey,
-        })
-        chart.registerAxisDatakey(uid, {
-            axisId: yAxisId,
-            dimension: AXIS_DIMENSION.Y,
-            series,
-            datakey: yDatakey,
-        })
+        registerXAxisDataKey({ chart, uid, props })
+        registerYAxisDataKey({ chart, uid, props })
+        // chart.registerForLegend(uid, {
+        //     label: 'test',
+        //     color: 'red',
+        // })
     },
     computed: {
-        xAxis () {
-            return this.Chart.axes[this.xAxisId || AXIS_DIMENSION.X]
-        },
-        yAxis () {
-            return this.Chart.axes[this.yAxisId || AXIS_DIMENSION.Y]
-        },
-        actualXDatakey () {
-            return this.xDatakey || this.xAxis.datakey
-        },
-        actualYDatakey () {
-            return this.yDatakey || this.yAxis.datakey
-        },
         coords () {
             const {
-                xAxis, yAxis, series, actualXDatakey, actualYDatakey, Chart,
+                Chart, series, xCoordForDatum, yCoordForDatum,
             } = this
-            if (!xAxis.scale || !yAxis.scale) return undefined
             const data = Chart.getDatasetForSeries(series)
             if (!data || data.length === 0) return undefined
 
-            return data.map((datum) => {
-                const x = datum[actualXDatakey]
-                const y = datum[actualYDatakey]
-                return {
-                    x,
-                    y,
-                    xScaled: xAxis.scale(x),
-                    yScaled: yAxis.scale(y),
-                }
-            })
+            return data.map(datum => ({
+                datum,
+                ...xCoordForDatum(datum),
+                ...yCoordForDatum(datum),
+            }))
         },
         genLine () {
             return d3Line().x(d => d.xScaled).y(d => d.yScaled)

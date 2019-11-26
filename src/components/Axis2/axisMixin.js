@@ -38,6 +38,7 @@ export default {
         type: VueTypes.oneOf(AXIS_TYPE_LIST).isRequired,
         reversed: VueTypes.bool.def(false),
         allowDuplicatedCategory: VueTypes.bool.def(false), // http://recharts.org/en-US/examples/LineChartHasMultiSeries
+        series: VueTypes.string.optional,
         datakey: VueTypes.string.optional,
         invisible: VueTypes.bool.def(false),
         domain: VueTypes.array.def([]),
@@ -78,11 +79,14 @@ export default {
     },
     preload ({ chart, options, props }) {
         const { dimension } = options
-        const { id, type, datakey } = props || {}
+        const {
+            id, type, series, datakey,
+        } = props || {}
 
         chart.registerAxis(id, {
             dimension,
             type,
+            series,
             datakey,
         })
     },

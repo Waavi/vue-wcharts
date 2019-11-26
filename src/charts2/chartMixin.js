@@ -416,8 +416,11 @@ export default {
                         [key]: typeof val.default === 'function' ? val.default() : val.default,
                     }), {})
                     const props = { ...defaultProps, ...options.propsData }
-                    const uid = generateUid(sealedOptions, props)
-                    slot.componentOptions.propsData.uid = uid
+                    let { uid } = slot.componentInstance || {}
+                    if (!uid) {
+                        uid = generateUid(sealedOptions, props)
+                        slot.componentOptions.propsData.uid = uid
+                    }
 
                     sealedOptions.preload({
                         uid,
