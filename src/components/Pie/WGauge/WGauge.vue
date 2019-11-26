@@ -8,7 +8,7 @@
             :startAngle="startAngle"
             :endAngle="endAngle"
             :animation="false"
-            :color="background"
+            :color="stylesCmp.background"
             :borderRadius="borderRadius"
         />
         <WPie
@@ -23,7 +23,10 @@
             :animationDuration="animationDuration"
         />
 
-        <foreignObject :style="contentStyles">
+        <foreignObject
+            v-if="slots"
+            :style="contentStyles"
+        >
             <slot />
         </foreignObject>
     </g>
@@ -56,19 +59,12 @@ export default {
             VueTypes.arrayOf(VueTypes.number).def([85, 100]),
         ]).def([85, 100]),
         // Styles
-        color: VueTypes.string,
         borderRadius: VueTypes.oneOfType([VueTypes.number, VueTypes.string]).def(0),
+        color: VueTypes.string,
         styles: VueTypes.object,
-        background: VueTypes.string.def('#eee'),
         // Animation
         animation: VueTypes.bool.def(true),
         animationDuration: VueTypes.number.def(2.5),
-    },
-    data () {
-        return {
-            activePath: null,
-            animatedSectors: [],
-        }
     },
     computed: {
         // Active elem
@@ -82,6 +78,10 @@ export default {
 
             return { innerRadius, outerRadius }
         },
+        // Slots
+        slots () {
+            return Object.keys(this.$slots).length
+        },
         // Styles
         contentStyles () {
             const { height } = this.Chart
@@ -90,7 +90,7 @@ export default {
             return {
                 width: size,
                 height: size,
-                transform: `translate(${outerRadius * 2}px, ${height / 2 - outerRadius}px)`,
+                transform: `translate(${outerRadius}px, ${height / 2 - outerRadius}px)`,
             }
         },
         stylesCmp () {

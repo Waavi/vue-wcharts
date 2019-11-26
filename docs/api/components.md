@@ -311,10 +311,55 @@ sidebarDepth: 3
 | datakey | string | Required property | The key of dataset |
 | trigger | string | `'hover'`, `'click'`, `'manual'` | Events triggering the tooltip |
 | radius | number, array | [0, 100] | Start and end radius number |
+| startAngle | number | 180 | Start angle sector |
+| endAngle | number | 0 | End angle sector |
+| borderRadius | number | 0 | Border radius sectors |
 | styles | object | ```{position: 'relative',transform: 'translate(50%, 50%)'}``` | Container styles |
 | pathStyles | object | Required property | The key of dataset |
 | opacityDisabled | string | Required property | The key of dataset |
 | active | string | Required property | The key of dataset |
+| animation | bool | true | Animation enabled |
+| animationDuration | number | 2.5 | Animation duration (sec.) |
+
+### Slots
+
+-   #### default
+
+    *Slot to include external elements like html*
+
+    | Property | Description |
+    |----------|-------------|
+    | values | Items value (Dataset item value, value, percentage and color) |
+
+### Events
+
+| Name | Attributes | Listen to | Description |
+|------|------------|-----------|-------------|
+| onHover | ```{ id, [{ id, value}]}``` | @onHover | Emitted after hovering a pie section |
+| onClick | ```{ id, [{ id, value}]}``` | @onClick | Emitted after clicking a pie section |
+| onEvent | ```{ id, [{ id, value}]}``` | @onEvent | Emitted after activating a pie section with empty event name |
+
+## WGauge
+
+*Gauge component.*
+
+<br>
+<Api-Gauge />
+
+### Parent components
+**[\<WPieChart />](/api/charts.html#wpiechart)**
+
+### Properties
+| Property | Type | Default value | Description |
+|----------|------|---------------|-------------|
+| datakey | string | Required property | The key of dataset |
+| maxValue | number | 100 | Max value of all datakeys |
+| trigger | string | `'hover'`, `'click'`, `'manual'` | Events triggering the tooltip |
+| radius | number, array | [0, 100] | Start and end radius number |
+| startAngle | number | 180 | Start angle sector |
+| endAngle | number | 0 | End angle sector |
+| borderRadius | number | 0 | Border radius sectors |
+| styles | object | ```{position: 'relative',background: '#eee'}``` | Base styles |
 | animation | bool | true | Animation enabled |
 | animationDuration | number | 2.5 | Animation duration (sec.) |
 

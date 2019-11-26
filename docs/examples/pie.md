@@ -51,3 +51,15 @@ sidebarDepth: 1
 <SourceCode>
 <<< @/docs/.vuepress/components/Examples/Pie/Custom.vue
 </SourceCode>
+
+## Gauge
+
+<br>
+
+<Examples-Pie-Gauge />
+
+<br>
+
+<SourceCode>
+<<< @/docs/.vuepress/components/Examples/Pie/Gauge.vue
+</SourceCode>

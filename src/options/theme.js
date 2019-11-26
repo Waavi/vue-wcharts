@@ -117,6 +117,7 @@ export default {
     WGauge: {
         styles: {
             position: 'relative',
+            background: '#eee',
         },
     },
     WLegend: {
