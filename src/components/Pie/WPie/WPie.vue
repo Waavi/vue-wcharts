@@ -174,13 +174,14 @@ export default {
         },
         // Styles
         contentStyles () {
-            const { height } = this.Chart
+            const { width, height } = this.Chart
             const { outerRadius } = this.curRadius
             const size = `${outerRadius * 2}px`
             return {
                 width: size,
                 height: size,
-                transform: `translate(${outerRadius}px, ${height / 2 - outerRadius}px)`,
+                transform: `translate(${width / 2 - outerRadius}px, ${height / 2 - outerRadius}px)`,
+                overflow: 'initial',
             }
         },
         stylesCmp () {
