@@ -25,6 +25,31 @@ sidebarDepth: 3
 | titleStyles | object | { display: 'flex', flexDirection: 'column' } | Title Styles |
 | wrapperStyles | object | { marginBottom: '5px' } | Wrapper Styles |
 
+### Data
+
+| Property | Type | Default value | Description |
+|----------|------|---------------|-------------|
+| selected | object | null | Data model of tooltip |
+
+Example
+
+```
+{
+    id: 2, // [String, Number] - Id unique
+    label: 'Demo', // [String] - Title of Tooltip
+    value: [ // [Arrray] - Vlues to render in tooltip
+        {
+            value: 'Elem 1', // [String] - Value rendered
+            color: '#333' // [String] - Color of bullet
+        },
+        ...
+    ],
+    data: { // [Any] - Additional data to use in slots or in a another place
+        ...
+    }
+}
+```
+
 ### Slots
 
 -   #### default
