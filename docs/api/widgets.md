@@ -31,22 +31,24 @@ sidebarDepth: 3
 |----------|------|---------------|-------------|
 | selected | object | null | Data model of tooltip |
 
-Example
 
-```
-{
-    id: 2, // [String, Number] - Id unique
-    label: 'Demo', // [String] - Title of Tooltip
-    value: [ // [Arrray] - Vlues to render in tooltip
-        {
-            value: 'Elem 1', // [String] - Value rendered
-            color: '#333' // [String] - Color of bullet
-        },
-        ...
+```js
+/**
+ * @typedef PropertiesHash
+ * @type {object}
+ * @property {string} id - an ID.
+ * @property {string} label - Title of Tooltip.
+ * @property {Array.<{value: String, color: String}>} Values to render in tooltip.
+ * @property {any} data - Additional data to use in slots
+ */
+/** @type {PropertiesHash} */
+this.selected = {
+    id: 2,
+    label: 'Demo',
+    value: [
+        { value: 'Elem 1', color: '#333' },
     ],
-    data: { // [Any] - Additional data to use in slots or in a another place
-        ...
-    }
+    data: {},
 }
 ```
 
