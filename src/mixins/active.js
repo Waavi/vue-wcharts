@@ -19,7 +19,7 @@ export default {
             }
         },
         cleanActive () {
-            this.active = { ...initial }
+            // this.active = { ...initial }
         },
     },
 }

@@ -3,7 +3,10 @@
         v-if="active"
         class="pie-sectors"
     >
-        <foreignObject :style="contentStyles">
+        <foreignObject
+            v-if="slots"
+            :style="contentStyles"
+        >
             <slot />
         </foreignObject>
 
@@ -31,13 +34,13 @@
 import VueTypes from 'vue-types'
 import omit from 'lodash.omit'
 import TweenLite from 'gsap/TweenLite'
-import merge from '../../utils/merge'
-import themeMixin from '../../mixins/theme'
-import visibleMixin from '../../mixins/visible'
-import { isNumber } from '../../utils/checks'
+import merge from '../../../utils/merge'
+import themeMixin from '../../../mixins/theme'
+import visibleMixin from '../../../mixins/visible'
+import { isNumber } from '../../../utils/checks'
 import {
     getSectorPath, mathSign, parseDeltaAngle,
-} from '../../utils/mathsPie'
+} from '../../../utils/mathsPie'
 
 export default {
     name: 'WPie',
@@ -45,18 +48,24 @@ export default {
     inject: ['Chart'],
     mixins: [themeMixin, visibleMixin],
     props: {
-        // internal props set by the parent (WPieChart)
+        // Internal props set by the parent (WPieChart)
         index: VueTypes.number,
-        datakey: VueTypes.string.isRequired,
+        datakey: VueTypes.string,
         trigger: VueTypes.oneOf(['hover', 'click', 'manual']).def('hover'),
+        startAngle: VueTypes.number.def(-1),
+        endAngle: VueTypes.number.def(-1),
         radius: VueTypes.oneOfType([
             VueTypes.number,
             VueTypes.arrayOf(VueTypes.number).def([0, 100]),
         ]).def([0, 100]),
+        maxValue: VueTypes.number.def(-1), // Max value to limit curValues
+        // Styles
         styles: VueTypes.object,
         pathStyles: VueTypes.shape({
             stroke: VueTypes.string,
         }).loose,
+        color: VueTypes.string,
+        borderRadius: VueTypes.oneOfType([VueTypes.number, VueTypes.string]).def(0),
         opacityDisabled: VueTypes.number.def(0.5),
         // Animation
         animation: VueTypes.bool.def(true),
@@ -84,23 +93,26 @@ export default {
         },
         // Values
         curValues () {
-            return this.Chart.data.map(item => item[this.datakey])
+            return this.Chart.data.map(item => (isNumber(item[this.datakey]) ? item[this.datakey] : this.maxValue))
         },
         // Sectors
         sectors () {
+            const { paddingAngle, curCx, curCy } = this.Chart
             const {
-                startAngle, endAngle, paddingAngle, curCx, curCy,
-            } = this.Chart
+                curValues, curRadius, maxValue, borderRadius,
+            } = this
+            const startAngle = this.startAngle >= 0 ? this.startAngle : this.Chart.startAngle
+            const endAngle = this.endAngle >= 0 ? this.endAngle : this.Chart.endAngle
+            const sum = maxValue >= 0 ? maxValue : this.curValues.reduce((acc, a) => acc + a, 0)
             let prev
-            const sum = this.curValues.reduce((acc, a) => acc + a, 0)
 
-            const len = this.curValues.length
+            const { length } = curValues
             const deltaAngle = parseDeltaAngle({ startAngle, endAngle })
             const absDeltaAngle = Math.abs(deltaAngle)
-            const totalPadingAngle = (absDeltaAngle >= 360 ? len : (len - 1)) * paddingAngle
+            const totalPadingAngle = (absDeltaAngle >= 360 ? length : (length - 1)) * paddingAngle
             const realTotalAngle = absDeltaAngle - totalPadingAngle
 
-            return this.curValues.map((value, index) => {
+            return curValues.map((value, index) => {
                 let tempStartAngle
                 const percentage = (isNumber(value) ? value : 0) / sum
 
@@ -118,7 +130,8 @@ export default {
                     percentage,
                     startAngle: tempStartAngle,
                     endAngle: tempEndAngle,
-                    ...this.curRadius,
+                    borderRadius,
+                    ...curRadius,
                 }
 
                 return prev
@@ -129,7 +142,7 @@ export default {
             const sectors = (this.animation ? this.animatedSectors : this.sectors)
             return sectors.map((sector, index) => ({
                 d: getSectorPath(sector),
-                fill: this.Chart.colors[index],
+                fill: this.color || this.Chart.colors[index],
                 stroke: this.pathStylesCmp.stroke,
             }))
         },
@@ -161,13 +174,14 @@ export default {
         },
         // Styles
         contentStyles () {
-            const { height } = this.Chart
+            const { width, height } = this.Chart
             const { outerRadius } = this.curRadius
             const size = `${outerRadius * 2}px`
             return {
                 width: size,
                 height: size,
-                transform: `translate(${outerRadius}px, ${height / 2 - outerRadius}px)`,
+                transform: `translate(${width / 2 - outerRadius}px, ${height / 2 - outerRadius}px)`,
+                overflow: 'initial',
             }
         },
         stylesCmp () {
@@ -183,13 +197,18 @@ export default {
                 ...(this.trigger === 'click' ? { cursor: 'pointer' } : {}),
             }
         },
+        // Slots
+        slots () {
+            return Object.keys(this.$slots).length
+        },
     },
     watch: {
         sectors: {
             handler (sectors) {
                 if (this.animation) {
                     // Initialize sectors
-                    this.animatedSectors = sectors.map(s => ({ ...s, startAngle: 0, endAngle: 0 }))
+                    const { startAngle } = this
+                    this.animatedSectors = sectors.map(s => ({ ...s, startAngle, endAngle: startAngle }))
                     // Interpolate angles
                     sectors.forEach((s, index) => {
                         TweenLite.to(this.animatedSectors[index], this.animationDuration, {

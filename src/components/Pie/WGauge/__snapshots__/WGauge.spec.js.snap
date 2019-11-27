@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Components/WGauge Should be render correctly 1`] = `
+<g id="gauge">
+  <WPie-stub colors="#48c0b6,#9d6af5,#ffde69,#e8e8e8,#54ddd9,#5C6BC0,#FB499D" visible="true" index="0" datakey="" trigger="hover" startAngle="180" endAngle="0" radius="85,100" maxValue="-1" styles="[object Object]" color="#eee" borderRadius="0" opacityDisabled="0.5" animationDuration="2.5"></WPie-stub>
+  <WPie-stub colors="#48c0b6,#9d6af5,#ffde69,#e8e8e8,#54ddd9,#5C6BC0,#FB499D" visible="true" index="0" datakey="one" trigger="hover" startAngle="180" endAngle="0" radius="85,100" maxValue="100" styles="[object Object]" color="" borderRadius="0" opacityDisabled="0.5" animationDuration="2.5"></WPie-stub>
+  <!---->
+</g>
+`;

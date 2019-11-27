@@ -25,6 +25,31 @@ sidebarDepth: 3
 | titleStyles | object | { display: 'flex', flexDirection: 'column' } | Title Styles |
 | wrapperStyles | object | { marginBottom: '5px' } | Wrapper Styles |
 
+### Data
+
+| Property | Type | Default value | Description |
+|----------|------|---------------|-------------|
+| selected | object | null | Data model of tooltip |
+
+
+```js
+/**
+ * @type {object}
+ * @property {string} id - an ID.
+ * @property {string} label - Title of Tooltip.
+ * @property {Array.<{value: String, color: String}>} Values to render in tooltip.
+ * @property {any} data - Additional data to use in slots
+ */
+this.selected = {
+    id: 2,
+    label: 'Demo',
+    value: [
+        { value: 'Elem 1', color: '#333' },
+    ],
+    data: {},
+}
+```
+
 ### Slots
 
 -   #### default

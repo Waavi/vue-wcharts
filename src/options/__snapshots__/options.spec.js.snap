@@ -51,6 +51,12 @@ Object {
       "cursor": "default",
     },
   },
+  "WGauge": Object {
+    "styles": Object {
+      "background": "#eee",
+      "position": "relative",
+    },
+  },
   "WLegend": Object {
     "bulletStyles": Object {
       "background": "white",
@@ -307,6 +313,12 @@ Object {
     "strokeWidth": 2,
     "styles": Object {
       "cursor": "default",
+    },
+  },
+  "WGauge": Object {
+    "styles": Object {
+      "background": "#eee",
+      "position": "relative",
     },
   },
   "WLegend": Object {

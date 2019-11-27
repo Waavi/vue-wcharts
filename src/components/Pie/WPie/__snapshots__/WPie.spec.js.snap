@@ -2,7 +2,7 @@
 
 exports[`Components/WPie Should be render correctly 1`] = `
 <g class="pie-sectors">
-  <foreignObject style="width: 200px; height: 200px; transform: translate(100px, 100px);"></foreignObject>
+  <!---->
   <g class="pie-sector">
     <path id="0" d="M 400,200
     A 100,100,0,
@@ -57,7 +57,7 @@ L 300,200 Z" fill="red" style="opacity: 1;"></path>
 
 exports[`Components/WPie Should be render correctly with custom radius 1`] = `
 <g class="pie-sectors">
-  <foreignObject style="width: 360px; height: 360px; transform: translate(180px, 20px);"></foreignObject>
+  <!---->
   <g class="pie-sector">
     <path id="0" d="M 480,200
     A 180,180,0,
