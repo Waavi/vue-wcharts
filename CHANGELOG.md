@@ -11,6 +11,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - HotFix propsData in WCartesian/WPîeChart
 - Added more docs of WTooltip
 
+## [0.4.1] - 2019-11-21
+### Added
+- WMarker with tooltip
+
 ## [0.4.0] - 2019-10-3
 ### Added
 - WBar Background
