@@ -34,14 +34,12 @@ sidebarDepth: 3
 
 ```js
 /**
- * @typedef PropertiesHash
  * @type {object}
  * @property {string} id - an ID.
  * @property {string} label - Title of Tooltip.
  * @property {Array.<{value: String, color: String}>} Values to render in tooltip.
  * @property {any} data - Additional data to use in slots
  */
-/** @type {PropertiesHash} */
 this.selected = {
     id: 2,
     label: 'Demo',
