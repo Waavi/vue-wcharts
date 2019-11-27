@@ -45,7 +45,7 @@ export default {
                 return
             }
             const { propsData } = options
-            const { datakey, legend } = propsData
+            const { datakey, legend } = propsData || {}
             const piesLength = pies.length
 
             switch (sealed.type) {
