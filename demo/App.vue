@@ -1,7 +1,7 @@
 <template>
     <div class="Container">
         <div class="Wrapper">
-            <div class="Tabs">
+            <!-- <div class="Tabs">
                 <button
                     class="Btn"
                     @click="activeComponent = 'Cartesian'"
@@ -20,7 +20,7 @@
                 >
                     Scatter
                 </button>
-            </div>
+            </div> -->
             <h2>{{ activeComponent }}</h2>
             <component
                 :is="activeComponent"
@@ -109,14 +109,24 @@ export default {
 }
 </script>
 <style lang="scss">
-    body {
-        display: flex;
-        padding: 0;
-        margin: 0;
-        min-width: 100vw;
-        min-height: 100vh;
-        font-family: sans-serif;
-    }
+body {
+    display: flex;
+    padding: 0;
+    margin: 0;
+    min-width: 100vw;
+    min-height: 100vh;
+    font-family: sans-serif;
+}
+.Btn {
+    margin-top: 1rem;
+    padding: .75rem 1.5rem;
+    background: #626c91;
+    border-radius: 6px;
+    color: #FFF;
+    font-size: 16px;
+    outline: none;
+    cursor: pointer;
+}
 </style>
 <style lang="scss" scoped>
 .Container {
@@ -144,15 +154,5 @@ export default {
     border: 1px solid rgba(0,0,0,0.125);
     background: #FFF;
     // padding: 0 0 2rem 0;
-}
-.Btn {
-    margin-top: 1rem;
-    padding: .75rem 1.5rem;
-    background: #626c91;
-    border-radius: 6px;
-    color: #FFF;
-    font-size: 16px;
-    outline: none;
-    cursor: pointer;
 }
 </style>

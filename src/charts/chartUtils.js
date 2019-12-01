@@ -1,4 +1,6 @@
 /* eslint-disable prefer-destructuring */
+import VueTypes from 'vue-types'
+import { max, round } from '../utils/maths'
 import { getPercentValue } from '../utils/mathsPie'
 
 /**
@@ -11,6 +13,109 @@ export function generateUid (options, props) {
     if (uid) return uid
     // const random = Math.round(Math.random() * 10000)
     return [type, name, id].filter(x => x)./* concat(random). */join('-')
+}
+
+export const marginVueType = VueTypes.oneOfType([
+    VueTypes.number,
+    VueTypes.arrayOf(VueTypes.number),
+    VueTypes.shape({
+        top: VueTypes.number,
+        right: VueTypes.number,
+        bottom: VueTypes.number,
+        left: VueTypes.number,
+    }),
+]).def(0)
+export const marginHorizontalVueType = VueTypes.oneOfType([
+    VueTypes.number,
+    VueTypes.arrayOf(VueTypes.number),
+    VueTypes.shape({
+        right: VueTypes.number,
+        left: VueTypes.number,
+    }),
+]).def(0)
+export const marginVerticalVueType = VueTypes.oneOfType([
+    VueTypes.number,
+    VueTypes.arrayOf(VueTypes.number),
+    VueTypes.shape({
+        top: VueTypes.number,
+        bottom: VueTypes.number,
+    }),
+]).def(0)
+
+/**
+ * Normalizes a margin (or padding)
+ */
+export function normalizedMargin (margin) {
+    let top = 0
+    let right = 0
+    let bottom = 0
+    let left = 0
+    if (Array.isArray(margin)) {
+        top = margin[0] || 0
+        right = margin[1] || 0
+        bottom = margin[2] || margin[0] || 0
+        left = margin[3] || margin[1] || 0
+    } else if (typeof margin === 'object') {
+        top = margin.top || 0
+        right = margin.right || 0
+        bottom = margin.bottom || 0
+        left = margin.left || 0
+    } else if (typeof margin === 'number') {
+        top = margin
+        right = margin
+        bottom = margin
+        left = margin
+    }
+    return {
+        top: max(round(top), 0),
+        right: max(round(right), 0),
+        bottom: max(round(bottom), 0),
+        left: max(round(left), 0),
+    }
+}
+
+/**
+ * Normalizes a horizontal margin (or padding)
+ */
+export function normalizedMarginHorizontal (margin) {
+    let right = 0
+    let left = 0
+    if (Array.isArray(margin)) {
+        right = margin[0] || 0
+        left = margin[1] || margin[0] || 0
+    } else if (typeof margin === 'object') {
+        right = margin.right || 0
+        left = margin.left || 0
+    } else if (typeof margin === 'number') {
+        right = margin
+        left = margin
+    }
+    return {
+        right: max(round(right), 0),
+        left: max(round(left), 0),
+    }
+}
+
+/**
+ * Normalizes a vertical margin (or padding)
+ */
+export function normalizedMarginVertical (margin) {
+    let top = 0
+    let bottom = 0
+    if (Array.isArray(margin)) {
+        top = margin[0] || 0
+        bottom = margin[1] || margin[0] || 0
+    } else if (typeof margin === 'object') {
+        top = margin.top || 0
+        bottom = margin.bottom || 0
+    } else if (typeof margin === 'number') {
+        top = margin
+        bottom = margin
+    }
+    return {
+        top: max(round(top), 0),
+        bottom: max(round(bottom), 0),
+    }
 }
 
 /**

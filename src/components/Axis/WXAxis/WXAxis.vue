@@ -1,59 +1,59 @@
 <template>
-    <g :id="id">
+    <g
+        :id="id"
+        class="WXAxis"
+    >
         <line
-            v-if="!hideLine"
-            :x1="x1"
-            :y1="y1"
-            :x2="x2"
-            :y2="y2"
-            :stroke="axisStylesCmp.stroke"
+            v-if="lineProps"
+            v-bind="lineProps"
         />
-        <template
-            v-for="(tick, index) in ticks"
+        <g
+            v-for="({ tickX, value, label, textProps }, index) in ticksWithInfo"
+            :key="index"
         >
-            <g
-                :key="`tick-${index}`"
-                :text-anchor="textAnchor"
+            <line
+                v-if="!hideTickMark"
+                :x1="tickX"
+                :y1="tickY"
+                :x2="tickX"
+                :y2="isOnTop ? tickY + tickLength : tickY - tickLength"
+                v-bind="actualStyles.tick"
+            />
+            <slot
+                name="tick"
+                :value="value"
+                :label="label"
+                :index="index"
+                :styles="actualStyles.tickLabel"
             >
-                <line
-                    v-if="!hideTickMark"
-                    :x1="tick.mark.x1"
-                    :y1="tick.mark.y1"
-                    :x2="tick.mark.x2"
-                    :y2="tick.mark.y2"
-                    :stroke="markStylesCmp.stroke"
-                />
-                <slot
-                    name="tick"
-                    v-bind="tick.text"
-                    :styles="tickStylesCmp"
+                <WAxisText
+                    v-if="label || label === 0"
+                    :x="tickX"
+                    :y="tickY"
+                    :value="label"
+                    v-bind="textProps"
+                    :styles="actualStyles.tickLabel"
+                    #default="{ value }"
                 >
-                    <WAxisText
-                        v-bind="tick.text"
-                        :styles="tickStylesCmp"
+                    <slot
+                        name="tickText"
+                        :value="value"
                     >
-                        <template #default="{ value }">
-                            <slot
-                                name="tickText"
-                                :value="value"
-                            >
-                                {{ value }}
-                            </slot>
-                        </template>
-                    </WAxisText>
-                </slot>
-            </g>
-        </template>
+                        {{ value }}
+                    </slot>
+                </WAxisText>
+            </slot>
+        </g>
 
-        <slot
+        <!-- <slot
             name="label"
             v-bind="labels"
-            :styles="labelStylesCmp"
+            :styles="actualStyles.label"
         >
             <WAxisLabel
                 v-if="label"
                 v-bind="labels"
-                :styles="labelStylesCmp"
+                :styles="actualStyles.label"
             />
         </slot>
 
@@ -61,50 +61,116 @@
             v-if="!hideNegativeAxis && negativeAxis"
             v-bind="negativeAxis"
             :style="negativeAxisStylesCmp"
-        />
+        /> -->
     </g>
 </template>
 
 <script>
 import VueTypes from 'vue-types'
-import axisMixin from '../../../mixins/axis'
+import outerElementMixin from '../../../mixins/outerElementMixin'
+import { AXIS_TYPE, AXIS_TYPE_LIST, AXIS_DIMENSION } from '../axisMixin'
+import printableAxisMixin from '../printableAxisMixin'
+import { marginHorizontalVueType, normalizedMarginHorizontal } from '../../../charts/chartUtils'
+import WAxisText from '../WAxisText/WAxisText.vue'
 
-const negativeAxisStylesDefaultProp = {
-    stroke: '#999',
-    strokeWidth: 1,
-    strokeDasharray: '0',
+const XAXIS_POSITION = {
+    BOTTOM: 'bottom',
+    TOP: 'top',
 }
 
 export default {
     name: 'WXAxis',
-    axis: 'x',
-    mixins: [axisMixin],
+    dimension: AXIS_DIMENSION.X,
+    components: {
+        WAxisText,
+    },
+    mixins: [
+        printableAxisMixin,
+        outerElementMixin,
+    ],
     props: {
+        id: VueTypes.string.def(AXIS_DIMENSION.X),
+        type: VueTypes.oneOf(AXIS_TYPE_LIST).def(AXIS_TYPE.NUMERIC),
+        position: VueTypes.oneOf([XAXIS_POSITION.BOTTOM, XAXIS_POSITION.TOP]).def(XAXIS_POSITION.BOTTOM),
+        padding: marginHorizontalVueType,
+        height: VueTypes.number.def(30),
+
         labelAlign: VueTypes.oneOf(['start', 'middle', 'end']).def('end'),
-        space: VueTypes.arrayOf(VueTypes.number).def([0, 20, 24, 20]),
-        textOffset: VueTypes.number.def(20),
         negativeAxisStyles: VueTypes.object.def({}),
     },
     computed: {
-        negativeAxis () {
+        layoutInOuterArea () {
             const {
-                canvas, yScale, bounds, snap,
-            } = this.Chart
-            if (bounds.min >= 0 || !Object.keys(snap).length) return null
-            const y = yScale(0)
+                position, height, invisible,
+            } = this
             return {
-                x1: canvas.x0,
-                y1: y,
-                x2: canvas.x1,
-                y2: y,
+                reference: 'canvas',
+                order: -1, // it should be the first one
+                position,
+                left: 0,
+                width: '100%',
+                height: invisible ? 0 : height,
             }
         },
-        negativeAxisStylesCmp () {
+
+        normalizedPadding () {
+            return normalizedMarginHorizontal(this.padding)
+        },
+
+        actualRange () {
+            const { Chart: { canvas }, normalizedPadding } = this
+            const { left: leftPadding = 0, right: rightPadding = 0 } = normalizedPadding
+            return [canvas.left + leftPadding, canvas.left + canvas.width - rightPadding]
+        },
+
+        isOnTop () {
+            return this.position === XAXIS_POSITION.TOP
+        },
+        lineY () {
+            const { outerLayout, isOnTop } = this
+            return isOnTop ? outerLayout.y + outerLayout.height : outerLayout.y
+        },
+        lineProps () {
+            const {
+                hideLine, lineY, outerLayout, actualStyles,
+            } = this
+            if (hideLine) return undefined
             return {
-                ...negativeAxisStylesDefaultProp,
-                ...this.negativeAxisStyles,
+                x1: outerLayout.x,
+                y1: lineY,
+                x2: outerLayout.x + outerLayout.width,
+                y2: lineY,
+                style: actualStyles.line,
             }
+        },
+        tickY () {
+            const { lineY, tickLength, isOnTop } = this
+            return isOnTop ? lineY - tickLength : lineY + tickLength
+        },
+        ticksWithInfo () {
+            const {
+                actualTicks, scale, tickFormatter, tickLength, isOnTop,
+            } = this
+            const verticalPadding = tickLength + 2
+            const textProps = {
+                'dominant-baseline': isOnTop ? 'baseline' : 'hanging',
+                'text-anchor': 'middle',
+                dx: '1',
+                dy: ((isOnTop ? -verticalPadding : verticalPadding)).toString(),
+            }
+            return actualTicks.map((value, index) => ({
+                tickX: scale(value),
+                value,
+                label: tickFormatter(value, index),
+                textProps,
+            }))
         },
     },
 }
 </script>
+
+<style lang="scss" scoped>
+line {
+    transition: all 1s;
+}
+</style>

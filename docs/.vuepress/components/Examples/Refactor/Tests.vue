@@ -1,17 +1,17 @@
 <template>
     <div>
-        <WCartesian2
+        <WCartesian
             :dataset="dataset2"
             responsive
             :padding="chartPadding"
         >
-            <WLine2
+            <WLine
                 id="time"
                 yAxisId="time"
                 yDatakey="time"
                 color="#f55"
             />
-            <WLine2
+            <WLine
                 id="performance"
                 yAxisId="performance"
                 yDatakey="tiresPerformance"
@@ -22,8 +22,8 @@
                 xDatakey="timestamp"
                 yDatakey="speed"
             /> -->
-            <WXAxis2 type="categorical" datakey="lap" position="bottom" />
-            <WYAxis2
+            <WXAxis type="categorical" datakey="lap" position="bottom" />
+            <WYAxis
                 id="time"
                 position="left"
                 :numTicks="4"
@@ -32,7 +32,7 @@
                     stroke: '#b88'
                 }"
             />
-            <WYAxis2
+            <WYAxis
                 id="performance"
                 position="right"
                 :numTicks="4"
@@ -42,40 +42,40 @@
                     stroke: '#88b'
                 }"
             />
-        </WCartesian2>
+        </WCartesian>
 <!--
-        <WCartesian2
+        <WCartesian
             :dataset="dataseries2"
             responsive
             :padding="chartPadding"
         >
-            <WLine2
+            <WLine
                 series="seat"
                 xDatakey="lap"
                 yDatakey="time"
                 color="#f55"
             />
-            <WLine2
+            <WLine
                 series="chevrolet"
                 xDatakey="num"
                 yDatakey="totalTime"
                 color="#55f"
             />
 			<WPoint x="Lap 3" :y="35" :z="5" />
-            <WXAxis2 type="categorical" position="bottom" />
-            <WYAxis2
+            <WXAxis type="categorical" position="bottom" />
+            <WYAxis
                 position="left"
                 :numTicks="4"
                 :domain2="[0, n => n]"
             />
-            <WZAxis2
+            <WZAxis
 				type="numeric"
 				series="chevrolet"
 				datakey="z"
 				scaleFn="circleArea"
 				:range="[0, 50]"
 			/>
-        </WCartesian2> -->
+        </WCartesian> -->
     </div>
 </template>
 

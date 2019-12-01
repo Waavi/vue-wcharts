@@ -1,17 +1,17 @@
 <template>
     <div>
-        <WCartesian2 :dataset="dataset">
+        <WCartesian :dataset="dataset">
             <WLine
                 datakeyY="seatTime"
             />
             <WLine
                 datakeyY="chevroletTime"
             />
-            <WXAxis2 type="categorical" datakey="lap" />
-            <WYAxis2 />
-        </WCartesian2>
+            <WXAxis type="categorical" datakey="lap" />
+            <WYAxis />
+        </WCartesian>
 
-        <WCartesian2 :dataset="dataseries1">
+        <WCartesian :dataset="dataseries1">
             <WLine
                 series="seat"
                 datakeyY="lap"
@@ -20,11 +20,11 @@
                 series="chevrolet"
                 datakeyY="lap"
             />
-            <WXAxis2 type="categorical" datakey="time" />
-            <WYAxis2 />
-        </WCartesian2>
+            <WXAxis type="categorical" datakey="time" />
+            <WYAxis />
+        </WCartesian>
 
-        <WCartesian2 :dataset="dataseries2">
+        <WCartesian :dataset="dataseries2">
             <WLine
                 series="seat"
                 datakeyY="time"
@@ -35,9 +35,9 @@
                 datakeyY="totalTime"
                 datakeyX="num"
             />
-            <WXAxis2 type="categorical" />
-            <WYAxis2 />
-        </WCartesian2>
+            <WXAxis type="categorical" />
+            <WYAxis />
+        </WCartesian>
     </div>
 </template>
 

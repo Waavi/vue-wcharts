@@ -1,6 +1,6 @@
 <template>
     <div>
-        <WCartesian2 :dataset="dataset">
+        <WCartesian :dataset="dataset">
             <WBar stackId="myGroup" datakeyY="lap1" />
             <WBar stackId="myGroup" datakeyY="lap2" />
             <WBar stackId="myGroup" datakeyY="lap3" />
@@ -13,9 +13,9 @@
                 <WBar datakeyY="lap4" />
                 <WBar datakeyY="lap5" />
             </WStacked>
-            <WXAxis2 type="categorical" datakey="team" />
-            <WYAxis2 />
-        </WCartesian2>
+            <WXAxis type="categorical" datakey="team" />
+            <WYAxis />
+        </WCartesian>
     </div>
 </template>
 

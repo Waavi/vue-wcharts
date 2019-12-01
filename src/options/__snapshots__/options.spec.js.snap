@@ -122,21 +122,6 @@ Object {
       "strokeWidth": 4,
     },
   },
-  "WLine2": Object {
-    "dot": Object {
-      "fill": "white",
-      "hoverRadius": 8,
-      "radius": 4,
-      "stroke": "",
-      "strokeWidth": 2,
-    },
-    "styles": Object {
-      "fill": "",
-      "stroke": "",
-      "strokeDasharray": "0",
-      "strokeWidth": 2,
-    },
-  },
   "WMarker": Object {
     "label": Object {
       "fill": "#333333",
@@ -236,41 +221,7 @@ Object {
       "stroke": "none",
     },
   },
-  "WXAxis2": Object {
-    "label": Object {
-      "fill": "#414141",
-      "fontWeight": 800,
-    },
-    "mark": Object {
-      "stroke": "#cccccc",
-    },
-    "styles": Object {
-      "stroke": "#cccccc",
-    },
-    "tick": Object {
-      "fill": "#414141",
-      "fontSize": 12,
-      "stroke": "none",
-    },
-  },
   "WYAxis": Object {
-    "label": Object {
-      "fill": "#414141",
-      "fontWeight": 800,
-    },
-    "mark": Object {
-      "stroke": "#cccccc",
-    },
-    "styles": Object {
-      "stroke": "#cccccc",
-    },
-    "tick": Object {
-      "fill": "#414141",
-      "fontSize": 12,
-      "stroke": "none",
-    },
-  },
-  "WYAxis2": Object {
     "label": Object {
       "fill": "#414141",
       "fontWeight": 800,
@@ -429,21 +380,6 @@ Object {
       "strokeWidth": 4,
     },
   },
-  "WLine2": Object {
-    "dot": Object {
-      "fill": "white",
-      "hoverRadius": 8,
-      "radius": 4,
-      "stroke": "",
-      "strokeWidth": 2,
-    },
-    "styles": Object {
-      "fill": "",
-      "stroke": "",
-      "strokeDasharray": "0",
-      "strokeWidth": 2,
-    },
-  },
   "WMarker": Object {
     "label": Object {
       "fill": "#333333",
@@ -543,41 +479,7 @@ Object {
       "stroke": "none",
     },
   },
-  "WXAxis2": Object {
-    "label": Object {
-      "fill": "#414141",
-      "fontWeight": 800,
-    },
-    "mark": Object {
-      "stroke": "#cccccc",
-    },
-    "styles": Object {
-      "stroke": "#cccccc",
-    },
-    "tick": Object {
-      "fill": "#414141",
-      "fontSize": 12,
-      "stroke": "none",
-    },
-  },
   "WYAxis": Object {
-    "label": Object {
-      "fill": "#414141",
-      "fontWeight": 800,
-    },
-    "mark": Object {
-      "stroke": "#cccccc",
-    },
-    "styles": Object {
-      "stroke": "#cccccc",
-    },
-    "tick": Object {
-      "fill": "#414141",
-      "fontSize": 12,
-      "stroke": "none",
-    },
-  },
-  "WYAxis2": Object {
     "label": Object {
       "fill": "#414141",
       "fontWeight": 800,

@@ -10,9 +10,7 @@
 <script>
 import VueTypes from 'vue-types'
 import drawableCartesianMixin from '../../../mixins/drawable/drawableCartesianMixin'
-import withXAxisMixin from '../../../mixins/axes/withXAxisMixin'
-import withYAxisMixin from '../../../mixins/axes/withYAxisMixin'
-import withZAxisMixin from '../../../mixins/axes/withZAxisMixin'
+import { withXAxisMixin, withYAxisMixin, withZAxisMixin } from '../../Axis2/withAxisMixin'
 
 export default {
     name: 'WPoint',

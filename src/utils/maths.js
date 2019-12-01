@@ -64,7 +64,20 @@ export function random () {
     return  Math.floor(Math.random() * 1e6)
 }
 
+export const min = Math.min
+export const max = Math.max
+export const round = Math.round
+export const floor = Math.floor
+export const ceil = Math.ceil
+export const between = (x, a, b) => Math.min(Math.max(x, a), b)
+
 export default {
+	min,
+	max,
+	round,
+	floor,
+	ceil,
+	between,
     genTicks,
     genExactNbTicks,
     bound,

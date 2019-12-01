@@ -1,10 +1,11 @@
 /**
  * Mixin related to the "Unique ID"
  */
-import VueTypes from 'vue-types'
+import { random } from '../utils/maths'
 
 export default {
-    props: {
-        uid: VueTypes.string.optional,
+    beforeCreate () {
+        const { type, name } = this.$options
+        this.uid = [type, name].filter(x => x).concat(random()).join('-')
     },
 }

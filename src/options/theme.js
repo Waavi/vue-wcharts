@@ -20,40 +20,34 @@ const legendStyles = {
 }
 
 const axisStyles = {
-    styles: {
+    line: {
         stroke: colors.grayMedium,
     },
-    mark: {
+    tick: {
         stroke: colors.grayMedium,
+    },
+    tickLabel: {
+        stroke: 'none',
+        fill: colors.grayDark,
+        fontSize: 12,
     },
     label: {
         fill: colors.grayDark,
         fontWeight: 800,
     },
-    tick: {
-        stroke: 'none',
-        fill: colors.grayDark,
-        fontSize: 12,
-    },
+    grid: {},
 }
 
 export default {
-    WLine: {
-        styles: {
-            fill: '',
-            stroke: '',
-            strokeWidth: 2,
-            strokeDasharray: '0',
-        },
-        dot: {
+    WChart: {
+        viewBox: {
             fill: 'white',
-            stroke: '',
-            strokeWidth: 2,
-            radius: 4,
-            hoverRadius: 8,
+        },
+        canvas: {
+            fill: '#fbfbfb',
         },
     },
-    WLine2: {
+    WLine: {
         styles: {
             fill: '',
             stroke: '',
@@ -98,9 +92,7 @@ export default {
         },
     },
     WXAxis: { ...axisStyles },
-    WXAxis2: { ...axisStyles },
     WYAxis: { ...axisStyles },
-    WYAxis2: { ...axisStyles },
     WZAxis: { ...axisStyles },
     WCartesianGrid: {
         styles: {

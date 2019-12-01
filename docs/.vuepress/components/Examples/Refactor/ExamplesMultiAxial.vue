@@ -1,6 +1,6 @@
 <template>
     <div>
-        <WCartesian2 :dataset="dataset">
+        <WCartesian :dataset="dataset">
             <WLine
                 yAxisId="time"
                 datakeyY="time"
@@ -9,10 +9,10 @@
                 yAxisId="performance"
                 datakeyY="tiresPerformance"
             />
-            <WXAxis2 type="categorical" datakey="lap" />
-            <WYAxis2 id="time" />
-            <WYAxis2 id="performance" />
-        </WCartesian2>
+            <WXAxis type="categorical" datakey="lap" />
+            <WYAxis id="time" />
+            <WYAxis id="performance" />
+        </WCartesian>
     </div>
 </template>
 

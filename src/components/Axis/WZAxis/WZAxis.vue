@@ -1,19 +1,30 @@
+<template>
+    <g :id="id">
+        <path />
+    </g>
+</template>
+
 <script>
 import VueTypes from 'vue-types'
+import axisMixin, { AXIS_TYPE, AXIS_TYPE_LIST, AXIS_DIMENSION } from '../axisMixin'
 
 export default {
     name: 'WZAxis',
-    axis: 'z',
+    dimension: AXIS_DIMENSION.Z,
+    mixins: [axisMixin],
     props: {
-        name: VueTypes.string.def(''),
-        datakey: VueTypes.string.isRequired,
-        range: VueTypes.array.def([100, 100]),
+        id: VueTypes.string.def(AXIS_DIMENSION.Z),
+        type: VueTypes.oneOf(AXIS_TYPE_LIST).def(AXIS_TYPE.NUMERIC),
+        scaleFn: VueTypes.oneOfType([VueTypes.string, VueTypes.func]).def('circleArea'),
+        range: VueTypes.arrayOf(VueTypes.number).def([0, 50]),
     },
-    preload ({ parent, props }) {
-        const { datakey, range, name } = props
-        parent.axis.z.datakey = datakey
-        parent.axis.z.name = name || ''
-        parent.axis.z.range = range
+    computed: {
+        actualRange () {
+            return this.range
+        },
+        actualTicks () {
+            return []
+        },
     },
 }
 </script>

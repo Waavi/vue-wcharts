@@ -6,10 +6,10 @@ import withUidMixin from './withUidMixin'
 export default {
     inject: ['Chart'],
     mixins: [withUidMixin],
-    layoutInOuterArea (props) {
-        throw Error('"layoutInOuterArea" must be implemented')
-    },
     computed: {
+        layoutInOuterArea () {
+            throw Error('"layoutInOuterArea" must be implemented')
+        },
         /**
          * The layout (as a "rect") for this elmenet
          */
@@ -20,6 +20,15 @@ export default {
             return {
                 x, y, width, height,
             }
+        },
+    },
+    watch: {
+        layoutInOuterArea: {
+            handler () {
+                const { Chart, uid, layoutInOuterArea } = this
+                Chart.reserveAPlaceInOuterArea(uid, layoutInOuterArea)
+            },
+            immediate: true,
         },
     },
     beforeDestroy () {
