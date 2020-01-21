@@ -7,5 +7,6 @@ export default {
     beforeCreate () {
         const { type, name } = this.$options
         this.uid = [type, name].filter(x => x).concat(random()).join('-')
+        console.log('UID: ', this.uid)
     },
 }

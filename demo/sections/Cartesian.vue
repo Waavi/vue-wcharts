@@ -24,8 +24,22 @@
             />
             <WLine
                 yAxisId="time"
-                :yDatakey="yDatakey"
-                color="#f55"
+                yDatakey="time"
+                :styles="{
+                    line: {
+                        stroke: '#f55'
+                    },
+                }"
+            />
+            <WLine
+                v-if="showLine"
+                yAxisId="time"
+                yDatakey="performance"
+                :styles="{
+                    line: {
+                        stroke: '#55f'
+                    },
+                }"
             />
         </WChart>
 
@@ -50,30 +64,36 @@ export default {
     },
     data () {
         return {
-            dataset: [
-                { lap: 'LAP 1', seatTime: 37, chevroletTime: 32 },
-                { lap: 'LAP 2', seatTime: 38, chevroletTime: 33 },
-                { lap: 'LAP 3', seatTime: 36, chevroletTime: 31 },
-                { lap: 'LAP 4', seatTime: 39, chevroletTime: 32 },
-                { lap: 'LAP 5', seatTime: 37, chevroletTime: 33 },
-            ],
+            dataset: this.randomDataset(),
             xAxisPosition: 'bottom',
             yAxisPosition: 'left',
-            yDatakey: 'seatTime',
+            yDatakey: 'time',
             chartPadding: [20, 30, 40, 50],
+            showLine: false,
         }
     },
     methods: {
         change () {
+            this.dataset = this.randomDataset()
             // this.xAxisPosition = this.xAxisPosition === 'top' ? 'bottom' : 'top'
             // this.yAxisPosition = this.yAxisPosition === 'left' ? 'right' : 'left'
-            this.yDatakey = this.yDatakey === 'seatTime' ? 'chevroletTime' : 'seatTime'
+            this.showLine = true
         },
         yTickFormatter (value) {
             if (typeof value === 'number') {
                 return value.toFixed(2)
             }
             return value
+        },
+        randomDataset () {
+            const nearTo = (x, delta) => Math.round(x - delta + 2 * delta * Math.random())
+            return [
+                { lap: 'LAP 1', time: nearTo(37, 3), performance: nearTo(90, 5) },
+                { lap: 'LAP 2', time: nearTo(38, 3), performance: nearTo(87, 5) },
+                { lap: 'LAP 3', time: nearTo(36, 3), performance: nearTo(86, 5) },
+                { lap: 'LAP 4', time: nearTo(39, 3), performance: nearTo(80, 5) },
+                { lap: 'LAP 5', time: nearTo(37, 3), performance: nearTo(72, 5) },
+            ]
         },
     },
 }

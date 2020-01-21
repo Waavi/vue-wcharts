@@ -18,6 +18,7 @@ import {
     WAxisLabel,
     WBullet,
     WShowIfFit,
+    SvgLine,
 } from './components'
 import {
     WTrans,
@@ -51,6 +52,7 @@ export default (Vue, opts = {}) => {
         WAxisLabel,
         WBullet,
         WShowIfFit,
+        SvgLine,
     ]
 
     const common = [

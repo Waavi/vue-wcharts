@@ -2,7 +2,7 @@
 import VueTypes from 'vue-types'
 import {
     obtainCategories,
-    obtainNumericDataDomain,
+    obtainNumericGlobalDataDomain,
     obtainNumericActualDomain,
     obtainNumericStep,
     obtainNumericActualBounds,
@@ -44,7 +44,7 @@ export default {
         datakey: VueTypes.string.optional,
         domain: VueTypes.array.def([]),
         bounds: VueTypes.array.def([]),
-        formatter: VueTypes.func.def(value => value),
+        formatter: VueTypes.func.def(value => value), // default formatter (for ticks and drawable values that belong to this)
     },
     computed: {
         axisDefinition () {
@@ -75,25 +75,27 @@ export default {
             const {
                 id, isCategorical, Chart, allowDuplicatedCategory,
             } = this
+            if (this.id === 'time' || true) debugger
             if (!isCategorical) return undefined
             return obtainCategories({
                 dataset: Chart.dataset,
-                datakeys: Chart.axisDefs[id].datakeys,
+                datakeys: Chart.axisDatakeys[id],
                 allowDuplicatedCategory,
             })
         },
 
         dataDomain () {
             const { id, isNumeric, Chart } = this
+            if (this.id === 'time' || true) debugger
             if (!isNumeric) return undefined
-            return obtainNumericDataDomain({
-                dataset: Chart.dataset,
-                datakeys: Chart.axisDefs[id].datakeys,
+            return obtainNumericGlobalDataDomain({
+                dataDomainByElement: Chart.axisDataDomainsByElement[id],
             })
         },
 
         actualDomain () {
             const { isNumeric, dataDomain, domain } = this
+            if (this.id === 'time' || true) debugger
             if (!isNumeric) return undefined
             return obtainNumericActualDomain({
                 dataDomain,
@@ -104,6 +106,7 @@ export default {
             const {
                 isCategorical, actualDomain, numTicks, exactNumTicks,
             } = this
+            if (this.id === 'time' || true) debugger
             if (isCategorical) return 1
             return obtainNumericStep({ domain: actualDomain, numTicks, exactNumTicks })
         },
@@ -112,6 +115,7 @@ export default {
             const {
                 isNumeric, actualDomain, step, bounds,
             } = this
+            if (this.id === 'time' || true) debugger
             if (!isNumeric) return undefined
             return obtainNumericActualBounds({
                 domain: actualDomain,
@@ -122,11 +126,12 @@ export default {
 
         scale () {
             const {
-                actualRange, isCategorical, reversed, actualBounds, categories,
+                actualRange, isCategorical, reversed, actualBounds, // categories,
             } = this
+            if (this.id === 'time' || true) debugger
             if (isCategorical) {
                 return obtainCategoricalScale({
-                    categories,
+                    categories: this.id === 'time' ? undefined : ['LAP 1', 'LAP 2', 'LAP 3', 'LAP 4', 'LAP 5'],
                     range: actualRange,
                     reversed,
                 })
@@ -138,31 +143,58 @@ export default {
             })
         },
 
-        axisData () {
-            const {
-                id, dataDomain, actualBounds, scale, actualTicks,
-            } = this
-            return {
-                id,
-                domain: dataDomain,
-                bounds: actualBounds,
-                scale,
-                ticks: actualTicks,
-            }
-        },
+        // axisInformation () {
+        //     const {
+        //         id, dataDomain, actualBounds, scale, actualTicks,
+        //     } = this
+        //     if (this.id === 'time' || true) debugger
+        //     return {
+        //         id,
+        //         domain: dataDomain,
+        //         bounds: actualBounds,
+        //         scale,
+        //         ticks: actualTicks,
+        //     }
+        // },
     },
     watch: {
         axisDefinition: {
             handler (definition) {
-                this.Chart.registerAxis(definition.id, definition)
+                this.Chart.registerAxisDefinition(definition.id, definition)
             },
             immediate: true,
         },
-        axisData: {
-            handler (data) {
-                this.Chart.setAxisData(data.id, data)
+        dataDomain: {
+            handler (value) {
+                this.Chart.setAxisDomain(this.id, value)
             },
             immediate: true,
         },
+        actualBounds: {
+            handler (value) {
+                this.Chart.setAxisBound(this.id, value)
+            },
+            immediate: true,
+        },
+        scale: {
+            handler (value) {
+                this.Chart.setAxisScale(this.id, value)
+            },
+            immediate: true,
+        },
+        ticks: {
+            handler (value) {
+                this.Chart.setAxisTicks(this.id, value)
+            },
+            immediate: true,
+        },
+
+        // axisInformation: {
+        //     handler (data) {
+        //         if (this.id === 'time' || true) debugger
+        //         this.Chart.setAxisInformation(data.id, data)
+        //     },
+        //     immediate: true,
+        // },
     },
 }

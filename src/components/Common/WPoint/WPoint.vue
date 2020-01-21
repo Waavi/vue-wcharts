@@ -1,16 +1,14 @@
 <template>
-    <g>
-        <circle
-            v-if="circleProps"
-            v-bind="circleProps"
-        />
-    </g>
+    <circle
+        v-if="circleProps"
+        v-bind="circleProps"
+    />
 </template>
 
 <script>
 import VueTypes from 'vue-types'
 import drawableCartesianMixin from '../../../mixins/drawable/drawableCartesianMixin'
-import { withXAxisMixin, withYAxisMixin, withZAxisMixin } from '../../Axis2/withAxisMixin'
+import { withXAxisMixin, withYAxisMixin, withZAxisMixin } from '../../Axis/withAxisMixin'
 
 export default {
     name: 'WPoint',

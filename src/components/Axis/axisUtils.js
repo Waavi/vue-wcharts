@@ -1,31 +1,63 @@
 import scaleLinear from 'd3-scale/src/linear'
 import { tickStep as d3TickStep } from 'd3-array'
 import lodashRange from 'lodash/range'
+import castArray from 'lodash/castArray'
+import { getDatums } from '../../charts/chartUtils'
 
-export function getFlattenDataset ({ dataset, datakeys }) {
-    const data = []
+// Obtain the corresponding value from a datum knowing its datakey.
+// datakey could be a string, number, function or array.
+export function datakeyValue ({ datum, datakey }) {
+    const type = typeof datakey
+    if (type === 'string' || type === 'number') {
+        return datum[datakey]
+    }
+    if (type === 'function') {
+        return datakey(datum)
+    }
+    if (Array.isArray(datakey)) {
+        return datakey.map(a => datakeyValue({ datum, a }))
+    }
+    return null
+}
+
+// Obtain an array of categories for this axis
+export function obtainCategories ({ dataset, datakeys, allowDuplicatedCategory }) {
+    const values = []
     if (datakeys) {
         Object.values(datakeys).forEach(({ series, datakey }) => {
-            const datums = series ? dataset[series] : dataset
+            const datums = getDatums({ dataset, series })
             datums.forEach((datum) => {
-                data.push(datum[datakey])
+                const value = datakeyValue({ datum, datakey })
+                values.push(...castArray(value))
             })
         })
     }
-    return data
+    return allowDuplicatedCategory ? values : Array.from(new Set(values))
 }
 
-export function obtainCategories ({ dataset, datakeys, allowDuplicatedCategory }) {
-    const data = getFlattenDataset({ dataset, datakeys })
-    return allowDuplicatedCategory ? data : Array.from(new Set(data))
+export function obtainNumericDataDomainFromValue (value) {
+    if (!value) return undefined
+    const values = castArray(value)
+    return [Math.min(...values), Math.max(...values)]
+}
+export function obtainNumericDataDomainFromDatakey ({ dataset, series, datakey }) {
+    const datums = getDatums({ dataset, series })
+    const values = []
+    datums.forEach((datum) => {
+        const value = datakeyValue({ datum, datakey })
+        values.push(...castArray(value))
+    })
+    return values.length > 0 ? [Math.min(...values), Math.max(...values)] : [0, 1]
 }
 
-export function obtainNumericDataDomain ({ dataset, datakeys }) {
-    const data = getFlattenDataset({ dataset, datakeys })
-    return data.length > 0 ? [Math.min(...data), Math.max(...data)] : [0, 1]
+export function obtainNumericGlobalDataDomain ({ dataDomainByElement }) {
+    const domains = Object.values(dataDomainByElement || {})
+    if (domains.length === 0) return undefined
+    return domains.length > 0 ? [Math.min(...domains.map(d => d[0])), Math.max(...domains.map(d => d[1]))] : [0, 1]
 }
 
 export function obtainNumericActualDomain ({ dataDomain, propDomain }) {
+    if (!dataDomain) return undefined
     const [dataMin = 0, dataMax = 0] = Array.isArray(dataDomain) ? dataDomain : []
     const [propMin = undefined, propMax = undefined] = Array.isArray(propDomain) ? propDomain : []
     return [adjustedValue(dataMin, propMin), adjustedValue(dataMax, propMax)]
@@ -37,6 +69,7 @@ function adjustedValue (value, adjustedValueOrFunction) {
 }
 
 export function obtainNumericStep ({ domain, numTicks, exactNumTicks }) {
+    if (!domain) return undefined
     if (exactNumTicks) {
         return (domain[0] - domain[1]) / exactNumTicks
     }
@@ -44,6 +77,7 @@ export function obtainNumericStep ({ domain, numTicks, exactNumTicks }) {
 }
 
 export function obtainNumericActualBounds ({ domain, step, propBounds }) {
+    if (!domain) return undefined
     const [domainMin = 0, domainMax = 0] = Array.isArray(domain) ? domain : []
     const [propMin = undefined, propMax = undefined] = Array.isArray(propBounds) ? propBounds : []
     const boundMin = Math.floor(domainMin / step) * step
@@ -59,10 +93,12 @@ export function obtainNumericActualBounds ({ domain, step, propBounds }) {
 }
 
 export function obtainNumericScale ({ bounds, range, reversed }) {
+    if (!bounds) return undefined
     return scaleLinear().domain(reversed ? [...bounds].reverse() : bounds).range(range)
 }
 
 export function obtainCategoricalScale ({ categories, range, reversed }) {
+    if (!categories || !range) return undefined
     const bounds = [0, categories.length - 1]
     const numericScale = obtainNumericScale({
         bounds,
@@ -77,6 +113,7 @@ export function obtainNumericActualTicks ({
     bounds,
     step,
 }) {
+    if (!bounds || !step) return []
     if (ticks) return ticks
     return lodashRange(bounds[0], bounds[1] + 10e-6, step)
 }

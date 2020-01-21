@@ -1,4 +1,5 @@
 import VueTypes from 'vue-types'
+import merge from 'lodash.merge'
 import { colors, theme } from '../options'
 
 export default {
@@ -14,7 +15,7 @@ export default {
     },
     computed: {
         actualStyles () {
-            return { ...this.themeStyles, ...this.styles }
+            return merge(this.themeStyles, this.styles)
         },
     },
 }

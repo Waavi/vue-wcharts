@@ -48,9 +48,9 @@ export default {
         },
     },
     WLine: {
-        styles: {
-            fill: '',
-            stroke: '',
+        line: {
+            fill: 'none',
+            stroke: '#555',
             strokeWidth: 2,
             strokeDasharray: '0',
         },

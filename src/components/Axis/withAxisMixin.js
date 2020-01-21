@@ -1,5 +1,10 @@
 import VueTypes from 'vue-types'
-import { AXIS_DIMENSION } from './axisMixin'
+import { AXIS_DIMENSION, AXIS_TYPE } from './axisMixin'
+import {
+    datakeyValue,
+    obtainNumericDataDomainFromValue,
+    obtainNumericDataDomainFromDatakey,
+} from './axisUtils'
 import withUidMixin from '../../mixins/withUidMixin'
 
 export const withXAxisMixin = withAxisMixinFactory(AXIS_DIMENSION.X)
@@ -8,58 +13,121 @@ export const withZAxisMixin = withAxisMixinFactory(AXIS_DIMENSION.Z)
 export const withAngleAxisMixin = withAxisMixinFactory(AXIS_DIMENSION.ANGLE)
 export const withRadiusAxisMixin = withAxisMixinFactory(AXIS_DIMENSION.RADIUS)
 
+const numberOfStringVueType = VueTypes.oneOf([VueTypes.number, VueTypes.string])
+const numberOfStringOrArrayVueType = VueTypes.oneOf([
+    numberOfStringVueType,
+    VueTypes.arrayOf(numberOfStringVueType),
+]).optional
+
 function withAxisMixinFactory (dimension) {
-    const lowercasedAxis = dimension.charAt(0).toLowerCase() + dimension.slice(1)
-    const capitalizedAxis = dimension.charAt(0).toUpperCase() + dimension.slice(1)
-    const aAxisId = `${lowercasedAxis}AxisId`
-    const aDatakey = `${lowercasedAxis}Datakey`
-    const actualAAxisId = `actual${capitalizedAxis}AxisId`
-    const aAxis = `${lowercasedAxis}Axis`
-    const actualADatakey = `actual${capitalizedAxis}Datakey`
-    const aCoordForDatum = `${lowercasedAxis}CoordForDatum`
-    const aScaled = `${lowercasedAxis}Scaled`
+    const dimensionFirstLetter = dimension.charAt(0)
+    const dimensionWithoutFirstLetter = dimension.slice(1)
+    const lowercasedDimension = dimensionFirstLetter.toLowerCase() + dimensionWithoutFirstLetter
+    const capitalizedDimension = dimensionFirstLetter.toUpperCase() + dimensionWithoutFirstLetter
+    const a = lowercasedDimension
+    const aAxisId = `${lowercasedDimension}AxisId`
+    const aDatakey = `${lowercasedDimension}Datakey`
+    const actualAAxisId = `actual${capitalizedDimension}AxisId`
+    // const aAxis = `${lowercasedDimension}Axis`
+    const actualADatakey = `actual${capitalizedDimension}Datakey`
+    const aDatakeyData = `${lowercasedDimension}DatakeyData`
+    const aDataDomain = `${lowercasedDimension}DataDomain`
+    const aDataDomainData = `${lowercasedDimension}DataDomainData`
+    const aCoordForDatum = `${lowercasedDimension}CoordForDatum`
+    const aScale = `${lowercasedDimension}Scale`
+    const aScaled = `${lowercasedDimension}Scaled`
     return {
         mixins: [withUidMixin],
         props: {
-            series: VueTypes.string.optional,
             [aAxisId]: VueTypes.string.optional,
-            [aDatakey]: VueTypes.string.optional,
+            [a]: numberOfStringOrArrayVueType,
+            series: VueTypes.string.optional,
+            [aDatakey]: numberOfStringOrArrayVueType,
         },
         computed: {
             [actualAAxisId] () {
                 return this[aAxisId] || dimension
             },
-            [aAxis] () {
-                const axis = this.Chart.axes[this[actualAAxisId]]
-                !axis && console.error(`WChart ERROR - Axis "${this[actualAAxisId]}" is not found.`)
-                return axis
+            // [aAxis] () {
+            //     const axis = this.Chart.axes[this[actualAAxisId]]
+            //     !axis && console.error(`WChart ERROR - Axis "${this[actualAAxisId]}" is not found.`)
+            //     return axis
+            // },
+            [aScale] () {
+                const scales = this.Chart.axisScales
+                const axisId = this[actualAAxisId]
+                !Object.prototype.hasOwnProperty.call(scales, axisId) && console.error(`WChart ERROR - Axis scale "${axisId}" is not found.`)
+                debugger
+                return scales[axisId]
+            },
+            [aScaled] () {
+                const value = this[a]
+                const scale = this[aScale]
+                if (value !== undefined && scale) {
+                    return Array.isArray(value) ? value.map(v => scale(v)) : scale(value)
+                }
+                return undefined
             },
             [actualADatakey] () {
-                return this[aDatakey] || this[aAxis].datakey
+                return this[aDatakey] || this.Chart.axisDefinitions[this[actualAAxisId]].datakey
             },
-            datakeyData () {
+            [aDatakeyData] () {
                 return {
                     axisId: this[actualAAxisId],
                     series: this.series,
                     datakey: this[actualADatakey],
                 }
             },
+            [aDataDomain] () {
+                if (this.Chart.axisDefinitions[this[actualAAxisId]].type === AXIS_TYPE.NUMERIC) {
+                    console.log(obtainNumericDataDomainFromValue(this[a]) ||
+					obtainNumericDataDomainFromDatakey({
+					    dataset: this.Chart.dataset,
+					    series: this.series,
+					    datakey: this[actualADatakey],
+					}))
+                    debugger
+                    return obtainNumericDataDomainFromValue(this[a]) ||
+                        obtainNumericDataDomainFromDatakey({
+                            dataset: this.Chart.dataset,
+                            series: this.series,
+                            datakey: this[actualADatakey],
+                        })
+                }
+                return undefined
+            },
+            [aDataDomainData] () {
+                return {
+                    axisId: this[actualAAxisId],
+                    domain: this[aDataDomain],
+                }
+            },
+            [aCoordForDatum] () {
+                const datakey = this[actualADatakey]
+                const scale = this[aScale] || (x => x)
+                return (datum) => {
+                    const value = datakeyValue({ datum, datakey })
+                    return {
+                        [lowercasedDimension]: value,
+                        [aScaled]: Array.isArray(value) ? value.map(v => scale(v)) : scale(value),
+                    }
+                }
+            },
         },
         watch: {
-            datakeyData: {
+            [aDatakeyData]: {
                 handler (data) {
                     this.Chart.registerAxisDatakey(this.uid, data)
                 },
                 immediate: true,
             },
-        },
-        methods: {
-            [aCoordForDatum] (datum) {
-                const a = typeof datum === 'object' ? datum[this[actualADatakey]] : datum
-                return {
-                    [lowercasedAxis]: a,
-                    [aScaled]: this[aAxis].scale(a),
-                }
+            [aDataDomainData]: {
+                handler (data) {
+                    if (data && data.domain) {
+                        this.Chart.registerAxisDataDomain(this.uid, data)
+                    }
+                },
+                immediate: true,
             },
         },
     }

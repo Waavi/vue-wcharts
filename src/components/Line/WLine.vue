@@ -1,17 +1,15 @@
 <template>
     <g>
-        <path
-            :d="linePath"
-            v-bind="stylesCmp"
-            fill="none"
+        <SvgLine
+            :datums="coords"
+            :curve="curve"
+            v-bind="actualStyles.line"
         />
     </g>
 </template>
 
 <script>
 import VueTypes from 'vue-types'
-import d3Line from 'd3-shape/src/line'
-import { monotoneX as curveMonotoneX } from 'd3-shape/src/curve/monotone'
 import drawableCartesianMixin from '../../mixins/drawable/drawableCartesianMixin'
 import { withXAxisMixin, withYAxisMixin } from '../Axis/withAxisMixin'
 // import withXAxisMixin from '../../mixins/axes/withXAxisMixin'
@@ -39,56 +37,8 @@ export default {
         curve: VueTypes.oneOfType([VueTypes.bool, VueTypes.func]).def(false),
         area: VueTypes.bool.def(false),
         color: VueTypes.string.optional,
-        styles: VueTypes.shape({
-            fill: VueTypes.string,
-            stroke: VueTypes.string,
-            strokeWidth: VueTypes.number,
-            strokeDasharray: VueTypes.string,
-        }).def({}),
+        styles: VueTypes.object.def({}),
         dot: VueTypes.bool.def(false),
-        dotStyles: VueTypes.shape({
-            fill: VueTypes.string,
-            stroke: VueTypes.string,
-            strokeWidth: VueTypes.number,
-            radius: VueTypes.number,
-            hoverRadius: VueTypes.number,
-        }).def({}),
-    },
-    computed: {
-        coords () {
-            const {
-                Chart, series, xCoordForDatum, yCoordForDatum,
-            } = this
-            const data = Chart.getDatasetForSeries(series)
-            if (!data || data.length === 0) return undefined
-
-            return data.map(datum => ({
-                datum,
-                ...xCoordForDatum(datum),
-                ...yCoordForDatum(datum),
-            }))
-        },
-        genLine () {
-            return d3Line().x(d => d.xScaled).y(d => d.yScaled)
-        },
-        linePath () {
-            const { coords, curve, genLine } = this
-            if (curve === false) return genLine(coords)
-            const curveFn = typeof curve === 'function' ? curve : curveMonotoneX
-            return genLine.curve(curveFn)(coords)
-        },
-
-        // Styles
-        stylesCmp () {
-            return {
-                ...this.themeStyles.styles,
-                ...this.styles,
-                stroke: (this.themeStyles && this.themeStyles.styles && this.themeStyles.styles.stroke) ||
-                 this.styles.stroke ||
-                 this.fillColor ||
-                 this.color,
-            }
-        },
     },
 }
 </script>

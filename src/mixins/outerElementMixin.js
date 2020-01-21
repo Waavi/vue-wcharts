@@ -24,8 +24,8 @@ export default {
     },
     watch: {
         layoutInOuterArea: {
-            handler () {
-                const { Chart, uid, layoutInOuterArea } = this
+            handler (layoutInOuterArea) {
+                const { Chart, uid } = this
                 Chart.reserveAPlaceInOuterArea(uid, layoutInOuterArea)
             },
             immediate: true,

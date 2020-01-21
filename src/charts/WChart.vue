@@ -33,11 +33,6 @@ export default {
             return normalizedMargin(this.padding)
         },
     },
-    methods: {
-        getDatasetForSeries (series) {
-            return series ? this.dataset[series] : this.dataset
-        },
-    },
 
     render (h) {
         const {

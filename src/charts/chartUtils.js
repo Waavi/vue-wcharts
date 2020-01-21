@@ -15,6 +15,10 @@ export function generateUid (options, props) {
     return [type, name, id].filter(x => x)./* concat(random). */join('-')
 }
 
+export function getDatums ({ dataset, series }) {
+    return series ? dataset[series] : dataset
+}
+
 export const marginVueType = VueTypes.oneOfType([
     VueTypes.number,
     VueTypes.arrayOf(VueTypes.number),
