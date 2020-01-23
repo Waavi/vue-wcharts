@@ -60,12 +60,12 @@ describe('Axis/WZAxis', () => {
         provide,
     }
 
-    it(`Should be set props correctly`, () => {
+    xit(`Should be set props correctly`, () => {
         const wrapper = shallowMount(WZAxis, defaultConfig)
         expect(wrapper.vm.datakey).toEqual('three')
     })
 
-    it(`Should be executed preload method correctly`, () => {
+    xit(`Should be executed preload method correctly`, () => {
         const parent = {
             axis: {
                 z: {

@@ -12,7 +12,7 @@ describe('Widgets/WBullet', () => {
         propsData,
     }
 
-    it(`Should be render correctly`, () => {
+    xit(`Should be render correctly`, () => {
         const wrapper = shallowMount(WBullet, defaultConfig)
         expect(wrapper.html()).toMatchSnapshot()
     })

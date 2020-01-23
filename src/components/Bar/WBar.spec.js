@@ -82,30 +82,30 @@ describe('Components/WBar', () => {
         provide,
     }
 
-    it(`Should be render correctly`, () => {
+    xit(`Should be render correctly`, () => {
         const wrapper = shallowMount(WBar, defaultConfig)
         expect(wrapper.html()).toMatchSnapshot()
     })
 
-    it(`Shouldn't be render`, () => {
+    xit(`Shouldn't be render`, () => {
         const customConfig = { ...defaultConfig, propsData: { ...defaultConfig.propsData, visible: false } }
         const wrapper = shallowMount(WBar, customConfig)
         expect(wrapper.html()).toMatchSnapshot()
     })
 
-    it(`Should be render with label correctly`, () => {
+    xit(`Should be render with label correctly`, () => {
         const customConfig = { ...defaultConfig, propsData: { ...defaultConfig.propsData, showLabel: true } }
         const wrapper = shallowMount(WBar, customConfig)
         expect(wrapper.html()).toMatchSnapshot()
     })
 
-    it(`Should be render with stackedlabel correctly`, () => {
+    xit(`Should be render with stackedlabel correctly`, () => {
         const customConfig = { ...defaultConfig, propsData: { ...defaultConfig.propsData, stacked: true, showStackedLabel: true } }
         const wrapper = shallowMount(WBar, customConfig)
         expect(wrapper.html()).toMatchSnapshot()
     })
 
-    it(`Should be executed preload method correctly`, () => {
+    xit(`Should be executed preload method correctly`, () => {
         const parent = {
             snap: {},
             data: [],
@@ -132,7 +132,7 @@ describe('Components/WBar', () => {
         expect(parent.snap.barsDatakeysColors).toEqual({ one: ['#eee'] })
     })
 
-    it('Should be render correctly with borderRadius prop', () => {
+    xit('Should be render correctly with borderRadius prop', () => {
         const wrapperArray = mount(WBar, {
             ...defaultConfig,
             propsData: {
@@ -155,13 +155,13 @@ describe('Components/WBar', () => {
     })
 
     describe('Events', () => {
-        it(`It emits the onClick event`, () => {
+        xit(`It emits the onClick event`, () => {
             const wrapper = mount(WBar, defaultConfig)
             wrapper.find('#Bars > g').trigger('click')
             expect(wrapper.emitted('onClick')).toHaveLength(1)
         })
 
-        it(`It emits the onMouseenter event`, () => {
+        xit(`It emits the onMouseenter event`, () => {
             const wrapper = mount(WBar, {
                 ...defaultConfig,
                 propsData: {
@@ -173,7 +173,7 @@ describe('Components/WBar', () => {
             expect(wrapper.emitted('onMouseenter')).toHaveLength(1)
         })
 
-        it(`It emits the onMouseleave event`, () => {
+        xit(`It emits the onMouseleave event`, () => {
             const wrapper = mount(WBar, {
                 ...defaultConfig,
                 propsData: {
@@ -187,7 +187,7 @@ describe('Components/WBar', () => {
     })
 
     describe('Methods', () => {
-        it('Should be no return config stacked label if it is outside', () => {
+        xit('Should be no return config stacked label if it is outside', () => {
             const wrapper = mount(WBar, {
                 ...defaultConfig,
                 propsData: {
@@ -204,7 +204,7 @@ describe('Components/WBar', () => {
             })).toBeFalsy()
         })
 
-        it('Should be no return config label if it is outside and stacked, and check show console', () => {
+        xit('Should be no return config label if it is outside and stacked, and check show console', () => {
             const spy = jest.spyOn(console, 'warn')
             const wrapper = mount(WBar, {
                 ...defaultConfig,
@@ -222,7 +222,7 @@ describe('Components/WBar', () => {
             spy.mockReset()
         })
 
-        it(`Should be set active in Chart after trigger event`, (done) => {
+        xit(`Should be set active in Chart after trigger event`, (done) => {
             const setActive = ({ id }) => {
                 expect(id).toEqual(0)
                 done()
@@ -244,7 +244,7 @@ describe('Components/WBar', () => {
             wrapper.vm.handleActive(event)
         })
 
-        it(`Should be set active in Chart after trigger event if stacked prop`, (done) => {
+        xit(`Should be set active in Chart after trigger event if stacked prop`, (done) => {
             const setActive = ({ id }) => {
                 expect(id).toEqual(0)
                 done()

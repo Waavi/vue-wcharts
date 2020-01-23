@@ -27,18 +27,18 @@ describe('Common/WDot', () => {
         provide,
     }
 
-    it(`Should be render correctly`, () => {
+    xit(`Should be render correctly`, () => {
         const wrapper = shallowMount(WDot, defaultConfig)
         expect(wrapper.html()).toMatchSnapshot()
     })
 
-    it(`It emits the onClick event`, () => {
+    xit(`It emits the onClick event`, () => {
         const wrapper = mount(WDot, defaultConfig)
         wrapper.trigger('click')
         expect(wrapper.emitted('onClick')).toHaveLength(1)
     })
 
-    it(`It emits the onMouseenter event`, () => {
+    xit(`It emits the onMouseenter event`, () => {
         const wrapper = mount(WDot, {
             ...defaultConfig,
             propsData: {
@@ -50,7 +50,7 @@ describe('Common/WDot', () => {
         expect(wrapper.emitted('onMouseenter')).toHaveLength(1)
     })
 
-    it(`It emits the onMouseleave event`, () => {
+    xit(`It emits the onMouseleave event`, () => {
         const wrapper = mount(WDot, {
             ...defaultConfig,
             propsData: {
@@ -62,7 +62,7 @@ describe('Common/WDot', () => {
         expect(wrapper.emitted('onMouseleave')).toHaveLength(1)
     })
 
-    it(`Generate rStyle if has Chart.active element`, (done) => {
+    xit(`Generate rStyle if has Chart.active element`, (done) => {
         const wrapper = mount(WDot, {
             ...defaultConfig,
             provide: {

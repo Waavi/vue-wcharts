@@ -18,12 +18,12 @@ describe('Widgets/WTrans', () => {
         },
     }
 
-    it(`Should be render correctly`, () => {
+    xit(`Should be render correctly`, () => {
         const wrapper = shallowMount(WTrans, defaultConfig)
         expect(wrapper.html()).toMatchSnapshot()
     })
 
-    it(`Should be render correctly with children`, () => {
+    xit(`Should be render correctly with children`, () => {
         const wrapper = mount({
             components: { WTrans },
             props: {
@@ -43,7 +43,7 @@ describe('Widgets/WTrans', () => {
         expect(wrapper.html()).toMatchSnapshot()
     })
 
-    it(`Should be render correctly with children`, (done) => {
+    xit(`Should be render correctly with children`, (done) => {
         const h = (tag, { props, on }) => {
             const el = {
                 getAttribute: (key) => {},

@@ -5,11 +5,11 @@ import {
 describe('Options/colors', () => {
     const newColors = ['#fff', '#000']
 
-    it('Set theme colors via setColors correctly', () => {
+    xit('Set theme colors via setColors correctly', () => {
         setColors(newColors)
         expect(colors).toEqual(newColors)
     })
-    it('Set theme colors via setOptions correctly', () => {
+    xit('Set theme colors via setOptions correctly', () => {
         setOptions({ colors: newColors })
         expect(colors).toEqual(newColors)
     })
@@ -26,11 +26,11 @@ describe('Options/theme', () => {
         },
     }
 
-    it('Set theme via setTheme correctly', () => {
+    xit('Set theme via setTheme correctly', () => {
         setTheme(newTheme)
         expect(theme).toMatchSnapshot()
     })
-    it('Set theme theme via setOptions correctly', () => {
+    xit('Set theme theme via setOptions correctly', () => {
         setOptions({ theme: newTheme })
         expect(theme).toMatchSnapshot()
     })

@@ -58,18 +58,18 @@ describe('Axis/WYAxis', () => {
         provide,
     }
 
-    it(`Should be render correctly`, () => {
+    xit(`Should be render correctly`, () => {
         const wrapper = shallowMount(WYAxis, defaultConfig)
         expect(wrapper.html()).toMatchSnapshot()
     })
 
-    it(`Should be render correctly without line`, () => {
+    xit(`Should be render correctly without line`, () => {
         const customConfig = { ...defaultConfig, propsData: { ...defaultConfig.propsData, hideLine: true } }
         const wrapper = shallowMount(WYAxis, customConfig)
         expect(wrapper.html()).toMatchSnapshot()
     })
 
-    it(`Should be render correctly without ticks lines`, () => {
+    xit(`Should be render correctly without ticks lines`, () => {
         const customConfig = { ...defaultConfig, propsData: { ...defaultConfig.propsData, hideTickMark: true } }
         const wrapper = shallowMount(WYAxis, customConfig)
         expect(wrapper.html()).toMatchSnapshot()

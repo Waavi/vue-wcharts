@@ -14,12 +14,12 @@ describe('Widgets/WSpread', () => {
         },
     }
 
-    it(`Should be render correctly`, () => {
+    xit(`Should be render correctly`, () => {
         const wrapper = shallowMount(WSpread, defaultConfig)
         expect(wrapper.html()).toMatchSnapshot()
     })
 
-    it(`Should be render correctly with children and axis it is x`, () => {
+    xit(`Should be render correctly with children and axis it is x`, () => {
         const wrapper = mount({
             components: { WSpread },
             props: {
@@ -37,7 +37,7 @@ describe('Widgets/WSpread', () => {
         expect(wrapper.html()).toMatchSnapshot()
     })
 
-    it(`Should be render correctly with children and axis it is y`, () => {
+    xit(`Should be render correctly with children and axis it is y`, () => {
         const wrapper = mount({
             components: { WSpread },
             props: {

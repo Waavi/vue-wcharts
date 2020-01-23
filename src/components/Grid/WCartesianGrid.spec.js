@@ -75,22 +75,22 @@ describe('Components/WCartesianGrid', () => {
         provide: provideWithLines,
     }
 
-    it(`Should be render correctly without lines`, () => {
+    xit(`Should be render correctly without lines`, () => {
         const wrapper = shallowMount(WCartesianGrid, defaultConfig)
         expect(wrapper.html()).toMatchSnapshot()
     })
 
-    it(`Should be render correctly with lines`, () => {
+    xit(`Should be render correctly with lines`, () => {
         const wrapper = mount(WCartesianGrid, defaultConfigWithLines)
         expect(wrapper.html()).toMatchSnapshot()
     })
 
-    it(`Should be render correctly with 3 lines`, () => {
+    xit(`Should be render correctly with 3 lines`, () => {
         const wrapper = mount(WCartesianGrid, defaultConfigWithLines)
         expect(wrapper.findAll('line')).toHaveLength(3)
     })
 
-    it(`Should be render correctly with 3 lines with scatter prop`, () => {
+    xit(`Should be render correctly with 3 lines with scatter prop`, () => {
         const wrapper = mount(WCartesianGrid, {
             ...defaultConfigWithLines,
             provide: {

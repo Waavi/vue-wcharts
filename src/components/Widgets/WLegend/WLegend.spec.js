@@ -37,23 +37,23 @@ describe('Widgets/WLegend', () => {
         provide,
     }
 
-    it(`Should be render correctly`, () => {
+    xit(`Should be render correctly`, () => {
         const wrapper = shallowMount(WLegend, defaultConfig)
         expect(wrapper.html()).toMatchSnapshot()
     })
 
-    it(`Shouldn't be render`, () => {
+    xit(`Shouldn't be render`, () => {
         const wrapper = shallowMount(WLegend, { ...defaultConfig, provide: provideWithoutLegends })
         expect(wrapper.html()).toMatchSnapshot()
     })
 
-    it(`Should be handle activeElements in Chart after click WLegendItem`, () => {
+    xit(`Should be handle activeElements in Chart after click WLegendItem`, () => {
         const wrapper = shallowMount(WLegend, defaultConfig)
         wrapper.vm.handleClick({ legend: undefined, index: 0 })
         expect(wrapper.vm.Chart.activeElements).toEqual([1])
     })
 
-    it(`Should be render correctly, without space of Chart`, () => {
+    xit(`Should be render correctly, without space of Chart`, () => {
         const wrapper = shallowMount(WLegend, {
             ...defaultConfig,
             provide: {
@@ -66,7 +66,7 @@ describe('Widgets/WLegend', () => {
         expect(wrapper.vm.chartSpace).toEqual([0, 0, 0, 0])
     })
 
-    it(`Should be render correctly, with custom styles and position horizontal`, () => {
+    xit(`Should be render correctly, with custom styles and position horizontal`, () => {
         const wrapper = shallowMount(WLegend, {
             ...defaultConfig,
             propsData: {
