@@ -75,7 +75,7 @@ export default {
             const {
                 id, isCategorical, Chart, allowDuplicatedCategory,
             } = this
-            if (this.id === 'time' || true) debugger
+            // if (this.id === 'time' || true) debugger
             if (!isCategorical) return undefined
             return obtainCategories({
                 dataset: Chart.dataset,
@@ -86,7 +86,7 @@ export default {
 
         dataDomain () {
             const { id, isNumeric, Chart } = this
-            if (this.id === 'time' || true) debugger
+            // if (this.id === 'time' || true) debugger
             if (!isNumeric) return undefined
             return obtainNumericGlobalDataDomain({
                 dataDomainByElement: Chart.axisDataDomainsByElement[id],
@@ -95,7 +95,7 @@ export default {
 
         actualDomain () {
             const { isNumeric, dataDomain, domain } = this
-            if (this.id === 'time' || true) debugger
+            // if (this.id === 'time' || true) debugger
             if (!isNumeric) return undefined
             return obtainNumericActualDomain({
                 dataDomain,
@@ -106,7 +106,7 @@ export default {
             const {
                 isCategorical, actualDomain, numTicks, exactNumTicks,
             } = this
-            if (this.id === 'time' || true) debugger
+            // if (this.id === 'time' || true) debugger
             if (isCategorical) return 1
             return obtainNumericStep({ domain: actualDomain, numTicks, exactNumTicks })
         },
@@ -115,7 +115,7 @@ export default {
             const {
                 isNumeric, actualDomain, step, bounds,
             } = this
-            if (this.id === 'time' || true) debugger
+            // if (this.id === 'time' || true) debugger
             if (!isNumeric) return undefined
             return obtainNumericActualBounds({
                 domain: actualDomain,
@@ -126,12 +126,12 @@ export default {
 
         scale () {
             const {
-                actualRange, isCategorical, reversed, actualBounds, // categories,
+                actualRange, isCategorical, reversed, actualBounds, categories,
             } = this
-            if (this.id === 'time' || true) debugger
+            // if (this.id === 'time' || true) debugger
             if (isCategorical) {
                 return obtainCategoricalScale({
-                    categories: this.id === 'time' ? undefined : ['LAP 1', 'LAP 2', 'LAP 3', 'LAP 4', 'LAP 5'],
+                    categories,
                     range: actualRange,
                     reversed,
                 })

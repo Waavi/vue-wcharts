@@ -1,5 +1,5 @@
 <template>
-    <g>
+    <g v-if="hasBeenMounted">
         <SvgLine
             :datums="coords"
             :curve="curve"
@@ -39,6 +39,12 @@ export default {
         color: VueTypes.string.optional,
         styles: VueTypes.object.def({}),
         dot: VueTypes.bool.def(false),
+    },
+    methods: {
+        loggy (value) {
+            console.log('coords', value)
+            return value
+        },
     },
 }
 </script>

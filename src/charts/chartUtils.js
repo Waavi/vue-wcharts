@@ -1,5 +1,6 @@
 /* eslint-disable prefer-destructuring */
 import VueTypes from 'vue-types'
+// import debounce from 'lodash.debounce'
 import { max, round } from '../utils/maths'
 import { getPercentValue } from '../utils/mathsPie'
 
@@ -214,21 +215,40 @@ export function getOuterElementLayout ({
  *
 */
 function getSanitizedSides ({
-    start, end, size, max,
+    start, end, size, max: maxValue,
 }) {
-    let sanitizedStart = getPercentValue({ percent: start, totalValue: max, defaultValue: null })
-    let sanitizedEnd = getPercentValue({ percent: end, totalValue: max, defaultValue: null })
-    let sanitizedSize = getPercentValue({ percent: size, totalValue: max, defaultValue: null })
+    let sanitizedStart = getPercentValue({ percent: start, totalValue: maxValue, defaultValue: null })
+    let sanitizedEnd = getPercentValue({ percent: end, totalValue: maxValue, defaultValue: null })
+    let sanitizedSize = getPercentValue({ percent: size, totalValue: maxValue, defaultValue: null })
     if (sanitizedStart !== null && sanitizedEnd !== null) {
-        sanitizedSize = max - sanitizedStart - sanitizedEnd
+        sanitizedSize = maxValue - sanitizedStart - sanitizedEnd
     } else if (sanitizedStart !== null && sanitizedSize !== null) {
-        sanitizedEnd = max - sanitizedStart - sanitizedSize
+        sanitizedEnd = maxValue - sanitizedStart - sanitizedSize
     } else if (sanitizedEnd !== null && sanitizedSize !== null) {
-        sanitizedStart = max - sanitizedEnd - sanitizedSize
+        sanitizedStart = maxValue - sanitizedEnd - sanitizedSize
     }
     return {
         start: sanitizedStart,
         end: sanitizedEnd,
         size: sanitizedSize,
+    }
+}
+
+export function enqueueRegisterUpdateFactory (onFlush, wait = 50, id) {
+    let queue = []
+    const debouncedFlush = /* debounce( */() => {
+        console.log('flushing ', id)
+        // debugger
+        onFlush(queue)
+        queue = []
+    }/* , wait) */
+    return (key, value) => {
+        console.log('enqueue ', id)
+        // debugger
+        if (queue.find(item => item.key === key)) {
+            delete queue[key]
+        }
+        queue.push({ key, value })
+        debouncedFlush()
     }
 }

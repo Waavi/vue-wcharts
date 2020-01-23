@@ -7,15 +7,11 @@ export default {
         colors: VueTypes.array.def(() => colors),
         styles: VueTypes.object.def({}),
     },
-    data () {
-        const { name } = this.$options
-        return {
-            themeStyles: theme[name] || {},
-        }
-    },
     computed: {
         actualStyles () {
-            return merge(this.themeStyles, this.styles)
+            const { name } = this.$options
+            debugger
+            return merge({}, theme[name] || {}, this.styles)
         },
     },
 }

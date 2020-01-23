@@ -1,4 +1,5 @@
 import omit from 'lodash.omit'
+import { enqueueRegisterUpdateFactory } from './chartUtils'
 
 export default {
     props: {
@@ -72,27 +73,16 @@ export default {
             series,
             datakey,
         }) {
-            debugger
-            const { axisDefinitions } = this
-            const newAxisDefinitions = {
-                ...axisDefinitions,
-                [id]: {
-                    dimension,
-                    type,
-                    series,
-                    datakey,
-                },
-            }
+            // debugger
+            this.enqueueAxisDefinitionUpdate(id, {
+                dimension,
+                type,
+                series,
+                datakey,
+            })
             if (datakey) {
                 this.registerAxisDatakey(id, { axisId: id, series, datakey })
             }
-            this.axisDefinitions = newAxisDefinitions
-            // this.axisDefinitions[id] = {
-            //     dimension,
-            //     type,
-            //     series,
-            //     datakey,
-            // }
         },
 
         /**
@@ -100,19 +90,9 @@ export default {
          * @param {string} id identifier for the axis.
          */
         unregisterAxis (id) {
-            // delete this.axisDefinitions[id]
-            // delete this.axisDatakeys[id]
-            // delete this.axisDomains[id]
-            // delete this.axisBounds[id]
-            // delete this.axisScales[id]
-            // delete this.axisTicks[id]
-            this.axisDefinitions = omit(this.axisDefinitions, id)
-            this.axisDatakeys = omit(this.axisDatakeys, id)
-            // this.axisInformations = omit(this.axisInformations, id)
-            this.axisDomains = omit(this.axisDomains, id)
-            this.axisBounds = omit(this.axisBounds, id)
-            this.axisScales = omit(this.axisScales, id)
-            this.axisTicks = omit(this.axisTicks, id)
+            this.enqueueAxisDefinitionUpdate(id)
+            this.enqueueAxisDatakeyUpdate(id)
+            this.enqueueAxisDataDomainUpdate(id)
         },
 
         /**
@@ -128,28 +108,25 @@ export default {
             series,
             datakey,
         }) {
-            debugger
-            const { axisDatakeys } = this
+            // debugger
             if (series || datakey) {
                 if (uid && axisId) {
-                    const newAxisDatakeys = {
-                        ...axisDatakeys,
-                        [axisId]: {
-                            ...(axisDatakeys[axisId] || {}),
-                            [uid]: {
-                                series,
-                                datakey,
-                            },
-                        },
-                    }
-                    this.axisDatakeys = newAxisDatakeys
-                    // this.axisDatakeys[axisId] = {
-                    //     ...(axisDatakeys[axisId] || {}),
-                    //     [uid]: {
-                    //         series,
-                    //         datakey,
+                    this.enqueueAxisDatakeyUpdate(uid, {
+                        axisId,
+                        series,
+                        datakey,
+                    })
+                    // const newAxisDatakeys = {
+                    //     ...axisDatakeys,
+                    //     [axisId]: {
+                    //         ...(axisDatakeys[axisId] || {}),
+                    //         [uid]: {
+                    //             series,
+                    //             datakey,
+                    //         },
                     //     },
                     // }
+                    // this.axisDatakeys = newAxisDatakeys
                 } else {
                     console.warn('chart.registerAxisDatakey: there is no "uid" or "axisId"')
                 }
@@ -161,14 +138,15 @@ export default {
          * @param {string} uid unique identifier for the component.
          */
         unregisterAxisDatakey (uid) {
-            const { axisDatakeys } = this
-            this.axisDatakeys = Object.keys(axisDatakeys).reduce(
-                (acc, axisId) => ({
-                    ...acc,
-                    [axisId]: omit(axisDatakeys[axisId] || {}, uid),
-                }),
-                {}
-            )
+            this.enqueueAxisDatakeyUpdate(uid)
+            // const { axisDatakeys } = this
+            // this.axisDatakeys = Object.keys(axisDatakeys).reduce(
+            //     (acc, axisId) => ({
+            //         ...acc,
+            //         [axisId]: omit(axisDatakeys[axisId] || {}, uid),
+            //     }),
+            //     {}
+            // )
         },
 
         /**
@@ -182,20 +160,15 @@ export default {
             axisId,
             domain,
         }) {
-            debugger
-            const { axisDataDomainsByElement } = this
+            // debugger
             if (uid && axisId) {
-                const newAxisDataDomainsByElement = {
-                    ...axisDataDomainsByElement,
-                    [axisId]: {
-                        ...(axisDataDomainsByElement[axisId] || {}),
-                        [uid]: domain,
-                    },
-                }
-                this.axisDataDomainsByElement = newAxisDataDomainsByElement
-                // this.axisDataDomainsByElement[axisId] = {
-                //     ...(axisDataDomainsByElement[axisId] || {}),
-                //     [uid]: domain,
+                this.enqueueAxisDataDomainUpdate(uid, { axisId, domain })
+                // const newAxisDataDomainsByElement = {
+                //     ...axisDataDomainsByElement,
+                //     [axisId]: {
+                //         ...(axisDataDomainsByElement[axisId] || {}),
+                //         [uid]: domain,
+                //     },
                 // }
             } else {
                 console.warn('chart.registerAxisDataDomain: there is no "uid" or "axisId"')
@@ -207,33 +180,34 @@ export default {
          * @param {string} uid unique identifier for the component.
          */
         unregisterAxisDataDomain (uid) {
-            const { axisDataDomainsByElement } = this
-            this.axisDataDomainsByElement = Object.keys(axisDataDomainsByElement).reduce(
-                (acc, axisId) => ({
-                    ...acc,
-                    [axisId]: omit(axisDataDomainsByElement[axisId] || {}, uid),
-                }),
-                {}
-            )
+            this.enqueueAxisDataDomainUpdate(uid)
+            // const { axisDataDomainsByElement } = this
+            // this.axisDataDomainsByElement = Object.keys(axisDataDomainsByElement).reduce(
+            //     (acc, axisId) => ({
+            //         ...acc,
+            //         [axisId]: omit(axisDataDomainsByElement[axisId] || {}, uid),
+            //     }),
+            //     {}
+            // )
         },
 
         setAxisDomain (id, domain) {
-            debugger
+            // debugger
             this.axisDomains = { ...this.axisDomains, [id]: domain }
             // this.axisDomains[id] = domain
         },
         setAxisBound (id, bound) {
-            debugger
+            // debugger
             this.axisBounds = { ...this.axisBounds, [id]: bound }
             // this.axisBounds[id] = bound
         },
         setAxisScale (id, scale) {
-            debugger
+            // debugger
             this.axisScales = { ...this.axisScales, [id]: scale }
             // this.axisScales[id] = scale
         },
         setAxisTicks (id, ticks) {
-            debugger
+            // debugger
             this.axisTicks = { ...this.axisTicks, [id]: ticks }
             // this.axisTicks[id] = ticks
         },
@@ -255,5 +229,68 @@ export default {
         //     this.axisScales = { ...axisScales, [id]: scale }
         //     this.axisTicks = { ...axisTicks, [id]: ticks }
         // },
+    },
+    created () {
+        this.enqueueAxisDefinitionUpdate = enqueueRegisterUpdateFactory(
+            (definitionsArray) => {
+                const newAxisDefinitions = { ...this.axisDefinitions }
+                definitionsArray.forEach(({ key: id, value: data }) => {
+                    if (data !== undefined) {
+                        newAxisDefinitions[id] = data
+                    } else {
+                        delete newAxisDefinitions[id]
+                    }
+                })
+                this.axisDefinitions = newAxisDefinitions
+            },
+            100,
+            'definition'
+        )
+        this.enqueueAxisDatakeyUpdate = enqueueRegisterUpdateFactory(
+            (datakeysArray) => {
+                const newAxisDatakeys = { ...this.axisDatakeys }
+                datakeysArray.forEach(({ key: uid, value: data }) => {
+                    if (data !== undefined) {
+                        const { axisId, series, datakey } = data
+                        newAxisDatakeys[axisId] = {
+                            ...newAxisDatakeys[axisId],
+                            [uid]: { series, datakey },
+                        }
+                    } else {
+                        Object.keys(newAxisDatakeys).forEach((axisId) => {
+                            if (newAxisDatakeys[axisId][uid]) {
+                                newAxisDatakeys[axisId] = omit(newAxisDatakeys[axisId], uid)
+                            }
+                        })
+                    }
+                })
+                this.axisDatakeys = newAxisDatakeys
+            },
+            100,
+            'datakey'
+        )
+        this.enqueueAxisDataDomainUpdate = enqueueRegisterUpdateFactory(
+            (dataDomainsArray) => {
+                const newAxisDataDomains = { ...this.axisDataDomainsByElement }
+                dataDomainsArray.forEach(({ key: uid, value: data }) => {
+                    if (data !== undefined) {
+                        const { axisId, domain } = data
+                        newAxisDataDomains[axisId] = {
+                            ...newAxisDataDomains[axisId],
+                            [uid]: domain,
+                        }
+                    } else {
+                        Object.keys(newAxisDataDomains).forEach((axisId) => {
+                            if (newAxisDataDomains[axisId][uid]) {
+                                newAxisDataDomains[axisId] = omit(newAxisDataDomains[axisId], uid)
+                            }
+                        })
+                    }
+                })
+                this.axisDataDomainsByElement = newAxisDataDomains
+            },
+            100,
+            'dataDomain'
+        )
     },
 }

@@ -44,49 +44,37 @@ function withAxisMixinFactory (dimension) {
             series: VueTypes.string.optional,
             [aDatakey]: numberOfStringOrArrayVueType,
         },
+        data () {
+            return {
+                hasBeenMounted: false,
+            }
+        },
         computed: {
             [actualAAxisId] () {
+                console.log('computed ', actualAAxisId)
+                // debugger
                 return this[aAxisId] || dimension
             },
-            // [aAxis] () {
-            //     const axis = this.Chart.axes[this[actualAAxisId]]
-            //     !axis && console.error(`WChart ERROR - Axis "${this[actualAAxisId]}" is not found.`)
-            //     return axis
-            // },
-            [aScale] () {
-                const scales = this.Chart.axisScales
-                const axisId = this[actualAAxisId]
-                !Object.prototype.hasOwnProperty.call(scales, axisId) && console.error(`WChart ERROR - Axis scale "${axisId}" is not found.`)
-                debugger
-                return scales[axisId]
-            },
-            [aScaled] () {
-                const value = this[a]
-                const scale = this[aScale]
-                if (value !== undefined && scale) {
-                    return Array.isArray(value) ? value.map(v => scale(v)) : scale(value)
-                }
-                return undefined
-            },
             [actualADatakey] () {
-                return this[aDatakey] || this.Chart.axisDefinitions[this[actualAAxisId]].datakey
+                console.log('computed ', actualADatakey)
+                // debugger
+                return this[aDatakey] || (this.Chart.axisDefinitions[this[actualAAxisId]] || {}).datakey
             },
             [aDatakeyData] () {
+                console.log('computed ', aDatakeyData)
+                // debugger
                 return {
                     axisId: this[actualAAxisId],
                     series: this.series,
                     datakey: this[actualADatakey],
                 }
             },
+
             [aDataDomain] () {
-                if (this.Chart.axisDefinitions[this[actualAAxisId]].type === AXIS_TYPE.NUMERIC) {
-                    console.log(obtainNumericDataDomainFromValue(this[a]) ||
-					obtainNumericDataDomainFromDatakey({
-					    dataset: this.Chart.dataset,
-					    series: this.series,
-					    datakey: this[actualADatakey],
-					}))
-                    debugger
+                if (!this.hasBeenMounted) return undefined
+                console.log('computed ', aDataDomain)
+                // debugger
+                if ((this.Chart.axisDefinitions[this[actualAAxisId]] || {}).type === AXIS_TYPE.NUMERIC) {
                     return obtainNumericDataDomainFromValue(this[a]) ||
                         obtainNumericDataDomainFromDatakey({
                             dataset: this.Chart.dataset,
@@ -97,12 +85,42 @@ function withAxisMixinFactory (dimension) {
                 return undefined
             },
             [aDataDomainData] () {
+                if (!this.hasBeenMounted) return undefined
+                console.log('computed ', aDataDomainData)
+                // debugger
                 return {
                     axisId: this[actualAAxisId],
                     domain: this[aDataDomain],
                 }
             },
+
+            // // [aAxis] () {
+            // //     const axis = this.Chart.axes[this[actualAAxisId]]
+            // //     !axis && console.error(`WChart ERROR - Axis "${this[actualAAxisId]}" is not found.`)
+            // //     return axis
+            // // },
+
+            [aScale] () {
+                if (!this.hasBeenMounted) return undefined
+                const scales = this.Chart.axisScales
+                const axisId = this[actualAAxisId]
+                !Object.prototype.hasOwnProperty.call(scales, axisId) && console.error(`WChart ERROR - Axis scale "${axisId}" is not found.`)
+                // debugger
+                return scales[axisId]
+            },
+            [aScaled] () {
+                if (!this.hasBeenMounted) return undefined
+                const value = this[a]
+                const scale = this[aScale]
+                if (value !== undefined && scale) {
+                    return Array.isArray(value) ? value.map(v => scale(v)) : scale(value)
+                }
+                return undefined
+            },
+
             [aCoordForDatum] () {
+                console.log('aCoordForDatum: ', aCoordForDatum)
+                if (!this.hasBeenMounted) return undefined
                 const datakey = this[actualADatakey]
                 const scale = this[aScale] || (x => x)
                 return (datum) => {
@@ -129,6 +147,9 @@ function withAxisMixinFactory (dimension) {
                 },
                 immediate: true,
             },
+        },
+        mounted () {
+            this.hasBeenMounted = true
         },
     }
 }

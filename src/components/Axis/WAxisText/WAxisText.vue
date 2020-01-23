@@ -7,7 +7,7 @@
         :stroke="stroke"
         :fill="fill"
         :font-size="fontSize"
-        :style="stylesCmp"
+        :style="actualStyles"
     >
         <slot :value="value">
             {{ value }}
@@ -17,7 +17,7 @@
 
 <script>
 import VueTypes from 'vue-types'
-import omit from 'lodash.omit'
+// import omit from 'lodash.omit'
 import themeMixin from '../../../mixins/theme'
 
 export default {
@@ -36,12 +36,12 @@ export default {
         }).loose,
     },
     computed: {
-        stylesCmp () {
-            return {
-                ...omit(this.themeStyles.styles, ['stroke', 'fill', 'fontSize']),
-                ...omit(this.styles, ['stroke', 'fill', 'fontSize']),
-            }
-        },
+        // stylesCmp () {
+        //     return {
+        //         ...omit(this.themeStyles.styles, ['stroke', 'fill', 'fontSize']),
+        //         ...omit(this.styles, ['stroke', 'fill', 'fontSize']),
+        //     }
+        // },
         stroke () {
             return (this.styles || {}).stroke || this.themeStyles.styles.stroke
         },

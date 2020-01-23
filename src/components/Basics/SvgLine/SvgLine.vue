@@ -19,6 +19,7 @@ export default {
         xExtractor: VueTypes.func.optional,
         yExtractor: VueTypes.func.optional,
         curve: VueTypes.oneOfType([VueTypes.bool, VueTypes.func]).def(false),
+        styles: VueTypes.object.def({}),
     },
     data () {
         return {
@@ -61,6 +62,12 @@ export default {
     // },
     mounted () {
         this.mounted = true
+    },
+    methods: {
+        loggy (value) {
+            console.log('datums', value)
+            return value
+        },
     },
 }
 </script>
