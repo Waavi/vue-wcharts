@@ -28,7 +28,7 @@ export default {
         this.isChartReady = !this.responsive
     },
     mounted () {
-    // Added listenner if has response prop to true
+    // Added listener if has response prop to true
         if (this.responsive) {
             this.resize()
             if (typeof window !== 'undefined') {
@@ -37,7 +37,7 @@ export default {
         }
     },
     unmounted () {
-    // Remove listenner response
+    // Remove listener response
         if (this.responsive && typeof window !== 'undefined') window.removeEventListener('resize')
     },
     methods: {

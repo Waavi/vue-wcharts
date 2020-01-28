@@ -3,6 +3,7 @@ import VueTypes from 'vue-types'
 import { random } from '../utils/maths'
 import chartCanvasMixin from './chartCanvasMixin'
 import chartAxisMixin from './chartAxisMixin'
+import chartLegendMixin from './chartLegendMixin'
 import { marginVueType, normalizedMargin } from './chartUtils'
 import themeMixin from '../mixins/theme'
 
@@ -11,18 +12,19 @@ export default {
     mixins: [
         chartCanvasMixin,
         chartAxisMixin,
+        chartLegendMixin,
         themeMixin,
     ],
+    provide () {
+        return {
+            Chart: this,
+        }
+    },
     props: {
         id: VueTypes.oneOfType([VueTypes.string, VueTypes.number]).optional,
         dataset: VueTypes.oneOfType([Array, Object]).def([]),
         padding: marginVueType,
         styles: VueTypes.object.def({}),
-    },
-    provide () {
-        return {
-            Chart: this,
-        }
     },
     computed: {
         // Create a unique chart id
@@ -39,8 +41,8 @@ export default {
             viewBox, canvas, responsive, isChartReady, actualStyles,
         } = this
         const slots = this.$slots.default || []
-        const drawables = [] // We need inject necessary props to cartesian slots
-        const axes = []
+        const outerElements = []
+        const innerElements = []
         const widgets = []
         const others = []
 
@@ -55,19 +57,13 @@ export default {
                 if (!sealedOptions) {
                     return
                 }
-
-                switch (sealedOptions.type) {
-                    case 'drawable':
-                        drawables.push(slot)
-                        break
-                    case 'axis':
-                        axes.push(slot)
-                        break
-                    case 'widget':
-                        widgets.push(slot)
-                        break
-                    default:
-                        break
+                const { type, computed: { layoutInOuterArea } = {} } = sealedOptions
+                if (type === 'widget') {
+                    widgets.push(slot)
+                } else if (layoutInOuterArea) {
+                    outerElements.push(slot)
+                } else {
+                    innerElements.push(slot)
                 }
             })
         }
@@ -108,9 +104,9 @@ export default {
                                     },
                                 },
                             ),
+                            outerElements,
+                            innerElements,
                             others,
-                            axes,
-                            drawables,
                         ]
                         : []
                 ),

@@ -2,113 +2,118 @@ import omit from 'lodash.omit'
 import { enqueueRegisterUpdateFactory } from './chartUtils'
 
 export default {
-    props: {
-
-    },
     data () {
         return {
             /**
-             * Axes stores all the relevant information for each axis
+             * Axes store for all the relevant information for each axis
              * @property {Object.<string, Object>} axisDefinitions map { [axisId]: axisDefData, ... }
              * @property {string} axisDefData.dimension "x", "y", "z", "angle", "radius".
              * @property {string} axisDefData.type "numeric", "categorical".
-             * @property {string|string[]} axisDefData.datakey optional datakey or array of datakeys.
+             * @property {string} [axisDefData.series] optional series.
+             * @property {string|string[]} [axisDefData.datakey] optional datakey or array of datakeys.
+             * @property {function} [axisDefData.formatter] optional default formatter (for ticks and drawable values that belong to this)
              * @property {Object.<string, string>} axisDefData.datakeys a "map" of element's "uid" and their "datakeys".
              *      It must be a "map" to register who is requiring a datakey. It could be more than one element.
             */
             axisDefinitions: {},
 
+            /**
+             * Store for all the "datakeys" grouped by axes and its corresponding "uids"
+             * @property {Object.<string, Object>} axisDatakeys map { [axisId]: axisDatakeysData, ... }
+             * @property {Object.<string, Object>} axisDatakeysData map { [uid]: axisDatakeyData, ... }
+             * @property {string} [axisDatakeyData.series] optional series.
+             * @property {string|string[]} axisDatakeyData.datakey datakey or array of datakeys.
+             */
             axisDatakeys: {},
 
+            /**
+             * Store for all the "data-domains" grouped by axes and its corresponding "uids"
+             * @property {Object.<string, Object>} axisDataDomainsByElement map { [axisId]: axisDataDomainsData, ... }
+             * @property {Object.<string, number[]>} axisDataDomainsData map { [uid]: domain, ... }
+             * @property {number[]} domain domain as an array [min, max]
+             */
             axisDataDomainsByElement: {},
 
             /**
-             * Axes stores all the relevant information for each axis
-             * @property {Object.<string, Object>} axisInformations map { [axisId]: axisData, ... }
-             * @property {string} axisData.dimension "x", "y", "z", "angle", "radius".
-             * @property {string} axisData.type "numeric", "categorical".
-             * @property {string|string[]} axisData.datakey optional datakey or array of datakeys.
-             * @property {Object.<string, string>} axisData.datakeys a "map" of element's "uid" and their "datakeys".
-             * @property {number[]} axisData.domain
-             * @property {number[]} axisData.bounds
-             * @property {function} axisData.scale
-             * @property {number[]} axisData.ticks
-            */
-            // axisInformations: {},
+             * Store for all the global "data-domains" by each axis
+             * @property {Object.<string, number[]>} axisDomains map { [axisId]: domain, ... }
+             * @property {number[]} [domain] domain as an array [min, max]. It will be undefined for categorical axes.
+             */
             axisDomains: {},
+            /**
+             * Store for all the "bounds" by each axis
+             * @property {Object.<string, number[]>} axisBounds map { [axisId]: bounds, ... }
+             * @property {number[]} [bounds] bounds as an array [min, max]. It will be undefined for categorical axes.
+             */
             axisBounds: {},
+            /**
+             * Store for all the scales by each axis
+             * @property {Object.<string, function>} axisBounds map { [axisId]: scale, ... }
+             * @property {function} [scale] function that returns a scaled value given the original one
+             */
             axisScales: {},
+            /**
+             * Store for all the ticks array by each axis
+             * @property {Object.<string, any[]>} axisBounds map { [axisId]: ticks, ... }
+             * @property {any[]} ticks array of tick values
+             */
             axisTicks: {},
         }
-    },
-    computed: {
-        // axes () {
-        //     const { axisDefinitions, axisInformations } = this
-        //     return Object.keys(axisDefinitions).reduce(
-        //         (acc, axisId) => ({
-        //             ...acc,
-        //             [axisId]: {
-        //                 ...axisDefinitions[axisId],
-        //                 ...axisInformations[axisId],
-        //             },
-        //         }),
-        //         {}
-        //     )
-        // },
     },
     methods: {
         /**
          * Function that registers the axes relevant information.
          * Every axis must use this function.
-         * @param {string} id identifier for the axis.
-         * @param {Object} obj object with parameters.
-         * @param {string} obj.dimension "x", "y", "z", "angle", "radius".
-         * @param {string} obj.type "numeric", "categorical".
-         * @param {string} [obj.series] optional series.
-         * @param {string} [obj.datakey] optional datakey.
+         * @param {string} axisId identifier for the axis.
+         * @param {Object} axisDefData object with parameters.
+         * @param {string} axisDefData.dimension "x", "y", "z", "angle", "radius".
+         * @param {string} axisDefData.type "numeric", "categorical".
+         * @param {string} [axisDefData.series] optional series.
+         * @param {string|string[]} [axisDefData.datakey] optional datakey or array of datakeys.
+         * @param {function} [axisDefData.formatter] optional default formatter (for ticks and drawable values that belong to this)
          */
-        registerAxisDefinition (id, {
+        registerAxisDefinition (axisId, {
             dimension,
             type,
             series,
             datakey,
+            formatter,
         }) {
-            // debugger
-            this.enqueueAxisDefinitionUpdate(id, {
+            this.enqueueAxisDefinitionUpdate(axisId, {
                 dimension,
                 type,
                 series,
                 datakey,
+                formatter,
             })
             if (datakey) {
-                this.registerAxisDatakey(id, { axisId: id, series, datakey })
+                this.registerAxisDatakey(axisId, { axisId, series, datakey })
             }
         },
 
         /**
          * Function that unregisters the axes relevant information.
-         * @param {string} id identifier for the axis.
+         * @param {string} axisId identifier for the axis.
          */
-        unregisterAxis (id) {
-            this.enqueueAxisDefinitionUpdate(id)
-            this.enqueueAxisDatakeyUpdate(id)
-            this.enqueueAxisDataDomainUpdate(id)
+        unregisterAxis (axisId) {
+            this.enqueueAxisDefinitionUpdate(axisId)
+            this.enqueueAxisDatakeyUpdate(axisId)
+            this.enqueueAxisDataDomainUpdate(axisId)
         },
 
         /**
          * Function that registers a datakey for a specific axis.
          * @param {string} uid unique identifier for the component.
-         * @param {Object} obj object with parameters.
-         * @param {string} obj.axisId identifier for the axis.
-         * @param {string} obj.series series key if needed.
-         * @param {string} obj.datakey datakey. It can be namespaced by a series "{series}:{datakey}"
+         * @param {Object} axisDatakeyData object with parameters.
+         * @param {string} axisDatakeyData.axisId identifier for the axis.
+         * @param {string} [axisDatakeyData.series] series key if needed.
+         * @param {string|string[]} axisDatakeyData.datakey datakey or array of datakeys.
          */
         registerAxisDatakey (uid, {
             axisId,
             series,
             datakey,
         }) {
-            // debugger
             if (series || datakey) {
                 if (uid && axisId) {
                     this.enqueueAxisDatakeyUpdate(uid, {
@@ -134,7 +139,7 @@ export default {
         },
 
         /**
-         * Function that unregisters a datakey for a specific axis.
+         * Function that unregisters a datakey for every axis.
          * @param {string} uid unique identifier for the component.
          */
         unregisterAxisDatakey (uid) {
@@ -150,17 +155,16 @@ export default {
         },
 
         /**
-         * Function that registers a datakey for a specific axis.
+         * Function that registers a "data-domain" for a specific axis.
          * @param {string} uid unique identifier for the component.
-         * @param {Object} obj object with parameters.
-         * @param {string} obj.axisId identifier for the axis.
-         * @param {string} obj.domain domain
+         * @param {Object} axisDataDomainData object with parameters.
+         * @param {string} axisDataDomainData.axisId identifier for the axis.
+         * @param {number[]} axisDataDomainData.domain domain as an array [min, max]
          */
         registerAxisDataDomain (uid, {
             axisId,
             domain,
         }) {
-            // debugger
             if (uid && axisId) {
                 this.enqueueAxisDataDomainUpdate(uid, { axisId, domain })
                 // const newAxisDataDomainsByElement = {
@@ -176,7 +180,7 @@ export default {
         },
 
         /**
-         * Function that unregisters a datakey for a specific axis.
+         * Function that unregisters a "data-domain" for a specific axis.
          * @param {string} uid unique identifier for the component.
          */
         unregisterAxisDataDomain (uid) {
@@ -191,72 +195,68 @@ export default {
             // )
         },
 
-        setAxisDomain (id, domain) {
-            // debugger
-            this.axisDomains = { ...this.axisDomains, [id]: domain }
-            // this.axisDomains[id] = domain
+        /**
+         * Function that sets the final computed domain for a specific axis.
+         * @param {string} axisId identifier for the axis.
+         * @param {number[]} domain domain as an array [min, max]
+         */
+        setAxisDomain (axisId, domain) {
+            this.axisDomains = { ...this.axisDomains, [axisId]: domain }
         },
-        setAxisBound (id, bound) {
-            // debugger
-            this.axisBounds = { ...this.axisBounds, [id]: bound }
-            // this.axisBounds[id] = bound
+        /**
+         * Function that sets the final bounds for a specific axis.
+         * @param {string} axisId identifier for the axis.
+         * @param {number[]} bound bound as an array [min, max]
+         */
+        setAxisBound (axisId, bound) {
+            this.axisBounds = { ...this.axisBounds, [axisId]: bound }
         },
-        setAxisScale (id, scale) {
-            // debugger
-            this.axisScales = { ...this.axisScales, [id]: scale }
-            // this.axisScales[id] = scale
+        /**
+         * Function that sets the final scale for a specific axis.
+         * @param {string} axisId identifier for the axis.
+         * @param {function} scale scale
+         */
+        setAxisScale (axisId, scale) {
+            this.axisScales = { ...this.axisScales, [axisId]: scale }
         },
-        setAxisTicks (id, ticks) {
-            // debugger
-            this.axisTicks = { ...this.axisTicks, [id]: ticks }
-            // this.axisTicks[id] = ticks
+        /**
+         * Function that sets the final ticks array for a specific axis.
+         * @param {string} axisId identifier for the axis.
+         * @param {any[]} ticks array of tick values
+         */
+        setAxisTicks (axisId, ticks) {
+            this.axisTicks = { ...this.axisTicks, [axisId]: ticks }
         },
-        // setAxisInformation (id, {
-        //     domain,
-        //     bounds,
-        //     scale,
-        //     ticks,
-        // }) {
-        //     debugger
-        //     const {
-        //         axisDomains,
-        //         axisBounds,
-        //         axisScales,
-        //         axisTicks,
-        //     } = this
-        //     this.axisDomains = { ...axisDomains, [id]: domain }
-        //     this.axisBounds = { ...axisBounds, [id]: bounds }
-        //     this.axisScales = { ...axisScales, [id]: scale }
-        //     this.axisTicks = { ...axisTicks, [id]: ticks }
-        // },
     },
     created () {
         this.enqueueAxisDefinitionUpdate = enqueueRegisterUpdateFactory(
+            // onFlush action (given an array of `{ key, value }` assuming an undefined value as the action to remove an element)
             (definitionsArray) => {
                 const newAxisDefinitions = { ...this.axisDefinitions }
                 definitionsArray.forEach(({ key: id, value: data }) => {
-                    if (data !== undefined) {
+                    if (data !== undefined) { // adds the data
                         newAxisDefinitions[id] = data
-                    } else {
+                    } else { // removes the data
                         delete newAxisDefinitions[id]
                     }
                 })
                 this.axisDefinitions = newAxisDefinitions
             },
-            100,
-            'definition'
+            100, // wait time for inner debounce method
+            'definition' // only for debug
         )
         this.enqueueAxisDatakeyUpdate = enqueueRegisterUpdateFactory(
+            // onFlush action (given an array of `{ key, value }` assuming an undefined value as the action to remove an element)
             (datakeysArray) => {
                 const newAxisDatakeys = { ...this.axisDatakeys }
                 datakeysArray.forEach(({ key: uid, value: data }) => {
-                    if (data !== undefined) {
+                    if (data !== undefined) { // adds the data on the corresponding axis
                         const { axisId, series, datakey } = data
                         newAxisDatakeys[axisId] = {
                             ...newAxisDatakeys[axisId],
                             [uid]: { series, datakey },
                         }
-                    } else {
+                    } else { // removes the data for every axis
                         Object.keys(newAxisDatakeys).forEach((axisId) => {
                             if (newAxisDatakeys[axisId][uid]) {
                                 newAxisDatakeys[axisId] = omit(newAxisDatakeys[axisId], uid)
@@ -266,20 +266,21 @@ export default {
                 })
                 this.axisDatakeys = newAxisDatakeys
             },
-            100,
-            'datakey'
+            100, // wait time for inner debounce method
+            'datakey' // only for debug
         )
         this.enqueueAxisDataDomainUpdate = enqueueRegisterUpdateFactory(
+            // onFlush action (given an array of `{ key, value }` assuming an undefined value as the action to remove an element)
             (dataDomainsArray) => {
                 const newAxisDataDomains = { ...this.axisDataDomainsByElement }
                 dataDomainsArray.forEach(({ key: uid, value: data }) => {
-                    if (data !== undefined) {
+                    if (data !== undefined) { // adds the data on the corresponding axis
                         const { axisId, domain } = data
                         newAxisDataDomains[axisId] = {
                             ...newAxisDataDomains[axisId],
                             [uid]: domain,
                         }
-                    } else {
+                    } else { // removes the data for every axis
                         Object.keys(newAxisDataDomains).forEach((axisId) => {
                             if (newAxisDataDomains[axisId][uid]) {
                                 newAxisDataDomains[axisId] = omit(newAxisDataDomains[axisId], uid)
@@ -289,8 +290,8 @@ export default {
                 })
                 this.axisDataDomainsByElement = newAxisDataDomains
             },
-            100,
-            'dataDomain'
+            100, // wait time for inner debounce method
+            'dataDomain' // only for debug
         )
     },
 }

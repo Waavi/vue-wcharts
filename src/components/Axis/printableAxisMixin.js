@@ -54,4 +54,12 @@ export default {
             })
         },
     },
+    watch: {
+        actualTicks: {
+            handler (value) {
+                this.Chart.setAxisTicks(this.id, value)
+            },
+            immediate: true,
+        },
+    },
 }

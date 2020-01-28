@@ -1,6 +1,6 @@
+export * from './basicsElements'
 export * from './Axis'
 export * from './Common'
-export * from './Basics'
 export * from './Grid'
 export * from './Marker'
 export * from './Line'

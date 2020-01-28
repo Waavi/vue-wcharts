@@ -1,24 +1,12 @@
+/** *********************************************
+ * Mathematical calculation for axes
+********************************************** */
+
 import scaleLinear from 'd3-scale/src/linear'
 import { tickStep as d3TickStep } from 'd3-array'
 import lodashRange from 'lodash/range'
 import castArray from 'lodash/castArray'
-import { getDatums } from '../../charts/chartUtils'
-
-// Obtain the corresponding value from a datum knowing its datakey.
-// datakey could be a string, number, function or array.
-export function datakeyValue ({ datum, datakey }) {
-    const type = typeof datakey
-    if (type === 'string' || type === 'number') {
-        return datum[datakey]
-    }
-    if (type === 'function') {
-        return datakey(datum)
-    }
-    if (Array.isArray(datakey)) {
-        return datakey.map(a => datakeyValue({ datum, a }))
-    }
-    return null
-}
+import { getDatums, datakeyValue } from '../../utils'
 
 // Obtain an array of categories for this axis
 export function obtainCategories ({ dataset, datakeys, allowDuplicatedCategory }) {
@@ -27,7 +15,7 @@ export function obtainCategories ({ dataset, datakeys, allowDuplicatedCategory }
         Object.values(datakeys).forEach(({ series, datakey }) => {
             const datums = getDatums({ dataset, series })
             datums.forEach((datum) => {
-                const value = datakeyValue({ datum, datakey })
+                const value = datakeyValue(datum, datakey)
                 values.push(...castArray(value))
             })
         })
@@ -44,7 +32,7 @@ export function obtainNumericDataDomainFromDatakey ({ dataset, series, datakey }
     const datums = getDatums({ dataset, series })
     const values = []
     datums.forEach((datum) => {
-        const value = datakeyValue({ datum, datakey })
+        const value = datakeyValue(datum, datakey)
         values.push(...castArray(value))
     })
     return values.length > 0 ? [Math.min(...values), Math.max(...values)] : [0, 1]

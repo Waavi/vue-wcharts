@@ -9,7 +9,6 @@ import {
     obtainCategoricalScale,
     obtainNumericScale,
 } from './axisUtils'
-// import { genTicks, genExactNbTicks } from '@/utils/maths'
 import withUidMixin from '../../mixins/withUidMixin'
 import themeMixin from '../../mixins/theme'
 
@@ -49,7 +48,7 @@ export default {
     computed: {
         axisDefinition () {
             const {
-                id, type, series, datakey, $options: { dimension },
+                id, type, series, datakey, formatter, $options: { dimension },
             } = this
             return {
                 id,
@@ -57,6 +56,7 @@ export default {
                 type,
                 series,
                 datakey,
+                formatter,
             }
         },
         isNumeric () {
@@ -75,7 +75,6 @@ export default {
             const {
                 id, isCategorical, Chart, allowDuplicatedCategory,
             } = this
-            // if (this.id === 'time' || true) debugger
             if (!isCategorical) return undefined
             return obtainCategories({
                 dataset: Chart.dataset,
@@ -86,7 +85,6 @@ export default {
 
         dataDomain () {
             const { id, isNumeric, Chart } = this
-            // if (this.id === 'time' || true) debugger
             if (!isNumeric) return undefined
             return obtainNumericGlobalDataDomain({
                 dataDomainByElement: Chart.axisDataDomainsByElement[id],
@@ -95,7 +93,6 @@ export default {
 
         actualDomain () {
             const { isNumeric, dataDomain, domain } = this
-            // if (this.id === 'time' || true) debugger
             if (!isNumeric) return undefined
             return obtainNumericActualDomain({
                 dataDomain,
@@ -106,7 +103,6 @@ export default {
             const {
                 isCategorical, actualDomain, numTicks, exactNumTicks,
             } = this
-            // if (this.id === 'time' || true) debugger
             if (isCategorical) return 1
             return obtainNumericStep({ domain: actualDomain, numTicks, exactNumTicks })
         },
@@ -115,7 +111,6 @@ export default {
             const {
                 isNumeric, actualDomain, step, bounds,
             } = this
-            // if (this.id === 'time' || true) debugger
             if (!isNumeric) return undefined
             return obtainNumericActualBounds({
                 domain: actualDomain,
@@ -128,7 +123,6 @@ export default {
             const {
                 actualRange, isCategorical, reversed, actualBounds, categories,
             } = this
-            // if (this.id === 'time' || true) debugger
             if (isCategorical) {
                 return obtainCategoricalScale({
                     categories,
@@ -142,25 +136,11 @@ export default {
                 reversed,
             })
         },
-
-        // axisInformation () {
-        //     const {
-        //         id, dataDomain, actualBounds, scale, actualTicks,
-        //     } = this
-        //     if (this.id === 'time' || true) debugger
-        //     return {
-        //         id,
-        //         domain: dataDomain,
-        //         bounds: actualBounds,
-        //         scale,
-        //         ticks: actualTicks,
-        //     }
-        // },
     },
     watch: {
         axisDefinition: {
             handler (definition) {
-                this.Chart.registerAxisDefinition(definition.id, definition)
+                this.Chart.registerAxisDefinition(this.id, definition)
             },
             immediate: true,
         },
@@ -182,19 +162,8 @@ export default {
             },
             immediate: true,
         },
-        ticks: {
-            handler (value) {
-                this.Chart.setAxisTicks(this.id, value)
-            },
-            immediate: true,
-        },
-
-        // axisInformation: {
-        //     handler (data) {
-        //         if (this.id === 'time' || true) debugger
-        //         this.Chart.setAxisInformation(data.id, data)
-        //     },
-        //     immediate: true,
-        // },
+    },
+    beforeDestroy () {
+        this.Chart.unregisterAxis(this.id)
     },
 }

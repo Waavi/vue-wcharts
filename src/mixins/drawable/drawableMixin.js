@@ -1,16 +1,16 @@
 import VueTypes from 'vue-types'
 // import visibleMixin from '../visible'
 import themeMixin from '../theme'
-import animationMixin from '../animation'
+// import animationMixin from '../animation'
 import withUidMixin from '../withUidMixin'
-import { getDatums } from '../../charts/chartUtils'
+import { getDatums } from '../../utils'
 
 export default {
     type: 'drawable',
     mixins: [
         withUidMixin,
         themeMixin,
-        animationMixin,
+        // animationMixin,
         // visibleMixin,
     ],
     inject: ['Chart'],
@@ -19,7 +19,6 @@ export default {
     },
     computed: {
         coords () {
-            console.log('coords')
             const {
                 Chart,
                 series,

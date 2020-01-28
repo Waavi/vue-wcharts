@@ -1,5 +1,6 @@
 <template>
     <g
+        v-if="typeof tickY === 'number'"
         :id="id"
         class="WXAxis"
     >
@@ -12,7 +13,7 @@
             :key="index"
         >
             <line
-                v-if="!hideTickMark"
+                v-if="!hideTickMark && tickX"
                 :x1="tickX"
                 :y1="tickY"
                 :x2="tickX"
@@ -20,6 +21,7 @@
                 v-bind="actualStyles.tick"
             />
             <slot
+                v-if="tickX"
                 name="tick"
                 :value="value"
                 :label="label"

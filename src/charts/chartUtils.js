@@ -4,21 +4,9 @@ import VueTypes from 'vue-types'
 import { max, round } from '../utils/maths'
 import { getPercentValue } from '../utils/mathsPie'
 
-/**
- * Generate an "Unique Id" for the component within the chart
- */
-
-export function generateUid (options, props) {
-    const { type, name } = options || {}
-    const { id, uid } = props || {}
-    if (uid) return uid
-    // const random = Math.round(Math.random() * 10000)
-    return [type, name, id].filter(x => x)./* concat(random). */join('-')
-}
-
-export function getDatums ({ dataset, series }) {
-    return series ? dataset[series] : dataset
-}
+/** ***********************************
+ * VueTypes utils
+************************************ */
 
 export const marginVueType = VueTypes.oneOfType([
     VueTypes.number,
@@ -46,6 +34,10 @@ export const marginVerticalVueType = VueTypes.oneOfType([
         bottom: VueTypes.number,
     }),
 ]).def(0)
+
+/** ***********************************
+ * Margin and padding normalizations
+************************************ */
 
 /**
  * Normalizes a margin (or padding)
@@ -122,6 +114,10 @@ export function normalizedMarginVertical (margin) {
         bottom: max(round(bottom), 0),
     }
 }
+
+/** ***********************************
+ * Outer Elements' utils
+************************************ */
 
 /**
  * Gets the layout for an outer element
@@ -211,9 +207,6 @@ export function getOuterElementLayout ({
     }
 }
 
-/**
- *
-*/
 function getSanitizedSides ({
     start, end, size, max: maxValue,
 }) {
@@ -234,21 +227,27 @@ function getSanitizedSides ({
     }
 }
 
+/** *********************************************
+ * Enqueue register utilities for performance
+********************************************** */
+
+/** TODO: COMMENT THIS! */
 export function enqueueRegisterUpdateFactory (onFlush, wait = 50, id) {
-    let queue = []
-    const debouncedFlush = /* debounce( */() => {
-        console.log('flushing ', id)
-        // debugger
-        onFlush(queue)
-        queue = []
-    }/* , wait) */
     return (key, value) => {
-        console.log('enqueue ', id)
-        // debugger
-        if (queue.find(item => item.key === key)) {
-            delete queue[key]
-        }
-        queue.push({ key, value })
-        debouncedFlush()
+        onFlush([{ key, value }])
     }
+    // let queue = []
+    // const debouncedFlush = debounce(() => {
+    //     // console.log('flushing ', id)
+    //     onFlush(queue)
+    //     queue = []
+    // }, wait)
+    // return (key, value) => {
+    //     // console.log('enqueue ', id)
+    //     if (queue.find(item => item.key === key)) {
+    //         delete queue[key]
+    //     }
+    //     queue.push({ key, value })
+    //     debouncedFlush()
+    // }
 }
