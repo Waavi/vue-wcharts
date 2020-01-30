@@ -42,4 +42,14 @@ describe('Components/WGauge', () => {
         const wrapper = shallowMount(WGauge, defaultConfig)
         expect(wrapper.html()).toMatchSnapshot()
     })
+
+    it(`Should be render radius correctly`, () => {
+        const wrapper = shallowMount(WGauge, defaultConfig)
+        expect(wrapper.vm.curRadius).toMatchSnapshot()
+    })
+
+    it(`Should be render styles correctly`, () => {
+        const wrapper = shallowMount(WGauge, defaultConfig)
+        expect(wrapper.vm.contentStyles).toMatchSnapshot()
+    })
 })

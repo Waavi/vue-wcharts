@@ -7,3 +7,26 @@ exports[`Components/WGauge Should be render correctly 1`] = `
   <!---->
 </g>
 `;
+
+exports[`Components/WGauge Should be render correctly 2`] = `
+Object {
+  "innerRadius": 85,
+  "outerRadius": 100,
+}
+`;
+
+exports[`Components/WGauge Should be render radius correctly 1`] = `
+Object {
+  "innerRadius": 85,
+  "outerRadius": 100,
+}
+`;
+
+exports[`Components/WGauge Should be render styles correctly 1`] = `
+Object {
+  "height": "200px",
+  "overflow": "initial",
+  "transform": "translate(270px, 100px)",
+  "width": "200px",
+}
+`;

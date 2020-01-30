@@ -153,4 +153,12 @@ describe('Components/WLine', () => {
             expect(wrapper.emitted('onClickDot')).toHaveLength(1)
         })
     })
+
+    describe('Methods', () => {
+        it('Should be return y0 coord on y0Area executed', () => {
+            const customConfig = { ...defaultConfig, propsData: { ...defaultConfig.propsData, area: 'two', curve: true } }
+            const wrapper = shallowMount(WLine, customConfig)
+            expect(wrapper.vm.y0Area(null, 1)).toEqual(2210)
+        })
+    })
 })
