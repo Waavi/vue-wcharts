@@ -85,13 +85,13 @@ describe('Components/WScatter', () => {
     it(`Should be render correctly with curve and bool`, () => {
         const customConfig = { ...defaultConfig, propsData: { ...defaultConfig.propsData, curve: true } }
         const wrapper = shallowMount(WScatter, customConfig)
-        expect(wrapper.vm.linePath).toBeFalsy()
+        expect(wrapper.vm.linePath).toBeTruthy()
     })
 
     it(`Should be render correctly with curve and func`, () => {
         const customConfig = { ...defaultConfig, propsData: { ...defaultConfig.propsData, area: true, curve: curveStep } }
         const wrapper = shallowMount(WScatter, customConfig)
-        expect(wrapper.vm.linePath).toBeFalsy()
+        expect(wrapper.vm.linePath).toBeTruthy()
     })
 
     it(`Should be render correctly with custom fillColor`, () => {

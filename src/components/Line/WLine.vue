@@ -67,7 +67,7 @@ import animationMixin from '../../mixins/animation'
 import themeMixin from '../../mixins/theme'
 import visibleMixin from '../../mixins/visible'
 import { WSpread } from '../../transitions'
-import { isFunc, noNilInArray } from '../../utils/checks'
+import { isFunc, isNumber, noNilInArray } from '../../utils/checks'
 
 export default {
     name: 'WLine',
@@ -121,7 +121,7 @@ export default {
         lineData () {
             return this.Chart.data
                 .map((item, index) => item[this.datakey])
-                .map((y, x) => (y ? [this.Chart.xScale(x), this.Chart.yScale(y)] : [null]))
+                .map((y, x) => (isNumber(y) ? [this.Chart.xScale(x), this.Chart.yScale(y)] : [null]))
         },
         dotsData () {
             if (!this.dot) return []

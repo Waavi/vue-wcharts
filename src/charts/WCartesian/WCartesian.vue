@@ -5,8 +5,8 @@ import stack from 'd3-shape/src/stack'
 import stackOffsetDiverging from 'd3-shape/src/offset/diverging'
 import noop from 'lodash.noop'
 import { bound } from '../../utils/maths'
+import { isNumber } from '../../utils/checks'
 import merge from '../../utils/merge'
-
 import chartMixin from '../../mixins/chart'
 
 export default {
@@ -203,7 +203,7 @@ export default {
         getDataStacked (datakeys, offset = noop) {
             return stack()
                 .keys(datakeys)
-                .value((d, key) => d[key] || null)
+                .value((d, key) => (isNumber(d[key]) ? d[key] : null))
                 .offset(offset)(this.data)
         },
         // Set axis options

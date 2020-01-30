@@ -37,13 +37,13 @@
 import VueTypes from 'vue-types'
 import sortBy from 'lodash.sortby'
 import d3Line from 'd3-shape/src/line'
-import { monotoneX as curveMonotoneX } from 'd3-shape/src/curve/monotone'
+import cardinal from 'd3-shape/src/curve/cardinal'
 import { WDot } from '../Common'
 import animationMixin from '../../mixins/animation'
 import themeMixin from '../../mixins/theme'
 import visibleMixin from '../../mixins/visible'
 import { WSpread } from '../../transitions'
-import { isFunc } from '../../utils/checks'
+import { isFunc, isNumber, noNilInArray } from '../../utils/checks'
 
 export default {
     name: 'WScatter',
@@ -59,13 +59,13 @@ export default {
     ],
     inject: ['Chart'],
     props: {
-        // internal props set by the parent (WPieChart)
         index: VueTypes.number,
         datakey: VueTypes.string,
         trigger: VueTypes.oneOf(['hover', 'click', 'manual']).def('hover'),
         legend: VueTypes.string,
         curve: VueTypes.oneOfType([VueTypes.bool, VueTypes.func]).def(false),
         line: VueTypes.bool.def(false),
+        continued: VueTypes.bool.def(false),
         lineStyles: VueTypes.shape({
             stroke: VueTypes.string,
             strokeWidth: VueTypes.number,
@@ -80,6 +80,61 @@ export default {
         }).loose.def({}),
     },
     computed: {
+        active () {
+            return this.Chart.activeElements.includes(this.index)
+        },
+        points () {
+            // Check if has a multiple scatter
+            return this.datakey ? this.Chart.data.filter(item => item.$dataset === this.datakey) : (this.Chart.data || [])
+        },
+        lineData () {
+            const {
+                axis, xScale, yScale, zScale,
+            } = this.Chart
+            const { x, y, z } = axis
+            const data = this.continued ? sortBy(this.points, x.datakey) : this.points
+            return data.map(item => (isNumber(item[x.datakey]) && isNumber(item[y.datakey]) ? [xScale(item[x.datakey]), yScale(item[y.datakey]), zScale(item[z.datakey])] : [null]))
+        },
+        dotsData () {
+            const { axis } = this.Chart
+
+            return this.points.reduce((acc, item, index) => {
+                const [x, y, z = this.dotStylesCmp.radius] = this.lineData[index] || []
+                if (y === undefined) return acc
+                const coords = { x, y, z }
+                const value = Object.keys(axis).map(key => this.generateAxisValue(axis[key], item[axis[key].datakey])).filter(Boolean)
+                const info = {
+                    $dataset: item.$dataset,
+                    id: index,
+                    data: item,
+                    label: item.name || '',
+                    value,
+                }
+
+                return [
+                    ...acc, {
+                        index,
+                        cartesianIndex: this.index,
+                        value: item[axis.y.datakey],
+                        info,
+                        ...coords,
+                        ...this.dotStylesCmp,
+                        radius: z,
+                        hoverRadius: z,
+                    },
+                ]
+            }, [])
+        },
+        linePath () {
+            const draw = d3Line().defined(noNilInArray)
+            const data = this.continued ? this.lineData.filter(noNilInArray) : this.lineData
+
+            if (this.curve) {
+                draw.curve(isFunc(this.curve) ? this.curve : cardinal)
+            }
+
+            return draw(data)
+        },
         lineStylesCmp () {
             return {
                 ...this.themeStyles.line,
@@ -89,81 +144,23 @@ export default {
             }
         },
         dotStylesCmp () {
+            const styles = { ...this.themeStyles.dot, ...this.dotStyles }
             return {
-                ...this.themeStyles.dot,
-                ...this.dotStyles,
+                ...styles,
+                stroke: styles.stroke || this.fillColor,
+                fill: styles.fill || this.fillColor,
             }
         },
         fillColor () {
             return (this.colors || [])[this.index] || this.Chart.colors[this.index]
         },
-        active () {
-            return this.Chart.activeElements.includes(this.index)
-        },
-        points () {
-            // Check if has a multiple scatter
-            return this.datakey ? this.Chart.data.filter(item => item.$dataset === this.datakey) : (this.Chart.data || [])
-        },
-        lineData () {
-            // We sort values becouse we want a left to right line
-            return sortBy(this.points, this.Chart.axis.x.datakey).map((item, index) => ({
-                x: item[this.Chart.axis.x.datakey],
-                y: item[this.Chart.axis.y.datakey],
-            }))
-        },
-        dotsData () {
-            const {
-                xScale, yScale, zScale, axis,
-            } = this.Chart
-
-            return this.points.map((item, index) => {
-                const z = axis.z.datakey ? zScale(item[axis.z.datakey]) : this.dotStylesCmp.radius
-                const value = [
-                    this.generateAxisValue(axis.x, item[axis.x.datakey], this.fillColor),
-                    this.generateAxisValue(axis.y, item[axis.y.datakey], this.fillColor),
-                    ...(axis.z.datakey ? [this.generateAxisValue(axis.z, item[axis.z.datakey], this.fillColor)] : []),
-                ]
-
-                return {
-                    index,
-                    cartesianIndex: this.index,
-                    value: item[axis.y.datakey],
-                    x: xScale(item[axis.x.datakey]),
-                    y: yScale(item[axis.y.datakey]),
-                    z,
-                    info: {
-                        $dataset: item.$dataset,
-                        id: index,
-                        data: item,
-                        label: item.name || '',
-                        value,
-                    },
-                    // Styles
-                    ...this.dotStylesCmp,
-                    stroke: this.dotStylesCmp.stroke || this.fillColor,
-                    fill: this.dotStylesCmp.fill || this.fillColor,
-                    radius: z,
-                    hoverRadius: z,
-                }
-            })
-        },
-        genLine () {
-            return d3Line()
-                .x(d => this.Chart.xScale(d.x))
-                .y(d => this.Chart.yScale(d.y))
-        },
-        linePath () {
-            if (this.curve === false) return this.genLine(this.lineData)
-            const curveFn = isFunc(this.curve) ? this.curve : curveMonotoneX
-            return this.line ? this.genLine.curve(curveFn)(this.lineData) : null
-        },
     },
     methods: {
         generateAxisValue ({ name, datakey }, data, color) {
-            return ({
+            return data && ({
                 key: name,
                 value: data,
-                color,
+                color: color || this.fillColor,
             })
         },
     },
