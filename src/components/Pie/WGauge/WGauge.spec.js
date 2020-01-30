@@ -45,11 +45,13 @@ describe('Components/WGauge', () => {
 
     it(`Should be render radius correctly`, () => {
         const wrapper = shallowMount(WGauge, defaultConfig)
-        expect(wrapper.vm.curRadius).toMatchSnapshot()
+        expect(wrapper.vm.curRadius).toEqual({ innerRadius: 85, outerRadius: 100 })
     })
 
     it(`Should be render styles correctly`, () => {
         const wrapper = shallowMount(WGauge, defaultConfig)
-        expect(wrapper.vm.contentStyles).toMatchSnapshot()
+        expect(wrapper.vm.contentStyles).toEqual({
+            height: '200px', overflow: 'initial', transform: 'translate(270px, 100px)', width: '200px',
+        })
     })
 })
