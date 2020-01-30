@@ -1,6 +1,7 @@
 
 import VueTypes from 'vue-types'
 import { genTicks, genExactNbTicks } from '../utils/maths'
+import { isNumber } from '../utils/checks'
 import WAxisText from '../components/Axis/WAxisText/WAxisText.vue'
 import themeMixin from './theme'
 
@@ -87,6 +88,7 @@ export default {
             const {
                 data, canvas, bounds, xBounds, padding, yScale, xScale, scatter,
             } = this.Chart
+            const tickOffset = this.tickStylesCmp.fontSize / 3
 
             // Return a empty array if we don't have any data
             if (!data || data.length === 0 || this.numTicks === 0) {
@@ -115,7 +117,7 @@ export default {
                             text: {
                                 index,
                                 value: this.format(value),
-                                x: x + this.tickStylesCmp.fontSize / 3,
+                                x: x + tickOffset,
                                 y: canvas.y1 + this.textOffset,
                             },
                         }
@@ -169,7 +171,7 @@ export default {
                         index,
                         value: this.format(value),
                         x: canvas.x0 - this.textOffset,
-                        y: y + this.tickStylesCmp.fontSize / 3,
+                        y: y + tickOffset,
                     },
                 }
             })
@@ -224,9 +226,13 @@ export default {
         },
         // Generate styles of text
         tickStylesCmp () {
-            return {
+            const styles = {
                 ...this.themeStyles.tick,
                 ...this.tickStyles,
+            }
+            return {
+                ...styles,
+                fontSize: isNumber(styles.fontSize) ? styles.fontSize : 12,
             }
         },
         // Generate styles of label

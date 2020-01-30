@@ -43,7 +43,9 @@ import animationMixin from '../../mixins/animation'
 import themeMixin from '../../mixins/theme'
 import visibleMixin from '../../mixins/visible'
 import { WSpread } from '../../transitions'
-import { isFunc, isNumber, noNilInArray } from '../../utils/checks'
+import {
+    isFunc, isNil, isNumber, noNilInArray,
+} from '../../utils/checks'
 
 export default {
     name: 'WScatter',
@@ -93,7 +95,10 @@ export default {
             } = this.Chart
             const { x, y, z } = axis
             const data = this.continued ? sortBy(this.points, x.datakey) : this.points
-            return data.map(item => (isNumber(item[x.datakey]) && isNumber(item[y.datakey]) ? [xScale(item[x.datakey]), yScale(item[y.datakey]), zScale(item[z.datakey])] : [null]))
+            return data.map((item) => {
+                if (!isNumber(item[x.datakey]) || !isNumber(item[y.datakey])) return [null]
+                return [xScale(item[x.datakey]), yScale(item[y.datakey]), zScale(item[z.datakey])].filter(val => !isNil(val))
+            })
         },
         dotsData () {
             const { axis } = this.Chart
