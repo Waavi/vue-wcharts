@@ -10,6 +10,8 @@ export const isObj = val => typeof val === 'object' && !Array.isArray(val)
 
 export const isArray = val => Array.isArray(val)
 
+export const isNil = val => val === null || val === undefined
+
 // eslint-disable-next-line func-names
 export const isNaN = Number.isNaN || function (value) {
     // eslint-disable-next-line no-self-compare
@@ -20,6 +22,10 @@ export const isPercent = value => (
     isString(value) && value.indexOf('%') === value.length - 1
 )
 
+export function noNilInArray (arr) {
+    return !arr.some(isNil)
+}
+
 export default {
     isBoolean,
     isFunc,
@@ -29,4 +35,6 @@ export default {
     isArray,
     isNaN,
     isPercent,
+    isNil,
+    noNilInArray,
 }

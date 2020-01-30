@@ -201,7 +201,10 @@ export default {
         // Return data without transform of datakeys and dataset props
         // ref: https://github.com/d3/d3-shape#stacks
         getDataStacked (datakeys, offset = noop) {
-            return stack().keys(datakeys).offset(offset)(this.data)
+            return stack()
+                .keys(datakeys)
+                .value((d, key) => d[key] || null)
+                .offset(offset)(this.data)
         },
         // Set axis options
         setAxisOptions (options) {

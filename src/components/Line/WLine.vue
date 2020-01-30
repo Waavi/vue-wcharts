@@ -60,14 +60,14 @@
 import VueTypes from 'vue-types'
 import d3Line from 'd3-shape/src/line'
 import d3Area from 'd3-shape/src/area'
-import { monotoneX as curveMonotoneX } from 'd3-shape/src/curve/monotone'
+import cardinal from 'd3-shape/src/curve/cardinal'
 import merge from '../../utils/merge'
 import { WDot } from '../Common'
 import animationMixin from '../../mixins/animation'
 import themeMixin from '../../mixins/theme'
 import visibleMixin from '../../mixins/visible'
 import { WSpread } from '../../transitions'
-import { isFunc } from '../../utils/checks'
+import { isFunc, noNilInArray } from '../../utils/checks'
 
 export default {
     name: 'WLine',
@@ -88,13 +88,13 @@ export default {
         trigger: VueTypes.oneOf(['hover', 'click', 'manual']).def('click'),
         legend: VueTypes.string,
         curve: VueTypes.oneOfType([VueTypes.bool, VueTypes.func]).def(false),
-        area: VueTypes.bool.def(false),
+        area: VueTypes.oneOfType([VueTypes.bool, VueTypes.string]).def(false),
         styles: VueTypes.shape({
             fill: VueTypes.string,
             stroke: VueTypes.string,
             strokeWidth: VueTypes.number,
             strokeDasharray: VueTypes.string,
-        }).def({}),
+        }).loose.def({}),
         dot: VueTypes.bool.def(false),
         dotStyles: VueTypes.shape({
             fill: VueTypes.string,
@@ -103,6 +103,7 @@ export default {
             radius: VueTypes.number,
             hoverRadius: VueTypes.number,
         }).def({}),
+        continued: VueTypes.bool.def(false),
     },
     // It's called by parent components to necessary calcs before be rendering
     // Componen is not mounted and cannot access to default props
@@ -118,67 +119,63 @@ export default {
             return this.Chart.activeElements.includes(this.index)
         },
         lineData () {
-            return this.Chart.data.map((item, index) => ({
-                x: index,
-                y: item[this.datakey],
-            }))
+            return this.Chart.data
+                .map((item, index) => item[this.datakey])
+                .map((y, x) => (y ? [this.Chart.xScale(x), this.Chart.yScale(y)] : [null]))
         },
         dotsData () {
-            if (this.dot) {
-                const {
-                    data, xScale, yScale, datakeys, axis,
-                } = this.Chart
-                return data.map((item, index) => {
-                    const key = datakeys[this.index]
-                    const label = item[axis.x.datakey]
-                    const value = [{
-                        value: item[key],
-                        color: this.fillColor,
-                    }]
+            if (!this.dot) return []
+            const { data, axis } = this.Chart
 
-                    return {
+            return data.reduce((acc, item, index) => {
+                const [x, y] = this.lineData[index] || []
+                if (y === undefined) return acc
+
+                const info = {
+                    id: this.index,
+                    data: item,
+                    point: index,
+                    label: item[axis.x.datakey],
+                    value: [{
+                        value: item[this.datakey],
+                        color: this.fillColor,
+                    }],
+                }
+
+                return [
+                    ...acc,
+                    {
                         index,
                         cartesianIndex: this.index,
                         value: item[this.datakey],
-                        x: xScale(index),
-                        y: yScale(item[this.datakey]),
-                        info: {
-                            id: this.index,
-                            label,
-                            data: item,
-                            point: index,
-                            value,
-                        },
-                        // Styles
+                        x,
+                        y,
+                        info,
                         ...this.dotStylesCmp,
-                        stroke: this.dotStylesCmp.stroke || this.fillColor,
-                        fill: this.dotStylesCmp.fill || this.fillColor,
-                    }
-                })
-            }
-            return []
-        },
-        genLine () {
-            return d3Line()
-                .x(d => this.Chart.xScale(d.x))
-                .y(d => this.Chart.yScale(d.y))
+                    },
+                ]
+            }, [])
         },
         linePath () {
-            if (this.curve === false) return this.genLine(this.lineData)
-            const curveFn = isFunc(this.curve) ? this.curve : curveMonotoneX
-            return this.genLine.curve(curveFn)(this.lineData)
-        },
-        genArea () {
-            if (!this.area) return null
-            return d3Area().x(d => this.Chart.xScale(d.x))
-                .y0(this.Chart.canvas.y1)
-                .y1(d => this.Chart.yScale(d.y))
+            const draw = d3Line().defined(noNilInArray)
+            const data = this.continued ? this.lineData.filter(noNilInArray) : this.lineData
+
+            if (this.curve) {
+                draw.curve(isFunc(this.curve) ? this.curve : cardinal)
+            }
+
+            return draw(data)
         },
         areaPath () {
             if (!this.area) return null
-            if (this.curve === false) return this.genArea(this.lineData)
-            const curveFn = isFunc(this.curve) ? this.curve : curveMonotoneX
-            return this.genArea.curve(curveFn)(this.lineData)
+            const draw = d3Area().defined(noNilInArray).y0(this.y0Area)
+            const data = this.continued ? this.lineData.filter(noNilInArray) : this.lineData
+
+            if (this.curve) {
+                draw.curve(isFunc(this.curve) ? this.curve : cardinal)
+            }
+
+            return draw(data)
         },
         // Event Listeners
         lineListeners () {
@@ -196,22 +193,29 @@ export default {
         },
         // Styles
         stylesCmp () {
+            const stroke = ((this.themeStyles || {}).styles || {}).stroke || this.styles.stroke || this.fillColor
             return {
                 ...this.themeStyles.styles,
                 ...this.styles,
-                stroke: (this.themeStyles && this.themeStyles.styles && this.themeStyles.styles.stroke) ||
-                 this.styles.stroke ||
-                 this.fillColor,
+                stroke,
             }
         },
         dotStylesCmp () {
+            const styles = { ...this.themeStyles.dot, ...this.dotStyles }
             return {
-                ...this.themeStyles.dot,
-                ...this.dotStyles,
+                ...styles,
+                stroke: styles.stroke || this.fillColor,
+                fill: styles.fill || this.fillColor,
             }
         },
         fillColor () {
             return (this.colors || [])[this.index] || this.Chart.colors[this.index]
+        },
+    },
+    methods: {
+        y0Area (d, index) {
+            if (typeof this.area !== 'string') return this.Chart.canvas.y1
+            return this.Chart.data.map(item => this.Chart.yScale(item[this.area] || 0))[index]
         },
     },
 }
