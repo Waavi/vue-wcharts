@@ -117,18 +117,15 @@ describe('Components/WLine', () => {
     it(`Should be render correctly with curve and bool`, () => {
         const customConfig = { ...defaultConfig, propsData: { ...defaultConfig.propsData, area: true, curve: true } }
         const wrapper = shallowMount(WLine, customConfig)
-        expect(wrapper.vm.linePath).toEqual('M0,4000C0,4000,0.6666666666666667,2033.3333333333335,1,3000C1.3333333333333333,3966.6666666666665,2,9800,2,9800')
-        expect(wrapper.vm.areaPath).toEqual(
-            [`M0,4000C0,4000,0.6666666666666667,2033.3333333333335,1,3000C1.3333333333333333,`,
-                `3966.6666666666665,2,9800,2,9800L2,250C2,250,1.3333333333333333,250,1,250C0.6666666666666667,250,0,250,0,250Z`].join('')
-        )
+        expect(wrapper.vm.linePath).toMatchSnapshot()
+        expect(wrapper.vm.areaPath).toMatchSnapshot()
     })
 
     it(`Should be render correctly with curve and func`, () => {
         const customConfig = { ...defaultConfig, propsData: { ...defaultConfig.propsData, area: true, curve: curveStep } }
         const wrapper = shallowMount(WLine, customConfig)
-        expect(wrapper.vm.linePath).toEqual('M0,4000L0.5,4000L0.5,3000L1.5,3000L1.5,9800L2,9800')
-        expect(wrapper.vm.areaPath).toEqual('M0,4000L0.5,4000L0.5,3000L1.5,3000L1.5,9800L2,9800L2,250L1.5,250L1.5,250L0.5,250L0.5,250L0,250Z')
+        expect(wrapper.vm.linePath).toMatchSnapshot()
+        expect(wrapper.vm.areaPath).toMatchSnapshot()
     })
 
     describe('Events', () => {
