@@ -37,7 +37,7 @@
 import VueTypes from 'vue-types'
 import sortBy from 'lodash.sortby'
 import d3Line from 'd3-shape/src/line'
-import cardinal from 'd3-shape/src/curve/cardinal'
+import { monotoneX as curveMonotoneX } from 'd3-shape/src/curve/monotone'
 import { WDot } from '../Common'
 import animationMixin from '../../mixins/animation'
 import themeMixin from '../../mixins/theme'
@@ -135,7 +135,7 @@ export default {
             const data = this.continued ? this.lineData.filter(noNilInArray) : this.lineData
 
             if (this.curve) {
-                draw.curve(isFunc(this.curve) ? this.curve : cardinal)
+                draw.curve(isFunc(this.curve) ? this.curve : curveMonotoneX)
             }
 
             return draw(data)
