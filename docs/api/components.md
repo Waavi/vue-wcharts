@@ -177,7 +177,8 @@ sidebarDepth: 3
 | trigger | string | `'hover'`, `'click'`, `'manual'` | Events triggering the tooltip |
 | legend | string |  | Legend's text |
 | curve | bool, func | false | Curve of the line, you can specify the curve function |
-| area | bool | false | If true set, area will be drawn  |
+| area | bool, string | false | If true or datakey element set, area will be drawn  |
+| continued | bool | false | If true set and has holes in data the line continue to the nex point |
 | styles | object | ```{fill: '',stroke: '',strokeWidth: 1,strokeDasharray: '0'}``` | Line styles |
 | dot | bool | false | If true set, dots will be drawn |
 | dotStyles | object | ```{fill: '',stroke: '',strokeWidth: 0,radius: 4,hoverRadius: 8}``` | Dot styles |
@@ -422,6 +423,7 @@ sidebarDepth: 3
 | trigger | string | `'hover'`, `'click'`, `'manual'` | Events triggering the tooltip |
 | legend | string | | Legend's text |
 | curve | bool, func | false | Curve of the line, you can choose the curve function if you want |
+| continued | bool | false | If true set and has holes in data the line continue to the nex point |
 | line | bool | false | Draw a line joining the dots |
 | lineStyles | object | ```{fill: '',stroke: '',strokeWidth: 1,strokeDasharray: '0'}``` | Line styles |
 | styles | object | ```{fill: '',stroke: '',strokeWidth: 0,radius: 8,opacity: 0.8}``` | Dot styles |

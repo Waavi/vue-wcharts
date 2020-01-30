@@ -99,6 +99,18 @@ sidebarDepth: 1
 <<< @/docs/.vuepress/components/Examples/Lines/CustomDots.vue
 </SourceCode>
 
+## Holes data
+
+<br>
+
+<Examples-Lines-Holes />
+
+<br>
+
+<SourceCode>
+<<< @/docs/.vuepress/components/Examples/Lines/Holes.vue
+</SourceCode>
+
 ## Area
 
 <br>
@@ -122,6 +134,31 @@ sidebarDepth: 1
 <SourceCode>
 <<< @/docs/.vuepress/components/Examples/Lines/AreaGradient.vue
 </SourceCode>
+
+## Area with ranges
+
+<br>
+
+<Examples-Lines-AreaGradientKey />
+
+<br>
+
+<SourceCode>
+<<< @/docs/.vuepress/components/Examples/Lines/AreaGradientKey.vue
+</SourceCode>
+
+## Area with intersection data
+
+<br>
+
+<Examples-Lines-AreaGradientIntersection />
+
+<br>
+
+<SourceCode>
+<<< @/docs/.vuepress/components/Examples/Lines/AreaGradientIntersection.vue
+</SourceCode>
+
 
 ## With grid
 

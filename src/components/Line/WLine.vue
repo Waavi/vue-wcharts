@@ -89,13 +89,14 @@ export default {
         legend: VueTypes.string,
         curve: VueTypes.oneOfType([VueTypes.bool, VueTypes.func]).def(false),
         area: VueTypes.oneOfType([VueTypes.bool, VueTypes.string]).def(false),
+        continued: VueTypes.bool.def(false),
+        dot: VueTypes.bool.def(false),
         styles: VueTypes.shape({
             fill: VueTypes.string,
             stroke: VueTypes.string,
             strokeWidth: VueTypes.number,
             strokeDasharray: VueTypes.string,
         }).loose.def({}),
-        dot: VueTypes.bool.def(false),
         dotStyles: VueTypes.shape({
             fill: VueTypes.string,
             stroke: VueTypes.string,
@@ -103,7 +104,6 @@ export default {
             radius: VueTypes.number,
             hoverRadius: VueTypes.number,
         }).def({}),
-        continued: VueTypes.bool.def(false),
     },
     // It's called by parent components to necessary calcs before be rendering
     // Componen is not mounted and cannot access to default props
