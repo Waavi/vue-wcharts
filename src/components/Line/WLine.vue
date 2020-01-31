@@ -6,9 +6,7 @@
         >
             <path
                 :d="linePath"
-                :style="{ transition }"
-                v-bind="stylesCmp"
-                fill="none"
+                :style="{ ...stylesCmp, fill: 'none', transition }"
                 v-on="lineListeners"
             />
             <defs
@@ -94,13 +92,10 @@ export default {
         styles: VueTypes.shape({
             fill: VueTypes.string,
             stroke: VueTypes.string,
-            strokeWidth: VueTypes.number,
-            strokeDasharray: VueTypes.string,
         }).loose.def({}),
         dotStyles: VueTypes.shape({
             fill: VueTypes.string,
             stroke: VueTypes.string,
-            strokeWidth: VueTypes.number,
             radius: VueTypes.number,
             hoverRadius: VueTypes.number,
         }).def({}),
