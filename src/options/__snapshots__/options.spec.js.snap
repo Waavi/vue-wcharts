@@ -162,7 +162,7 @@ Object {
       "fill": "",
       "stroke": "",
       "strokeDasharray": "0",
-      "strokeWidth": 1,
+      "strokeWidth": 2,
     },
   },
   "WSimpleHStackBar": Object {
@@ -426,7 +426,7 @@ Object {
       "fill": "",
       "stroke": "",
       "strokeDasharray": "0",
-      "strokeWidth": 1,
+      "strokeWidth": 2,
     },
   },
   "WSimpleHStackBar": Object {

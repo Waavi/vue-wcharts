@@ -71,7 +71,7 @@ export default {
         line: {
             fill: '',
             stroke: '',
-            strokeWidth: 1,
+            strokeWidth: 2,
             strokeDasharray: '0',
         },
         dot: {

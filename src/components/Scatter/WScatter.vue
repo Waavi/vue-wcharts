@@ -7,7 +7,7 @@
         >
             <path
                 :d="linePath"
-                :style="{ ...stylesCmp, fill: 'none', transition: `all 250ms ${transEffect}` }"
+                :style="{ ...lineStylesCmp, fill: 'none', transition: `all 250ms ${transEffect}` }"
             />
         </WSpread>
         <g>
