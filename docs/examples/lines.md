@@ -99,7 +99,7 @@ sidebarDepth: 1
 <<< @/docs/.vuepress/components/Examples/Lines/CustomDots.vue
 </SourceCode>
 
-## Holes data
+## Holes in data
 
 <br>
 
