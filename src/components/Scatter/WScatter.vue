@@ -7,7 +7,7 @@
         >
             <path
                 :d="linePath"
-                :style="lineStylesCmp"
+                :style="{ ...stylesCmp, fill: 'none', transition: `all 250ms ${transEffect}` }"
             />
         </WSpread>
         <g>
@@ -140,12 +140,11 @@ export default {
             return draw(data)
         },
         lineStylesCmp () {
+            const stroke = this.themeStyles.line.stroke || this.lineStyles.stroke || this.fillColor
             return {
                 ...this.themeStyles.line,
                 ...this.lineStyles,
-                stroke: this.themeStyles.line.stroke || this.lineStyles.stroke || this.fillColor,
-                fill: 'none',
-                transition: `all 250ms ${this.transEffect}`,
+                stroke,
             }
         },
         dotStylesCmp () {
