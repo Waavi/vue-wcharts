@@ -7,7 +7,11 @@
         :xBound="[n => n - 1000,n => n + 1000]"
     >
         <WCartesianGrid />
-        <WScatter legend="One Scatter" />
+        <WScatter
+            line
+            curve
+            legend="One Scatter"
+        />
         <WXAxis
             name="one"
             datakey="one"

@@ -117,18 +117,15 @@ describe('Components/WLine', () => {
     it(`Should be render correctly with curve and bool`, () => {
         const customConfig = { ...defaultConfig, propsData: { ...defaultConfig.propsData, area: true, curve: true } }
         const wrapper = shallowMount(WLine, customConfig)
-        expect(wrapper.vm.linePath).toEqual('M0,4000C0.3333333333333333,3500,0.6666666666666667,3000,1,3000C1.3333333333333333,3000,1.6666666666666667,6400,2,9800')
-        expect(wrapper.vm.areaPath).toEqual(
-            [`M0,4000C0.3333333333333333,3500,0.6666666666666667,3000,1,3000C1.3333333333333333,3000,1.6666666666666667,`,
-                `6400,2,9800L2,250C1.6666666666666667,250,1.3333333333333333,250,1,250C0.6666666666666667,250,0.3333333333333333,250,0,250Z`].join('')
-        )
+        expect(wrapper.vm.linePath).toMatchSnapshot()
+        expect(wrapper.vm.areaPath).toMatchSnapshot()
     })
 
     it(`Should be render correctly with curve and func`, () => {
         const customConfig = { ...defaultConfig, propsData: { ...defaultConfig.propsData, area: true, curve: curveStep } }
         const wrapper = shallowMount(WLine, customConfig)
-        expect(wrapper.vm.linePath).toEqual('M0,4000L0.5,4000L0.5,3000L1.5,3000L1.5,9800L2,9800')
-        expect(wrapper.vm.areaPath).toEqual('M0,4000L0.5,4000L0.5,3000L1.5,3000L1.5,9800L2,9800L2,250L1.5,250L1.5,250L0.5,250L0.5,250L0,250Z')
+        expect(wrapper.vm.linePath).toMatchSnapshot()
+        expect(wrapper.vm.areaPath).toMatchSnapshot()
     })
 
     describe('Events', () => {
@@ -151,6 +148,14 @@ describe('Components/WLine', () => {
             const wrapper = mount(WLine, dotConfig)
             wrapper.find(WDot).trigger('click')
             expect(wrapper.emitted('onClickDot')).toHaveLength(1)
+        })
+    })
+
+    describe('Methods', () => {
+        it('Should be return y0 coord on y0Area executed', () => {
+            const customConfig = { ...defaultConfig, propsData: { ...defaultConfig.propsData, area: 'two', curve: true } }
+            const wrapper = shallowMount(WLine, customConfig)
+            expect(wrapper.vm.y0Area(null, 1)).toEqual(2210)
         })
     })
 })
