@@ -7,8 +7,7 @@
         >
             <path
                 :d="linePath"
-                :style="{ transition: `all 250ms ${transEffect}` }"
-                v-bind="lineStylesCmp"
+                :style="lineStylesCmp"
             />
         </WSpread>
         <g>
@@ -146,6 +145,7 @@ export default {
                 ...this.lineStyles,
                 stroke: this.themeStyles.line.stroke || this.lineStyles.stroke || this.fillColor,
                 fill: 'none',
+                transition: `all 250ms ${this.transEffect}`,
             }
         },
         dotStylesCmp () {

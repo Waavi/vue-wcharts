@@ -18,7 +18,7 @@ exports[`Components/WScatter Should be render correctly 1`] = `
 exports[`Components/WScatter Shouldn be render with line 1`] = `
 <g>
   <WSpread-stub axis="x" transition="all 1s ease">
-    <path d="M4000,2400L3000,2210L9800,2200L2780,3908L1890,4800L2390,3800L3490,4300" fill="none" stroke="#48c0b6" strokeWidth="1" strokeDasharray="0" style="transition: all 250ms ease;"></path>
+    <path d="M4000,2400L3000,2210L9800,2200L2780,3908L1890,4800L2390,3800L3490,4300" style="fill: none; stroke: #48c0b6; stroke-width: 1; stroke-dasharray: 0; transition: all 250ms ease;"></path>
   </WSpread-stub>
   <g>
     <WDot-stub colors="#48c0b6,#9d6af5,#ffde69,#e8e8e8,#54ddd9,#5C6BC0,#FB499D" index="0" cartesianIndex="0" trigger="hover" x="4000" y="2400" fill="#48c0b6" stroke="#48c0b6" strokeWidth="0" radius="2300" hoverRadius="2300" info="[object Object]" styles="[object Object]" transition="all 250ms ease" value="2400" z="2300" opacity="0.8"></WDot-stub>

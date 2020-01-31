@@ -58,10 +58,8 @@
                 id="label"
             >
                 <WTrans
-                    :initialProps="{
-                        opacity: 0,
-                    }"
-                    :transition="`all ${transDuration / 2}s ${transDuration}s ${transEffect}`"
+                    :initialProps="{ opacity: 0 }"
+                    :transition="transitionCmp"
                 >
                     <slot
                         name="label"
@@ -96,10 +94,8 @@
                 id="label"
             >
                 <WTrans
-                    :initialProps="{
-                        opacity: 0,
-                    }"
-                    :transition="`all ${transDuration / 2}s ${transDuration}s ${transEffect}`"
+                    :initialProps="{ opacity: 0 }"
+                    :transition="transitionCmp"
                 >
                     <slot
                         name="stackedLabel"
@@ -381,6 +377,9 @@ export default {
                 ...this.themeStyles.styles,
                 ...this.styles,
             }
+        },
+        transitionCmp () {
+            return `all ${this.transDuration / 2}s ${this.transDuration}s ${this.transEffect}`
         },
         // Label styles
         labelStylesCmp () {
