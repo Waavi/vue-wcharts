@@ -4,11 +4,6 @@
             axis="x"
             :transition="transition"
         >
-            <path
-                :d="linePath"
-                :style="{ ...stylesCmp, fill: 'none', transition }"
-                v-on="lineListeners"
-            />
             <defs
                 v-if="area && stylesCmp.fill === ''"
             >
@@ -24,6 +19,11 @@
                 :d="areaPath"
                 :fill="stylesCmp.fill || `url(#areaGradient${_uid})`"
                 :style="{ transition }"
+                v-on="lineListeners"
+            />
+            <path
+                :d="linePath"
+                :style="{ ...stylesCmp, fill: 'none', transition }"
                 v-on="lineListeners"
             />
         </WSpread>
