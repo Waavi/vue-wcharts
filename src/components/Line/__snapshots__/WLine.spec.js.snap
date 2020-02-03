@@ -3,9 +3,9 @@
 exports[`Components/WLine Should be render correctly 1`] = `
 <g>
   <WSpread-stub axis="x" transition="all 1s ease">
+    <!---->
+    <!---->
     <path d="M0,4000L1,3000L2,9800" style="fill: none; stroke: FFF; stroke-width: 2; stroke-dasharray: 0; transition: all 1s ease;"></path>
-    <!---->
-    <!---->
   </WSpread-stub>
   <!---->
 </g>
@@ -14,13 +14,13 @@ exports[`Components/WLine Should be render correctly 1`] = `
 exports[`Components/WLine Should be render correctly with area 1`] = `
 <g>
   <WSpread-stub axis="x" transition="all 1s ease">
-    <path d="M0,4000L1,3000L2,9800" style="fill: none; stroke: FFF; stroke-width: 2; stroke-dasharray: 0; transition: all 1s ease;"></path>
     <defs>
       <linearGradient id="areaGradient15">
         <stop stop-color="FFF" stop-opacity="0.5"></stop>
       </linearGradient>
     </defs>
     <path d="M0,4000L1,3000L2,9800L2,250L1,250L0,250Z" fill="url(#areaGradient15)" style="transition: all 1s ease;"></path>
+    <path d="M0,4000L1,3000L2,9800" style="fill: none; stroke: FFF; stroke-width: 2; stroke-dasharray: 0; transition: all 1s ease;"></path>
   </WSpread-stub>
   <!---->
 </g>
@@ -37,9 +37,9 @@ exports[`Components/WLine Should be render correctly with curve and func 2`] = `
 exports[`Components/WLine Should be render correctly with custom color area  1`] = `
 <g>
   <WSpread-stub axis="x" transition="all 1s ease">
-    <path d="M0,4000L1,3000L2,9800" style="fill: none; stroke: #48c0b6; stroke-width: 2; stroke-dasharray: 0; transition: all 1s ease;"></path>
     <!---->
     <path d="M0,4000L1,3000L2,9800L2,250L1,250L0,250Z" fill="red" style="transition: all 1s ease;"></path>
+    <path d="M0,4000L1,3000L2,9800" style="fill: none; stroke: #48c0b6; stroke-width: 2; stroke-dasharray: 0; transition: all 1s ease;"></path>
   </WSpread-stub>
   <!---->
 </g>
@@ -48,9 +48,9 @@ exports[`Components/WLine Should be render correctly with custom color area  1`]
 exports[`Components/WLine Should be render correctly with dots 1`] = `
 <g>
   <WSpread-stub axis="x" transition="all 1s ease">
+    <!---->
+    <!---->
     <path d="M0,4000L1,3000L2,9800" style="fill: none; stroke: FFF; stroke-width: 2; stroke-dasharray: 0; transition: all 1s ease;"></path>
-    <!---->
-    <!---->
   </WSpread-stub>
   <g>
     <WDot-stub colors="#48c0b6,#9d6af5,#ffde69,#e8e8e8,#54ddd9,#5C6BC0,#FB499D" index="0" cartesianIndex="0" trigger="click" x="0" y="4000" fill="#48c0b6" stroke="#48c0b6" strokeWidth="2" radius="4" hoverRadius="8" info="[object Object]" styles="[object Object]" transition="all 250ms ease" value="4000"></WDot-stub>

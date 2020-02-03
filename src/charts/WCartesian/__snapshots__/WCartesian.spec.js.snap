@@ -10,9 +10,9 @@ exports[`Charts/WCartesian Should be ommit children components not allowed 1`] =
           </clipPath>
         </defs>
         <g clip-path="url(#WSpread62)">
+          <!---->
+          <!---->
           <path d="M0,352.2970721256844L300,400L600,0" style="fill: none; stroke: #48c0b6; stroke-width: 2; stroke-dasharray: 0; transition: all 1s ease;"></path>
-          <!---->
-          <!---->
         </g>
       </g>
       <!---->
@@ -133,9 +133,9 @@ exports[`Charts/WCartesian Should be render correctly with bars and lines 1`] = 
           </clipPath>
         </defs>
         <g clip-path="url(#WSpread55)">
+          <!---->
+          <!---->
           <path d="M75,400L300,52L525,226" style="fill: none; stroke: #9d6af5; stroke-width: 2; stroke-dasharray: 0; transition: all 1s ease;"></path>
-          <!---->
-          <!---->
         </g>
       </g>
       <!---->
