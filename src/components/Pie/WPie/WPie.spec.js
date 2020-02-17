@@ -61,6 +61,11 @@ describe('Components/WPie', () => {
         expect(wrapper.html()).toMatchSnapshot()
     })
 
+    it('Should be normalize curValues with maxValue prop', () => {
+        const wrapper = mount(WPie, { ...defaultConfig, propsData: { ...propsData, maxValue: 5000, datakey: 'name' } })
+        expect(wrapper.vm.curValues).toEqual([5000, 5000, 5000, 5000, 5000, 5000, 5000])
+    })
+
     it('Should be render correctly with custom styles', () => {
         const wrapper = mount(WPie, { ...defaultConfig, propsData: { ...propsData, styles: { backgroundColor: 'green' } } })
         expect(wrapper.vm.stylesCmp).toEqual({ backgroundColor: 'green', position: 'relative', transform: 'translate(50%, 50%)' })
@@ -73,6 +78,16 @@ describe('Components/WPie', () => {
 
         const wrapperTwo = mount(WPie, { ...defaultConfig, propsData: { ...propsData, radius: null } })
         expect(wrapperTwo.vm.curRadius).toEqual({ innerRadius: 0, outerRadius: 100 })
+    })
+
+    it('Should be render correctly with custom styles', () => {
+        const wrapper = mount(WPie, { ...defaultConfig, propsData: { ...propsData, styles: { backgroundColor: 'green' } } })
+        expect(wrapper.vm.contentStyles).toEqual({
+            height: '200px',
+            overflow: 'initial',
+            transform: 'translate(270px, 100px)',
+            width: '200px',
+        })
     })
 
     it('It emits the handleClick event', () => {
