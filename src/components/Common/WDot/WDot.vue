@@ -63,7 +63,11 @@ export default {
         dotListeners () {
             return merge({}, this.$listeners, {
                 click: (event) => {
-                    if (this.trigger === 'click') this.handleActive(event)
+                    if (this.trigger === 'click') {
+                        if ((this.Chart.active.el || {}).id !== (this.info || {}).id) this.handleActive(event)
+                        else this.Chart.cleanActive()
+                    }
+
                     this.$emit('onClick', this.info)
                 },
                 mouseenter: (event) => {
@@ -71,7 +75,7 @@ export default {
                     this.$emit('onMouseenter', this.info)
                 },
                 mouseleave: () => {
-                    if (['hover', 'click'].includes(this.trigger)) this.Chart.cleanActive()
+                    if (['hover'].includes(this.trigger)) this.Chart.cleanActive()
                     this.$emit('onMouseleave')
                 },
             })

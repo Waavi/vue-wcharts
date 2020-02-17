@@ -150,24 +150,21 @@ export default {
         pieListeners () {
             return merge({}, this.$listeners, {
                 click: (event) => {
+                    const id = parseInt(event.target.id, 0)
                     if (this.trigger === 'click') {
-                        this.setActivePath(parseInt(event.target.id, 0))
-                        this.handleActive(event)
+                        if (this.activePath !== id) this.handleSetActive(id, event)
+                        else this.handleCleanActive()
                     }
+
                     this.$emit('onClick')
                 },
                 mouseenter: (event) => {
-                    if (this.trigger === 'hover') {
-                        this.setActivePath(parseInt(event.target.id, 0))
-                        this.handleActive(event)
-                    }
+                    const id = parseInt(event.target.id, 0)
+                    if (this.trigger === 'hover') this.handleSetActive(id, event)
                     this.$emit('onMouseenter')
                 },
                 mouseleave: () => {
-                    if (['hover', 'click'].includes(this.trigger)) {
-                        this.setActivePath(null)
-                        this.Chart.cleanActive()
-                    }
+                    if (['hover'].includes(this.trigger)) this.handleCleanActive()
                     this.$emit('onMouseleave')
                 },
             })
@@ -228,6 +225,14 @@ export default {
         },
     },
     methods: {
+        handleSetActive (id, event) {
+            this.setActivePath(id)
+            this.handleActive(event)
+        },
+        handleCleanActive () {
+            this.setActivePath(null)
+            this.Chart.cleanActive()
+        },
         setActivePath (id) {
             if ([null, undefined].includes(this.itemActive)) this.activePath = id
         },
