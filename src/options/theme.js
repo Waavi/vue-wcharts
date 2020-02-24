@@ -47,35 +47,31 @@ export default {
             fill: '#fbfbfb',
         },
     },
-    WLine: {
+    WLine: ({ color: { main = '#555', secondary } = {}, hoverRadius = 8 }) => ({
         line: {
             fill: 'none',
-            stroke: '#555',
+            stroke: main,
             strokeWidth: 2,
             strokeDasharray: '0',
+            // https://css-tricks.com/presentation-attributes-vs-inline-styles/
+            // => ¿Y si esto devuelve los attrs para el componente svg concreto y themeStyle hace además un merge con este styles y el suyo?
+            // styles: {
+
+            // },
         },
         dot: {
-            fill: 'white',
+            fill: main,
             stroke: '',
             strokeWidth: 2,
             radius: 4,
-            hoverRadius: 8,
+            hoverRadius,
         },
-    },
-    WBar: {
-        styles: {},
-        label: {
-            fill: colors.grayDarker,
-            cursor: 'default',
+    }),
+    WBar: ({ color: { main = '#555', secondary } = {}, hoverRadius = 8 }) => ({
+        rect: {
+            fill: main,
         },
-        stackedLabel: {
-            fill: colors.grayDarker,
-            cursor: 'default',
-        },
-        background: {
-            fill: colors.grayLight,
-        },
-    },
+    }),
     WScatter: {
         line: {
             fill: '',
@@ -212,4 +208,33 @@ export default {
             background: colors.white,
         },
     },
+}
+
+export const COLORS = {
+    red: { main: '#f88', secondary: '#fbb' },
+    green: { main: '#8f8', secondary: '#bfb' },
+    blue: { main: '#88f', secondary: '#bbf' },
+    yellow: { main: '#ff8', secondary: '#ffb' },
+}
+export const PALETTE = [
+    { key: 'red', ...COLORS.red },
+    { key: 'green', ...COLORS.green },
+    { key: 'blue', ...COLORS.blue },
+    { key: 'yellow', ...COLORS.yellow },
+    { main: '#f8f', secondary: '#fbf' },
+    { main: '#8ff', secondary: '#bff' },
+]
+
+export function colorNormalizer (color) {
+    if (typeof color === 'string') {
+        return { key: color, main: color, secondary: color }
+    }
+    if (color && color.main) {
+        return {
+            ...color,
+            key: color.key || color.main,
+            secondary: color.secondary || color.main,
+        }
+    }
+    return { key: 'unknown', main: '#333', secondary: '#555' }
 }

@@ -13,7 +13,7 @@ import d3Line from 'd3-shape/src/line'
 import { monotoneX as curveMonotoneX } from 'd3-shape/src/curve/monotone'
 
 export default {
-    name: 'BPoint',
+    name: 'BasicPoint',
     props: {
         x: VueTypes.array.isRequired,
         xExtractor: VueTypes.func.optional,

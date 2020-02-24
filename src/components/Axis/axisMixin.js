@@ -10,7 +10,7 @@ import {
     obtainNumericScale,
 } from './axisUtils'
 import withUidMixin from '../../mixins/withUidMixin'
-import themeMixin from '../../mixins/theme'
+import stylesMixin from '../../mixins/stylesMixin'
 
 export const AXIS_TYPE = {
     NUMERIC: 'numeric',
@@ -31,7 +31,7 @@ export default {
     inject: ['Chart'],
     mixins: [
         withUidMixin,
-        themeMixin,
+        stylesMixin,
     ],
     props: {
         // Settings
@@ -43,6 +43,7 @@ export default {
         datakey: VueTypes.string.optional,
         domain: VueTypes.array.def([]),
         bounds: VueTypes.array.def([]),
+        categoricalPadding: VueTypes.number.def(0.5),
         formatter: VueTypes.func.def(value => value), // default formatter (for ticks and drawable values that belong to this)
     },
     computed: {
@@ -121,13 +122,14 @@ export default {
 
         scale () {
             const {
-                actualRange, isCategorical, reversed, actualBounds, categories,
+                actualRange, isCategorical, reversed, actualBounds, categories, categoricalPadding,
             } = this
             if (isCategorical) {
                 return obtainCategoricalScale({
                     categories,
                     range: actualRange,
                     reversed,
+                    padding: categoricalPadding,
                 })
             }
             return obtainNumericScale({
@@ -135,6 +137,26 @@ export default {
                 range: actualRange,
                 reversed,
             })
+        },
+
+        reference () {
+            const {
+                dimension, isCategorical, scale, actualRange,
+            } = this
+            if (isCategorical || !scale) {
+                return dimension === AXIS_DIMENSION.Y ? actualRange[1] : actualRange[0]
+            }
+            return scale(0)
+        },
+
+        stepWidth () {
+            const {
+                isCategorical, categories, scale, actualRange,
+            } = this
+            if (isCategorical && Array.isArray(categories) && scale) {
+                return categories.length >= 2 ? scale(categories[1]) - scale(categories[0]) : actualRange
+            }
+            return undefined
         },
     },
     watch: {
@@ -159,6 +181,18 @@ export default {
         scale: {
             handler (value) {
                 this.Chart.setAxisScale(this.id, value)
+            },
+            immediate: true,
+        },
+        reference: {
+            handler (value) {
+                this.Chart.setAxisReference(this.id, value)
+            },
+            immediate: true,
+        },
+        stepWidth: {
+            handler (value) {
+                this.Chart.setAxisCategoricalStepWidths(this.id, value)
             },
             immediate: true,
         },

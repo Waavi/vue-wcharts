@@ -4,8 +4,9 @@ import { random } from '../utils/maths'
 import chartCanvasMixin from './chartCanvasMixin'
 import chartAxisMixin from './chartAxisMixin'
 import chartLegendMixin from './chartLegendMixin'
+import chartColorsMixin from './chartColorsMixin'
 import { marginVueType, normalizedMargin } from './chartUtils'
-import themeMixin from '../mixins/theme'
+import stylesMixin from '../mixins/stylesMixin'
 
 export default {
     name: 'WChart',
@@ -13,7 +14,8 @@ export default {
         chartCanvasMixin,
         chartAxisMixin,
         chartLegendMixin,
-        themeMixin,
+        stylesMixin,
+        chartColorsMixin,
     ],
     provide () {
         return {

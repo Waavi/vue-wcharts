@@ -5,6 +5,8 @@
 import scaleLinear from 'd3-scale/src/linear'
 import { tickStep as d3TickStep } from 'd3-array'
 import lodashRange from 'lodash/range'
+import uniqWidth from 'lodash/uniqWith'
+import isEqual from 'lodash/isEqual'
 import castArray from 'lodash/castArray'
 import { getDatums, datakeyValue } from '../../utils'
 
@@ -12,7 +14,7 @@ import { getDatums, datakeyValue } from '../../utils'
 export function obtainCategories ({ dataset, datakeys, allowDuplicatedCategory }) {
     const values = []
     if (datakeys) {
-        Object.values(datakeys).forEach(({ series, datakey }) => {
+        uniqWidth(Object.values(datakeys), isEqual).forEach(({ series, datakey }) => {
             const datums = getDatums({ dataset, series })
             datums.forEach((datum) => {
                 const value = datakeyValue(datum, datakey)
@@ -23,19 +25,31 @@ export function obtainCategories ({ dataset, datakeys, allowDuplicatedCategory }
     return allowDuplicatedCategory ? values : Array.from(new Set(values))
 }
 
+/**
+ * Obtains the data domain for a value
+ * @param {number|number[]|Object.<string,number>} value can be a single number, an array of numbers or an object of numbers
+ * @returns {number[]} [min, max]
+ */
 export function obtainNumericDataDomainFromValue (value) {
-    if (!value) return undefined
-    const values = castArray(value)
-    return [Math.min(...values), Math.max(...values)]
+    if (value === undefined) return undefined
+    if (typeof value === 'number') return [value, value]
+    const valuesArray = Array.isArray(value) ? value : Object.values(value)
+    return [Math.min(...valuesArray), Math.max(...valuesArray)]
 }
 export function obtainNumericDataDomainFromDatakey ({ dataset, series, datakey }) {
     const datums = getDatums({ dataset, series })
-    const values = []
-    datums.forEach((datum) => {
-        const value = datakeyValue(datum, datakey)
-        values.push(...castArray(value))
-    })
-    return values.length > 0 ? [Math.min(...values), Math.max(...values)] : [0, 1]
+    if (datums.length > 0) {
+        let overallMin = Infinity
+        let overallMax = -Infinity
+        datums.forEach((datum) => {
+            const value = datakeyValue(datum, datakey)
+            const [currentMin, currentMax] = obtainNumericDataDomainFromValue(value)
+            overallMin = Math.min(overallMin, currentMin)
+            overallMax = Math.max(overallMax, currentMax)
+        })
+        return [overallMin, overallMax]
+    }
+    return [0, 1]
 }
 
 export function obtainNumericGlobalDataDomain ({ dataDomainByElement }) {
@@ -85,9 +99,11 @@ export function obtainNumericScale ({ bounds, range, reversed }) {
     return scaleLinear().domain(reversed ? [...bounds].reverse() : bounds).range(range)
 }
 
-export function obtainCategoricalScale ({ categories, range, reversed }) {
+export function obtainCategoricalScale ({
+    categories, range, reversed, padding = 0.5,
+}) {
     if (!categories || !range) return undefined
-    const bounds = [0, categories.length - 1]
+    const bounds = [-padding, categories.length - 1 + padding]
     const numericScale = obtainNumericScale({
         bounds,
         range,

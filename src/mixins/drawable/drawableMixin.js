@@ -1,21 +1,27 @@
 import VueTypes from 'vue-types'
 // import visibleMixin from '../visible'
-import themeMixin from '../theme'
+import stylesMixin from '../stylesMixin'
+import colorMixin from '../colorMixin'
 // import animationMixin from '../animation'
 import withUidMixin from '../withUidMixin'
+import legendItemMixin from '../../components/Legend/legendItemMixin'
 import { getDatums } from '../../utils'
 
 export default {
     type: 'drawable',
     mixins: [
         withUidMixin,
-        themeMixin,
+        stylesMixin,
+        colorMixin,
+        legendItemMixin,
         // animationMixin,
         // visibleMixin,
     ],
     inject: ['Chart'],
     props: {
         series: VueTypes.string.optional,
+        legendShape: VueTypes.string.def('circle'),
+        legendInitialActive: VueTypes.bool.def(true),
     },
     computed: {
         coords () {
@@ -40,6 +46,14 @@ export default {
                 if (radiusCoordForDatum) Object.assign(obj, radiusCoordForDatum(datum))
                 return obj
             })
+        },
+        legendItemData () {
+            return {
+                label: this.label,
+                color: this.color,
+                shape: this.legendShape,
+                initialActive: this.legendInitialActive,
+            }
         },
     },
 }

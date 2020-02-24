@@ -27,6 +27,9 @@
                 class="Chart"
                 :data="data"
             />
+            <LinesTest />
+            <StackedLinesTest />
+            <BarsHorizontalTest />
             <button
                 class="Btn"
                 @click="changeData"
@@ -39,6 +42,9 @@
 
 <script>
 import { Cartesian, Pie, Scatter } from './sections'
+import LinesTest from './sections/tests/lines/LinesTest.vue'
+import StackedLinesTest from './sections/tests/lines/StackedLinesTest.vue'
+import BarsHorizontalTest from './sections/tests/bars/BarsHorizontalTest.vue'
 
 const dataOne = [
     {
@@ -94,6 +100,9 @@ export default {
         Cartesian,
         Pie,
         Scatter,
+        LinesTest,
+        StackedLinesTest,
+        BarsHorizontalTest,
     },
     data () {
         return {

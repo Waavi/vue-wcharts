@@ -8,14 +8,17 @@
             <WXAxis
                 id="lap"
                 type="categorical"
+                datakey="lap"
                 position="top"
             />
             <WXAxis
                 id="lapNumerical"
+                datakey="lapNumerical"
                 position="bottom"
             />
             <WYAxis
                 id="time"
+                datakey="time"
                 position="left"
                 :numTicks="4"
                 :domain2="[0, n => n]"
@@ -28,6 +31,7 @@
             />
             <WYAxis
                 id="performance"
+                datakey="performance"
                 position="right"
                 :numTicks="4"
                 :domain2="[0, n => n]"
@@ -38,37 +42,90 @@
                     },
                 }"
             />
-            <LegendItem
-                label="red"
-                #default="{ isActive }"
+            <Stack
+                baseAxisId="lap"
+                cumulativeAxisId="time"
             >
-                <WLine
-                    v-if="isActive"
-                    xAxisId="lap"
-                    xDatakey="lap"
-                    yAxisId="time"
-                    yDatakey="time"
-                    :styles="{
-                        line: {
-                            stroke: 'red'
-                        },
-                    }"
+                <StackedLine
+                    datakey="time"
+                    color="red"
                 />
-            </LegendItem>
+                <StackedLine
+                    :datakey="d => d.time / 2"
+                    color="green"
+                />
+            </Stack>
+            <AxisGroup
+                axisId="lap"
+                :slotWidth="0.8"
+            >
+                <Stack
+                    baseAxisId="lap"
+                    cumulativeAxisId="time"
+                >
+                    <LegendItem
+                        label="redStack"
+                        color="red"
+                        #default="{ isActive }"
+                    >
+                        <StackedBar
+                            :active="isActive"
+                            datakey="time"
+                            color="red"
+                        />
+                    </LegendItem>
+                    <StackedBar
+                        :datakey="d => d.time / 2"
+                        color="green"
+                    />
+                </Stack>
+                <WBar
+                    xAxisId="lap"
+                    yAxisId="time"
+                    color="red"
+                />
+                <WBar
+                    xAxisId="lap"
+                    yAxisId="performance"
+                    yDatakey="performance"
+                    color="blue"
+                />
+                <LegendItem
+                    label="red"
+                    color="red"
+                    #default="{ isActive }"
+                >
+                    <WLine
+                        v-if="isActive"
+                        key="redOne"
+                        uniqueId="redOne"
+                        keepColor
+                        xAxisId="lap"
+                        yAxisId="time"
+                        color="red"
+                    />
+                </LegendItem>
+            </AxisGroup>
+
             <WLine
                 v-if="showElement"
+                key="blueOne"
+                uniqueId="blueOne"
                 xAxisId="lapNumerical"
-                xDatakey="lapNumerical"
                 yAxisId="performance"
-                yDatakey="performance"
                 label="blue"
-                :styles="{
-                    line: {
-                        stroke: 'blue'
-                    },
-                }"
+                color="blue"
             />
-            <Scaled
+            <WLine
+                key="greenOne"
+                uniqueId="greenOne"
+                xAxisId="lapNumerical"
+                yAxisId="performance"
+                :yDatakey="d => d.performance + 10"
+                label="green"
+                color="green"
+            />
+            <!-- <Scaled
                 :valuesByAxes="{ lapNumerical: 6.5, performance: [-25, 25] }"
                 adjustAxes
                 #default="scaled"
@@ -94,7 +151,7 @@
                         fill="none"
                     />
                 </g>
-            </Scaled>
+            </Scaled> -->
             <!-- <Scaled
                 :dataset="[
                     {
@@ -127,12 +184,20 @@
 import VueTypes from 'vue-types'
 import Legend from '../../src/components/Legend/Legend.vue'
 import LegendItem from '../../src/components/Legend/LegendItem.vue'
+import AxisGroup from '../../src/components/AxisGroup/AxisGroup.vue'
+import Stack from '../../src/components/Stack/Stack.vue'
+import StackedBar from '../../src/components/Stack/StackedBar.vue'
+import StackedLine from '../../src/components/Stack/StackedLine.vue'
 
 export default {
     name: 'Cartesian',
     components: {
         Legend,
         LegendItem,
+        AxisGroup,
+        Stack,
+        StackedBar,
+        StackedLine,
     },
     props: {
         data: VueTypes.any,

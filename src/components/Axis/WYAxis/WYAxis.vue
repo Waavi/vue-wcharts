@@ -120,9 +120,13 @@ export default {
         },
 
         actualRange () {
-            const { Chart: { canvas }, normalizedPadding } = this
+            const { Chart: { canvas }, normalizedPadding, isCategorical } = this
             const { top: topPadding = 0, bottom: bottomPadding = 0 } = normalizedPadding
-            return [canvas.top + canvas.height - bottomPadding, canvas.top + topPadding]
+            const range = [canvas.top + canvas.height - bottomPadding, canvas.top + topPadding]
+            if (isCategorical) {
+                range.reverse()
+            }
+            return range
         },
 
         isOnRight () {

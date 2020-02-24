@@ -1,12 +1,20 @@
 /**
- * Mixin that create a "Unique ID" for the component
+ * Mixin that takes or create a "Unique ID" for the component.
  */
+import VueTypes from 'vue-types'
 import { random } from '../utils/maths'
 
 export default {
+    props: {
+        uniqueId: VueTypes.string.optional,
+    },
     beforeCreate () {
-        const { type, name } = this.$options
-        this.uid = [type, name].filter(x => x).concat(random()).join('-')
-        // this.$vnode.key = this.$vnode.key || this.uid
+        const { type, name, propsData: { uniqueId } } = this.$options
+        this.uid = uniqueId || [type, name].filter(x => x).concat(random()).join('-')
+    },
+    created () {
+        if (this.uniqueId) {
+            this.uid = this.uniqueId
+        }
     },
 }

@@ -1,3 +1,4 @@
+import isEqual from 'lodash.isequal'
 import { enqueueRegisterUpdateFactory } from './chartUtils'
 
 export default {
@@ -40,6 +41,8 @@ export default {
     },
     created () {
         this.enqueueLegendItemUpdate = enqueueRegisterUpdateFactory(
+            // needsToBeUpdated
+            (id, data) => !isEqual(this.legendItems[id], data),
             // onFlush action (given an array of `{ key, value }` assuming an undefined value as the action to remove an element)
             (legendItemArray) => {
                 const newLegendItems = { ...this.legendItems }

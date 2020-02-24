@@ -1,5 +1,6 @@
 import omit from 'lodash.omit'
-import { enqueueRegisterUpdateFactory } from './chartUtils'
+import isEqual from 'lodash.isequal'
+import { uniqueAxesBy, enqueueRegisterUpdateFactory } from './chartUtils'
 
 export default {
     data () {
@@ -52,13 +53,29 @@ export default {
              * @property {function} [scale] function that returns a scaled value given the original one
              */
             axisScales: {},
+
+            axisReferences: {},
+
             /**
              * Store for all the ticks array by each axis
              * @property {Object.<string, any[]>} axisBounds map { [axisId]: ticks, ... }
              * @property {any[]} ticks array of tick values
              */
             axisTicks: {},
+
+            axisCategoricalStepWidths: {},
         }
+    },
+    computed: {
+        inferredAxisId () {
+            const { axisDefinitions } = this
+            const axes = Object.values(axisDefinitions)
+            return {
+                byDimension: uniqueAxesBy(axes, 'dimension'),
+                byType: uniqueAxesBy(axes, 'type'),
+                byDatakey: uniqueAxesBy(axes, 'datakey'),
+            }
+        },
     },
     methods: {
         /**
@@ -80,6 +97,7 @@ export default {
             formatter,
         }) {
             this.enqueueAxisDefinitionUpdate(axisId, {
+                axisId,
                 dimension,
                 type,
                 series,
@@ -99,6 +117,13 @@ export default {
             this.enqueueAxisDefinitionUpdate(axisId)
             this.enqueueAxisDatakeyUpdate(axisId)
             this.enqueueAxisDataDomainUpdate(axisId)
+
+            this.axisDomains = omit(this.axisDomains, axisId)
+            this.axisBounds = omit(this.axisBounds, axisId)
+            this.axisScales = omit(this.axisScales, axisId)
+            this.axisReferences = omit(this.axisReferences, axisId)
+            this.axisTicks = omit(this.axisTicks, axisId)
+            this.axisCategoricalStepWidths = omit(this.axisCategoricalStepWidths, axisId)
         },
 
         /**
@@ -219,6 +244,11 @@ export default {
         setAxisScale (axisId, scale) {
             this.axisScales = { ...this.axisScales, [axisId]: scale }
         },
+
+        setAxisReference (axisId, reference) {
+            this.axisReferences = { ...this.axisReferences, [axisId]: reference }
+        },
+
         /**
          * Function that sets the final ticks array for a specific axis.
          * @param {string} axisId identifier for the axis.
@@ -227,9 +257,15 @@ export default {
         setAxisTicks (axisId, ticks) {
             this.axisTicks = { ...this.axisTicks, [axisId]: ticks }
         },
+
+        setAxisCategoricalStepWidths (axisId, stepWidth) {
+            this.axisCategoricalStepWidths = { ...this.axisCategoricalStepWidths, [axisId]: stepWidth }
+        },
     },
     created () {
         this.enqueueAxisDefinitionUpdate = enqueueRegisterUpdateFactory(
+            // needsToBeUpdated
+            (id, data) => !isEqual(this.axisDefinitions[id], data),
             // onFlush action (given an array of `{ key, value }` assuming an undefined value as the action to remove an element)
             (definitionsArray) => {
                 const newAxisDefinitions = { ...this.axisDefinitions }
@@ -246,6 +282,8 @@ export default {
             'definition' // only for debug
         )
         this.enqueueAxisDatakeyUpdate = enqueueRegisterUpdateFactory(
+            // needsToBeUpdated
+            (uid, data) => !isEqual((this.axisDatakeys[data.axisId] || {})[uid], data),
             // onFlush action (given an array of `{ key, value }` assuming an undefined value as the action to remove an element)
             (datakeysArray) => {
                 const newAxisDatakeys = { ...this.axisDatakeys }
@@ -270,6 +308,8 @@ export default {
             'datakey' // only for debug
         )
         this.enqueueAxisDataDomainUpdate = enqueueRegisterUpdateFactory(
+            // needsToBeUpdated
+            (uid, data) => !isEqual((this.axisDataDomainsByElement[data.axisId] || {})[uid], data),
             // onFlush action (given an array of `{ key, value }` assuming an undefined value as the action to remove an element)
             (dataDomainsArray) => {
                 const newAxisDataDomains = { ...this.axisDataDomainsByElement }

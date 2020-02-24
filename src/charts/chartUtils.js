@@ -228,13 +228,30 @@ function getSanitizedSides ({
 }
 
 /** *********************************************
+ * Gets the axisId
+********************************************** */
+
+export function uniqueAxesBy (axes, field) {
+    const fieldValues = Array.from(new Set(axes.map(axis => axis[field]).filter(value => typeof value === 'string')))
+    return fieldValues.reduce(
+        (acc, fieldValue) => {
+            const axesWithFieldValue = axes.filter(axis => axis[field] === fieldValue)
+            return axesWithFieldValue.length === 1 ? { ...acc, [fieldValue]: axesWithFieldValue[0].axisId } : acc
+        },
+        {}
+    )
+}
+
+/** *********************************************
  * Enqueue register utilities for performance
 ********************************************** */
 
 /** TODO: COMMENT THIS! */
-export function enqueueRegisterUpdateFactory (onFlush, wait = 50, id) {
+export function enqueueRegisterUpdateFactory (needsToBeUpdated, onFlush, wait = 50, id) {
     return (key, value) => {
-        onFlush([{ key, value }])
+        if (value === undefined || needsToBeUpdated(key, value)) {
+            onFlush([{ key, value }])
+        }
     }
     // let queue = []
     // const debouncedFlush = debounce(() => {
@@ -244,10 +261,13 @@ export function enqueueRegisterUpdateFactory (onFlush, wait = 50, id) {
     // }, wait)
     // return (key, value) => {
     //     // console.log('enqueue ', id)
-    //     if (queue.find(item => item.key === key)) {
+    //     const indexWithinQueue = queue.findIndex(item => item.key === key) !== undefined
+    //     if (indexWithinQueue >= 0) {
     //         delete queue[key]
     //     }
-    //     queue.push({ key, value })
+    //     if (indexWithinQueue >= 0 || value === undefined || needsToBeUpdated(key, value)) {
+    //         queue.push({ key, value })
+    //     }
     //     debouncedFlush()
     // }
 }

@@ -69,7 +69,7 @@ export default {
                 top: 0,
                 right: 0,
                 height: 30,
-                width: 100,
+                width: '100%',
             }
         },
         style () {
@@ -103,12 +103,13 @@ export default {
 .Legend {
     position: absolute;
     display: flex;
-    justify-content: flex-end;
+    justify-content: center;
     align-items: center;
     flex-wrap: wrap;
     border: 1px solid black;
 }
 .LegendItem {
+    margin: 5px 7.5px;
     display: flex;
     align-items: center;
     flex-wrap: no-wrap;

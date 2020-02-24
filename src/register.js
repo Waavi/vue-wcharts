@@ -2,8 +2,6 @@ import { WChart } from './charts'
 import { WSimpleHStackBar } from './extraCharts'
 import {
     Scaled,
-    BPoint,
-    BLine,
     WLine,
     WBar,
     WScatter,
@@ -39,8 +37,6 @@ export default (Vue, opts = {}) => {
 
     const components = [
         Scaled,
-        BPoint,
-        BLine,
         WLine,
         WBar,
         WScatter,
