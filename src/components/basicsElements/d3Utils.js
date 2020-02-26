@@ -4,9 +4,8 @@ import d3Transition from 'd3-transition/dist/d3-transition'
 import getD3Curve from './getD3Curve'
 
 const normalizeAccessor = accessor => (typeof accessor === 'string' ? d => d[accessor] : accessor)
-const isUndefinedOrNull = x => x === undefined || x === null
 const normalizeDefined = (defined, ...accessors) => (
-    (defined === true && (d => !accessors.some(accessor => isUndefinedOrNull(accessor(d))))) ||
+    (defined === true && (d => !accessors.some(accessor => accessor(d) === undefined))) ||
     defined ||
     (() => true)
 )

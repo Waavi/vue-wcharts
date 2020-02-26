@@ -29,6 +29,8 @@
             />
             <LinesTest />
             <StackedLinesTest />
+            <BarsTest />
+            <LinesVerticalTest />
             <BarsHorizontalTest />
             <button
                 class="Btn"
@@ -43,7 +45,9 @@
 <script>
 import { Cartesian, Pie, Scatter } from './sections'
 import LinesTest from './sections/tests/lines/LinesTest.vue'
+import LinesVerticalTest from './sections/tests/lines/LinesVerticalTest.vue'
 import StackedLinesTest from './sections/tests/lines/StackedLinesTest.vue'
+import BarsTest from './sections/tests/bars/BarsTest.vue'
 import BarsHorizontalTest from './sections/tests/bars/BarsHorizontalTest.vue'
 
 const dataOne = [
@@ -101,7 +105,9 @@ export default {
         Pie,
         Scatter,
         LinesTest,
+        LinesVerticalTest,
         StackedLinesTest,
+        BarsTest,
         BarsHorizontalTest,
     },
     data () {

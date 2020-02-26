@@ -125,8 +125,8 @@ export default {
             const { stackData } = this
             if (stackData.length > 0) {
                 return [
-                    Math.min(...stackData.map(stackDataItem => Math.min(...stackDataItem.map(range => range[0])))),
-                    Math.max(...stackData.map(stackDataItem => Math.max(...stackDataItem.map(range => range[1])))),
+                    Math.min(...stackData.map(stackDataItem => Math.min(...stackDataItem.map(range => range[0]).filter(v => typeof v === 'number' && !Number.isNaN(v))))),
+                    Math.max(...stackData.map(stackDataItem => Math.max(...stackDataItem.map(range => range[1]).filter(v => typeof v === 'number' && !Number.isNaN(v))))),
                 ]
             }
             return undefined

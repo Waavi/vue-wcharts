@@ -31,10 +31,10 @@ export function obtainCategories ({ dataset, datakeys, allowDuplicatedCategory }
  * @returns {number[]} [min, max]
  */
 export function obtainNumericDataDomainFromValue (value) {
-    if (value === undefined) return undefined
+    if (value === undefined || value === null) return undefined
     if (typeof value === 'number') return [value, value]
-    const valuesArray = Array.isArray(value) ? value : Object.values(value)
-    return [Math.min(...valuesArray), Math.max(...valuesArray)]
+    const valuesArray = Array.isArray(value) ? value : Object.values(value).filter(v => typeof v === 'number')
+    return valuesArray.length > 0 ? [Math.min(...valuesArray), Math.max(...valuesArray)] : undefined
 }
 export function obtainNumericDataDomainFromDatakey ({ dataset, series, datakey }) {
     const datums = getDatums({ dataset, series })
@@ -43,7 +43,7 @@ export function obtainNumericDataDomainFromDatakey ({ dataset, series, datakey }
         let overallMax = -Infinity
         datums.forEach((datum) => {
             const value = datakeyValue(datum, datakey)
-            const [currentMin, currentMax] = obtainNumericDataDomainFromValue(value)
+            const [currentMin, currentMax] = obtainNumericDataDomainFromValue(value) || [Infinity, -Infinity]
             overallMin = Math.min(overallMin, currentMin)
             overallMax = Math.max(overallMax, currentMax)
         })
