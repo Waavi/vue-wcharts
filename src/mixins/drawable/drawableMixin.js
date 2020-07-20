@@ -5,7 +5,6 @@ import colorMixin from '../colorMixin'
 // import animationMixin from '../animation'
 import withUidMixin from '../withUidMixin'
 import legendItemMixin from '../../components/Legend/legendItemMixin'
-import { getDatums } from '../../utils'
 
 export default {
     type: 'drawable',
@@ -25,27 +24,7 @@ export default {
     },
     computed: {
         coords () {
-            const {
-                Chart,
-                series,
-                xCoordForDatum,
-                yCoordForDatum,
-                zCoordForDatum,
-                angleCoordForDatum,
-                radiusCoordForDatum,
-            } = this
-            const datums = getDatums({ dataset: Chart.dataset, series })
-            if (!datums || datums.length === 0) return undefined
-
-            return datums.map((datum) => {
-                const obj = { datum }
-                if (xCoordForDatum) Object.assign(obj, xCoordForDatum(datum))
-                if (yCoordForDatum) Object.assign(obj, yCoordForDatum(datum))
-                if (zCoordForDatum) Object.assign(obj, zCoordForDatum(datum))
-                if (angleCoordForDatum) Object.assign(obj, angleCoordForDatum(datum))
-                if (radiusCoordForDatum) Object.assign(obj, radiusCoordForDatum(datum))
-                return obj
-            })
+            throw new Error('drawableMixin: implement "coords"')
         },
         legendItemData () {
             return {

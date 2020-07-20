@@ -57,10 +57,8 @@
             </Stack>
             <AxisGroup
                 axisId="lap"
-                :slotWidth="0.8"
             >
                 <Stack
-                    baseAxisId="lap"
                     cumulativeAxisId="time"
                 >
                     <LegendItem
@@ -125,8 +123,8 @@
                 label="green"
                 color="green"
             />
-            <!-- <Scaled
-                :valuesByAxes="{ lapNumerical: 6.5, performance: [-25, 25] }"
+            <Scaled
+                :valuesByAxes="{ lapNumerical: 4.25, performance: [25, 50] }"
                 adjustAxes
                 #default="scaled"
             >
@@ -151,7 +149,7 @@
                         fill="none"
                     />
                 </g>
-            </Scaled> -->
+            </Scaled>
             <!-- <Scaled
                 :dataset="[
                     {

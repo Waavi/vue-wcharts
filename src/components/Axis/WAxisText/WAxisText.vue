@@ -28,7 +28,7 @@ export default {
         y: VueTypes.number,
         dy: VueTypes.string,
         index: VueTypes.number,
-        value: VueTypes.oneOfType([String, Number]),
+        value: VueTypes.any,
         styles: VueTypes.shape({
             fill: VueTypes.string,
             stroke: VueTypes.string,

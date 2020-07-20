@@ -10,6 +10,7 @@
                 type="categorical"
                 datakey="month"
                 position="bottom"
+                :bandPadding="{ start: 0, inner: 0.3, end: 0 }"
             />
             <WYAxis
                 id="fruits"
@@ -19,7 +20,7 @@
             />
 
             <AxisGroup
-                :slotWidth="0.8"
+                :bandPadding="{ inner: 0.25 }"
             >
                 <WBar
                     yDatakey="apples"

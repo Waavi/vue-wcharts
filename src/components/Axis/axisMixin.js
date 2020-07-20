@@ -1,22 +1,39 @@
 
 import VueTypes from 'vue-types'
+import { scaleLinear, scaleTime } from 'd3-scale'
 import {
     obtainCategories,
     obtainNumericGlobalDataDomain,
     obtainNumericActualDomain,
-    obtainNumericStep,
-    obtainNumericActualBounds,
+} from './axisUtils'
+import {
     obtainCategoricalScale,
     obtainNumericScale,
-} from './axisUtils'
+} from './axisScaleUtils'
 import withUidMixin from '../../mixins/withUidMixin'
 import stylesMixin from '../../mixins/stylesMixin'
+import {
+    paddingBandVueType,
+    paddingStartEndVueType,
+    normalizedPaddingBand,
+    normalizedPaddingStartEnd,
+} from '../../charts/chartUtils'
 
 export const AXIS_TYPE = {
     NUMERIC: 'numeric',
+    TEMPORAL: 'temporal',
     CATEGORICAL: 'categorical',
 }
-export const AXIS_TYPE_LIST = [AXIS_TYPE.NUMERIC, AXIS_TYPE.CATEGORICAL]
+export const AXIS_NUMERIC_TYPES = [AXIS_TYPE.NUMERIC, AXIS_TYPE.TEMPORAL]
+export const AXIS_CATEGORICAL_TYPES = [AXIS_TYPE.CATEGORICAL]
+export const AXIS_TYPE_LIST = [...AXIS_NUMERIC_TYPES, ...AXIS_CATEGORICAL_TYPES]
+
+export const AXIS_TYPE_CHECKERS = {
+    isNumeric: type => AXIS_NUMERIC_TYPES.includes(type),
+    isTemporal: type => type === AXIS_TYPE.TEMPORAL,
+    isCategorical: type => type === AXIS_TYPE.CATEGORICAL,
+}
+
 export const AXIS_DIMENSION = {
     X: 'x',
     Y: 'y',
@@ -43,7 +60,10 @@ export default {
         datakey: VueTypes.string.optional,
         domain: VueTypes.array.def([]),
         bounds: VueTypes.array.def([]),
-        categoricalPadding: VueTypes.number.def(0.5),
+        numTicks: VueTypes.any.def(8),
+        d3Scale: VueTypes.func.optional,
+        padding: paddingStartEndVueType,
+        bandPadding: paddingBandVueType,
         formatter: VueTypes.func.def(value => value), // default formatter (for ticks and drawable values that belong to this)
     },
     computed: {
@@ -61,10 +81,20 @@ export default {
             }
         },
         isNumeric () {
-            return this.type === AXIS_TYPE.NUMERIC
+            return AXIS_TYPE_CHECKERS.isNumeric(this.type)
+        },
+        isTemporal () {
+            return AXIS_TYPE_CHECKERS.isTemporal(this.type)
         },
         isCategorical () {
-            return this.type === AXIS_TYPE.CATEGORICAL
+            return AXIS_TYPE_CHECKERS.isCategorical(this.type)
+        },
+
+        normalizedPadding () {
+            return normalizedPaddingStartEnd(this.padding)
+        },
+        normalizedBandPadding () {
+            return normalizedPaddingBand(this.bandPadding)
         },
 
         actualRange () {
@@ -100,43 +130,37 @@ export default {
                 propDomain: domain,
             })
         },
-        step () {
-            const {
-                isCategorical, actualDomain, numTicks, exactNumTicks,
-            } = this
-            if (isCategorical) return 1
-            return obtainNumericStep({ domain: actualDomain, numTicks, exactNumTicks })
-        },
-
-        actualBounds () {
-            const {
-                isNumeric, actualDomain, step, bounds,
-            } = this
-            if (!isNumeric) return undefined
-            return obtainNumericActualBounds({
-                domain: actualDomain,
-                step,
-                propBounds: bounds,
-            })
-        },
 
         scale () {
             const {
-                actualRange, isCategorical, reversed, actualBounds, categories, categoricalPadding,
+                isTemporal, d3Scale, actualRange, isCategorical, reversed, actualDomain, bounds: propBounds, numTicks, categories, normalizedPadding, normalizedBandPadding,
             } = this
             if (isCategorical) {
                 return obtainCategoricalScale({
                     categories,
                     range: actualRange,
+                    rangePadding: normalizedPadding,
+                    bandPadding: normalizedBandPadding,
                     reversed,
-                    padding: categoricalPadding,
                 })
             }
             return obtainNumericScale({
-                bounds: actualBounds,
+                d3Scale: d3Scale || (isTemporal ? scaleTime() : scaleLinear()),
+                dataDomain: actualDomain,
+                propBounds,
+                numTicks,
                 range: actualRange,
+                rangePadding: normalizedPadding,
                 reversed,
             })
+        },
+
+        actualBounds () {
+            const {
+                isNumeric, scale,
+            } = this
+            if (!isNumeric || !scale) return undefined
+            return scale.bounds()
         },
 
         reference () {
@@ -147,16 +171,6 @@ export default {
                 return dimension === AXIS_DIMENSION.Y ? actualRange[1] : actualRange[0]
             }
             return scale(0)
-        },
-
-        stepWidth () {
-            const {
-                isCategorical, categories, scale, actualRange,
-            } = this
-            if (isCategorical && Array.isArray(categories) && scale) {
-                return categories.length >= 2 ? scale(categories[1]) - scale(categories[0]) : actualRange
-            }
-            return undefined
         },
     },
     watch: {
@@ -172,27 +186,21 @@ export default {
             },
             immediate: true,
         },
-        actualBounds: {
-            handler (value) {
-                this.Chart.setAxisBound(this.id, value)
-            },
-            immediate: true,
-        },
         scale: {
             handler (value) {
                 this.Chart.setAxisScale(this.id, value)
             },
             immediate: true,
         },
-        reference: {
+        actualBounds: {
             handler (value) {
-                this.Chart.setAxisReference(this.id, value)
+                this.Chart.setAxisBound(this.id, value)
             },
             immediate: true,
         },
-        stepWidth: {
+        reference: {
             handler (value) {
-                this.Chart.setAxisCategoricalStepWidths(this.id, value)
+                this.Chart.setAxisReference(this.id, value)
             },
             immediate: true,
         },

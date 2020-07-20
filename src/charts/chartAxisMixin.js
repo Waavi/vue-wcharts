@@ -56,14 +56,12 @@ export default {
 
             axisReferences: {},
 
-            /**
-             * Store for all the ticks array by each axis
-             * @property {Object.<string, any[]>} axisBounds map { [axisId]: ticks, ... }
-             * @property {any[]} ticks array of tick values
-             */
-            axisTicks: {},
-
-            axisCategoricalStepWidths: {},
+            // /**
+            //  * Store for all the ticks array by each axis
+            //  * @property {Object.<string, any[]>} axisBounds map { [axisId]: ticks, ... }
+            //  * @property {any[]} ticks array of tick values
+            //  */
+            // axisTicks: {},
         }
     },
     computed: {
@@ -122,8 +120,7 @@ export default {
             this.axisBounds = omit(this.axisBounds, axisId)
             this.axisScales = omit(this.axisScales, axisId)
             this.axisReferences = omit(this.axisReferences, axisId)
-            this.axisTicks = omit(this.axisTicks, axisId)
-            this.axisCategoricalStepWidths = omit(this.axisCategoricalStepWidths, axisId)
+            // this.axisTicks = omit(this.axisTicks, axisId)
         },
 
         /**
@@ -249,18 +246,14 @@ export default {
             this.axisReferences = { ...this.axisReferences, [axisId]: reference }
         },
 
-        /**
-         * Function that sets the final ticks array for a specific axis.
-         * @param {string} axisId identifier for the axis.
-         * @param {any[]} ticks array of tick values
-         */
-        setAxisTicks (axisId, ticks) {
-            this.axisTicks = { ...this.axisTicks, [axisId]: ticks }
-        },
-
-        setAxisCategoricalStepWidths (axisId, stepWidth) {
-            this.axisCategoricalStepWidths = { ...this.axisCategoricalStepWidths, [axisId]: stepWidth }
-        },
+        // /**
+        //  * Function that sets the final ticks array for a specific axis.
+        //  * @param {string} axisId identifier for the axis.
+        //  * @param {any[]} ticks array of tick values
+        //  */
+        // setAxisTicks (axisId, ticks) {
+        //     this.axisTicks = { ...this.axisTicks, [axisId]: ticks }
+        // },
     },
     created () {
         this.enqueueAxisDefinitionUpdate = enqueueRegisterUpdateFactory(

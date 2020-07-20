@@ -13,6 +13,7 @@
 
 <script>
 import VueTypes from 'vue-types'
+import noop from 'lodash.noop'
 import drawableCartesianMixin from '../../mixins/drawable/drawableCartesianMixin'
 import { withXAxisMixin, withYAxisMixin } from '../Axis/withAxisMixin'
 import { AXIS_TYPE } from '../Axis/axisMixin'
@@ -45,12 +46,12 @@ export default {
         },
         actualBarWidth () {
             const {
-                barWidth, Chart, actualXAxisId, actualYAxisId, actualHorizontal, AxisGroup,
+                barWidth, actualHorizontal, xScale, yScale,
             } = this
-            const axisId = actualHorizontal ? actualYAxisId : actualXAxisId
+            const scale = actualHorizontal ? yScale : xScale
             return obtainBarWidth({
                 barWidthFromProp: barWidth,
-                constrainedWidth: AxisGroup ? AxisGroup.slotWidth : Chart.axisCategoricalStepWidths[axisId],
+                constrainedWidth: (scale.bandwidth || noop)(),
             })
         },
         rectsAttrsFromCoord () {

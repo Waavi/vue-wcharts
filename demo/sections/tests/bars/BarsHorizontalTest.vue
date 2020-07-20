@@ -18,7 +18,7 @@
             />
 
             <AxisGroup
-                :slotWidth="0.8"
+                :bandPadding="{ inner: 0 }"
             >
                 <WBar
                     xDatakey="apples"

@@ -15,9 +15,9 @@
             <WYAxis
                 id="month"
                 type="categorical"
+                bandPadding="point"
                 datakey="month"
                 position="right"
-                :categoricalPadding="0"
             />
 
             <WLine

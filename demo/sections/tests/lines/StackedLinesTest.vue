@@ -8,9 +8,9 @@
             <WXAxis
                 id="month"
                 type="categorical"
+                bandPadding="point"
                 datakey="month"
                 position="bottom"
-                :categoricalPadding="0"
             />
             <WYAxis
                 id="fruits"

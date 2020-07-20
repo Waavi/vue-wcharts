@@ -1,5 +1,5 @@
 import VueTypes from 'vue-types'
-import { AXIS_DIMENSION, AXIS_TYPE } from './axisMixin'
+import { AXIS_DIMENSION, AXIS_TYPE_CHECKERS } from './axisMixin'
 import { datakeyValue, scaledArray } from '../../utils'
 import { obtainNumericDataDomainFromValue, obtainNumericDataDomainFromDatakey } from './axisUtils'
 import withUidMixin from '../../mixins/withUidMixin'
@@ -34,7 +34,6 @@ function withAxisMixinFactory (dimension) {
     const aCoordForDatum = `${lowercasedDimension}CoordForDatum`
     const aScale = `${lowercasedDimension}Scale`
     const aScaled = `${lowercasedDimension}Scaled`
-    const aSlotScale = `${lowercasedDimension}SlotScale`
     return {
         mixins: [
             withUidMixin,
@@ -68,7 +67,7 @@ function withAxisMixinFactory (dimension) {
             },
 
             [aDataDomain] () {
-                if ((this.Chart.axisDefinitions[this[actualAAxisId]] || {}).type === AXIS_TYPE.NUMERIC) {
+                if (AXIS_TYPE_CHECKERS.isNumeric((this.Chart.axisDefinitions[this[actualAAxisId]] || {}).type)) {
                     return obtainNumericDataDomainFromValue(this[a]) ||
                         obtainNumericDataDomainFromDatakey({
                             dataset: this.Chart.dataset,
@@ -86,10 +85,11 @@ function withAxisMixinFactory (dimension) {
             },
 
             [aScale] () {
-                const scales = this.Chart.axisScales
+                const { Chart, AxisGroup } = this
+                const scales = Chart.axisScales
                 const axisId = this[actualAAxisId]
                 !Object.prototype.hasOwnProperty.call(scales, axisId) && console.error(`WChart ERROR - Axis scale "${axisId}" is not found.`)
-                return scales[axisId]
+                return (AxisGroup && AxisGroup.getSlottedScale(this.uid, axisId)) || scales[axisId]
             },
             [aScaled] () {
                 const value = this[a]
@@ -100,22 +100,19 @@ function withAxisMixinFactory (dimension) {
                 return undefined
             },
 
-            [aSlotScale] () {
-                const { AxisGroup } = this
-                return AxisGroup ? AxisGroup.getSlotScale(this.uid, this[actualAAxisId]) : undefined
-            },
-
             [aCoordForDatum] () {
                 const datakey = this[actualADatakey]
-                const scale = this[aScale] || (x => x)
-                const slotScale = this[aSlotScale] || (x => x)
-                return (datum) => {
-                    const value = datakeyValue(datum, datakey)
-                    return {
-                        [lowercasedDimension]: value,
-                        [aScaled]: scaledArray(slotScale, scaledArray(scale, value)),
+                const scale = this[aScale]
+                if (scale) {
+                    return (datum) => {
+                        const value = datakeyValue(datum, datakey)
+                        return {
+                            [lowercasedDimension]: value,
+                            [aScaled]: scaledArray(scale, value),
+                        }
                     }
                 }
+                return null
             },
         },
         watch: {

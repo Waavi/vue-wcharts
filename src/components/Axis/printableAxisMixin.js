@@ -1,9 +1,5 @@
 
 import VueTypes from 'vue-types'
-import {
-    obtainCategoricalActualTicks,
-    obtainNumericActualTicks,
-} from './axisUtils'
 import axisMixin from './axisMixin'
 
 export default {
@@ -15,8 +11,6 @@ export default {
 
         // Ticks
         ticks: VueTypes.array.optional,
-        numTicks: VueTypes.number.def(8),
-        exactNumTicks: VueTypes.number.optional,
         tickFormatter: VueTypes.func.def(value => value),
 
         // Label
@@ -42,24 +36,16 @@ export default {
     computed: {
         actualTicks () {
             const {
-                isCategorical, categories, actualBounds, ticks, step,
+                invisible, ticks, numTicks, scale, tickFormatter, formatter: axisFormatter,
             } = this
-            if (isCategorical) {
-                return obtainCategoricalActualTicks({ ticks, categories })
-            }
-            return obtainNumericActualTicks({
-                ticks,
-                bounds: actualBounds,
-                step,
-            })
-        },
-    },
-    watch: {
-        actualTicks: {
-            handler (value) {
-                this.Chart.setAxisTicks(this.id, value)
-            },
-            immediate: true,
+            if (invisible || !scale) return []
+            const formatter = tickFormatter || axisFormatter || (x => x)
+            const tickValues = (ticks || scale.ticks(numTicks)) || []
+            return tickValues.map((value, index) => ({
+                value,
+                scaledValue: scale(value),
+                label: formatter(value, index),
+            }))
         },
     },
 }

@@ -1,5 +1,6 @@
 <script>
 import VueTypes from 'vue-types'
+import noop from 'lodash.noop'
 import d3Stack from 'd3-shape/src/stack'
 import orderAppearance from 'd3-shape/src/order/appearance'
 import orderAscending from 'd3-shape/src/order/ascending'
@@ -89,16 +90,16 @@ export default {
         baseAxisScale () {
             const { Chart, AxisGroup, actualBaseAxisId } = this
             const axisScale = Chart.axisScales[actualBaseAxisId]
-            const slotScale = AxisGroup ? AxisGroup.getSlotScale(this.uid, actualBaseAxisId) : x => x
-            return x => slotScale(axisScale(x))
+            return (AxisGroup && AxisGroup.getSlottedScale(this.uid, actualBaseAxisId)) || axisScale
         },
         actualBarWidth () {
             const {
                 barWidth, Chart, AxisGroup, actualBaseAxisId,
             } = this
+            const scale = (AxisGroup && AxisGroup.getSlottedScale(this.uid, actualBaseAxisId)) || Chart.axisScales[actualBaseAxisId]
             return obtainBarWidth({
                 barWidthFromProp: barWidth,
-                constrainedWidth: AxisGroup ? AxisGroup.slotWidth : Chart.axisCategoricalStepWidths[actualBaseAxisId],
+                constrainedWidth: (scale.bandwidth || noop)(),
             })
         },
         cumulativeAxisScale () {

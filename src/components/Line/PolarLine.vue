@@ -6,34 +6,33 @@
             yAccessor="yScaled"
             :curve="curve"
             v-bind="actualStyles.line"
+            stroke="red"
+            strokeWidth="3"
         />
-        <template v-if="dot">
-            <circle
-                v-for="({ xScaled, yScaled }, index) in coords"
-                :key="index"
-                :cx="xScaled"
-                :cy="yScaled"
-                :r="5"
-                fill="red"
-            />
-        </template>
+        <circle
+            v-for="({ xScaled, yScaled }, index) in coords"
+            :key="index"
+            :cx="xScaled"
+            :cy="yScaled"
+            :r="5"
+            fill="red"
+        />
     </g>
 </template>
 
 <script>
 import VueTypes from 'vue-types'
-import drawableCartesianMixin from '../../mixins/drawable/drawableCartesianMixin'
-import { withXAxisMixin, withYAxisMixin } from '../Axis/withAxisMixin'
+import drawablePolarMixin from '../../mixins/drawable/drawablePolarMixin'
+import { withRadiusAxisMixin, withAngleAxisMixin } from '../Axis/withAxisMixin'
 import BasicLine from '../basicsElements/BasicLine/BasicLine.vue'
-// import withXAxisMixin from '../../mixins/axes/withXAxisMixin'
-// import withYAxisMixin from '../../mixins/axes/withYAxisMixin'
 // import d3Area from 'd3-shape/src/area'
 // import merge from '../../utils/merge'
 // import { WDot } from '../Common'
 // import { WSpread } from '../../transitions'
+// import { isFunc } from '../../utils/checks'
 
 export default {
-    name: 'WLine',
+    name: 'PolarLine',
     components: {
         BasicLine,
     },
@@ -42,9 +41,9 @@ export default {
     //     WSpread,
     // },
     mixins: [
-        drawableCartesianMixin,
-        withXAxisMixin,
-        withYAxisMixin,
+        drawablePolarMixin,
+        withRadiusAxisMixin,
+        withAngleAxisMixin,
     ],
     props: {
         trigger: VueTypes.oneOf(['hover', 'click', 'manual']).def('click'),

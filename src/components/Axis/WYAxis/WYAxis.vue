@@ -72,7 +72,6 @@ import VueTypes from 'vue-types'
 import outerElementMixin from '../../../mixins/outerElementMixin'
 import { AXIS_TYPE, AXIS_TYPE_LIST, AXIS_DIMENSION } from '../axisMixin'
 import printableAxisMixin from '../printableAxisMixin'
-import { marginVerticalVueType, normalizedMarginVertical } from '../../../charts/chartUtils'
 import WAxisText from '../WAxisText/WAxisText.vue'
 
 const YAXIS_POSITION = {
@@ -94,8 +93,8 @@ export default {
         id: VueTypes.string.def(AXIS_DIMENSION.Y),
         type: VueTypes.oneOf(AXIS_TYPE_LIST).def(AXIS_TYPE.NUMERIC),
         position: VueTypes.oneOf([YAXIS_POSITION.LEFT, YAXIS_POSITION.RIGHT]).def(YAXIS_POSITION.LEFT),
-        padding: marginVerticalVueType,
         width: VueTypes.number.def(30),
+        offset: VueTypes.number.optional,
 
         labelAlign: VueTypes.oneOf(['start', 'middle', 'end']).def('end'),
         negativeAxisStyles: VueTypes.object.def({}),
@@ -103,7 +102,7 @@ export default {
     computed: {
         layoutInOuterArea () {
             const {
-                position, width, invisible,
+                position, width, invisible, offset,
             } = this
             return {
                 reference: 'canvas',
@@ -111,36 +110,35 @@ export default {
                 position,
                 top: 0,
                 height: '100%',
-                width: invisible ? 0 : width,
+                width: invisible || typeof offset === 'number' ? 0 : width,
             }
-        },
-
-        normalizedPadding () {
-            return normalizedMarginVertical(this.padding)
         },
 
         actualRange () {
-            const { Chart: { canvas }, normalizedPadding, isCategorical } = this
-            const { top: topPadding = 0, bottom: bottomPadding = 0 } = normalizedPadding
-            const range = [canvas.top + canvas.height - bottomPadding, canvas.top + topPadding]
-            if (isCategorical) {
-                range.reverse()
-            }
-            return range
+            const { Chart: { canvas }, isCategorical } = this
+            const { top } = canvas
+            const bottom = top + canvas.height
+            return isCategorical ? [top, bottom] : [bottom, top]
         },
 
         isOnRight () {
             return this.position === YAXIS_POSITION.RIGHT
         },
         lineX () {
-            const { outerLayout, isOnRight } = this
+            const {
+                Chart: { canvas }, outerLayout, isOnRight, offset,
+            } = this
+            if (typeof offset === 'number') {
+                const actualOffset = (offset <= 1 ? offset * canvas.width : offset)
+                return outerLayout.x + (isOnRight ? -1 : +1) * actualOffset
+            }
             return isOnRight ? outerLayout.x : outerLayout.x + outerLayout.width
         },
         lineProps () {
             const {
-                hideLine, lineX, outerLayout, actualStyles,
+                invisible, hideLine, lineX, outerLayout, actualStyles,
             } = this
-            if (hideLine) return undefined
+            if (invisible || hideLine) return undefined
             return {
                 x1: lineX,
                 y1: outerLayout.y,
@@ -155,7 +153,7 @@ export default {
         },
         ticksWithInfo () {
             const {
-                actualTicks, scale, tickFormatter, tickLength, isOnRight,
+                actualTicks, tickLength, isOnRight,
             } = this
             const horizontalPadding = tickLength + 2
             const textProps = {
@@ -164,10 +162,10 @@ export default {
                 dx: (isOnRight ? horizontalPadding : -horizontalPadding).toString(),
                 dy: '1',
             }
-            return actualTicks.map((value, index) => ({
-                tickY: scale(value),
+            return actualTicks.map(({ value, scaledValue, label }) => ({
                 value,
-                label: tickFormatter(value, index),
+                tickY: scaledValue,
+                label,
                 textProps,
             }))
         },

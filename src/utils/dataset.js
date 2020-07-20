@@ -28,3 +28,12 @@ export function datakeyValue (datum, datakey) {
     }
     return datum
 }
+
+/**
+ * Obtain the corresponding datakey accesor.
+ * @param {string|number|function|Array} datakey
+ * @return {function}
+ */
+export function datakeyAccessor (datakey) {
+    return datum => datakeyValue(datum, datakey)
+}

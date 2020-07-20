@@ -41,7 +41,7 @@
                         name="tickText"
                         :value="value"
                     >
-                        {{ value }}
+                        {{ String(value) }}
                     </slot>
                 </WAxisText>
             </slot>
@@ -72,7 +72,6 @@ import VueTypes from 'vue-types'
 import outerElementMixin from '../../../mixins/outerElementMixin'
 import { AXIS_TYPE, AXIS_TYPE_LIST, AXIS_DIMENSION } from '../axisMixin'
 import printableAxisMixin from '../printableAxisMixin'
-import { marginHorizontalVueType, normalizedMarginHorizontal } from '../../../charts/chartUtils'
 import WAxisText from '../WAxisText/WAxisText.vue'
 
 const XAXIS_POSITION = {
@@ -94,8 +93,8 @@ export default {
         id: VueTypes.string.def(AXIS_DIMENSION.X),
         type: VueTypes.oneOf(AXIS_TYPE_LIST).def(AXIS_TYPE.NUMERIC),
         position: VueTypes.oneOf([XAXIS_POSITION.BOTTOM, XAXIS_POSITION.TOP]).def(XAXIS_POSITION.BOTTOM),
-        padding: marginHorizontalVueType,
         height: VueTypes.number.def(30),
+        offset: VueTypes.number.optional,
 
         labelAlign: VueTypes.oneOf(['start', 'middle', 'end']).def('end'),
         negativeAxisStyles: VueTypes.object.def({}),
@@ -103,7 +102,7 @@ export default {
     computed: {
         layoutInOuterArea () {
             const {
-                position, height, invisible,
+                position, height, invisible, offset,
             } = this
             return {
                 reference: 'canvas',
@@ -111,32 +110,33 @@ export default {
                 position,
                 left: 0,
                 width: '100%',
-                height: invisible ? 0 : height,
+                height: invisible || typeof offset === 'number' ? 0 : height,
             }
         },
 
-        normalizedPadding () {
-            return normalizedMarginHorizontal(this.padding)
-        },
-
         actualRange () {
-            const { Chart: { canvas }, normalizedPadding } = this
-            const { left: leftPadding = 0, right: rightPadding = 0 } = normalizedPadding
-            return [canvas.left + leftPadding, canvas.left + canvas.width - rightPadding]
+            const { Chart: { canvas } } = this
+            return [canvas.left, canvas.left + canvas.width]
         },
 
         isOnTop () {
             return this.position === XAXIS_POSITION.TOP
         },
         lineY () {
-            const { outerLayout, isOnTop } = this
+            const {
+                Chart: { canvas }, outerLayout, isOnTop, offset,
+            } = this
+            if (typeof offset === 'number') {
+                const actualOffset = (offset <= 1 ? offset * canvas.height : offset)
+                return outerLayout.y + (isOnTop ? +1 : -1) * actualOffset
+            }
             return isOnTop ? outerLayout.y + outerLayout.height : outerLayout.y
         },
         lineProps () {
             const {
-                hideLine, lineY, outerLayout, actualStyles,
+                invisible, hideLine, lineY, outerLayout, actualStyles,
             } = this
-            if (hideLine) return undefined
+            if (invisible || hideLine) return undefined
             return {
                 x1: outerLayout.x,
                 y1: lineY,
@@ -151,7 +151,7 @@ export default {
         },
         ticksWithInfo () {
             const {
-                actualTicks, scale, tickFormatter, tickLength, isOnTop,
+                actualTicks, tickLength, isOnTop,
             } = this
             const verticalPadding = tickLength + 2
             const textProps = {
@@ -160,10 +160,10 @@ export default {
                 dx: '1',
                 dy: ((isOnTop ? -verticalPadding : verticalPadding)).toString(),
             }
-            return actualTicks.map((value, index) => ({
-                tickX: scale(value),
+            return actualTicks.map(({ value, scaledValue, label }) => ({
                 value,
-                label: tickFormatter(value, index),
+                tickX: scaledValue,
+                label,
                 textProps,
             }))
         },

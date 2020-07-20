@@ -1,7 +1,8 @@
 /* eslint-disable prefer-destructuring */
 import VueTypes from 'vue-types'
+import clamp from 'lodash.clamp'
 // import debounce from 'lodash.debounce'
-import { max, round } from '../utils/maths'
+import { max } from '../utils/maths'
 import { getPercentValue } from '../utils/mathsPie'
 
 /** ***********************************
@@ -17,27 +18,50 @@ export const marginVueType = VueTypes.oneOfType([
         bottom: VueTypes.number,
         left: VueTypes.number,
     }),
-]).def(0)
-export const marginHorizontalVueType = VueTypes.oneOfType([
-    VueTypes.number,
-    VueTypes.arrayOf(VueTypes.number),
-    VueTypes.shape({
-        right: VueTypes.number,
-        left: VueTypes.number,
-    }),
-]).def(0)
-export const marginVerticalVueType = VueTypes.oneOfType([
-    VueTypes.number,
-    VueTypes.arrayOf(VueTypes.number),
-    VueTypes.shape({
-        top: VueTypes.number,
-        bottom: VueTypes.number,
-    }),
-]).def(0)
+]).optional
+
+function marginStartEndVueTypeFactory (startName = 'start', endName = 'end') {
+    return VueTypes.oneOfType([
+        VueTypes.number,
+        VueTypes.arrayOf(VueTypes.number),
+        VueTypes.shape({
+            [startName]: VueTypes.number,
+            [endName]: VueTypes.number,
+        }),
+    ]).optional
+}
+export const marginStartEndVueType = marginStartEndVueTypeFactory()
+export const marginHorizontalVueType = marginStartEndVueTypeFactory('left', 'right')
+export const marginVerticalVueType = marginStartEndVueTypeFactory('top', 'bottom')
+export const paddingStartEndVueType = marginStartEndVueType
+export const paddingHorizontalVueType = marginHorizontalVueType
+export const paddingVerticalVueType = marginVerticalVueType
+
+function paddingBandVueTypeFactory (startName = 'start', innerName = 'inner', endName = 'end') {
+    return VueTypes.oneOfType([
+        VueTypes.number,
+        VueTypes.arrayOf(VueTypes.number),
+        VueTypes.shape({
+            [startName]: VueTypes.number,
+            [innerName]: VueTypes.number,
+            [endName]: VueTypes.number,
+        }),
+    ]).optional
+}
+export const paddingBandVueType = paddingBandVueTypeFactory()
+export const paddingHorizontalBandVueType = paddingBandVueTypeFactory('left', 'right')
+export const paddingVerticalBandVueType = paddingBandVueTypeFactory('top', 'bottom')
 
 /** ***********************************
  * Margin and padding normalizations
 ************************************ */
+
+function firstDefined (...items) {
+    return items.find(n => n !== undefined)
+}
+function positive (number) {
+    return max(number, 0)
+}
 
 /**
  * Normalizes a margin (or padding)
@@ -48,10 +72,10 @@ export function normalizedMargin (margin) {
     let bottom = 0
     let left = 0
     if (Array.isArray(margin)) {
-        top = margin[0] || 0
-        right = margin[1] || 0
-        bottom = margin[2] || margin[0] || 0
-        left = margin[3] || margin[1] || 0
+        top = firstDefined(margin[0], 0)
+        right = firstDefined(margin[1], 0)
+        bottom = firstDefined(margin[2], margin[0], 0)
+        left = firstDefined(margin[3], margin[1], 0)
     } else if (typeof margin === 'object') {
         top = margin.top || 0
         right = margin.right || 0
@@ -64,10 +88,87 @@ export function normalizedMargin (margin) {
         left = margin
     }
     return {
-        top: max(round(top), 0),
-        right: max(round(right), 0),
-        bottom: max(round(bottom), 0),
-        left: max(round(left), 0),
+        top: positive(top),
+        right: positive(right),
+        bottom: positive(bottom),
+        left: positive(left),
+    }
+}
+
+/**
+ * Normalizes a "start-end" margin (or padding)
+ */
+export function normalizedMarginStartEnd (margin, startName = 'start', endName = 'end') {
+    let start = 0
+    let end = 0
+    if (Array.isArray(margin)) {
+        start = firstDefined(margin[0], 0)
+        end = firstDefined(margin[1], margin[0], 0)
+    } else if (typeof margin === 'object') {
+        start = margin[startName] || 0
+        end = margin[endName] || 0
+    } else if (typeof margin === 'number') {
+        start = margin
+        end = margin
+    }
+    return {
+        [startName]: positive(start),
+        [endName]: positive(end),
+    }
+}
+export const normalizedPaddingStartEnd = normalizedMarginStartEnd
+
+const DEFAULT_INNER_BAND_PADDING = 0.2
+const DEFAULT_INNER_POINT_PADDING = 1
+
+export function normalizedPaddingBand (margin, startName = 'start', innerName = 'inner', endName = 'end') {
+    let start = 0
+    let inner = 0
+    let end = 0
+    if (typeof margin === 'string') {
+        const [type, align] = margin.split(':')
+        if (type === 'band') {
+            inner = DEFAULT_INNER_BAND_PADDING
+        } else if (type === 'point') {
+            inner = DEFAULT_INNER_POINT_PADDING
+        } else {
+            const innerNumber = Number(type)
+            inner = clamp(Number.isNaN(innerNumber) ? DEFAULT_INNER_BAND_PADDING : innerNumber, 0, 1)
+        }
+        if (align === 'center') {
+            start = 0.5
+            end = 0.5
+        } else if (align === 'start') {
+            start = 0
+            end = 1
+        } else if (align === 'end') {
+            start = 1
+            end = 0
+        } else if (align) {
+            const alignNumber = Number(align)
+            const alpha = clamp(Number.isNaN(alignNumber) ? 0.5 : alignNumber, 0, 1)
+            start = alpha
+            end = 1 - start
+        }
+    } else if (Array.isArray(margin)) {
+        start = firstDefined(margin[0], 0)
+        inner = (margin.length === 3 && margin[1]) || DEFAULT_INNER_BAND_PADDING
+        end = firstDefined(margin[2], margin[1], margin[0], 0)
+    } else if (typeof margin === 'object') {
+        start = margin[startName] || 0
+        inner = margin[innerName] || DEFAULT_INNER_BAND_PADDING
+        end = margin[endName] || 0
+    } else if (typeof margin === 'number') {
+        start = margin
+        inner = margin
+        end = margin
+    } else {
+        inner = DEFAULT_INNER_BAND_PADDING
+    }
+    return {
+        [startName]: positive(start),
+        [innerName]: positive(inner),
+        [endName]: positive(end),
     }
 }
 
@@ -75,44 +176,20 @@ export function normalizedMargin (margin) {
  * Normalizes a horizontal margin (or padding)
  */
 export function normalizedMarginHorizontal (margin) {
-    let right = 0
-    let left = 0
-    if (Array.isArray(margin)) {
-        right = margin[0] || 0
-        left = margin[1] || margin[0] || 0
-    } else if (typeof margin === 'object') {
-        right = margin.right || 0
-        left = margin.left || 0
-    } else if (typeof margin === 'number') {
-        right = margin
-        left = margin
-    }
-    return {
-        right: max(round(right), 0),
-        left: max(round(left), 0),
-    }
+    return normalizedMarginStartEnd(margin, 'left', 'right')
+}
+export function normalizedPaddingHorizontal (margin) {
+    return normalizedPaddingBand(margin, 'left', 'inner', 'right')
 }
 
 /**
  * Normalizes a vertical margin (or padding)
  */
 export function normalizedMarginVertical (margin) {
-    let top = 0
-    let bottom = 0
-    if (Array.isArray(margin)) {
-        top = margin[0] || 0
-        bottom = margin[1] || margin[0] || 0
-    } else if (typeof margin === 'object') {
-        top = margin.top || 0
-        bottom = margin.bottom || 0
-    } else if (typeof margin === 'number') {
-        top = margin
-        bottom = margin
-    }
-    return {
-        top: max(round(top), 0),
-        bottom: max(round(bottom), 0),
-    }
+    return normalizedMarginStartEnd(margin, 'top', 'bottom')
+}
+export function normalizedPaddingVertical (margin) {
+    return normalizedPaddingBand(margin, 'top', 'inner', 'bottom')
 }
 
 /** ***********************************

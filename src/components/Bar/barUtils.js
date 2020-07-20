@@ -3,7 +3,7 @@ import clamp from 'lodash.clamp'
 export function obtainBarWidth ({
     barWidthFromProp,
     constrainedWidth,
-    DEFAULT_SLOT_WIDTH_WHEN_IS_CONSTRAINED = 0.6,
+    DEFAULT_SLOT_WIDTH_WHEN_IS_CONSTRAINED = 1,
     DEFAULT_SLOT_WIDTH_WHEN_IS_NOT_CONSTRAINED = 20,
 }) {
     const width =

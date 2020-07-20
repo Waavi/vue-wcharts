@@ -1,8 +1,12 @@
 <script>
 import VueTypes from 'vue-types'
+import noop from 'lodash.noop'
+import clamp from 'lodash.clamp'
 import { AXIS_TYPE, AXIS_DIMENSION } from '../Axis/axisMixin'
+import { paddingBandVueType, normalizedPaddingBand } from '../../charts/chartUtils'
+import { obtainScalerSlotter } from '../Axis/axisScaleUtils'
 
-const DEFAULT_SLOT_WIDTH_WHEN_IS_CONSTRAINED = 0.8
+const DEFAULT_SLOT_WIDTH_WHEN_IS_CONSTRAINED = 1
 const DEFAULT_SLOT_WIDTH_WHEN_IS_NOT_CONSTRAINED = 80
 
 export default {
@@ -16,6 +20,8 @@ export default {
     props: {
         axisId: VueTypes.string.optional,
         width: VueTypes.number.def(DEFAULT_SLOT_WIDTH_WHEN_IS_CONSTRAINED),
+        absoluteWidth: VueTypes.number.optional,
+        bandPadding: paddingBandVueType,
     },
     data () {
         return {
@@ -31,36 +37,34 @@ export default {
                 Chart.inferredAxisId.byDimension[AXIS_DIMENSION.RADIUS] ||
                 (console.error('WChart ERROR - Axis id is not defined for AxisGroup.') && null)
         },
+        actualWidth () {
+            const {
+                Chart, actualAxisId, width, absoluteWidth,
+            } = this
+            if (absoluteWidth === undefined) {
+                const constrainedWidth = ((Chart.axisScales[actualAxisId] || {}).bandwidth || noop)()
+                if (constrainedWidth) {
+                    return constrainedWidth * clamp(width, 0, 1)
+                }
+                return DEFAULT_SLOT_WIDTH_WHEN_IS_NOT_CONSTRAINED
+            }
+            return absoluteWidth
+        },
+        normalizedBandPadding () {
+            return normalizedPaddingBand(this.bandPadding)
+        },
         activeSlots () {
             return this.slots.filter(s => s.active).map(s => s.uid)
         },
-        totalWidth () {
-            const { Chart, actualAxisId, width } = this
-            const constrainedWidth = Chart.axisCategoricalStepWidths[actualAxisId]
-            const maxWidth = constrainedWidth || Infinity
-            const w =
-                (width > 1 && width) ||
-                (constrainedWidth && constrainedWidth * width) ||
-                DEFAULT_SLOT_WIDTH_WHEN_IS_NOT_CONSTRAINED
-            return Math.max(1, Math.min(maxWidth, w))
-        },
-        slotWidth () {
-            const { activeSlots, totalWidth } = this
-            return totalWidth / activeSlots.length
-        },
-        getSlotScale () {
+        getSlottedScale () {
             const {
-                actualAxisId, activeSlots, totalWidth, slotWidth,
+                Chart, actualAxisId, activeSlots, actualWidth, normalizedBandPadding,
             } = this
-            const offset = (slotWidth - totalWidth) / 2
-            const scale = index => x => x + offset + index * slotWidth
-            return (uid, childAxisId) => {
-                if (childAxisId === actualAxisId) {
-                    const index = activeSlots.indexOf(uid)
-                    return index >= 0 ? scale(index) : null
-                }
-                return undefined
-            }
+            const scale = Chart.axisScales[actualAxisId]
+            const scaleForUid = obtainScalerSlotter({
+                scale, slotUuids: activeSlots, width: actualWidth, bandPadding: normalizedBandPadding,
+            })
+            return (uid, childAxisId) => (childAxisId === actualAxisId ? scaleForUid(uid) : undefined)
         },
     },
     methods: {

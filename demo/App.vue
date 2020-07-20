@@ -22,16 +22,22 @@
                 </button>
             </div> -->
             <h2>{{ activeComponent }}</h2>
-            <component
-                :is="activeComponent"
-                class="Chart"
-                :data="data"
-            />
+
+            <CategoricalAxesDemo />
+            <NumericAxesDemo />
+            <TemporalAxesDemo />
+            <CustomAxesDemo />
+
             <LinesTest />
             <StackedLinesTest />
             <BarsTest />
             <LinesVerticalTest />
             <BarsHorizontalTest />
+            <PolarTest />
+            <Cartesian
+                class="Chart"
+                :data="data"
+            />
             <button
                 class="Btn"
                 @click="changeData"
@@ -44,11 +50,16 @@
 
 <script>
 import { Cartesian, Pie, Scatter } from './sections'
+import CategoricalAxesDemo from './sections/tests/axes/CategoricalAxesDemo.vue'
+import NumericAxesDemo from './sections/tests/axes/NumericAxesDemo.vue'
+import TemporalAxesDemo from './sections/tests/axes/TemporalAxesDemo.vue'
+import CustomAxesDemo from './sections/tests/axes/CustomAxesDemo.vue'
 import LinesTest from './sections/tests/lines/LinesTest.vue'
 import LinesVerticalTest from './sections/tests/lines/LinesVerticalTest.vue'
 import StackedLinesTest from './sections/tests/lines/StackedLinesTest.vue'
 import BarsTest from './sections/tests/bars/BarsTest.vue'
 import BarsHorizontalTest from './sections/tests/bars/BarsHorizontalTest.vue'
+import PolarTest from './sections/tests/polar/PolarTest.vue'
 
 const dataOne = [
     {
@@ -104,11 +115,16 @@ export default {
         Cartesian,
         Pie,
         Scatter,
+        CategoricalAxesDemo,
+        NumericAxesDemo,
+        TemporalAxesDemo,
+        CustomAxesDemo,
         LinesTest,
         LinesVerticalTest,
         StackedLinesTest,
         BarsTest,
         BarsHorizontalTest,
+        PolarTest,
     },
     data () {
         return {

@@ -1,6 +1,7 @@
 /* eslint-disable */
 import { tickStep } from 'd3-array/src/ticks'
 import { isNumber } from './checks'
+import clamp from 'lodash.clamp'
 
 /**
  * Returns nick ticks
@@ -69,7 +70,13 @@ export const max = Math.max
 export const round = Math.round
 export const floor = Math.floor
 export const ceil = Math.ceil
-export const between = (x, a, b) => Math.min(Math.max(x, a), b)
+
+export function polarToCartesian ({ radius, angle }) {
+	return {
+		x: radius * Math.sin(angle),
+		y: radius * Math.cos(angle),
+	}
+}
 
 export default {
 	min,
@@ -77,9 +84,9 @@ export default {
 	round,
 	floor,
 	ceil,
-	between,
+	clamp,
     genTicks,
     genExactNbTicks,
     bound,
-    random,
+	random,
 }
