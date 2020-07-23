@@ -201,7 +201,15 @@ export default {
     },
 
     render (h) {
-        return h('g', {}, this.$slots.default)
+        return h(
+            'g',
+            {},
+            (Array.isArray(this.$slots.default) ? this.$slots.default : [this.$slots.default]).map((child) => {
+                // eslint-disable-next-line no-param-reassign
+                child.componentOptions.propsData = { ...child.componentOptions.propsData, ...this.$attrs }
+                return child
+            })
+        )
     },
 }
 </script>

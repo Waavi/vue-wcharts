@@ -1,10 +1,10 @@
 <template>
     <g v-if="isActive">
-        <rect
+        <BasicRect
             v-for="(coord, index) in coords"
             :key="index"
             v-bind="{
-                ...rectsAttrsFromCoord(coord.xScaled, coord.yScaled),
+                ...rectsAttrsFromCoord(coord),
                 ...actualStyles.rect,
             }"
         />
@@ -18,11 +18,15 @@ import drawableCartesianMixin from '../../mixins/drawable/drawableCartesianMixin
 import { withXAxisMixin, withYAxisMixin } from '../Axis/withAxisMixin'
 import { AXIS_TYPE } from '../Axis/axisMixin'
 import { obtainBarWidth, obtainRectBarLayoutGenerator } from './barUtils'
+import BasicRect from '../basicsElements/BasicRect/BasicRect.vue'
 
 export default {
     name: 'WBar',
     inject: {
         AxisGroup: { default: undefined },
+    },
+    components: {
+        BasicRect,
     },
     mixins: [
         drawableCartesianMixin,
@@ -56,14 +60,14 @@ export default {
         },
         rectsAttrsFromCoord () {
             const {
-                actualBarWidth, actualHorizontal, actualXAxisId, actualYAxisId, Chart,
+                actualBarWidth, actualHorizontal, actualXAxisId, actualYAxisId, Chart, xAccessor, yAccessor,
             } = this
-            return obtainRectBarLayoutGenerator({
+            return coord => obtainRectBarLayoutGenerator({
                 barWidth: actualBarWidth,
                 isHorizontal: actualHorizontal,
                 valueAxisId: actualHorizontal ? actualXAxisId : actualYAxisId,
                 Chart,
-            })
+            })(xAccessor(coord), yAccessor(coord))
         },
     },
 }

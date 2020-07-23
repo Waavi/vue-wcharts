@@ -72,19 +72,26 @@ export default {
             fill: main,
         },
     }),
-    WScatter: {
-        line: {
-            fill: '',
-            stroke: '',
-            strokeWidth: 1,
-            strokeDasharray: '0',
-        },
-        dot: {
-            fill: '',
-            stroke: '',
+    WScatter: ({ color: { main = '#555', secondary } = {}, hoverRadius = 8 }) => ({
+        point: {
+            fill: main,
+            stroke: main,
             strokeWidth: 0,
-            radius: 8,
-            opacity: 0.8,
+            r: 8,
+        },
+    }),
+    PieSector: ({ color: { main = '#555', secondary } = {}, hoverRadius = 8 }) => ({
+        sector: {
+            fill: main,
+        },
+    }),
+    WPie: {
+        styles: {
+            position: 'relative',
+            transform: 'translate(50%, 50%)',
+        },
+        path: {
+            stroke: colors.white,
         },
     },
     WXAxis: { ...axisStyles },
@@ -108,15 +115,6 @@ export default {
         label: {
             fill: colors.grayDarker,
             fontSize: 14,
-        },
-    },
-    WPie: {
-        styles: {
-            position: 'relative',
-            transform: 'translate(50%, 50%)',
-        },
-        path: {
-            stroke: colors.white,
         },
     },
     WLegend: {

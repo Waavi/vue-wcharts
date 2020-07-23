@@ -2,8 +2,8 @@
     <g v-if="isActive">
         <BasicLine
             :datums="coords"
-            xAccessor="xScaled"
-            yAccessor="yScaled"
+            :xAccessor="xAccessor"
+            :yAccessor="yAccessor"
             :curve="curve"
             v-bind="actualStyles.line"
         />

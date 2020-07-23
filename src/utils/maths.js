@@ -61,8 +61,8 @@ export function bound (data, type, key) {
     )
 }
 
-export function random () {
-    return  Math.floor(Math.random() * 1e6)
+export function randomInt (limit = 1e6) {
+    return  Math.floor(Math.random() * limit)
 }
 
 export const min = Math.min
@@ -88,5 +88,5 @@ export default {
     genTicks,
     genExactNbTicks,
     bound,
-	random,
+	randomInt,
 }

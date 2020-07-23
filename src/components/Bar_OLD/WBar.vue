@@ -134,7 +134,7 @@
 <script>
 import VueTypes from 'vue-types'
 import merge from '../../utils/merge'
-import { random } from '../../utils/maths'
+import { randomInt } from '../../utils/maths'
 import animationMixin from '../../mixins/animation'
 import themeMixin from '../../mixins/theme'
 import visibleMixin from '../../mixins/visible'
@@ -236,7 +236,7 @@ export default {
         },
         // Path unique Id
         pathId () {
-            return this.stacked ? this.Chart.chartId : (this.id || `bar-${random()}`)
+            return this.stacked ? this.Chart.chartId : (this.id || `bar-${randomInt()}`)
         },
         // Normalize borderRadius prop to borders array
         normalizedBorderRadius () {

@@ -1,227 +1,117 @@
 <template>
     <g
-        v-if="active"
-        class="pie-sectors"
+        v-if="sectors.length > 0"
+        :transform="`translate(${center.x},${center.y})`"
     >
-        <foreignObject :style="contentStyles">
-            <slot />
-        </foreignObject>
-
-        <g
-            v-for="(path, i) in paths"
-            :key="i"
-            class="pie-sector"
+        <PieSector
+            v-for="(sector, index) in sectors"
+            :key="index"
+            :arcGenerator="arcGenerator"
+            :animDuration="animDuration"
+            v-bind="sector"
+            #default="scopedProps"
         >
-            <path
-                :id="i"
-                :d="path.d"
-                :fill="path.fill"
-                :stroke="path.stroke"
-                :style="{
-                    ...pathStylesCmp,
-                    opacity: activePath === null ? 1 : activePath === i ? 1 : opacityDisabled,
-                }"
-                v-on="pieListeners"
+            <slot
+                name="sector"
+                v-bind="scopedProps"
             />
-        </g>
+        </PieSector>
+
+        <slot />
     </g>
 </template>
 
 <script>
 import VueTypes from 'vue-types'
-import omit from 'lodash.omit'
-import TweenLite from 'gsap/TweenLite'
-import merge from '../../utils/merge'
-import themeMixin from '../../mixins/theme'
-import visibleMixin from '../../mixins/visible'
-import { isNumber } from '../../utils/checks'
-import {
-    getSectorPath, mathSign, parseDeltaAngle,
-} from '../../utils/mathsPie'
+import { getDatums, datakeyAccessor } from '../../utils/dataset'
+import { arcGeneratorFactory, pieGeneratorFactory } from '../basicsElements/d3Utils'
+import PieSector from './PieSector.vue'
 
 export default {
     name: 'WPie',
-    type: 'pie',
+    type: 'drawable',
     inject: ['Chart'],
-    mixins: [themeMixin, visibleMixin],
+    components: {
+        PieSector,
+    },
     props: {
-        // internal props set by the parent (WPieChart)
-        index: VueTypes.number,
         datakey: VueTypes.string.isRequired,
-        trigger: VueTypes.oneOf(['hover', 'click', 'manual']).def('hover'),
-        radius: VueTypes.oneOfType([
-            VueTypes.number,
-            VueTypes.arrayOf(VueTypes.number).def([0, 100]),
-        ]).def([0, 100]),
-        styles: VueTypes.object,
-        pathStyles: VueTypes.shape({
-            stroke: VueTypes.string,
-        }).loose,
-        opacityDisabled: VueTypes.number.def(0.5),
-        // Animation
-        animation: VueTypes.bool.def(true),
-        animationDuration: VueTypes.number.def(2.5),
-        // index of item active
-        itemActive: VueTypes.oneOfType([Number, null]),
+        series: VueTypes.string.optional,
+        cx: VueTypes.oneOfType([VueTypes.number, VueTypes.string]).optional,
+        cy: VueTypes.oneOfType([VueTypes.number, VueTypes.string]).optional,
+        startAngle: VueTypes.number.def(0),
+        endAngle: VueTypes.number.def(360),
+        outerRadius: VueTypes.oneOfType([VueTypes.number, VueTypes.string]).optional,
+        innerRadius: VueTypes.oneOfType([VueTypes.number, VueTypes.string]).optional,
+        padAngle: VueTypes.number.def(0),
+        padRadius: VueTypes.number.def(0),
+        cornerRadius: VueTypes.number.def(0),
+        sort: VueTypes.func.optional,
+        animDuration: VueTypes.number.optional,
     },
     data () {
         return {
-            activePath: null,
-            animatedSectors: [],
+            hasBeenMounted: false,
         }
     },
     computed: {
-        // Active elem
-        active () {
-            return this.Chart.activeElements.includes(this.index)
+        center () {
+            const { Chart, cx, cy } = this
+            const { canvas } = Chart
+            return {
+                x: canvas.left + this.normalizeNumberOrPercent(cx, canvas.width, canvas.width / 2),
+                y: canvas.top + this.normalizeNumberOrPercent(cy, canvas.height, canvas.height / 2),
+            }
         },
-        // Radius
-        curRadius () {
-            const innerRadius = Array.isArray(this.radius) ? this.radius[0] : 0
-            const outerRadius = Array.isArray(this.radius) ? this.radius[1] : 100
-
-            return { innerRadius, outerRadius }
+        maxRadius () {
+            const { canvas } = this.Chart
+            return Math.min(canvas.width, canvas.height) / 2
         },
-        // Values
-        curValues () {
-            return this.Chart.data.map(item => item[this.datakey])
+        normalizedOuterRadius () {
+            const { maxRadius } = this
+            return this.normalizeNumberOrPercent(this.outerRadius, maxRadius, maxRadius)
         },
-        // Sectors
-        sectors () {
+        normalizedInnerRadius () {
+            const { maxRadius } = this
+            return this.normalizeNumberOrPercent(this.innerRadius, maxRadius, 0)
+        },
+        arcGenerator () {
+            return arcGeneratorFactory({
+                innerRadius: this.normalizedInnerRadius,
+                outerRadius: this.normalizedOuterRadius,
+                padRadius: this.padRadius,
+                cornerRadius: this.cornerRadius,
+            })
+        },
+        pieGenerator () {
             const {
-                startAngle, endAngle, paddingAngle, curCx, curCy,
-            } = this.Chart
-            let prev
-            const sum = this.curValues.reduce((acc, a) => acc + a, 0)
-
-            const len = this.curValues.length
-            const deltaAngle = parseDeltaAngle({ startAngle, endAngle })
-            const absDeltaAngle = Math.abs(deltaAngle)
-            const totalPadingAngle = (absDeltaAngle >= 360 ? len : (len - 1)) * paddingAngle
-            const realTotalAngle = absDeltaAngle - totalPadingAngle
-
-            return this.curValues.map((value, index) => {
-                let tempStartAngle
-                const percentage = (isNumber(value) ? value : 0) / sum
-
-                if (index) {
-                    tempStartAngle = prev.endAngle + mathSign(deltaAngle) * paddingAngle
-                } else {
-                    tempStartAngle = startAngle
-                }
-                const tempEndAngle = tempStartAngle + mathSign(deltaAngle) * (percentage * realTotalAngle)
-
-                prev = {
-                    cx: curCx,
-                    cy: curCy,
-                    value,
-                    percentage,
-                    startAngle: tempStartAngle,
-                    endAngle: tempEndAngle,
-                    ...this.curRadius,
-                }
-
-                return prev
+                datakey, startAngle, endAngle, padAngle, sort, hasBeenMounted,
+            } = this
+            return pieGeneratorFactory({
+                startAngle: startAngle * Math.PI / 180,
+                endAngle: endAngle * Math.PI / 180,
+                padAngle: (hasBeenMounted ? padAngle : 0) * Math.PI / 180,
+                sort,
+                value: hasBeenMounted ? datakeyAccessor(datakey) : () => 0,
             })
         },
-        // Generate paths array by arcs
-        paths () {
-            const sectors = (this.animation ? this.animatedSectors : this.sectors)
-            return sectors.map((sector, index) => ({
-                d: getSectorPath(sector),
-                fill: this.Chart.colors[index],
-                stroke: this.pathStylesCmp.stroke,
-            }))
+        datums () {
+            const { Chart, series } = this
+            return getDatums({ dataset: Chart.dataset, series })
         },
-        // Event Listeners
-        pieListeners () {
-            return merge({}, this.$listeners, {
-                click: (event) => {
-                    if (this.trigger === 'click') {
-                        this.setActivePath(parseInt(event.target.id, 0))
-                        this.handleActive(event)
-                    }
-                    this.$emit('onClick')
-                },
-                mouseenter: (event) => {
-                    if (this.trigger === 'hover') {
-                        this.setActivePath(parseInt(event.target.id, 0))
-                        this.handleActive(event)
-                    }
-                    this.$emit('onMouseenter')
-                },
-                mouseleave: () => {
-                    if (['hover', 'click'].includes(this.trigger)) {
-                        this.setActivePath(null)
-                        this.Chart.cleanActive()
-                    }
-                    this.$emit('onMouseleave')
-                },
-            })
-        },
-        // Styles
-        contentStyles () {
-            const { height } = this.Chart
-            const { outerRadius } = this.curRadius
-            const size = `${outerRadius * 2}px`
-            return {
-                width: size,
-                height: size,
-                transform: `translate(${outerRadius}px, ${height / 2 - outerRadius}px)`,
-            }
-        },
-        stylesCmp () {
-            return {
-                ...this.themeStyles.styles,
-                ...this.styles,
-            }
-        },
-        pathStylesCmp () {
-            return {
-                ...omit(this.themeStyles.path, ['stroke']),
-                ...omit(this.pathStyles, ['stroke']),
-                ...(this.trigger === 'click' ? { cursor: 'pointer' } : {}),
-            }
+        sectors () {
+            const { datums, pieGenerator } = this
+            return pieGenerator(datums)
         },
     },
-    watch: {
-        sectors: {
-            handler (sectors) {
-                if (this.animation) {
-                    // Initialize sectors
-                    this.animatedSectors = sectors.map(s => ({ ...s, startAngle: 0, endAngle: 0 }))
-                    // Interpolate angles
-                    sectors.forEach((s, index) => {
-                        TweenLite.to(this.animatedSectors[index], this.animationDuration, {
-                            startAngle: sectors[index].startAngle,
-                            endAngle: sectors[index].endAngle,
-                        })
-                    })
-                }
-            },
-            immediate: true,
-        },
-        itemActive: {
-            handler (id) {
-                if (id) this.activePath = id
-            },
-            immediate: true,
-        },
+    mounted () {
+        this.hasBeenMounted = true
     },
     methods: {
-        setActivePath (id) {
-            if ([null, undefined].includes(this.itemActive)) this.activePath = id
-        },
-        handleActive (event) {
-            const { id } = event.target
-            const { setActive, colors } = this.Chart
-            const datum = this.Chart.data[id]
-            const color = this.fill || colors[id]
-            const value = [{ value: this.curValues[id], color }]
-            // Set active bar to show tooltip
-            setActive({
-                id, value, datum,
-            }, event)
+        normalizeNumberOrPercent (center, width, defaultValue) {
+            if (typeof center === 'number') return center
+            if (typeof center === 'string' && center[center.length - 1] === '%') return width * Number(center.slice(0, -1)) / 100
+            return defaultValue
         },
     },
 }

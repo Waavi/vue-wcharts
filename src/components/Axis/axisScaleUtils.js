@@ -5,7 +5,7 @@ import clamp from 'lodash.clamp'
 import { obtainNumericActualBounds } from './axisUtils'
 
 export function obtainNumericScale ({
-    d3Scale, dataDomain, propBounds, numTicks, range, rangePadding, reversed,
+    d3Scale, dataDomain, propBounds, numTicks, range, rangePadding, reversed, d3ScaleFactor,
 }) {
     if (!dataDomain) return undefined
     const bounds = obtainNumericActualBounds({
@@ -20,16 +20,25 @@ export function obtainNumericScale ({
     rangeStart += Math.min(paddingRangeStart, rangeEnd - rangeStart)
     rangeEnd -= Math.min(paddingRangeEnd, rangeEnd - rangeStart)
     const finalRange = willNeedToBeReversed ? [rangeEnd, rangeStart] : [rangeStart, rangeEnd]
-    const scale = d3Scale
+    let scale = d3Scale
         .domain(bounds)
         .range(finalRange)
+    if (d3ScaleFactor) {
+        const originalScale = scale
+        const scaleFactor = d3ScaleFactor.domain(finalRange).range(finalRange)
+        scale = x => scaleFactor(originalScale(x))
+        scale.domain = originalScale.domain
+        scale.range = originalScale.range
+        scale.ticks = originalScale.ticks
+        scale.invert = x => scaleFactor.invert(originalScale.invert(x))
+    }
     scale.dataDomain = () => dataDomain
     scale.bounds = () => bounds
     return scale
 }
 
 export function obtainCategoricalScale ({
-    categories, range, rangePadding, bandPadding, reversed,
+    categories, range, rangePadding, bandPadding, reversed, d3ScaleFactor,
 }) {
     if (!categories) return undefined
     const categoriesCopy = [...categories]
@@ -53,7 +62,11 @@ export function obtainCategoricalScale ({
     const bandwidth = step - gap
     const first = rangeStart + paddingBandStart * step + bandwidth / 2
 
-    const bandCenters = categoriesCopy.map((_, index) => first + index * step)
+    let bandCenters = categoriesCopy.map((_, index) => first + index * step)
+    if (d3ScaleFactor) {
+        const scaleFactor = d3ScaleFactor.domain([bandCenters[0], bandCenters[bandCenters.length - 1]]).range(finalRange)
+        bandCenters = bandCenters.map(center => scaleFactor(center))
+    }
     if (willNeedToBeReversed) {
         bandCenters.reverse()
     }
@@ -69,7 +82,7 @@ export function obtainCategoricalScale ({
     return scale
 }
 
-export function obtainScalerSlotter ({
+export function obtainScaleSlotter ({
     scale, slotUuids, width, bandPadding,
 }) {
     const slotScale = obtainCategoricalScale({

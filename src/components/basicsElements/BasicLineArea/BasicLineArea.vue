@@ -43,6 +43,7 @@ export default {
         BasicArea,
         BasicLine,
     },
+    inheritAttrs: false,
     props: {
         datums: VueTypes.array.isRequired,
         xAccessor: accessorVueType,

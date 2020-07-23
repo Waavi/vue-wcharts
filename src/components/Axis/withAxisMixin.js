@@ -7,7 +7,7 @@ import activeMixin from '../../mixins/activeMixin'
 
 export const withXAxisMixin = withAxisMixinFactory(AXIS_DIMENSION.X)
 export const withYAxisMixin = withAxisMixinFactory(AXIS_DIMENSION.Y)
-export const withZAxisMixin = withAxisMixinFactory(AXIS_DIMENSION.Z)
+export const withZAxisMixin = withAxisMixinFactory(AXIS_DIMENSION.Z, { required: false })
 export const withAngleAxisMixin = withAxisMixinFactory(AXIS_DIMENSION.ANGLE)
 export const withRadiusAxisMixin = withAxisMixinFactory(AXIS_DIMENSION.RADIUS)
 export const withAxisMixin = withAxisMixinFactory
@@ -18,7 +18,7 @@ const numberOrStringOrArrayVueType = VueTypes.oneOf([
     VueTypes.arrayOf(numberOrStringVueType),
 ]).optional
 
-function withAxisMixinFactory (dimension) {
+function withAxisMixinFactory (dimension, { required = true } = {}) {
     const dimensionFirstLetter = dimension.charAt(0)
     const dimensionWithoutFirstLetter = dimension.slice(1)
     const lowercasedDimension = dimensionFirstLetter.toLowerCase() + dimensionWithoutFirstLetter
@@ -34,6 +34,7 @@ function withAxisMixinFactory (dimension) {
     const aCoordForDatum = `${lowercasedDimension}CoordForDatum`
     const aScale = `${lowercasedDimension}Scale`
     const aScaled = `${lowercasedDimension}Scaled`
+    const aAccessor = `${lowercasedDimension}Accessor`
     return {
         mixins: [
             withUidMixin,
@@ -41,6 +42,7 @@ function withAxisMixinFactory (dimension) {
         ],
         inject: {
             AxisGroup: { default: undefined },
+            Animation: { default: undefined },
         },
         props: {
             [aAxisId]: VueTypes.string.optional,
@@ -88,7 +90,9 @@ function withAxisMixinFactory (dimension) {
                 const { Chart, AxisGroup } = this
                 const scales = Chart.axisScales
                 const axisId = this[actualAAxisId]
-                !Object.prototype.hasOwnProperty.call(scales, axisId) && console.error(`WChart ERROR - Axis scale "${axisId}" is not found.`)
+                if (required) {
+                    !Object.prototype.hasOwnProperty.call(scales, axisId) && console.error(`WChart ERROR - Axis scale "${axisId}" is not found.`)
+                }
                 return (AxisGroup && AxisGroup.getSlottedScale(this.uid, axisId)) || scales[axisId]
             },
             [aScaled] () {
@@ -113,6 +117,17 @@ function withAxisMixinFactory (dimension) {
                     }
                 }
                 return null
+            },
+
+            [aAccessor] () {
+                const { Chart, hasBeenMounted } = this
+                const { appearFromReferenceAlongAxis } = this.Animation || {}
+                const axisId = this[actualAAxisId]
+                if (!hasBeenMounted && appearFromReferenceAlongAxis === axisId) {
+                    const reference = Chart.axisReferences[axisId]
+                    return () => reference
+                }
+                return datum => datum[aScaled]
             },
         },
         watch: {

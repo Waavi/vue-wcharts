@@ -19,47 +19,52 @@
                 :domain="[0]"
             />
 
-            <AxisGroup
-                :bandPadding="{ inner: 0.25 }"
+            <Animation
+                :animDuration="1000"
+                appearFromReferenceAlongAxis="fruits"
             >
-                <WBar
-                    yDatakey="apples"
-                    label="apples"
-                    color="red"
-                />
+                <AxisGroup
+                    :bandPadding="{ inner: 0.25 }"
+                >
+                    <WBar
+                        yDatakey="apples"
+                        label="apples"
+                        color="red"
+                    />
 
-                <Stack>
-                    <StackedBar
-                        datakey="bananas"
-                        label="bananas"
-                        color="yellow"
-                    />
-                    <StackedBar
-                        datakey="platanos"
-                        label="platanos"
-                        color="orange"
-                    />
-                </Stack>
+                    <Stack>
+                        <StackedBar
+                            datakey="bananas"
+                            label="bananas"
+                            color="yellow"
+                        />
+                        <StackedBar
+                            datakey="platanos"
+                            label="platanos"
+                            color="orange"
+                        />
+                    </Stack>
 
-                <WBar
-                    yDatakey="pears"
-                    label="pears"
-                    color="green"
-                />
+                    <WBar
+                        yDatakey="pears"
+                        label="pears"
+                        color="green"
+                    />
 
-                <Stack>
-                    <StackedBar
-                        datakey="cherries"
-                        label="cherries"
-                        color="blue"
-                    />
-                    <StackedBar
-                        :datakey="d => d.cherries / 2"
-                        label="berries"
-                        color="aquamarine"
-                    />
-                </Stack>
-            </AxisGroup>
+                    <Stack>
+                        <StackedBar
+                            datakey="cherries"
+                            label="cherries"
+                            color="blue"
+                        />
+                        <StackedBar
+                            :datakey="d => d.cherries / 2"
+                            label="berries"
+                            color="aquamarine"
+                        />
+                    </Stack>
+                </AxisGroup>
+            </Animation>
             <Legend />
         </WChart>
 
@@ -80,6 +85,7 @@ import Stack from '../../../../src/components/Stack/Stack.vue'
 import StackedBar from '../../../../src/components/Stack/StackedBar.vue'
 import Legend from '../../../../src/components/Legend/Legend.vue'
 import { randomFruitsDataset } from '../randomDataset'
+import { Animation } from '../../../../src/transitions'
 
 export default {
     name: 'BarsTest',
@@ -88,6 +94,7 @@ export default {
         Stack,
         StackedBar,
         Legend,
+        Animation,
     },
     data () {
         return {

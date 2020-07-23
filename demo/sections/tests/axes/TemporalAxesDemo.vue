@@ -27,20 +27,31 @@
                 :bounds="[, d => new Date(d.getFullYear(), d.getMonth(), d.getDate() + 3)]"
             />
         </section>
-        <!-- <section>
-            <p>domain: [0, 104]</p>
+
+        <h3>padding (range padding)</h3>
+        <section>
+            <p>padding: (50 | [50, 50] | { start: 50, end: 50 })</p>
             <TemporalAxisDemo
-            :numTicks="4"
-                :domain="[0, 104]"
+                :numTicks="4"
+                :padding="50"
             />
         </section>
         <section>
-            <p>domain: [0, n => n + 20]</p>
+            <p>padding: ([20, 100] | { start: 20, end: 100 })</p>
             <TemporalAxisDemo
-            :numTicks="4"
-                :domain="[0, n => n + 20]"
+                :numTicks="4"
+                :padding="[20, 100]"
             />
-        </section> -->
+        </section>
+
+        <h3>reversed</h3>
+        <section>
+            <p>reversed: true</p>
+            <TemporalAxisDemo
+                :numTicks="4"
+                reversed
+            />
+        </section>
     </div>
 </template>
 

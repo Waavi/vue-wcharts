@@ -58,9 +58,7 @@
             <AxisGroup
                 axisId="lap"
             >
-                <Stack
-                    cumulativeAxisId="time"
-                >
+                <Stack cumulativeAxisId="time">
                     <LegendItem
                         label="redStack"
                         color="red"

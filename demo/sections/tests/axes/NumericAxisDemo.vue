@@ -28,7 +28,7 @@ import VueTypes from 'vue-types'
 export default {
     name: 'NumericAxisDemo',
     props: {
-        nums: VueTypes.arrayOf(VueTypes.any).def([22, 88]),
+        nums: VueTypes.arrayOf(VueTypes.any).def([21, 86]),
     },
     computed: {
         dataset () {

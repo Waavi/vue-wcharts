@@ -66,7 +66,7 @@ function positive (number) {
 /**
  * Normalizes a margin (or padding)
  */
-export function normalizedMargin (margin) {
+export function normalizeMargin (margin) {
     let top = 0
     let right = 0
     let bottom = 0
@@ -98,7 +98,7 @@ export function normalizedMargin (margin) {
 /**
  * Normalizes a "start-end" margin (or padding)
  */
-export function normalizedMarginStartEnd (margin, startName = 'start', endName = 'end') {
+export function normalizeMarginStartEnd (margin, startName = 'start', endName = 'end') {
     let start = 0
     let end = 0
     if (Array.isArray(margin)) {
@@ -116,12 +116,12 @@ export function normalizedMarginStartEnd (margin, startName = 'start', endName =
         [endName]: positive(end),
     }
 }
-export const normalizedPaddingStartEnd = normalizedMarginStartEnd
+export const normalizePaddingStartEnd = normalizeMarginStartEnd
 
 const DEFAULT_INNER_BAND_PADDING = 0.2
 const DEFAULT_INNER_POINT_PADDING = 1
 
-export function normalizedPaddingBand (margin, startName = 'start', innerName = 'inner', endName = 'end') {
+export function normalizePaddingBand (margin, startName = 'start', innerName = 'inner', endName = 'end') {
     let start = 0
     let inner = 0
     let end = 0
@@ -175,21 +175,21 @@ export function normalizedPaddingBand (margin, startName = 'start', innerName = 
 /**
  * Normalizes a horizontal margin (or padding)
  */
-export function normalizedMarginHorizontal (margin) {
-    return normalizedMarginStartEnd(margin, 'left', 'right')
+export function normalizeMarginHorizontal (margin) {
+    return normalizeMarginStartEnd(margin, 'left', 'right')
 }
-export function normalizedPaddingHorizontal (margin) {
-    return normalizedPaddingBand(margin, 'left', 'inner', 'right')
+export function normalizePaddingHorizontal (margin) {
+    return normalizePaddingBand(margin, 'left', 'inner', 'right')
 }
 
 /**
  * Normalizes a vertical margin (or padding)
  */
-export function normalizedMarginVertical (margin) {
-    return normalizedMarginStartEnd(margin, 'top', 'bottom')
+export function normalizeMarginVertical (margin) {
+    return normalizeMarginStartEnd(margin, 'top', 'bottom')
 }
-export function normalizedPaddingVertical (margin) {
-    return normalizedPaddingBand(margin, 'top', 'inner', 'bottom')
+export function normalizePaddingVertical (margin) {
+    return normalizePaddingBand(margin, 'top', 'inner', 'bottom')
 }
 
 /** ***********************************

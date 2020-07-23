@@ -31,6 +31,22 @@
                 :domain="[0, n => n + 20]"
             />
         </section>
+
+        <h3>padding (range padding)</h3>
+        <section>
+            <p>padding: (50 | [50, 50] | { start: 50, end: 50 })</p>
+            <NumericAxisDemo :padding="50" />
+        </section>
+        <section>
+            <p>padding: ([20, 100] | { start: 20, end: 100 })</p>
+            <NumericAxisDemo :padding="[20, 100]" />
+        </section>
+
+        <h3>reversed</h3>
+        <section>
+            <p>reversed: true</p>
+            <NumericAxisDemo reversed />
+        </section>
     </div>
 </template>
 

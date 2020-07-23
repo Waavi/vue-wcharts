@@ -19,28 +19,33 @@
                 :numTicks="4"
                 :domain="[0]"
             />
+            <WZAxis />
 
             <Animation
                 :animDuration="1000"
                 appearFromReferenceAlongAxis="fruits"
             >
-                <WLine
+                <WScatter
                     yDatakey="apples"
+                    zDatakey="apples"
                     label="apples"
                     color="red"
                 />
-                <WLine
+                <WScatter
                     yDatakey="bananas"
+                    zDatakey="bananas"
                     label="bananas"
                     color="yellow"
                 />
-                <WLine
+                <WScatter
                     yDatakey="pears"
+                    zDatakey="pears"
                     label="pears"
                     color="green"
                 />
-                <WLine
+                <WScatter
                     yDatakey="cherries"
+                    zDatakey="cherries"
                     label="cherries"
                     color="blue"
                 />
@@ -65,7 +70,7 @@ import { randomFruitsDataset } from '../randomDataset'
 import { Animation } from '../../../../src/transitions'
 
 export default {
-    name: 'LinesTest',
+    name: 'ScatterTest',
     components: {
         Animation,
         Legend,

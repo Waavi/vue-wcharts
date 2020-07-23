@@ -41,11 +41,14 @@ export default {
             if (invisible || !scale) return []
             const formatter = tickFormatter || axisFormatter || (x => x)
             const tickValues = (ticks || scale.ticks(numTicks)) || []
-            return tickValues.map((value, index) => ({
-                value,
-                scaledValue: scale(value),
-                label: formatter(value, index),
-            }))
+            return tickValues.map((value, index) => {
+                const label = formatter(value, index)
+                return {
+                    value,
+                    scaledValue: scale(value),
+                    label: label === undefined || label === null ? undefined : String(label),
+                }
+            })
         },
     },
 }

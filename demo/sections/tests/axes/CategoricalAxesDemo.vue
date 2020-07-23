@@ -122,6 +122,31 @@
                 bandPadding="point:end"
             />
         </section>
+
+        <h3>padding (range padding)</h3>
+        <section>
+            <p>padding: (50 | [50, 50] | { start: 50, end: 50 })</p>
+            <CategoricalAxisDemo
+                type="band"
+                :padding="50"
+            />
+        </section>
+        <section>
+            <p>padding: ([20, 100] | { start: 20, end: 100 })</p>
+            <CategoricalAxisDemo
+                type="band"
+                :padding="[20, 100]"
+            />
+        </section>
+
+        <h3>reversed</h3>
+        <section>
+            <p>reversed: true</p>
+            <CategoricalAxisDemo
+                type="band"
+                reversed
+            />
+        </section>
     </div>
 </template>
 

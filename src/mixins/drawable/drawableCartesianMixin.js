@@ -22,7 +22,7 @@ export default {
                 zCoordForDatum,
             } = this
             const datums = getDatums({ dataset: Chart.dataset, series })
-            if (!datums || datums.length === 0 || xCoordForDatum === null || yCoordForDatum === null || zCoordForDatum === null) return undefined
+            if (!datums || datums.length === 0 || xCoordForDatum === null || yCoordForDatum === null) return undefined
 
             return datums.map((datum) => {
                 const obj = { datum }

@@ -26,19 +26,20 @@ export default {
     },
     created () {
         this.isChartReady = !this.responsive
+        this.debouncedResize = debounce(this.resize, 200)
     },
     mounted () {
     // Added listener if has response prop to true
         if (this.responsive) {
             this.resize()
             if (typeof window !== 'undefined') {
-                window.addEventListener('resize', debounce(this.resize, 220))
+                window.addEventListener('resize', this.debouncedResize)
             }
         }
     },
     unmounted () {
     // Remove listener response
-        if (this.responsive && typeof window !== 'undefined') window.removeEventListener('resize')
+        if (this.responsive && typeof window !== 'undefined') window.removeEventListener('resize', this.debouncedResize)
     },
     methods: {
         // Resize chart on event emited

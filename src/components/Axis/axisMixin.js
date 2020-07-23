@@ -15,8 +15,8 @@ import stylesMixin from '../../mixins/stylesMixin'
 import {
     paddingBandVueType,
     paddingStartEndVueType,
-    normalizedPaddingBand,
-    normalizedPaddingStartEnd,
+    normalizePaddingBand,
+    normalizePaddingStartEnd,
 } from '../../charts/chartUtils'
 
 export const AXIS_TYPE = {
@@ -62,6 +62,7 @@ export default {
         bounds: VueTypes.array.def([]),
         numTicks: VueTypes.any.def(8),
         d3Scale: VueTypes.func.optional,
+        d3ScaleFactor: VueTypes.func.optional,
         padding: paddingStartEndVueType,
         bandPadding: paddingBandVueType,
         formatter: VueTypes.func.def(value => value), // default formatter (for ticks and drawable values that belong to this)
@@ -91,10 +92,10 @@ export default {
         },
 
         normalizedPadding () {
-            return normalizedPaddingStartEnd(this.padding)
+            return normalizePaddingStartEnd(this.padding)
         },
         normalizedBandPadding () {
-            return normalizedPaddingBand(this.bandPadding)
+            return normalizePaddingBand(this.bandPadding)
         },
 
         actualRange () {
@@ -133,7 +134,8 @@ export default {
 
         scale () {
             const {
-                isTemporal, d3Scale, actualRange, isCategorical, reversed, actualDomain, bounds: propBounds, numTicks, categories, normalizedPadding, normalizedBandPadding,
+                isTemporal, d3Scale, d3ScaleFactor, actualRange, isCategorical, reversed, actualDomain,
+                bounds: propBounds, numTicks, categories, normalizedPadding, normalizedBandPadding,
             } = this
             if (isCategorical) {
                 return obtainCategoricalScale({
@@ -142,6 +144,7 @@ export default {
                     rangePadding: normalizedPadding,
                     bandPadding: normalizedBandPadding,
                     reversed,
+                    d3ScaleFactor,
                 })
             }
             return obtainNumericScale({
@@ -152,6 +155,7 @@ export default {
                 range: actualRange,
                 rangePadding: normalizedPadding,
                 reversed,
+                d3ScaleFactor,
             })
         },
 

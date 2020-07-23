@@ -1,11 +1,6 @@
-<template>
-    <g :id="id">
-        <path />
-    </g>
-</template>
-
 <script>
 import VueTypes from 'vue-types'
+import { scaleSqrt } from 'd3-scale'
 import axisMixin, { AXIS_TYPE, AXIS_TYPE_LIST, AXIS_DIMENSION } from '../axisMixin'
 
 export default {
@@ -15,16 +10,16 @@ export default {
     props: {
         id: VueTypes.string.def(AXIS_DIMENSION.Z),
         type: VueTypes.oneOf(AXIS_TYPE_LIST).def(AXIS_TYPE.NUMERIC),
-        scaleFn: VueTypes.oneOfType([VueTypes.string, VueTypes.func]).def('circleArea'),
-        range: VueTypes.arrayOf(VueTypes.number).def([0, 50]),
+        d3ScaleFactor: VueTypes.func.def(scaleSqrt()),
+        range: VueTypes.arrayOf(VueTypes.number).def([0, 30]),
     },
     computed: {
         actualRange () {
             return this.range
         },
-        actualTicks () {
-            return []
-        },
+    },
+    render () {
+        return undefined
     },
 }
 </script>

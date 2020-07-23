@@ -28,6 +28,7 @@
             <TemporalAxesDemo />
             <CustomAxesDemo />
 
+            <ScatterTest />
             <LinesTest />
             <StackedLinesTest />
             <BarsTest />
@@ -60,6 +61,7 @@ import StackedLinesTest from './sections/tests/lines/StackedLinesTest.vue'
 import BarsTest from './sections/tests/bars/BarsTest.vue'
 import BarsHorizontalTest from './sections/tests/bars/BarsHorizontalTest.vue'
 import PolarTest from './sections/tests/polar/PolarTest.vue'
+import ScatterTest from './sections/tests/scatters/ScatterTest.vue'
 
 const dataOne = [
     {
@@ -125,6 +127,7 @@ export default {
         BarsTest,
         BarsHorizontalTest,
         PolarTest,
+        ScatterTest,
     },
     data () {
         return {

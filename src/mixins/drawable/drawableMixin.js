@@ -22,6 +22,11 @@ export default {
         legendShape: VueTypes.string.def('circle'),
         legendInitialActive: VueTypes.bool.def(true),
     },
+    data () {
+        return {
+            hasBeenMounted: false,
+        }
+    },
     computed: {
         coords () {
             throw new Error('drawableMixin: implement "coords"')
@@ -34,5 +39,8 @@ export default {
                 initialActive: this.legendInitialActive,
             }
         },
+    },
+    mounted () {
+        setTimeout(() => (this.hasBeenMounted = true), 250)
     },
 }

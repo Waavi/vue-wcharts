@@ -3,8 +3,8 @@ import VueTypes from 'vue-types'
 import noop from 'lodash.noop'
 import clamp from 'lodash.clamp'
 import { AXIS_TYPE, AXIS_DIMENSION } from '../Axis/axisMixin'
-import { paddingBandVueType, normalizedPaddingBand } from '../../charts/chartUtils'
-import { obtainScalerSlotter } from '../Axis/axisScaleUtils'
+import { paddingBandVueType, normalizePaddingBand } from '../../charts/chartUtils'
+import { obtainScaleSlotter } from '../Axis/axisScaleUtils'
 
 const DEFAULT_SLOT_WIDTH_WHEN_IS_CONSTRAINED = 1
 const DEFAULT_SLOT_WIDTH_WHEN_IS_NOT_CONSTRAINED = 80
@@ -51,7 +51,7 @@ export default {
             return absoluteWidth
         },
         normalizedBandPadding () {
-            return normalizedPaddingBand(this.bandPadding)
+            return normalizePaddingBand(this.bandPadding)
         },
         activeSlots () {
             return this.slots.filter(s => s.active).map(s => s.uid)
@@ -61,7 +61,7 @@ export default {
                 Chart, actualAxisId, activeSlots, actualWidth, normalizedBandPadding,
             } = this
             const scale = Chart.axisScales[actualAxisId]
-            const scaleForUid = obtainScalerSlotter({
+            const scaleForUid = obtainScaleSlotter({
                 scale, slotUuids: activeSlots, width: actualWidth, bandPadding: normalizedBandPadding,
             })
             return (uid, childAxisId) => (childAxisId === actualAxisId ? scaleForUid(uid) : undefined)
@@ -87,7 +87,15 @@ export default {
     },
 
     render (h) {
-        return h('g', {}, this.$slots.default)
+        return h(
+            'g',
+            {},
+            (Array.isArray(this.$slots.default) ? this.$slots.default : [this.$slots.default]).map((child) => {
+                // eslint-disable-next-line no-param-reassign
+                child.componentOptions.propsData = { ...child.componentOptions.propsData, ...this.$attrs }
+                return child
+            })
+        )
     },
 }
 </script>

@@ -10,18 +10,21 @@
         />
         <g
             v-for="({ tickX, value, label, textProps }, index) in ticksWithInfo"
-            :key="index"
+            :key="label"
+            class="AxisTickAndMark"
+            :transform="`translate(${tickX}, 0)`"
         >
             <line
-                v-if="!hideTickMark && tickX"
-                :x1="tickX"
+                v-if="!hideTickMark && tickX !== undefined"
+                class="AxisMark"
+                :x1="0"
                 :y1="tickY"
-                :x2="tickX"
+                :x2="0"
                 :y2="isOnTop ? tickY + tickLength : tickY - tickLength"
                 v-bind="actualStyles.tick"
             />
             <slot
-                v-if="tickX"
+                v-if="tickX !== undefined"
                 name="tick"
                 :value="value"
                 :label="label"
@@ -30,7 +33,8 @@
             >
                 <WAxisText
                     v-if="label || label === 0"
-                    :x="tickX"
+                    class="AxisTick"
+                    :x="0"
                     :y="tickY"
                     :value="label"
                     v-bind="textProps"
@@ -172,7 +176,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-line {
+.AxisTickAndMark {
     transition: all 1s;
 }
 </style>

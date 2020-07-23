@@ -1,6 +1,9 @@
 import d3Line from 'd3-shape/src/line'
 import d3Area from 'd3-shape/src/area'
-import d3Transition from 'd3-transition/dist/d3-transition'
+import { arc as d3Arc, pie as d3Pie } from 'd3-shape'
+import { select as d3Select } from 'd3-selection'
+import 'd3-transition'
+import { interpolateObject } from 'd3-interpolate'
 import getD3Curve from './getD3Curve'
 
 const normalizeAccessor = accessor => (typeof accessor === 'string' ? d => d[accessor] : accessor)
@@ -62,10 +65,55 @@ export function lineAreaGeneratorFactory ({
         .curve(getD3Curve(curve))
 }
 
-export function pathAnimateTo ({ pathRef, newPathValue, duration }) {
-    d3Transition
-        .select(pathRef)
-        .transition()
-        .duration(duration)
-        .attr('d', newPathValue)
+export function linePathAnimateTo ({ pathRef, newPathValue, duration }) {
+    d3Select(pathRef).transition().duration(duration).attr('d', newPathValue)
+}
+
+export function arcGeneratorFactory (params) {
+    return Object.keys(params).reduce(
+        (fn, key) => fn[key](params[key]),
+        d3Arc()
+    )
+}
+export function arcGenerator (params) {
+    return arcGeneratorFactory(params)()
+}
+export function arcCentroid (params) {
+    return arcGeneratorFactory(params).centroid()
+}
+
+export function arcPathAnimateTo ({
+    pathRef, oldArcData, newArcData, generator, duration,
+}) {
+    d3Select(pathRef).transition().duration(duration).attrTween('d', arcTween(oldArcData, newArcData, generator))
+}
+function arcTween (oldArcData, newArcData, generator = arcGenerator) {
+    return function interpolatorFactory () {
+        const interpolate = interpolateObject(oldArcData, newArcData)
+        return function arcInterpolator (t) {
+            return generator(interpolate(t))
+        }
+    }
+}
+
+export function arcCentroidAnimateTo ({
+    centroidRef, oldArcData, newArcData, generator, duration,
+}) {
+    d3Select(centroidRef).transition().duration(duration).attrTween('transform', arcCentroidTween(oldArcData, newArcData, generator))
+}
+function arcCentroidTween (oldArcData, newArcData, generator = arcGenerator) {
+    return function interpolatorFactory () {
+        const interpolate = interpolateObject(oldArcData, newArcData)
+        return function arcInterpolator (t) {
+            const centroid = generator.centroid(interpolate(t))
+            return `translate(${centroid[0]},${centroid[1]})`
+        }
+    }
+}
+
+export function pieGeneratorFactory (params) {
+    return Object.keys(params).reduce(
+        (fn, key) => fn[key](params[key]),
+        d3Pie()
+    )
 }

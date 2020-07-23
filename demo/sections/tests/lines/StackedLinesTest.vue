@@ -18,28 +18,33 @@
                 :numTicks="4"
             />
 
-            <Stack curve>
-                <StackedLine
-                    datakey="apples"
-                    label="apples"
-                    color="red"
-                />
-                <StackedLine
-                    datakey="bananas"
-                    label="bananas"
-                    color="yellow"
-                />
-                <StackedLine
-                    datakey="pears"
-                    label="pears"
-                    color="green"
-                />
-                <StackedLine
-                    datakey="cherries"
-                    label="cherries"
-                    color="blue"
-                />
-            </Stack>
+            <Animation
+                :animDuration="1000"
+                appearFromReferenceAlongAxis="fruits"
+            >
+                <Stack curve>
+                    <StackedLine
+                        datakey="apples"
+                        label="apples"
+                        color="red"
+                    />
+                    <StackedLine
+                        datakey="bananas"
+                        label="bananas"
+                        color="yellow"
+                    />
+                    <StackedLine
+                        datakey="pears"
+                        label="pears"
+                        color="green"
+                    />
+                    <StackedLine
+                        datakey="cherries"
+                        label="cherries"
+                        color="blue"
+                    />
+                </Stack>
+            </Animation>
             <Legend />
         </WChart>
 
@@ -59,6 +64,7 @@ import Stack from '../../../../src/components/Stack/Stack.vue'
 import StackedLine from '../../../../src/components/Stack/StackedLine.vue'
 import Legend from '../../../../src/components/Legend/Legend.vue'
 import { randomFruitsDataset } from '../randomDataset'
+import { Animation } from '../../../../src/transitions'
 
 export default {
     name: 'StackedLinesTest',
@@ -66,6 +72,7 @@ export default {
         Stack,
         StackedLine,
         Legend,
+        Animation,
     },
     data () {
         return {

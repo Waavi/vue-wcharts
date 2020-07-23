@@ -1,11 +1,11 @@
 <script>
 import VueTypes from 'vue-types'
-import { random } from '../utils/maths'
+import { randomInt } from '../utils/maths'
 import chartCanvasMixin from './chartCanvasMixin'
 import chartAxisMixin from './chartAxisMixin'
 import chartLegendMixin from './chartLegendMixin'
 import chartColorsMixin from './chartColorsMixin'
-import { marginVueType, normalizedMargin } from './chartUtils'
+import { marginVueType, normalizeMargin } from './chartUtils'
 import stylesMixin from '../mixins/stylesMixin'
 
 export default {
@@ -31,10 +31,10 @@ export default {
     computed: {
         // Create a unique chart id
         chartId () {
-            return this.id || `chart-${random()}`
+            return this.id || `chart-${randomInt()}`
         },
         normalizedPadding () {
-            return normalizedMargin(this.padding)
+            return normalizeMargin(this.padding)
         },
     },
 

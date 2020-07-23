@@ -5,7 +5,7 @@
         v-bind="accessors"
         :fill="actualColor.secondary"
         :withEndStroke="actualColor.main"
-        :curve="actualCurve"
+        :curve="curve"
     />
 </template>
 
@@ -43,10 +43,6 @@ export default {
                 y0Accessor: d => d.cumulativeValueScaled[0],
                 y1Accessor: d => d.cumulativeValueScaled[1],
             }
-        },
-        actualCurve () {
-            const { Stack, curve } = this
-            return curve === undefined ? Stack.$attrs.curve : curve
         },
     },
 }
