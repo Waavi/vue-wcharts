@@ -38,7 +38,7 @@ export function genExactNbTicks (min, max, count) {
     const step = diff / (count - 1)
     const ticks = []
 
-    for (let i = 0; i < count; i++) {
+    for (let i = 0; i < (count - 1); i++) {
         ticks.push(i * step)
     }
 
