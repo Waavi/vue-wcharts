@@ -1,6 +1,6 @@
 <script>
 import VueTypes from 'vue-types'
-import scaleLinear from 'd3-scale/src/linear'
+import { scaleLinear } from 'd3-scale'
 import stack from 'd3-shape/src/stack'
 import stackOffsetDiverging from 'd3-shape/src/offset/diverging'
 import noop from 'lodash.noop'
