@@ -68,7 +68,7 @@
     "eslint-plugin-vue": "^5.0.0",
     "eslint-plugin-vue-types": "^1.0.0",
     "lint-staged": "^8.1.4",
-    "node-sass": "^4.9.0",
+    "node-sass": "^7.0.0",
     "sass-loader": "^7.1.0",
     "stylelint": "^10.1.0",
     "stylelint-config-recommended": "^2.1.0",
